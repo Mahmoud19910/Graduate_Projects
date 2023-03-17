@@ -122,6 +122,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 style="@style/edit_Text"
+                android:textDirection="rtl"
+                android:layoutDirection="rtl"
                 android:hint="الاسم كاملا"
                 android:padding="@dimen/_10sdp"
                 android:layout_marginTop="@dimen/_15sdp"
@@ -146,6 +148,9 @@
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
                 android:layout_marginTop="@dimen/_15sdp"
+                android:textDirection="rtl"
+                android:layoutDirection="rtl"
+                android:gravity="end"
                 android:layout_height="wrap_content">
 
                 <EditText
@@ -153,9 +158,11 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     style="@style/edit_Text"
-                    android:gravity="start"
                     android:hint="كلمة المرور"
                     android:padding="@dimen/_10sdp"
+                    android:textDirection="ltr"
+                    android:gravity="end"
+                    android:layoutDirection="rtl"
                     android:inputType="textVisiblePassword"
                     app:layout_constraintTop_toTopOf="parent"
                     app:layout_constraintBottom_toBottomOf="parent"
@@ -171,7 +178,7 @@
                     app:layout_constraintTop_toTopOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintBottom_toBottomOf="@id/editPass"
-                    android:src="@drawable/eye_24"/>
+                    android:src="@drawable/lock_24"/>
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 

@@ -25,11 +25,22 @@ public class UnBoarding_Activity extends AppCompatActivity implements ViewPager.
         PagerAdapter pagerAdapter = new PagerAdapter(this, PagerView_Comp.getImageList());
         binding.pagerImage.setAdapter(pagerAdapter);
         binding.pagerImage.addOnPageChangeListener(this);
-        binding.signUp.setOnClickListener(new View.OnClickListener() {
+
+        binding.signUpUnboarding.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent ii = new Intent(UnBoarding_Activity.this, SignUp_Activity.class);
                 startActivity(ii);
+                finish();
+            }
+        });
+
+        binding.signInUnboarding.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent ii = new Intent(UnBoarding_Activity.this, SignIn_Activity.class);
+                startActivity(ii);
+                finish();
             }
         });
 

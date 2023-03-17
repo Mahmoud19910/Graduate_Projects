@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.method.PasswordTransformationMethod;
 import android.view.View;
 import android.widget.Toast;
 
@@ -24,6 +25,7 @@ public class SignUp_Activity extends AppCompatActivity implements View.OnClickLi
 
     private ActivitySignUpBinding binding;
     boolean checkInputs;
+    boolean showPass=false;
 
 
     @Override
@@ -45,16 +47,12 @@ public class SignUp_Activity extends AppCompatActivity implements View.OnClickLi
         binding.signUpBut.setOnClickListener(this);
         binding.backSignUpBt.setOnClickListener(this);
         binding.gmailBut.setOnClickListener(this);
+        binding.signInButInSignUp.setOnClickListener(this);
+        binding.eyePass.setOnClickListener(this);
+        binding.editPass.setTransformationMethod(new PasswordTransformationMethod());
 
 
-// تشفير كلمة المرور
-//        binding.eyePass.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                binding.editPass.setTransformationMethod(new PasswordTransformationMethod());
-//
-//            }
-//        });
+
 
     }
 
@@ -78,16 +76,41 @@ public class SignUp_Activity extends AppCompatActivity implements View.OnClickLi
                 break;
 
             case R.id.backSignUp_Bt:
-                // تسجيل الخروج
-                Gmai_Auth.onSignOut(this);
+                startActivity(new Intent(getApplicationContext() ,SignIn_Activity.class));
+                finish();
                 break;
 
             case R.id.gmail_But:
                 // تسجيل الدخول
                 Gmai_Auth.onClickGoogleBut(this);
                 break;
+
+            case R.id.signInBut_InSignUp:
+                startActivity(new Intent(getApplicationContext() ,SignIn_Activity.class));
+                finish();
+                break;
+            case R.id.eyePass:
+                if(showPass==false){
+                    showPass=true;
+                    binding.editPass.setTransformationMethod(null);
+                    binding.eyePass.setImageResource(R.drawable.lock_open_24);
+
+                }else{
+                    showPass=false;
+                    binding.editPass.setTransformationMethod(new PasswordTransformationMethod());
+                    binding.eyePass.setImageResource(R.drawable.lock_24);
+
+                }
+                break;
         }
 
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        startActivity(new Intent(getApplicationContext() ,SignIn_Activity.class));
+        finish();
     }
 
     @Override
