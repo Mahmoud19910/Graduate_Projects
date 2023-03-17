@@ -1,3 +1,25 @@
 <resources>
-    <string name="app_name">Gradu_Ptojects</string>
+    <string name="app_name">Fitness App</string>
+    <string name="sign_UnderLine"><u>تسجيل الدخول</u>.</string>
+    <string name="new_user">مستخدم جديد</string>
+    <string name="you_have_account">هل لديك حساب ؟</string>
+    <string name="privacy"><u>الشروط و القوانين</u>.</string>
+    <string name="signIn">تسجيل دخول</string>
+    <string name="signUp">مستخدم جديد</string>
+    <string name="OR">أو</string>
+    <string name="create_New_Account"><u>إنشاء حساب جديد</u>.</string>
+    <string name="dont_have_account">ليس لديك حساب ؟</string>
+    <string name="forgtPass"><u>تذكير بكلمة المرور</u>.</string>
+    <string name="verify">تأكيد</string>
+    <string name="ReSend">إعادة الارسال</string>
+    <string name="New_Pass">كلمة المرور الجديدة</string>
+    <string name="Verify_Pass"> تأكيد كلمة المرور </string>
+    <string name="Verify_Account"> تأكيد الحساب </string>
+
+    <string name="sms6">ستصلك رسالة نصية من 6 أرقام لتأكيد الحساب قم بإدخالها</string>
+    <string name="signIn_UnderLine"><u>تسجيل دخول</u>.</string>
+    <string name="Users_Info">المعلومات الشخصية</string>
+    <string name="Gender">ما هو جنسك :</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout>
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#FFFFFF"
+        android:gravity="center"
+        android:padding="@dimen/_15sdp"
+        android:orientation="vertical"
+        tools:context=".Fragments.FragmentUsersInfo2">
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="ما مستوى نشاطك اليومي ؟"
+            style="@style/describtion_Black_Color"/>
+
+        <ListView
+            android:layout_marginTop="@dimen/_20sdp"
+            android:id="@+id/listView_PersonInfo"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            />
+    </LinearLayout>
+</layout>

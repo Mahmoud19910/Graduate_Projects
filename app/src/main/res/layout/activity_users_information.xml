@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:tools="http://schemas.android.com/tools"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <LinearLayout
+        android:id="@+id/parentUsersInfo"
+        android:layout_width="match_parent"
+        android:orientation="vertical"
+        android:layout_height="match_parent"
+        tools:context=".UsersInformation_Activity">
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="#3A7FC0"
+            android:paddingStart="@dimen/_15sdp"
+            android:paddingEnd="@dimen/_15sdp"
+            android:minHeight="?attr/actionBarSize"
+            android:theme="?attr/actionBarTheme">
+            <ImageView
+                android:id="@+id/backSignUp_Bt"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/back_ios_new_24"/>
+            <TextView
+                android:layout_weight="@integer/material_motion_duration_short_1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/Users_Info"
+                android:textSize="@dimen/_20ssp"
+                android:textStyle="normal"
+                style="@style/title_White_Color"/>
+
+        </androidx.appcompat.widget.Toolbar>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_87sdp"
+            android:orientation="vertical"
+            android:layout_marginTop="@dimen/_20sdp"
+            android:paddingEnd="@dimen/_15sdp"
+            android:paddingStart="@dimen/_15sdp">
+
+            <TextView
+                android:id="@+id/descriptionUnboarding"
+                style="@style/describtion_Black_Color"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textStyle="normal"
+                android:layout_marginEnd="@dimen/_15sdp"
+                android:layout_marginStart="@dimen/_15sdp"
+                android:text="من فضلك تزويدنا بالبيانات التالية
+ أدناه لحساب لسعرات الحرارية وكمية
+المياه الموصى بها ."
+                app:layout_constraintTop_toBottomOf="@id/titleUnboarding"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_10sdp"
+                android:orientation="horizontal">
+                <View
+                    android:id="@+id/indicatUserInfo2"
+                    android:layout_weight="1"
+                    android:layout_width="@dimen/_130sdp"
+                    android:layout_height="@dimen/_10sdp"
+                    android:background="@drawable/usersinfo_inducators_ouline"
+                    />
+                <View
+                    android:layout_width="@dimen/_20sdp"
+                    android:layout_height="0dp"/>
+                <View
+                    android:id="@+id/indicatUserInfo1"
+                    android:layout_weight="1"
+                    android:layout_width="@dimen/_130sdp"
+                    android:layout_height="@dimen/_10sdp"
+                    android:background="@drawable/usersinfo_indicators"
+                    />
+
+
+
+
+
+            </LinearLayout>
+        </LinearLayout>
+
+        <FrameLayout
+            android:id="@+id/framUsersInfo"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+
+            <androidx.fragment.app.FragmentContainerView
+                android:id="@+id/fragmentContainerView2"
+                android:name="dev.mah.nassa.gradu_ptojects.Fragments.FragmentUsersInfo1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+        </FrameLayout>
+
+
+    </LinearLayout>
+</layout>

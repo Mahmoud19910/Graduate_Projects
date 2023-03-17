@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout>
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="@dimen/_15sdp"
+        android:gravity="center"
+        tools:viewBindingIgnore="true"
+        tools:context=".Fragments.FragmentUsersInfo1">
+
+        <TextView
+            android:id="@+id/descriptionUnboarding"
+            style="@style/describtion_Black_Color"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/Gender" />
+
+
+        <RadioGroup
+            android:id="@+id/usersInfoRadiBut"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="start"
+            android:layout_marginTop="@dimen/_10sdp">
+            <RadioButton
+                android:id="@+id/male"
+                android:text="ذكر"
+                android:textSize="@dimen/_18ssp"
+                android:textStyle="normal"
+                style="@style/describtion_Black_Color"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+            <RadioButton
+                android:id="@+id/female"
+                android:text="أنثى"
+                android:textSize="@dimen/_18ssp"
+                android:textStyle="normal"
+                style="@style/describtion_Black_Color"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+        </RadioGroup>
+
+
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:orientation="horizontal"
+            android:layout_marginTop="@dimen/_20sdp">
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:layout_weight="1"
+                android:orientation="vertical">
+
+                <TextView
+                    style="@style/describtion_Black_Color"
+                    android:layout_width="match_parent"
+                    android:gravity="center"
+                    android:layout_height="wrap_content"
+                    android:text="أدخل عمرك :" />
+
+                <EditText
+                    android:id="@+id/editEage"
+                    android:layout_width="@dimen/_100sdp"
+                    android:layout_height="@dimen/_30sdp"
+                    android:inputType="number"
+                    style="@style/edit_Text"
+                    android:hint="25.5"
+                    android:layout_marginTop="@dimen/_10sdp"
+                    android:gravity="center"
+                    android:textSize="@dimen/_14ssp"/>
+
+            </LinearLayout>
+            <LinearLayout
+                android:layout_weight="1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:orientation="vertical">
+
+                <TextView
+                    style="@style/describtion_Black_Color"
+                    android:layout_width="wrap_content"
+                    android:gravity="center"
+                    android:layout_height="wrap_content"
+                    android:text="أدخل وزنك (كجم) :" />
+
+                <EditText
+                    android:id="@+id/editWeight"                android:layout_width="@dimen/_100sdp"
+                    android:layout_height="@dimen/_30sdp"
+                    android:inputType="number"
+                    style="@style/edit_Text"
+                    android:hint="25.5"
+                    android:layout_marginTop="@dimen/_10sdp"
+                    android:gravity="center"
+                    android:textSize="@dimen/_14ssp"/>
+
+            </LinearLayout>
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:orientation="vertical"
+            android:layout_marginTop="@dimen/_30sdp"
+            >
+
+            <TextView
+                style="@style/describtion_Black_Color"
+                android:layout_width="match_parent"
+                android:gravity="center"
+                android:layout_height="wrap_content"
+                android:text="أدخل طولك (سم) :" />
+
+            <EditText
+                android:id="@+id/editLength"
+                android:layout_width="@dimen/_100sdp"
+                android:layout_height="@dimen/_30sdp"
+                android:inputType="number"
+                style="@style/edit_Text"
+                android:hint="25.5"
+                android:layout_marginTop="@dimen/_10sdp"
+                android:gravity="center"
+                android:textSize="@dimen/_14ssp"/>
+
+        </LinearLayout>
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/nextBtUserInfo"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_45sdp"
+            style="@style/default_Button"
+            android:text="التالي"
+            android:layout_marginTop="@dimen/_30sdp"
+            />
+
+    </LinearLayout>
+</layout>
