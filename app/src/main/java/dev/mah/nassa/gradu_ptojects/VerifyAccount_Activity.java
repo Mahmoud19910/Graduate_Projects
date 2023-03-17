@@ -74,7 +74,7 @@ public class VerifyAccount_Activity extends AppCompatActivity implements View.On
             case R.id.verify_ButAccount:
                 try {
 
-                    PhoneAuthCredential credential= PhoneAuth.veryfiedAccount(storedVerificationId,"binding.firstPinViewAccount.getText().toString()");
+                    PhoneAuthCredential credential= PhoneAuth.veryfiedAccount(storedVerificationId,binding.firstPinViewAccount.getText().toString());
                     PhoneAuth.signInWithPhoneAuthCredential(credential , VerifyAccount_Activity.this,name,phone,pass);
                 }
                 catch (Exception e){

@@ -132,30 +132,32 @@
                     app:layout_constraintBottom_toBottomOf="@id/progress_VerifyAccount"/>
             </androidx.constraintlayout.widget.ConstraintLayout>
 
-<!--            <com.chaos.view.PinView-->
-<!--                android:id="@+id/firstPinViewAccount"-->
-<!--                style="@style/PinWidget.PinView"-->
-<!--                android:layout_width="wrap_content"-->
-<!--                android:layout_height="wrap_content"-->
-<!--                android:cursorVisible="true"-->
-<!--                android:hint="xxxxxx"-->
-<!--                android:layout_marginTop="@dimen/_20sdp"-->
-<!--                android:inputType="number"-->
-<!--                android:padding="@dimen/_10sdp"-->
-<!--                android:textColor="#3A7FC0"-->
-<!--                android:textSize="18sp"-->
-<!--                android:textStyle="bold"-->
-<!--                app:cursorColor="#E32C83"-->
-<!--                app:cursorWidth="2dp"-->
-<!--                app:hideLineWhenFilled="true"-->
-<!--                app:itemCount="6"-->
-<!--                app:itemHeight="48dp"-->
-<!--                app:itemRadius="4dp"-->
-<!--                app:itemSpacing="0dp"-->
-<!--                app:itemWidth="48dp"-->
-<!--                app:lineColor="#E32C83"-->
-<!--                app:lineWidth="2dp"-->
-<!--                app:viewType="rectangle" />-->
+            <com.chaos.view.PinView
+                android:id="@+id/firstPinViewAccount"
+                style="@style/PinWidget.PinView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:cursorVisible="true"
+                android:hint="xxxxxx"
+                android:layout_marginTop="@dimen/_20sdp"
+                android:inputType="number"
+                android:padding="@dimen/_10sdp"
+                android:textColor="#3A7FC0"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                app:cursorColor="#E32C83"
+                app:cursorWidth="2dp"
+                app:hideLineWhenFilled="true"
+                app:itemCount="6"
+                app:itemHeight="48dp"
+                app:itemRadius="4dp"
+                app:itemSpacing="0dp"
+                app:itemWidth="48dp"
+                app:lineColor="#E32C83"
+                app:lineWidth="2dp"
+                app:viewType="rectangle" />
+
+
 
 
 
