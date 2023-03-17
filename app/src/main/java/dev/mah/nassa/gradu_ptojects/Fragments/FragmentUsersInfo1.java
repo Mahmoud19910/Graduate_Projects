@@ -1,5 +1,6 @@
 package dev.mah.nassa.gradu_ptojects.Fragments;
 
+import android.app.TimePickerDialog;
 import android.content.Context;
 import android.os.Bundle;
 
@@ -13,6 +14,12 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.RadioGroup;
+import android.widget.TimePicker;
+import android.widget.Toast;
+
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Locale;
 
 import dev.mah.nassa.gradu_ptojects.Modles.SharedFunctions;
 import dev.mah.nassa.gradu_ptojects.R;
@@ -24,7 +31,7 @@ import dev.mah.nassa.gradu_ptojects.databinding.FragmentUsersInfo1Binding;
  * Use the {@link FragmentUsersInfo1#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class FragmentUsersInfo1 extends Fragment {
+public class FragmentUsersInfo1 extends Fragment implements View.OnClickListener , RadioGroup.OnCheckedChangeListener {
 
     private FragmentUsersInfo1Binding binding;
     private UsersInfoListener listener;
@@ -55,9 +62,20 @@ public class FragmentUsersInfo1 extends Fragment {
         super.onActivityCreated(savedInstanceState);
 
         // عند الضغط على زر التالي يقوم النترفيس بارسال قيمة الفراقمنت المتوجه له الى أكتيفيتي حتى يتم تغييير المؤشر
-        binding.nextBtUserInfo.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
+        binding.nextBtUserInfo.setOnClickListener(this);
+        binding.timeDialogBt.setOnClickListener(this);
+        binding.usersInfoRadiBut.setOnCheckedChangeListener(this);
+        binding.illnessRadioGroup.setOnCheckedChangeListener(this);
+
+
+    }
+
+
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()){
+
+            case R.id.nextBtUserInfo:
                 checkInput= SharedFunctions.checkEnterdDataInUserInfo(binding.editEage,binding.editLength,binding.editWeight,binding.usersInfoRadiBut,getContext());
                 if(checkInput==true){
                     listener.getFragmentNumber(2);
@@ -68,26 +86,73 @@ public class FragmentUsersInfo1 extends Fragment {
                     fragmentTransaction.commit();
                     listener.getInfoUsers(gender,length,weight,eage);
                 }
+                break;
 
-            }
-        });
+            case R.id.timeDialogBt:
+              createTimePickerDialog();
+                break;
+        }
+    }
 
 
-        binding.usersInfoRadiBut.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(RadioGroup group, int checkedId) {
-                switch (checkedId){
-                    case R.id.male:
-                        gender=binding.male.getText().toString();
-                        break;
+    @Override
+    public void onCheckedChanged(RadioGroup group, int checkedId) {
 
-                    case R.id.female:
-                        gender=binding.female.getText().toString();
-                        break;
-                }
-            }
-        });
+        switch (checkedId){
+            case R.id.male:
+                gender=binding.male.getText().toString();
+                break;
 
+            case R.id.female:
+                gender=binding.female.getText().toString();
+                break;
+            case R.id.yes:
+                Toast.makeText(getContext(), binding.yes.getText().toString(), Toast.LENGTH_SHORT).show();
+                binding.timeDialogBt.setVisibility(View.VISIBLE);
+                binding.timeTextView.setVisibility(View.VISIBLE);
+
+                break;
+            case R.id.no:
+                Toast.makeText(getContext(), binding.no.getText().toString(), Toast.LENGTH_SHORT).show();
+                binding.timeDialogBt.setVisibility(View.GONE);
+                binding.timeTextView.setVisibility(View.GONE);
+                break;
+        }
 
     }
+
+    // Create Time Picker Dialog
+    public  void createTimePickerDialog(){
+
+        // Create a calendar instance to set the initial time in the picker
+        final Calendar calendar = Calendar.getInstance();
+        int hour = calendar.get(Calendar.HOUR_OF_DAY);
+        int minute = calendar.get(Calendar.MINUTE);
+// Create a new instance of the time picker dialog and set the initial time
+        TimePickerDialog timePickerDialog = new TimePickerDialog(
+               getContext() ,
+                new TimePickerDialog.OnTimeSetListener() {
+                    @Override
+                    public void onTimeSet(TimePicker timePicker, int selectedHour, int selectedMinute) {
+                        // Handle the time selection here
+                        // Handle the time selection here
+                        SimpleDateFormat dateFormat = new SimpleDateFormat("hh:mm a", Locale.US);
+                        Calendar calendar = Calendar.getInstance();
+                        calendar.set(Calendar.HOUR_OF_DAY, selectedHour);
+                        calendar.set(Calendar.MINUTE, selectedMinute);
+                        String formattedTime = dateFormat.format(calendar.getTime());
+                        binding.timeDialogBt.setText(formattedTime);
+
+
+
+                    }
+                },
+                hour,
+                minute,
+                false
+        );
+// Show the time picker dialog
+        timePickerDialog.show();
+    }
+
 }

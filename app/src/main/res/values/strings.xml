@@ -20,6 +20,7 @@
     <string name="signIn_UnderLine"><u>تسجيل دخول</u>.</string>
     <string name="Users_Info">المعلومات الشخصية</string>
     <string name="Gender">ما هو جنسك :</string>
+    <string name="illness">هل مصاب بالسكري :</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

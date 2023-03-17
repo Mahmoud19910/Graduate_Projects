@@ -5,44 +5,114 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:padding="@dimen/_15sdp"
+        android:paddingBottom="@dimen/_10sdp"
+        android:paddingStart="@dimen/_10sdp"
+        android:paddingEnd="@dimen/_10sdp"
+        android:paddingTop="@dimen/_10sdp"
+
+
         android:gravity="center"
         tools:viewBindingIgnore="true"
         tools:context=".Fragments.FragmentUsersInfo1">
-
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
         <TextView
             android:id="@+id/descriptionUnboarding"
             style="@style/describtion_Black_Color"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
+            android:layout_weight="1"
+            android:gravity="start"
             android:layout_height="wrap_content"
             android:text="@string/Gender" />
+        <TextView
+            android:id="@+id/whatsGender"
+            style="@style/describtion_Black_Color"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="end"
+            android:text="@string/illness" />
+    </LinearLayout>
 
 
-        <RadioGroup
-            android:id="@+id/usersInfoRadiBut"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:gravity="start"
-            android:layout_marginTop="@dimen/_10sdp">
-            <RadioButton
-                android:id="@+id/male"
-                android:text="ذكر"
-                android:textSize="@dimen/_18ssp"
-                android:textStyle="normal"
-                style="@style/describtion_Black_Color"
+            android:orientation="horizontal">
+            <RadioGroup
+                android:id="@+id/usersInfoRadiBut"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
-            <RadioButton
-                android:id="@+id/female"
-                android:text="أنثى"
-                android:textSize="@dimen/_18ssp"
-                android:textStyle="normal"
-                style="@style/describtion_Black_Color"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="start"
+                android:layout_marginTop="@dimen/_10sdp">
+                <RadioButton
+                    android:id="@+id/male"
+                    android:text="ذكر"
+                    android:textSize="@dimen/_16ssp"
+                    android:textStyle="normal"
+                    style="@style/describtion_Black_Color"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+                <RadioButton
+                    android:id="@+id/female"
+                    android:text="أنثى"
+                    android:textSize="@dimen/_16ssp"
+                    android:textStyle="normal"
+                    style="@style/describtion_Black_Color"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+            </RadioGroup>
+
+            <RadioGroup
+                android:id="@+id/illnessRadioGroup"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
-        </RadioGroup>
+                android:layout_height="wrap_content"
+                android:gravity="start"
+                android:paddingStart="@dimen/_20sdp"
+                android:layout_weight="1"
+                android:layout_marginTop="@dimen/_10sdp">
+                <RadioButton
+                    android:id="@+id/yes"
+                    android:text="نعم"
+                    android:textSize="@dimen/_16ssp"
+                    android:textStyle="normal"
+                    style="@style/describtion_Black_Color"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+                <RadioButton
+                    android:id="@+id/no"
+                    android:text="لا"
+                    android:textSize="@dimen/_16ssp"
+                    android:textStyle="normal"
+                    style="@style/describtion_Black_Color"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+            </RadioGroup>
+        </LinearLayout>
 
 
+        <TextView
+            android:id="@+id/timeTextView"
+            style="@style/describtion_Black_Color"
+            android:layout_width="match_parent"
+            android:gravity="center"
+            android:visibility="gone"
+            android:layout_marginTop="@dimen/_15sdp"
+            android:layout_height="wrap_content"
+            android:text="أدخل وقت تناول الدواء :" />
+        <TextView
+            android:id="@+id/timeDialogBt"
+            style="@style/edit_Text"
+            android:layout_width="@dimen/_100sdp"
+            android:gravity="center"
+            android:visibility="gone"
+
+            android:layout_marginTop="@dimen/_10sdp"
+            android:layout_height="@dimen/_32sdp"
+            android:text="00:00 PM" />
 
 
         <LinearLayout
@@ -50,7 +120,7 @@
             android:layout_height="wrap_content"
             android:gravity="center"
             android:orientation="horizontal"
-            android:layout_marginTop="@dimen/_20sdp">
+            android:layout_marginTop="@dimen/_15sdp">
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -108,7 +178,7 @@
             android:layout_height="wrap_content"
             android:gravity="center"
             android:orientation="vertical"
-            android:layout_marginTop="@dimen/_30sdp"
+            android:layout_marginTop="@dimen/_15sdp"
             >
 
             <TextView

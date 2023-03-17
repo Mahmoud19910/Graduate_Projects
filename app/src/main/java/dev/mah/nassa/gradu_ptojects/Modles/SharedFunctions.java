@@ -1,5 +1,6 @@
 package dev.mah.nassa.gradu_ptojects.Modles;
 
+import android.app.TimePickerDialog;
 import android.content.Context;
 import android.os.CountDownTimer;
 import android.view.View;
@@ -9,9 +10,15 @@ import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.RadioGroup;
 import android.widget.TextView;
+import android.widget.TimePicker;
 import android.widget.Toast;
 
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Locale;
+
 public class SharedFunctions {
+
     static CountDownTimer countDownTimer;
     // ميثود التحقق من البيانات في واجهة مستخدم جديد
     public static boolean checkEnterdDataInSignUp(EditText editName , EditText editPhone , EditText editPass, CheckBox checkBox , Context context){
@@ -87,7 +94,7 @@ public class SharedFunctions {
             check=false;
         }
         else
-            if(radioGroup.isActivated()){
+            if(!radioGroup.isActivated()){
                 check=false;
                 Toast.makeText(context, "الرجاء اختيار جنسك", Toast.LENGTH_SHORT).show();
 
@@ -96,6 +103,7 @@ public class SharedFunctions {
         return check;
 
     }
+
 
 
 }

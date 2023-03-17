@@ -47,9 +47,9 @@ public class VerifyAccount_Activity extends AppCompatActivity implements View.On
         binding.verifyButAccount.setOnClickListener(this);
         binding.resendButAccount.setOnClickListener(this);
 
-
-        // ميثود ارسال رمز التحقق الى رقم الهاتف
-        PhoneAuth.sendSmsCode(VerifyAccount_Activity.this,phone.toString());
+//
+//        // ميثود ارسال رمز التحقق الى رقم الهاتف
+//        PhoneAuth.sendSmsCode(VerifyAccount_Activity.this,phone.toString());
 
 
 
@@ -73,9 +73,10 @@ public class VerifyAccount_Activity extends AppCompatActivity implements View.On
         switch (v.getId()){
             case R.id.verify_ButAccount:
                 try {
-
-                    PhoneAuthCredential credential= PhoneAuth.veryfiedAccount(storedVerificationId,binding.firstPinViewAccount.getText().toString());
-                    PhoneAuth.signInWithPhoneAuthCredential(credential , VerifyAccount_Activity.this,name,phone,pass);
+                    Intent intent=new Intent(this , UsersInformation_Activity.class);
+                    startActivity(intent);
+//                    PhoneAuthCredential credential= PhoneAuth.veryfiedAccount(storedVerificationId,binding.firstPinViewAccount.getText().toString());
+//                    PhoneAuth.signInWithPhoneAuthCredential(credential , VerifyAccount_Activity.this,name,phone,pass);
                 }
                 catch (Exception e){
                     Toast.makeText(this, e.getMessage().toString(), Toast.LENGTH_SHORT).show();
