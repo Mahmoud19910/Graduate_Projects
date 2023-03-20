@@ -1,4 +1,4 @@
-package dev.mah.nassa.gradu_ptojects.Modles;
+package dev.mah.nassa.gradu_ptojects.Constants;
 
 import android.app.TimePickerDialog;
 import android.content.Context;
@@ -77,7 +77,7 @@ public class SharedFunctions {
         countDownTimer.start();
     }
 
-    public static boolean checkEnterdDataInUserInfo(EditText eage , EditText length , EditText weight , RadioGroup radioGroup, Context context){
+    public static boolean checkEnterdDataInUserInfo(EditText eage , EditText length , EditText weight ,Context context){
         boolean check=true;
         if(eage.getText().toString().isEmpty()){
             eage.setError("هذا الحقل فارغ");
@@ -93,12 +93,6 @@ public class SharedFunctions {
             weight.setError("هذا الحقل فارغ");
             check=false;
         }
-        else
-            if(!radioGroup.isActivated()){
-                check=false;
-                Toast.makeText(context, "الرجاء اختيار جنسك", Toast.LENGTH_SHORT).show();
-
-            }
 
         return check;
 

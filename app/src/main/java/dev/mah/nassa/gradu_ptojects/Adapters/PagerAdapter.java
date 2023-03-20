@@ -1,4 +1,4 @@
-package dev.mah.nassa.gradu_ptojects;
+package dev.mah.nassa.gradu_ptojects.Adapters;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
@@ -12,6 +12,8 @@ import androidx.annotation.Nullable;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import dev.mah.nassa.gradu_ptojects.R;
 
 public class PagerAdapter extends androidx.viewpager.widget.PagerAdapter{
     List<Integer> imageArray;

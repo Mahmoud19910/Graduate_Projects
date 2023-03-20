@@ -1,27 +1,21 @@
-package dev.mah.nassa.gradu_ptojects;
+package dev.mah.nassa.gradu_ptojects.Activityes;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.text.method.PasswordTransformationMethod;
 import android.view.View;
-import android.widget.Toast;
-
-import com.google.android.gms.auth.api.signin.GoogleSignIn;
-import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
-import com.google.android.gms.auth.api.signin.GoogleSignInClient;
-import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
-import com.google.android.gms.common.api.ApiException;
-import com.google.android.gms.tasks.Task;
-import com.google.firebase.auth.FirebaseAuth;
 
 import dev.mah.nassa.gradu_ptojects.FireBase_Authentication.Gmai_Auth;
-import dev.mah.nassa.gradu_ptojects.Modles.SharedFunctions;
+import dev.mah.nassa.gradu_ptojects.Interfaces.Gmail_Acc_Info_Listener;
+import dev.mah.nassa.gradu_ptojects.Constants.SharedFunctions;
+import dev.mah.nassa.gradu_ptojects.R;
 import dev.mah.nassa.gradu_ptojects.databinding.ActivitySignUpBinding;
 
-public class SignUp_Activity extends AppCompatActivity implements View.OnClickListener {
+public class SignUp_Activity extends AppCompatActivity implements View.OnClickListener , Gmail_Acc_Info_Listener {
 
     private ActivitySignUpBinding binding;
     boolean checkInputs;
@@ -76,8 +70,9 @@ public class SignUp_Activity extends AppCompatActivity implements View.OnClickLi
                 break;
 
             case R.id.backSignUp_Bt:
-                startActivity(new Intent(getApplicationContext() ,SignIn_Activity.class));
-                finish();
+                Gmai_Auth.onSignOut(SignUp_Activity.this);
+//                startActivity(new Intent(getApplicationContext() ,SignIn_Activity.class));
+//                finish();
                 break;
 
             case R.id.gmail_But:
@@ -107,6 +102,22 @@ public class SignUp_Activity extends AppCompatActivity implements View.OnClickLi
     }
 
     @Override
+    public void getGmailInfoListener(String name, Uri photoUri, String email, String id) {
+        String photo;
+        if(photoUri!=null){
+          photo=photoUri.toString();
+        }else {
+            photo="";
+        }
+        Intent intent = new Intent(SignUp_Activity.this , UsersInformation_Activity.class);
+        intent.putExtra("name" , name);
+        intent.putExtra("photo" ,photo);
+        intent.putExtra("email" , email);
+        intent.putExtra("uid" , id);
+        startActivity(intent);
+    }
+
+    @Override
     public void onBackPressed() {
         super.onBackPressed();
         startActivity(new Intent(getApplicationContext() ,SignIn_Activity.class));
@@ -116,7 +127,6 @@ public class SignUp_Activity extends AppCompatActivity implements View.OnClickLi
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-
         Gmai_Auth.onResultGoolgleAuth(this, requestCode, data);
 
     }

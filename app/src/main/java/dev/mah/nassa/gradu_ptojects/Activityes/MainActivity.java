@@ -1,4 +1,4 @@
-package dev.mah.nassa.gradu_ptojects;
+package dev.mah.nassa.gradu_ptojects.Activityes;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -7,6 +7,8 @@ import android.os.Bundle;
 
 import java.util.Timer;
 import java.util.TimerTask;
+
+import dev.mah.nassa.gradu_ptojects.R;
 
 public class MainActivity extends AppCompatActivity {
 

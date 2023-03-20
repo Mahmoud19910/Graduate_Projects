@@ -1,4 +1,4 @@
-package dev.mah.nassa.gradu_ptojects;
+package dev.mah.nassa.gradu_ptojects.Activityes;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.viewpager.widget.ViewPager;
@@ -8,6 +8,8 @@ import android.os.Bundle;
 import android.view.View;
 
 import dev.mah.nassa.gradu_ptojects.Constants.PagerView_Comp;
+import dev.mah.nassa.gradu_ptojects.Adapters.PagerAdapter;
+import dev.mah.nassa.gradu_ptojects.R;
 import dev.mah.nassa.gradu_ptojects.databinding.ActivityUnBoardingBinding;
 
 public class UnBoarding_Activity extends AppCompatActivity implements ViewPager.OnPageChangeListener {

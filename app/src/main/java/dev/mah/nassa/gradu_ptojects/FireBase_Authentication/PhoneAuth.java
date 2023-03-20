@@ -19,8 +19,8 @@ import org.checkerframework.checker.nullness.qual.NonNull;
 
 import java.util.concurrent.TimeUnit;
 
-import dev.mah.nassa.gradu_ptojects.UsersInformation_Activity;
-import dev.mah.nassa.gradu_ptojects.VerificationIdListener;
+import dev.mah.nassa.gradu_ptojects.Activityes.UsersInformation_Activity;
+import dev.mah.nassa.gradu_ptojects.Interfaces.VerificationIdListener;
 
 
 public class PhoneAuth {
@@ -81,12 +81,12 @@ public class PhoneAuth {
                             // Sign in success, update UI with the signed-in user's information
                             FirebaseUser user = task.getResult().getUser();
                             String uid=user.getUid();
-                            Toast.makeText(context, "Successful", Toast.LENGTH_SHORT).show();
                             Intent intent=new Intent(context , UsersInformation_Activity.class);
                             intent.putExtra("name",name);
                             intent.putExtra("phone",phone);
                             intent.putExtra("pass",pass);
                             intent.putExtra("uid",uid);
+
                             context.startActivity(intent);
                             ((Activity) context).finish();
 

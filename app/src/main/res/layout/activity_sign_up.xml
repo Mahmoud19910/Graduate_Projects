@@ -6,7 +6,7 @@
         android:id="@+id/parentLayout_SignUp"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".SignUp_Activity"
+        tools:context=".Activityes.SignUp_Activity"
         android:textDirection="rtl"
         tools:ignore="ExtraText">
         <View
@@ -18,56 +18,61 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"/>
         //Back Button
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:layout_constraintTop_toTopOf="@id/viewSignUp"
-            app:layout_constraintStart_toStartOf="parent"
-            android:layout_margin="@dimen/_15sdp"
-            android:gravity="end"
-            app:layout_constraintEnd_toEndOf="parent">
+<!--        <LinearLayout-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            app:layout_constraintTop_toTopOf="@id/viewSignUp"-->
+<!--            app:layout_constraintStart_toStartOf="parent"-->
+<!--            android:layout_margin="@dimen/_15sdp"-->
+<!--            android:gravity="end"-->
+<!--            app:layout_constraintEnd_toEndOf="parent">-->
             <ImageView
                 android:id="@+id/backSignUp_Bt"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_margin="@dimen/_15sdp"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
                 android:src="@drawable/back_ios_new_24"/>
 
-        </LinearLayout>
+<!--        </LinearLayout>-->
+
 
         <LinearLayout
             android:id="@+id/vertial_Layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintBottom_toBottomOf="@id/viewSignUp"
             android:gravity="center"
             android:orientation="vertical"
-            app:layout_constraintEnd_toEndOf="parent">
+            app:layout_constraintBottom_toBottomOf="@id/viewSignUp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            android:layout_marginTop="@dimen/_15sdp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.153">
+
             <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
+                android:layout_width="@dimen/_80sdp"
+                android:layout_height="@dimen/_80sdp"
+                android:src="@drawable/mainlogo"
                 app:layout_constraintBottom_toBottomOf="@id/viewSignUp"
-                android:src="@drawable/mainlogo"/>
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
+                style="@style/title_White_Color"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/app_name"
-                style="@style/title_White_Color"/>
+                android:text="@string/app_name" />
         </LinearLayout>
-
-
-
 
         <View
             android:id="@+id/cardView"
             android:layout_width="match_parent"
             android:layout_height="@dimen/_460sdp"
-            android:layout_marginTop="@dimen/_30sdp"
+            android:layout_marginTop="@dimen/_40sdp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@id/vertial_Layout"
             app:layout_constraintStart_toStartOf="parent"

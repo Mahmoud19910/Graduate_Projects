@@ -1,4 +1,4 @@
-package dev.mah.nassa.gradu_ptojects;
+package dev.mah.nassa.gradu_ptojects.Activityes;
 
 import androidx.appcompat.app.AppCompatActivity;
 

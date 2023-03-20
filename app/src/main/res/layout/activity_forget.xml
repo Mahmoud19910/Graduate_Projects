@@ -6,7 +6,7 @@
         android:id="@+id/parentLayout_Forget"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".Forget_Activity"
+        tools:context=".Activityes.Forget_Activity"
         android:textDirection="rtl"
         tools:ignore="ExtraText">
         <View

@@ -1,17 +1,19 @@
-package dev.mah.nassa.gradu_ptojects;
+package dev.mah.nassa.gradu_ptojects.Activityes;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.content.DialogInterface;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
 
 import dev.mah.nassa.gradu_ptojects.FireBase_Authentication.Gmai_Auth;
+import dev.mah.nassa.gradu_ptojects.Interfaces.Gmail_Acc_Info_Listener;
+import dev.mah.nassa.gradu_ptojects.R;
 import dev.mah.nassa.gradu_ptojects.databinding.ActivitySignInBinding;
 
-public class SignIn_Activity extends AppCompatActivity implements View.OnClickListener {
+public class SignIn_Activity extends AppCompatActivity implements View.OnClickListener , Gmail_Acc_Info_Listener {
 
     ActivitySignInBinding binding;
     @Override
@@ -74,5 +76,21 @@ public class SignIn_Activity extends AppCompatActivity implements View.OnClickLi
 
         Gmai_Auth.onResultGoolgleAuth(this, requestCode, data);
 
+    }
+
+    @Override
+    public void getGmailInfoListener(String name, Uri photoUri, String email, String id) {
+        String photo;
+        if(photoUri!=null){
+            photo=photoUri.toString();
+        }else {
+            photo="";
+        }
+        Intent intent = new Intent(SignIn_Activity.this , UsersInformation_Activity.class);
+        intent.putExtra("name" , name);
+        intent.putExtra("photo" ,photo);
+        intent.putExtra("email" , email);
+        intent.putExtra("uid" , id);
+        startActivity(intent);
     }
 }

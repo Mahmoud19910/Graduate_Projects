@@ -1,4 +1,4 @@
-package dev.mah.nassa.gradu_ptojects;
+package dev.mah.nassa.gradu_ptojects.Adapters;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -8,6 +8,8 @@ import android.widget.BaseAdapter;
 import android.widget.TextView;
 
 import java.util.ArrayList;
+
+import dev.mah.nassa.gradu_ptojects.R;
 
 public class PersonActivity_Adapter extends BaseAdapter {
     private int layout;

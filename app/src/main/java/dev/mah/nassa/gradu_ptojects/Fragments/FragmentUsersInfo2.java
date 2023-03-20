@@ -11,11 +11,12 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 
 import dev.mah.nassa.gradu_ptojects.Constants.PersonActivityArray;
-import dev.mah.nassa.gradu_ptojects.PersonActivity_Adapter;
+import dev.mah.nassa.gradu_ptojects.Adapters.PersonActivity_Adapter;
 import dev.mah.nassa.gradu_ptojects.R;
-import dev.mah.nassa.gradu_ptojects.UsersInfoListener;
+import dev.mah.nassa.gradu_ptojects.Interfaces.UsersInfoListener;
 import dev.mah.nassa.gradu_ptojects.databinding.FragmentUsersInfo2Binding;
 
 /**
@@ -64,6 +65,14 @@ public class FragmentUsersInfo2 extends Fragment {
 
         PersonActivity_Adapter personActivity_adapter=new PersonActivity_Adapter(R.layout.arraylist_person_activity, getContext() , PersonActivityArray.getPersonActivityList());
         binding.listViewPersonInfo.setAdapter(personActivity_adapter);
+
+        binding.listViewPersonInfo.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                String activityLevel=PersonActivityArray.getPersonActivityList().get(position);
+                listener.getActivityLevel(position , activityLevel);
+            }
+        });
 
 
     }
