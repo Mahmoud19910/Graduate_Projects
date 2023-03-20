@@ -17,6 +17,7 @@ import com.google.android.gms.common.api.ApiException;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 
+import dev.mah.nassa.gradu_ptojects.Activityes.Home_Activity;
 import dev.mah.nassa.gradu_ptojects.Interfaces.Gmail_Acc_Info_Listener;
 
 public class Gmai_Auth {
@@ -24,6 +25,7 @@ public class Gmai_Auth {
     public static GoogleSignInClient mGoogleSignInClient;
     public static GoogleSignInOptions gso;
     public static Gmail_Acc_Info_Listener gmail_acc_info_listener;
+    public static FirebaseAuth firebaseAuth=FirebaseAuth.getInstance();
 
     //OnCreate تنفذ في
     public static void createGoogleAuth(Context context) {
@@ -73,5 +75,6 @@ public class Gmai_Auth {
         GoogleSignIn.getClient(context, GoogleSignInOptions.DEFAULT_SIGN_IN).signOut();
         Toast.makeText(context, "Sign Out", Toast.LENGTH_SHORT).show();
     }
+
 
 }

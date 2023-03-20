@@ -4,10 +4,12 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
 
+import dev.mah.nassa.gradu_ptojects.DataBase.FireStore_DataBase;
 import dev.mah.nassa.gradu_ptojects.FireBase_Authentication.Gmai_Auth;
 import dev.mah.nassa.gradu_ptojects.Interfaces.Gmail_Acc_Info_Listener;
 import dev.mah.nassa.gradu_ptojects.R;
@@ -15,7 +17,9 @@ import dev.mah.nassa.gradu_ptojects.databinding.ActivitySignInBinding;
 
 public class SignIn_Activity extends AppCompatActivity implements View.OnClickListener , Gmail_Acc_Info_Listener {
 
-    ActivitySignInBinding binding;
+    private ActivitySignInBinding binding;
+    private SharedPreferences preferences;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -48,8 +52,9 @@ public class SignIn_Activity extends AppCompatActivity implements View.OnClickLi
                 break;
 
             case R.id.signIn_But:
-                startActivity(new Intent(getApplicationContext() , UsersInformation_Activity.class));
-                finish();
+                FireStore_DataBase.signInMethods(binding.editPhoneSignIn.getText().toString() , binding.editPassSignIn.getText().toString() , SignIn_Activity.this);
+//                startActivity(new Intent(getApplicationContext() , UsersInformation_Activity.class));
+//                finish();
                 break;
 
             case R.id.gmail_ButSignIn:
@@ -93,4 +98,6 @@ public class SignIn_Activity extends AppCompatActivity implements View.OnClickLi
         intent.putExtra("uid" , id);
         startActivity(intent);
     }
+
+
 }

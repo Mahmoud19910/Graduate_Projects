@@ -10,7 +10,9 @@ import androidx.annotation.NonNull;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -73,6 +75,25 @@ public class FireStore_DataBase {
                     Toast.makeText(context, "Fail Health", Toast.LENGTH_SHORT).show();
 
                 }
+            }
+        });
+    }
+
+
+    // Check Sign In
+    public static void signInMethods(String phone , String pass , Context context){
+        firestore.collection("UsersInfo").get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+               QuerySnapshot querySnapshot= task.getResult();
+               for(DocumentSnapshot data : querySnapshot.getDocuments()){
+                   if(data.get("phone").toString().equalsIgnoreCase(phone) && data.get("pass").toString().equalsIgnoreCase(pass)){
+                       context.startActivity(new Intent(context ,Home_Activity.class));
+                       ((Activity)context).finish();
+                   }else {
+                       Toast.makeText(context, "فشل التسجيل يرجى التحقق من صحة البيانات!!", Toast.LENGTH_SHORT).show();
+                   }
+               }
             }
         });
     }

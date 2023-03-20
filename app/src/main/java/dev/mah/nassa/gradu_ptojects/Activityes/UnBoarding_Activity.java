@@ -4,30 +4,40 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.viewpager.widget.ViewPager;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 
 import dev.mah.nassa.gradu_ptojects.Constants.PagerView_Comp;
 import dev.mah.nassa.gradu_ptojects.Adapters.PagerAdapter;
+import dev.mah.nassa.gradu_ptojects.FireBase_Authentication.Gmai_Auth;
+import dev.mah.nassa.gradu_ptojects.FireBase_Authentication.PhoneAuth;
 import dev.mah.nassa.gradu_ptojects.R;
 import dev.mah.nassa.gradu_ptojects.databinding.ActivityUnBoardingBinding;
 
 public class UnBoarding_Activity extends AppCompatActivity implements ViewPager.OnPageChangeListener {
 
-    ActivityUnBoardingBinding binding;
+   private ActivityUnBoardingBinding binding;
+    private SharedPreferences preferences;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         binding = ActivityUnBoardingBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
+
         binding.parentLayoutUnBoarding.setLayoutDirection(View.LAYOUT_DIRECTION_RTL);
         binding.parentLayoutUnBoarding.setTextDirection(View.TEXT_DIRECTION_ANY_RTL);
 
+
         PagerAdapter pagerAdapter = new PagerAdapter(this, PagerView_Comp.getImageList());
         binding.pagerImage.setAdapter(pagerAdapter);
+
+        // Listeners
         binding.pagerImage.addOnPageChangeListener(this);
 
+        // Button SignUp
         binding.signUpUnboarding.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -37,6 +47,7 @@ public class UnBoarding_Activity extends AppCompatActivity implements ViewPager.
             }
         });
 
+        // Button SignIn
         binding.signInUnboarding.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -90,4 +101,5 @@ public class UnBoarding_Activity extends AppCompatActivity implements ViewPager.
     public void onPageScrollStateChanged(int state) {
 
     }
+
 }
