@@ -1,6 +1,11 @@
 package dev.mah.nassa.gradu_ptojects.Modles;
 
+import androidx.room.Entity;
+import androidx.room.PrimaryKey;
+
+@Entity(tableName = "usersTable")
 public class UsersInfo {
+    @PrimaryKey(autoGenerate = true)
     private String uid ;
     private String name ;
     private String phone ;
