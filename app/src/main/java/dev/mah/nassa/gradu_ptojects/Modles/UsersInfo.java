@@ -1,17 +1,35 @@
 package dev.mah.nassa.gradu_ptojects.Modles;
 
+import androidx.annotation.NonNull;
+import androidx.room.Entity;
+import androidx.room.PrimaryKey;
+
+@Entity(tableName = "usersTable")
 public class UsersInfo {
+    @PrimaryKey
+    @NonNull
     private String uid ;
+    @NonNull
     private String name ;
+    @NonNull
     private String phone ;
+    @NonNull
     private String pass;
+    @NonNull
     private String eage ;
+    @NonNull
     private String length ;
+    @NonNull
     private String weight;
     private String activityLeve ;
     private String gender ;
     private String photo ;
+    @NonNull
     private String email;
+
+    public UsersInfo() {
+    }
+
 
     public UsersInfo(String uid, String name, String phone, String pass, String eage, String length, String weight, String activityLeve, String gender, String photo, String email) {
         this.uid = uid;
@@ -26,8 +44,6 @@ public class UsersInfo {
         this.photo = photo;
         this.email = email;
     }
-
-
     public String getUid() {
         return uid;
     }

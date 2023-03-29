@@ -1,12 +1,27 @@
 package dev.mah.nassa.gradu_ptojects.Modles;
 
+import androidx.annotation.NonNull;
+import androidx.room.Entity;
+import androidx.room.ForeignKey;
+import androidx.room.PrimaryKey;
+
+@Entity(tableName = "usersHealthTable",foreignKeys = {@ForeignKey(entity =UsersInfo.class,
+        parentColumns = {"uid"},childColumns = {"userId"},
+        onDelete = ForeignKey.CASCADE,
+        onUpdate = ForeignKey.CASCADE)})
 public class Users_Health_Info {
+
+@PrimaryKey(autoGenerate = true)
 private int id;
+@NonNull
 private String userId;
 private double caloriesNumber;
 private int waterDrink;
 private boolean illness;
 private Long medicineTime;
+
+    public Users_Health_Info() {
+    }
 
     public Users_Health_Info(int id, String userId, double caloriesNumber, int waterDrink, boolean illness, Long medicineTime) {
         this.id = id;
