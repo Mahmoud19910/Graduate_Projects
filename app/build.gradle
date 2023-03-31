@@ -59,5 +59,20 @@ dependencies {
     implementation 'io.github.chaosleung:pinview:1.4.4'
 
 
+    // Room components
+    def room_version = "2.5.0"
+    implementation "androidx.room:room-runtime:$room_version"
+    annotationProcessor "androidx.room:room-compiler:$room_version"
 
+    //RXJAVA DEPENDENCY
+    // RxJava 3
+    implementation 'io.reactivex.rxjava3:rxandroid:3.0.0'
+    implementation 'io.reactivex.rxjava3:rxjava:3.0.0'
+    // optional - RxJava3 support for Room
+    implementation "androidx.room:room-rxjava3:$room_version"
+
+
+    // Lifecycle components
+    def lifecycle_version= "2.1.0"
+    implementation "androidx.lifecycle:lifecycle-extensions:$lifecycle_version"
 }
