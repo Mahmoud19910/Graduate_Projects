@@ -10,8 +10,6 @@ import android.view.View;
 
 import dev.mah.nassa.gradu_ptojects.Constants.PagerView_Comp;
 import dev.mah.nassa.gradu_ptojects.Adapters.PagerAdapter;
-import dev.mah.nassa.gradu_ptojects.FireBase_Authentication.Gmai_Auth;
-import dev.mah.nassa.gradu_ptojects.FireBase_Authentication.PhoneAuth;
 import dev.mah.nassa.gradu_ptojects.R;
 import dev.mah.nassa.gradu_ptojects.databinding.ActivityUnBoardingBinding;
 
@@ -21,11 +19,13 @@ public class UnBoarding_Activity extends AppCompatActivity implements ViewPager.
     private SharedPreferences preferences;
 
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         binding = ActivityUnBoardingBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
+
 
         binding.parentLayoutUnBoarding.setLayoutDirection(View.LAYOUT_DIRECTION_RTL);
         binding.parentLayoutUnBoarding.setTextDirection(View.TEXT_DIRECTION_ANY_RTL);
@@ -44,6 +44,7 @@ public class UnBoarding_Activity extends AppCompatActivity implements ViewPager.
                 Intent ii = new Intent(UnBoarding_Activity.this, SignUp_Activity.class);
                 startActivity(ii);
                 finish();
+
             }
         });
 

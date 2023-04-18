@@ -1,7 +1,10 @@
 package dev.mah.nassa.gradu_ptojects.Modles;
+import android.app.Application;
 import android.content.Context;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
@@ -13,12 +16,21 @@ import io.reactivex.rxjava3.core.Observer;
 import io.reactivex.rxjava3.disposables.Disposable;
 import io.reactivex.rxjava3.schedulers.Schedulers;
 
-public class UsersHealthInfoViewModel extends ViewModel {
+public class UsersHealthInfoViewModel extends AndroidViewModel {
+
     MutableLiveData<List<Users_Health_Info>> mutableLiveData = new MutableLiveData<>();
     Users_Health_Info usersHealthInfo = new Users_Health_Info();
+    Context context;
+    AppDatabese appDatabese;
 
-    public void insertUsersHealth(UsersDatabese usersDatabese, Users_Health_Info usersHealthInfo, Context context) {
-        usersDatabese.usersHealthDao().usersHealthInsert(usersHealthInfo)
+    public UsersHealthInfoViewModel(@NonNull Application application) {
+        super(application);
+        context=application.getApplicationContext();
+        appDatabese= AppDatabese.getInstance(application.getApplicationContext());
+    }
+
+    public void insertUsersHealth(Users_Health_Info usersHealthInfo) {
+        appDatabese.usersHealthDao().usersHealthInsert(usersHealthInfo)
                 .subscribeOn(Schedulers.computation())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new CompletableObserver() {
@@ -29,18 +41,20 @@ public class UsersHealthInfoViewModel extends ViewModel {
 
                     @Override
                     public void onComplete() {
-                        Toast.makeText(context, "Insert", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(context, "Insert Health Success", Toast.LENGTH_SHORT).show();
                     }
 
                     @Override
                     public void onError(@io.reactivex.rxjava3.annotations.NonNull Throwable e) {
+                        System.out.println("eRROR"+e.getMessage().toString());
+                        Toast.makeText(context, e.getMessage(), Toast.LENGTH_LONG).show();
 
                     }
                 });
     }
 
-    public void updateUsersHealth(UsersDatabese usersDatabese, Users_Health_Info usersHealthInfo, Context context) {
-        usersDatabese.usersHealthDao().usersHealthUpdate(usersHealthInfo)
+    public void updateUsersHealth( Users_Health_Info usersHealthInfo) {
+        appDatabese.usersHealthDao().usersHealthUpdate(usersHealthInfo)
                 .subscribeOn(Schedulers.computation())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new CompletableObserver() {
@@ -61,8 +75,8 @@ public class UsersHealthInfoViewModel extends ViewModel {
                 });
     }
 
-    public void deleteUsersHealth(UsersDatabese usersDatabese, Users_Health_Info usersHealthInfo, Context context) {
-        usersDatabese.usersHealthDao().usersHealthDelete(usersHealthInfo)
+    public void deleteUsersHealth(Users_Health_Info usersHealthInfo) {
+        appDatabese.usersHealthDao().usersHealthDelete(usersHealthInfo)
                 .subscribeOn(Schedulers.computation())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new CompletableObserver() {
@@ -83,8 +97,8 @@ public class UsersHealthInfoViewModel extends ViewModel {
                 });
     }
 
-    public void deleteAllUsersHealth(UsersDatabese usersDatabese, Context context) {
-        usersDatabese.usersHealthDao().deleteAllUsersHealth()
+    public void deleteAllUsersHealth() {
+        appDatabese.usersHealthDao().deleteAllUsersHealth()
                 .subscribeOn(Schedulers.computation())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new CompletableObserver() {
@@ -105,8 +119,8 @@ public class UsersHealthInfoViewModel extends ViewModel {
                 });
     }
 
-    public MutableLiveData<List<Users_Health_Info>> getAllUsersHealth(UsersDatabese usersDatabese) {
-        usersDatabese.usersHealthDao().getAllUsersHealth()
+    public MutableLiveData<List<Users_Health_Info>> getAllUsersHealth() {
+        appDatabese.usersHealthDao().getAllUsersHealth()
                 .subscribeOn(Schedulers.computation())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Observer<List<Users_Health_Info>>() {
@@ -135,8 +149,8 @@ public class UsersHealthInfoViewModel extends ViewModel {
         return mutableLiveData;
     }
 
-    public Users_Health_Info getUsersHealthById(UsersDatabese usersDatabese, int id, Context context) {
-        usersDatabese.usersHealthDao().getUsersHealthById(id)
+    public Users_Health_Info getUsersHealthById( int id) {
+        appDatabese.usersHealthDao().getUsersHealthById(id)
                 .subscribeOn(Schedulers.computation())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Observer<Users_Health_Info>() {
@@ -163,8 +177,8 @@ public class UsersHealthInfoViewModel extends ViewModel {
         return usersHealthInfo;
     }
 
-    public void deleteUsersHealthByUid(UsersDatabese usersDatabese , int id, Context context ){
-        usersDatabese.usersHealthDao().deleteUsersHealthByUid(id)
+    public void deleteUsersHealthById( int id ){
+        appDatabese.usersHealthDao().deleteUsersHealthByUid(id)
                 .subscribeOn(Schedulers.computation())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new CompletableObserver() {
@@ -184,4 +198,3 @@ public class UsersHealthInfoViewModel extends ViewModel {
                 });
     }
 }
-

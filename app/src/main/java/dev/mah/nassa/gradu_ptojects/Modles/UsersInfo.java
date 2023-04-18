@@ -9,11 +9,8 @@ public class UsersInfo {
     @PrimaryKey
     @NonNull
     private String uid ;
-    @NonNull
     private String name ;
-    @NonNull
     private String phone ;
-    @NonNull
     private String pass;
     @NonNull
     private String eage ;
@@ -24,7 +21,6 @@ public class UsersInfo {
     private String activityLeve ;
     private String gender ;
     private String photo ;
-    @NonNull
     private String email;
 
     public UsersInfo() {

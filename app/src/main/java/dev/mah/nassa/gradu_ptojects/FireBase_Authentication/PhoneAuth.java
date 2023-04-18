@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.FirebaseException;
 import com.google.firebase.auth.AuthResult;
@@ -20,7 +21,12 @@ import org.checkerframework.checker.nullness.qual.NonNull;
 import java.util.concurrent.TimeUnit;
 
 import dev.mah.nassa.gradu_ptojects.Activityes.Home_Activity;
+import dev.mah.nassa.gradu_ptojects.Activityes.SignIn_Activity;
+import dev.mah.nassa.gradu_ptojects.Activityes.SignUp_Activity;
 import dev.mah.nassa.gradu_ptojects.Activityes.UsersInformation_Activity;
+import dev.mah.nassa.gradu_ptojects.Activityes.VerifyForgetPass_Activity;
+import dev.mah.nassa.gradu_ptojects.Constants.SharedFunctions;
+import dev.mah.nassa.gradu_ptojects.DataBase.FireStore_DataBase;
 import dev.mah.nassa.gradu_ptojects.Interfaces.VerificationIdListener;
 
 
@@ -79,6 +85,7 @@ public class PhoneAuth {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
+                            SharedFunctions.dismissDialog();
                             // Sign in success, update UI with the signed-in user's information
                             FirebaseUser user = task.getResult().getUser();
                             String uid=user.getUid();
@@ -97,11 +104,39 @@ public class PhoneAuth {
                             if (task.getException() instanceof FirebaseAuthInvalidCredentialsException) {
                                 // The verification code entered was invalid
                                 Toast.makeText(context, task.getException().getMessage().toString(), Toast.LENGTH_SHORT).show();
+                                SharedFunctions.dismissDialog();
+
                             }
                         }
                     }
                 });
     }
+
+    public static void verifyNewPassWithPhoneAuthCredential(PhoneAuthCredential credential, Context context , OnSuccessListener<Boolean> onSuccessListener) {
+        firebaseAuth.signInWithCredential(credential)
+                .addOnCompleteListener((Activity) context, new OnCompleteListener<AuthResult>() {
+                    @Override
+                    public void onComplete(@NonNull Task<AuthResult> task) {
+                        if (task.isSuccessful()) {
+                            SharedFunctions.dismissDialog();
+                            Toast.makeText(context, "Success Update", Toast.LENGTH_SHORT).show();
+                            ((Activity)context).startActivity(new Intent(context , SignIn_Activity.class));
+                            ((Activity) context).finish();
+                            onSuccessListener.onSuccess(true);
+
+                            // Update UI
+                        } else {
+                            // Sign in failed, display a message and update the UI
+                            if (task.getException() instanceof FirebaseAuthInvalidCredentialsException) {
+                                SharedFunctions.dismissDialog();
+                                // The verification code entered was invalid
+                                Toast.makeText(context, task.getException().getMessage().toString(), Toast.LENGTH_SHORT).show();
+                            }
+                        }
+                    }
+                });
+    }
+
 
 
 }

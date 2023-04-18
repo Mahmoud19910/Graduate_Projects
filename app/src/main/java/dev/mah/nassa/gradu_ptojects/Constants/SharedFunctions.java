@@ -1,8 +1,12 @@
 package dev.mah.nassa.gradu_ptojects.Constants;
 
+import android.app.Activity;
+import android.app.Dialog;
 import android.app.TimePickerDialog;
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.CountDownTimer;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
@@ -17,9 +21,12 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Locale;
 
+import dev.mah.nassa.gradu_ptojects.R;
+
 public class SharedFunctions {
 
     static CountDownTimer countDownTimer;
+    static Dialog dialog;
     // ميثود التحقق من البيانات في واجهة مستخدم جديد
     public static boolean checkEnterdDataInSignUp(EditText editName , EditText editPhone , EditText editPass, CheckBox checkBox , Context context){
         boolean check=true;
@@ -42,6 +49,23 @@ public class SharedFunctions {
             check=false;
             Toast.makeText(context, "الرجاء الموافقة على الشروط و القوانين", Toast.LENGTH_SHORT).show();
         }
+        return check;
+
+    }
+
+    // ميثود التحقق من مدخلات تسجيل الدخول
+    public static boolean checkEnterdDataInSignIn(EditText pass , EditText phone ,Context context){
+        boolean check=true;
+        if(pass.getText().toString().isEmpty()){
+            pass.setError("هذا الحقل فارغ");
+            check=false;
+        }
+        else
+        if(phone.getText().toString().isEmpty()){
+            phone.setError("هذا الحقل فارغ");
+            check=false;
+        }
+
         return check;
 
     }
@@ -98,6 +122,48 @@ public class SharedFunctions {
 
     }
 
+
+    // ميثود حفظ عملية التسجيل
+    public static void isSignIn(boolean isLoged , Context context){
+        SharedPreferences sharedPreferences=context.getSharedPreferences("isLoged",Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putBoolean("isSignIn" ,isLoged);
+        editor.apply();
+
+    }
+
+
+    // ميثود التحقق من مدخلات كلمة المرور الجديدية
+    public static boolean checkEnterdNewPass(EditText newPass , EditText phone ,Context context){
+        boolean check=true;
+        if(newPass.getText().toString().isEmpty()){
+            newPass.setError("هذا الحقل فارغ");
+            check=false;
+        }
+        else
+        if(phone.getText().toString().isEmpty()){
+            phone.setError("هذا الحقل فارغ");
+            check=false;
+        }
+
+        return check;
+
+    }
+
+
+    // Show dialog
+    public static void showProgressBar(Context context){
+        dialog =new Dialog(context);
+        View view= LayoutInflater.from(context).inflate(context.getResources().getLayout(R.layout.loading_progress),null);
+        dialog.setContentView(view);
+        dialog.create();
+        dialog.show();
+    }
+
+    //Dismiss Dialog
+    public static void dismissDialog(){
+        dialog.dismiss();
+    }
 
 
 }

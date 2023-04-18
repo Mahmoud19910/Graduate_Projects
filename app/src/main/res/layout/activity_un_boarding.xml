@@ -13,7 +13,7 @@
         <androidx.viewpager.widget.ViewPager
             android:id="@+id/pagerImage"
             android:layout_width="match_parent"
-            android:layout_height="@dimen/_300sdp"
+            android:layout_height="300dp"
             android:background="@drawable/gradient_background"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -24,7 +24,7 @@
             android:id="@+id/linearIndicator"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/_20sdp"
+            android:layout_marginTop="20dp"
             android:gravity="center"
             app:layout_constraintTop_toBottomOf="@id/pagerImage"
             app:layout_constraintStart_toStartOf="parent"
@@ -32,20 +32,20 @@
             android:orientation="horizontal">
             <View
                 android:id="@+id/indicator3"
-                android:layout_width="@dimen/_31sdp"
-                android:layout_height="@dimen/_10sdp"
+                android:layout_width="31dp"
+                android:layout_height="10dp"
                 android:background="@drawable/indicator_outline" />
             <View
                 android:id="@+id/indicator2"
-                android:layout_width="@dimen/_31sdp"
-                android:layout_height="@dimen/_10sdp"
-                android:layout_marginStart="@dimen/_20sdp"
-                android:layout_marginEnd="@dimen/_20sdp"
+                android:layout_width="31dp"
+                android:layout_height="10dp"
+                android:layout_marginStart="20dp"
+                android:layout_marginEnd="20dp"
                 android:background="@drawable/indicator_outline" />
             <View
                 android:id="@+id/indicator1"
-                android:layout_width="@dimen/_31sdp"
-                android:layout_height="@dimen/_10sdp"
+                android:layout_width="31dp"
+                android:layout_height="10dp"
                 android:background="@drawable/indicator_pagerfillcolor" />
 
         </LinearLayout>
@@ -55,10 +55,11 @@
             style="@style/title_Blue_Color"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/_30sdp"
-            android:layout_marginEnd="@dimen/_15sdp"
-            android:layout_marginStart="@dimen/_15sdp"
+            android:layout_marginTop="30dp"
+            android:layout_marginEnd="15dp"
+            android:layout_marginStart="15dp"
             android:text="حقق إنجازاً"
+            android:textSize="@dimen/_20ssp"
             android:gravity="start"
             app:layout_constraintTop_toBottomOf="@id/linearIndicator"
             app:layout_constraintStart_toStartOf="parent"
@@ -70,12 +71,13 @@
             style="@style/describtion_Black_Color"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/_20sdp"
-            android:layout_marginEnd="@dimen/_15sdp"
-            android:layout_marginStart="@dimen/_15sdp"
+            android:layout_marginTop="20dp"
+            android:layout_marginEnd="15dp"
+            android:layout_marginStart="15dp"
             android:text="يتيج الطبيق لمستخدميه حساب خطوات المشي أو
 الركض والمسافة المقطوعة و السرعة وبناءً على ذلك
 تحسب عدد السعرات الحرارية المفقودة بعد كل تمرين."
+            android:textSize="@dimen/_16ssp"
             app:layout_constraintTop_toBottomOf="@id/titleUnboarding"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
@@ -83,13 +85,13 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="@dimen/_50sdp"
-            android:layout_marginStart="@dimen/_15sdp"
-            android:layout_marginEnd="@dimen/_15sdp"
-            android:layout_marginTop="@dimen/_15sdp"
+            android:layout_height="100dp"
+            android:layout_marginStart="15dp"
+            android:layout_marginEnd="15dp"
+            android:layout_marginTop="15dp"
             android:gravity="bottom"
             android:layoutDirection="rtl"
-            android:layout_marginBottom="@dimen/_20sdp"
+            android:layout_marginBottom="20dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
@@ -98,23 +100,25 @@
             <androidx.appcompat.widget.AppCompatButton
                 android:id="@+id/signUpUnboarding"
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/_45sdp"
+                android:layout_height="45dp"
                 android:layout_weight="1"
                 style="@style/button_Fill_Color"
                 android:text="@string/signUp" />
+
             <View
-                android:layout_width="@dimen/_15sdp"
+                android:layout_width="15dp"
                 android:layout_height="wrap_content"/>
             <androidx.appcompat.widget.AppCompatButton
                 android:id="@+id/signInUnboarding"
-
                 android:layout_width="match_parent"
                 android:layout_weight="1"
-                android:layout_height="@dimen/_45sdp"
+                android:layout_height="45dp"
                 style="@style/button_OutLine_Color"
                 android:text="@string/signIn" />
 
         </LinearLayout>
+
+
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>

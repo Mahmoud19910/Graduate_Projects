@@ -13,13 +13,17 @@ import io.reactivex.rxjava3.core.Observable;
 @Dao
 public interface UsersDao {
     @Insert
-    Completable UsersInsert (UsersInfo usersInfo);
+    Completable usersInsert (UsersInfo usersInfo);
     @Update
-    Completable  UsersUpdate (UsersInfo usersInfo);
+    Completable  usersUpdate (UsersInfo usersInfo);
     @Delete
-    Completable  UsersDelete (UsersInfo usersInfo);
+    Completable  usersDelete (UsersInfo usersInfo);
     @Query("delete From usersTable")
     Completable deleteAllUsers();
+
+    @Query("UPDATE usersTable SET pass = :newPass WHERE phone = :phoneNumber")
+    Completable updatePassword(String newPass, String phoneNumber);
+
     @Query("Select * from usersTable")
     Observable<List<UsersInfo>> getAllUsers();
     @Query("Select * from usersTable where uid=:uid")

@@ -5,12 +5,10 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:paddingBottom="@dimen/_10sdp"
-        android:paddingStart="@dimen/_10sdp"
-        android:paddingEnd="@dimen/_10sdp"
-        android:paddingTop="@dimen/_10sdp"
-
-
+        android:paddingBottom="10dp"
+        android:paddingStart="10dp"
+        android:paddingEnd="10dp"
+        android:paddingTop="10dp"
         android:gravity="center"
         tools:viewBindingIgnore="true"
         tools:context=".Fragments.FragmentUsersInfo1">
@@ -47,11 +45,11 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:gravity="start"
-                android:layout_marginTop="@dimen/_10sdp">
+                android:layout_marginTop="10dp">
                 <RadioButton
                     android:id="@+id/male"
                     android:text="ذكر"
-                    android:textSize="@dimen/_16ssp"
+                    android:textSize="16sp"
                     android:textStyle="normal"
                     style="@style/describtion_Black_Color"
                     android:layout_width="wrap_content"
@@ -59,7 +57,7 @@
                 <RadioButton
                     android:id="@+id/female"
                     android:text="أنثى"
-                    android:textSize="@dimen/_16ssp"
+                    android:textSize="16sp"
                     android:textStyle="normal"
                     style="@style/describtion_Black_Color"
                     android:layout_width="wrap_content"
@@ -71,13 +69,13 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:gravity="start"
-                android:paddingStart="@dimen/_20sdp"
+                android:paddingStart="20dp"
                 android:layout_weight="1"
-                android:layout_marginTop="@dimen/_10sdp">
+                android:layout_marginTop="10dp">
                 <RadioButton
                     android:id="@+id/yes"
                     android:text="نعم"
-                    android:textSize="@dimen/_16ssp"
+                    android:textSize="16sp"
                     android:textStyle="normal"
                     style="@style/describtion_Black_Color"
                     android:layout_width="wrap_content"
@@ -85,7 +83,7 @@
                 <RadioButton
                     android:id="@+id/no"
                     android:text="لا"
-                    android:textSize="@dimen/_16ssp"
+                    android:textSize="16sp"
                     android:textStyle="normal"
                     style="@style/describtion_Black_Color"
                     android:layout_width="wrap_content"
@@ -100,18 +98,18 @@
             android:layout_width="match_parent"
             android:gravity="center"
             android:visibility="gone"
-            android:layout_marginTop="@dimen/_15sdp"
+            android:layout_marginTop="15dp"
             android:layout_height="wrap_content"
             android:text="أدخل وقت تناول الدواء :" />
         <TextView
             android:id="@+id/timeDialogBt"
             style="@style/edit_Text"
-            android:layout_width="@dimen/_100sdp"
+            android:layout_width="100dp"
             android:gravity="center"
             android:visibility="gone"
 
-            android:layout_marginTop="@dimen/_10sdp"
-            android:layout_height="@dimen/_32sdp"
+            android:layout_marginTop="10dp"
+            android:layout_height="32dp"
             android:text="00:00 PM" />
 
 
@@ -120,7 +118,7 @@
             android:layout_height="wrap_content"
             android:gravity="center"
             android:orientation="horizontal"
-            android:layout_marginTop="@dimen/_15sdp">
+            android:layout_marginTop="15dp">
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -137,14 +135,14 @@
 
                 <EditText
                     android:id="@+id/editEage"
-                    android:layout_width="@dimen/_100sdp"
-                    android:layout_height="@dimen/_30sdp"
+                    android:layout_width="100dp"
+                    android:layout_height="30dp"
                     android:inputType="number"
                     style="@style/edit_Text"
                     android:hint="25.5"
-                    android:layout_marginTop="@dimen/_10sdp"
+                    android:layout_marginTop="10dp"
                     android:gravity="center"
-                    android:textSize="@dimen/_14ssp"/>
+                    android:textSize="14sp"/>
 
             </LinearLayout>
             <LinearLayout
@@ -163,13 +161,13 @@
 
                 <EditText
                     android:id="@+id/editWeight"                android:layout_width="@dimen/_100sdp"
-                    android:layout_height="@dimen/_30sdp"
+                    android:layout_height="30dp"
                     android:inputType="number"
                     style="@style/edit_Text"
                     android:hint="25.5"
-                    android:layout_marginTop="@dimen/_10sdp"
+                    android:layout_marginTop="10dp"
                     android:gravity="center"
-                    android:textSize="@dimen/_14ssp"/>
+                    android:textSize="14sp"/>
 
             </LinearLayout>
         </LinearLayout>
@@ -178,7 +176,7 @@
             android:layout_height="wrap_content"
             android:gravity="center"
             android:orientation="vertical"
-            android:layout_marginTop="@dimen/_15sdp"
+            android:layout_marginTop="15dp"
             >
 
             <TextView
@@ -190,23 +188,23 @@
 
             <EditText
                 android:id="@+id/editLength"
-                android:layout_width="@dimen/_100sdp"
-                android:layout_height="@dimen/_30sdp"
+                android:layout_width="100dp"
+                android:layout_height="30dp"
                 android:inputType="number"
                 style="@style/edit_Text"
                 android:hint="25.5"
-                android:layout_marginTop="@dimen/_10sdp"
+                android:layout_marginTop="10dp"
                 android:gravity="center"
-                android:textSize="@dimen/_14ssp"/>
+                android:textSize="14sp"/>
 
         </LinearLayout>
         <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/nextBtUserInfo"
             android:layout_width="match_parent"
-            android:layout_height="@dimen/_45sdp"
+            android:layout_height="45dp"
             style="@style/default_Button"
             android:text="التالي"
-            android:layout_marginTop="@dimen/_30sdp"
+            android:layout_marginTop="30dp"
             />
 
     </LinearLayout>

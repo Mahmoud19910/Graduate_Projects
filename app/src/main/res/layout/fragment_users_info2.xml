@@ -6,7 +6,7 @@
         android:layout_height="wrap_content"
         android:background="#FFFFFF"
         android:gravity="center"
-        android:padding="@dimen/_15sdp"
+        android:padding="15dp"
         android:orientation="vertical"
         tools:context=".Fragments.FragmentUsersInfo2">
         <TextView
@@ -16,7 +16,7 @@
             style="@style/describtion_Black_Color"/>
 
         <ListView
-            android:layout_marginTop="@dimen/_20sdp"
+            android:layout_marginTop="20dp"
             android:id="@+id/listView_PersonInfo"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

@@ -73,11 +73,14 @@ public class VerifyAccount_Activity extends AppCompatActivity implements View.On
         switch (v.getId()){
             case R.id.verify_ButAccount:
                 try {
+                    SharedFunctions.showProgressBar(VerifyAccount_Activity.this);
                     PhoneAuthCredential credential= PhoneAuth.veryfiedAccount(storedVerificationId,binding.firstPinViewAccount.getText().toString());
                     PhoneAuth.signInWithPhoneAuthCredential(credential , VerifyAccount_Activity.this,name,phone,pass);
                 }
                 catch (Exception e){
                     Toast.makeText(this, e.getMessage().toString(), Toast.LENGTH_SHORT).show();
+                    SharedFunctions.dismissDialog();
+
                 }
 
                 break;

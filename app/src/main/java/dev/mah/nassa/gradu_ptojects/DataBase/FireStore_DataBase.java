@@ -8,26 +8,33 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.Query;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import dev.mah.nassa.gradu_ptojects.Activityes.Home_Activity;
-import dev.mah.nassa.gradu_ptojects.Activityes.UsersInformation_Activity;
 import dev.mah.nassa.gradu_ptojects.Modles.UsersInfo;
 import dev.mah.nassa.gradu_ptojects.Modles.Users_Health_Info;
 
 public class FireStore_DataBase {
     static FirebaseFirestore firestore = FirebaseFirestore.getInstance();
+    public static boolean isFindUser=false;
+    public static boolean isFind=false;
+
 
     //UsersInfo(Collection)
     public static void insertUsersInfo(UsersInfo usersInfo, Context context) {
-        Toast.makeText(context, "PHOME NUMBER  =" + usersInfo.getPhone(), Toast.LENGTH_SHORT).show();
 
         Map<String, Object> mapArray = new HashMap<>();
         mapArray.put("uid", usersInfo.getUid());
@@ -49,11 +56,16 @@ public class FireStore_DataBase {
                     //عند اضافة البيانات بنجاح يتم الانتقال الى واجهة الرئيسية
                     context.startActivity(new Intent(context, Home_Activity.class));
                     ((Activity) context).finish();
+
                 } else {
                     Toast.makeText(context, "Added Failer", Toast.LENGTH_SHORT).show();
+
+
                 }
             }
         });
+
+
 
     }
 
@@ -66,6 +78,7 @@ public class FireStore_DataBase {
         mapUsersHealth.put("waterDrink" , usersHealthInfo.getWaterDrink());
         mapUsersHealth.put("illness" , usersHealthInfo.isIllness());
         mapUsersHealth.put("medicineTime" , usersHealthInfo.getMedicineTime());
+
         firestore.collection("UsersHealthInfo").add(mapUsersHealth).addOnCompleteListener(new OnCompleteListener<DocumentReference>() {
             @Override
             public void onComplete(@NonNull Task<DocumentReference> task) {
@@ -77,11 +90,41 @@ public class FireStore_DataBase {
                 }
             }
         });
+
+    }
+
+    // Get All Data(Users Info)
+    public static void getAllUsersInfo(OnSuccessListener<ArrayList<UsersInfo>> onsuccess , OnFailureListener onFailureListener){
+        ArrayList<UsersInfo> usersInfoArrayList =new ArrayList<>();
+        firestore.collection("UsersInfo").get().addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
+            @Override
+            public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
+               List<DocumentSnapshot> snapshotList = queryDocumentSnapshots.getDocuments();
+               for(DocumentSnapshot documentSnapshot : snapshotList){
+                   Map<String , Object> map = documentSnapshot.getData();
+                   String uid = (String) map.get("uid");
+                   String name = (String) map.get("name");
+                   String phone =(String) map.get("phone");
+                   String pass = (String)map.get("pass");
+                   String eage = (String)map.get("eage");
+                   String length =(String) map.get("length");
+                   String weight =(String) map.get("weight");
+                   String activityLevel = (String)map.get("activityLevel");
+                   String gender = (String)map.get("gender");
+                   String photo = (String)map.get("photo");
+                   String email = (String)map.get("email");
+                   usersInfoArrayList.add(new UsersInfo(uid , name , phone , pass , eage , length , weight,activityLevel,gender,photo,email));
+
+               }
+                onsuccess.onSuccess(usersInfoArrayList);
+            }
+        })
+                .addOnFailureListener(onFailureListener);
     }
 
 
     // Check Sign In
-    public static void signInMethods(String phone , String pass , Context context){
+    public static void signInMethods(String phone , String pass , Context context , OnSuccessListener<Boolean> onSuccessListener){
         firestore.collection("UsersInfo").get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
             @Override
             public void onComplete(@NonNull Task<QuerySnapshot> task) {
@@ -90,13 +133,42 @@ public class FireStore_DataBase {
                    if(data.get("phone").toString().equalsIgnoreCase(phone) && data.get("pass").toString().equalsIgnoreCase(pass)){
                        context.startActivity(new Intent(context ,Home_Activity.class));
                        ((Activity)context).finish();
-                   }else {
-                       Toast.makeText(context, "فشل التسجيل يرجى التحقق من صحة البيانات!!", Toast.LENGTH_SHORT).show();
+                       isFindUser=true;
+                      onSuccessListener.onSuccess(isFindUser);
                    }
+            }
+               if(!isFindUser){
+                   Toast.makeText(context, "فشل التسجيل يرجى التحقق من صحة البيانات!!", Toast.LENGTH_SHORT).show();
                }
             }
         });
+
     }
+
+    public static void updatePass(String newPass , String phoneNum , Context context){
+
+        Query query = firestore.collection("UsersInfo").whereEqualTo("phone",phoneNum);
+        query.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                if(task.isSuccessful()){
+                    QuerySnapshot querySnapshot = task.getResult();
+                    for(QueryDocumentSnapshot document : querySnapshot){
+                        document.getReference().update("pass" , newPass);
+
+                    }
+
+                }else{
+                    Toast.makeText(context, task.getException().getMessage(), Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
+
+
+    }
+
+
+
 
 
 }

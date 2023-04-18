@@ -1,13 +1,18 @@
 package dev.mah.nassa.gradu_ptojects.Modles;
 
+import android.app.Application;
 import android.content.Context;
+import android.util.Log;
 import android.widget.Toast;
 
+import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
 import java.util.List;
 
+import dev.mah.nassa.gradu_ptojects.Activityes.SignUp_Activity;
+import dev.mah.nassa.gradu_ptojects.Constants.SharedFunctions;
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
 import io.reactivex.rxjava3.annotations.NonNull;
 import io.reactivex.rxjava3.core.CompletableObserver;
@@ -15,13 +20,23 @@ import io.reactivex.rxjava3.core.Observer;
 import io.reactivex.rxjava3.disposables.Disposable;
 import io.reactivex.rxjava3.schedulers.Schedulers;
 
-public class UsersViewModel extends ViewModel {
+public class UsersViewModel extends AndroidViewModel {
 
-    MutableLiveData<List<UsersInfo>> mutableLiveData =new MutableLiveData<>();
-    UsersInfo usersInfoUid =new UsersInfo();
-    UsersInfo getusersInfoUid =new UsersInfo();
-    public void insertUsers(UsersDatabese usersDatabese , UsersInfo usersInfo,Context context){
-        usersDatabese.usersDao().UsersInsert(usersInfo)
+    MutableLiveData<List<UsersInfo>> mutableLiveData = new MutableLiveData<>();
+    UsersInfo usersInfoUid = new UsersInfo();
+    UsersInfo getusersInfoUid = new UsersInfo();
+    Context context;
+    AppDatabese appDatabese;
+
+    public UsersViewModel(@androidx.annotation.NonNull Application application) {
+        super(application);
+        context=application.getApplicationContext();
+        appDatabese=AppDatabese.getInstance(application.getApplicationContext());
+    }
+
+
+    public void insertUsers( UsersInfo usersInfo) {
+        appDatabese.usersDao().usersInsert(usersInfo)
                 .subscribeOn(Schedulers.computation())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new CompletableObserver() {
@@ -32,17 +47,21 @@ public class UsersViewModel extends ViewModel {
 
                     @Override
                     public void onComplete() {
-                        Toast.makeText(context, "Insert", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(context, "Insert Users Success", Toast.LENGTH_SHORT).show();
                     }
 
                     @Override
                     public void onError(@NonNull Throwable e) {
+                        Toast.makeText(context, e.getMessage(), Toast.LENGTH_LONG).show();
+                        System.out.println("E R R O R  :"+e.getMessage());
+                        Log.e("TAG", "Error occurred: " + e.getMessage());
 
                     }
                 });
     }
-    public void updateUsers(UsersDatabese usersDatabese , UsersInfo usersInfo , Context context){
-        usersDatabese.usersDao().UsersUpdate(usersInfo)
+
+    public void updateUsers( UsersInfo usersInfo) {
+        appDatabese.usersDao().usersUpdate(usersInfo)
                 .subscribeOn(Schedulers.computation())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new CompletableObserver() {
@@ -62,8 +81,9 @@ public class UsersViewModel extends ViewModel {
                     }
                 });
     }
-    public void deleteUsers (UsersDatabese usersDatabese , UsersInfo usersInfo , Context context){
-        usersDatabese.usersDao().UsersDelete(usersInfo)
+
+    public void deleteUsers( UsersInfo usersInfo) {
+        appDatabese.usersDao().usersDelete(usersInfo)
                 .subscribeOn(Schedulers.computation())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new CompletableObserver() {
@@ -83,8 +103,9 @@ public class UsersViewModel extends ViewModel {
                     }
                 });
     }
-    public void deleteAllUsers(UsersDatabese usersDatabese ,  Context context){
-        usersDatabese.usersDao().deleteAllUsers()
+
+    public void deleteAllUsers( Context context) {
+        appDatabese.usersDao().deleteAllUsers()
                 .subscribeOn(Schedulers.computation())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new CompletableObserver() {
@@ -104,8 +125,9 @@ public class UsersViewModel extends ViewModel {
                     }
                 });
     }
-    public MutableLiveData<List<UsersInfo>> getAllUsers(UsersDatabese usersDatabese){
-        usersDatabese.usersDao().getAllUsers()
+
+    public MutableLiveData<List<UsersInfo>> getAllUsers() {
+        appDatabese.usersDao().getAllUsers()
                 .subscribeOn(Schedulers.computation())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Observer<List<UsersInfo>>() {
@@ -122,6 +144,7 @@ public class UsersViewModel extends ViewModel {
 
                     @Override
                     public void onError(@NonNull Throwable e) {
+                        SharedFunctions.dismissDialog();
 
                     }
 
@@ -133,8 +156,9 @@ public class UsersViewModel extends ViewModel {
 
         return mutableLiveData;
     }
-    public void deleteByUidUsers(UsersDatabese usersDatabese , String uid , Context context ){
-        usersDatabese.usersDao().deleteByUid(uid)
+
+    public void deleteByUidUsers( String uid) {
+        appDatabese.usersDao().deleteByUid(uid)
                 .subscribeOn(Schedulers.computation())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new CompletableObserver() {
@@ -155,14 +179,15 @@ public class UsersViewModel extends ViewModel {
                 });
 
     }
-    public UsersInfo getUsersByUid(UsersDatabese usersDatabese ,String uid, Context context){
-        usersDatabese.usersDao().getUsersById(uid)
+
+    public UsersInfo getUsersByUid(String uid) {
+        appDatabese.usersDao().getUsersById(uid)
                 .subscribeOn(Schedulers.computation())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Observer<UsersInfo>() {
                     @Override
                     public void onSubscribe(@NonNull Disposable d) {
-                        
+
                     }
 
                     @Override
@@ -182,7 +207,8 @@ public class UsersViewModel extends ViewModel {
                 });
         return usersInfoUid;
     }
-//    public UsersInfo getAllByUidUserId (UsersDatabese usersDatabese , String uid ,Context context){
+
+    //    public UsersInfo getAllByUidUserId (UsersDatabese usersDatabese , String uid ,Context context){
 //            usersDatabese.usersDao().getAllByUidUserId(uid)
 //                    .subscribeOn(Schedulers.computation())
 //                    .observeOn(AndroidSchedulers.mainThread())
@@ -194,8 +220,8 @@ public class UsersViewModel extends ViewModel {
 //                    });
 //            return getusersInfoUid;
 //    }
-    public UsersInfo getAllByUidUserId (UsersDatabese usersDatabese , String uid ,Context context){
-        usersDatabese.usersDao().getAllByUidUserId(uid)
+    public UsersInfo getAllByUidUserId( String uid) {
+        appDatabese.usersDao().getAllByUidUserId(uid)
                 .subscribeOn(Schedulers.computation())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Observer<UsersInfo>() {
@@ -220,5 +246,29 @@ public class UsersViewModel extends ViewModel {
                     }
                 });
         return getusersInfoUid;
+    }
+
+    public void updatePass(String newPass , String phone){
+        appDatabese.usersDao().updatePassword(newPass , phone)
+                .subscribeOn(Schedulers.computation())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new CompletableObserver() {
+                    @Override
+                    public void onSubscribe(@NonNull Disposable d) {
+
+                    }
+
+                    @Override
+                    public void onComplete() {
+                        Toast.makeText(context, "Success Update", Toast.LENGTH_SHORT).show();
+                    }
+
+                    @Override
+                    public void onError(@NonNull Throwable e) {
+                        Toast.makeText(context, e.getMessage().toString() , Toast.LENGTH_SHORT).show();
+
+                    }
+                });
+
     }
 }

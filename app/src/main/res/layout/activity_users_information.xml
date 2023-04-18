@@ -13,8 +13,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="#3A7FC0"
-            android:paddingStart="@dimen/_15sdp"
-            android:paddingEnd="@dimen/_15sdp"
+            android:paddingStart="15dp"
+            android:paddingEnd="15dp"
             android:minHeight="?attr/actionBarSize"
             android:theme="?attr/actionBarTheme">
             <ImageView
@@ -27,7 +27,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/Users_Info"
-                android:textSize="@dimen/_20ssp"
+                android:textSize="20sp"
                 android:textStyle="normal"
                 style="@style/title_White_Color"/>
 
@@ -35,11 +35,11 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="@dimen/_87sdp"
+            android:layout_height="87dp"
             android:orientation="vertical"
-            android:layout_marginTop="@dimen/_20sdp"
-            android:paddingEnd="@dimen/_15sdp"
-            android:paddingStart="@dimen/_15sdp">
+            android:layout_marginTop="20dp"
+            android:paddingEnd="15dp"
+            android:paddingStart="15dp">
 
             <TextView
                 android:id="@+id/descriptionUnboarding"
@@ -47,8 +47,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:textStyle="normal"
-                android:layout_marginEnd="@dimen/_15sdp"
-                android:layout_marginStart="@dimen/_15sdp"
+                android:layout_marginEnd="15dp"
+                android:layout_marginStart="15dp"
                 android:text="من فضلك تزويدنا بالبيانات التالية
  أدناه لحساب لسعرات الحرارية وكمية
 المياه الموصى بها ."
@@ -60,23 +60,23 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/_10sdp"
+                android:layout_marginTop="10dp"
                 android:orientation="horizontal">
                 <View
                     android:id="@+id/indicatUserInfo2"
                     android:layout_weight="1"
-                    android:layout_width="@dimen/_130sdp"
-                    android:layout_height="@dimen/_10sdp"
+                    android:layout_width="130dp"
+                    android:layout_height="10dp"
                     android:background="@drawable/usersinfo_inducators_ouline"
                     />
                 <View
-                    android:layout_width="@dimen/_20sdp"
+                    android:layout_width="20dp"
                     android:layout_height="0dp"/>
                 <View
                     android:id="@+id/indicatUserInfo1"
                     android:layout_weight="1"
-                    android:layout_width="@dimen/_130sdp"
-                    android:layout_height="@dimen/_10sdp"
+                    android:layout_width="130dp"
+                    android:layout_height="10dp"
                     android:background="@drawable/usersinfo_indicators"
                     />
 

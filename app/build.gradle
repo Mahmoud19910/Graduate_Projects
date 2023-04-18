@@ -41,12 +41,14 @@ dependencies {
     implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
     implementation 'com.google.firebase:firebase-firestore:24.4.4'
     implementation 'com.google.firebase:firebase-auth:21.1.0'
+    implementation 'com.google.firebase:firebase-firestore-ktx:24.4.5'
     testImplementation 'junit:junit:4.13.2'
     androidTestImplementation 'androidx.test.ext:junit:1.1.5'
 
     // Intuit Library
     implementation 'com.intuit.sdp:sdp-android:1.1.0'
     implementation 'com.intuit.ssp:ssp-android:1.1.0'
+
 
 
     //FireBase
@@ -75,4 +77,23 @@ dependencies {
     // Lifecycle components
     def lifecycle_version= "2.1.0"
     implementation "androidx.lifecycle:lifecycle-extensions:$lifecycle_version"
+
+    // Meo Navigation
+    implementation 'com.etebarian:meow-bottom-navigation-java:1.2.0'
+
+    implementation 'com.github.ybq:Android-SpinKit:1.4.0'
+
+    //Circle Image
+    implementation 'de.hdodenhof:circleimageview:3.1.0'
+    implementation 'com.github.mmmelik:RoundedImageView:v1.0.1'
+    implementation 'com.rishabhharit.roundedimageview:RoundedImageView:0.8.4'
+
+
+
+
+
+
+
+
 }
+

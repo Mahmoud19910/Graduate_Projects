@@ -18,6 +18,9 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 
 import dev.mah.nassa.gradu_ptojects.Activityes.Home_Activity;
+import dev.mah.nassa.gradu_ptojects.Activityes.SignUp_Activity;
+import dev.mah.nassa.gradu_ptojects.Activityes.UnBoarding_Activity;
+import dev.mah.nassa.gradu_ptojects.Constants.SharedFunctions;
 import dev.mah.nassa.gradu_ptojects.Interfaces.Gmail_Acc_Info_Listener;
 
 public class Gmai_Auth {
@@ -50,30 +53,44 @@ public class Gmai_Auth {
             Task<GoogleSignInAccount> task = GoogleSignIn.getSignedInAccountFromIntent(data);
 
             try {
-                // Signed in successfully, show authenticated UI.
-                GoogleSignInAccount account = task.getResult(ApiException.class);
-                // Use account.getIdToken() to authenticate with your server.
-                Toast.makeText(context, "Success", Toast.LENGTH_SHORT).show();
-                String id=account.getId();
-                String email=account.getEmail();
-                String name=account.getDisplayName();
-                Uri photoUrl=account.getPhotoUrl();
+                if(task.isSuccessful()){
+                    Toast.makeText(context, "Task Success", Toast.LENGTH_SHORT).show();
+                    // Signed in successfully, show authenticated UI.
+                    GoogleSignInAccount account = task.getResult(ApiException.class);
+                    // Use account.getIdToken() to authenticate with your server.
+                    Toast.makeText(context, "Success", Toast.LENGTH_SHORT).show();
+                    String id=account.getId();
+                    String email=account.getEmail();
+                    String name=account.getDisplayName();
+                    Uri photoUrl=account.getPhotoUrl();
+                    gmail_acc_info_listener.getGmailInfoListener(name , photoUrl , email , id);
+                }
 
-
-
-                gmail_acc_info_listener.getGmailInfoListener(name , photoUrl , email , id);
             } catch (Exception e) {
                 // The ApiException status code indicates the detailed failure reason.
                 Toast.makeText(context, e.getMessage(), Toast.LENGTH_SHORT).show();
+                SharedFunctions.dismissDialog();
+
             }
         }
     }
+
 
     // عند الضغط على زر تسجيل الخروج
     public static void onSignOut(Context context){
         FirebaseAuth.getInstance().signOut();
         GoogleSignIn.getClient(context, GoogleSignInOptions.DEFAULT_SIGN_IN).signOut();
         Toast.makeText(context, "Sign Out", Toast.LENGTH_SHORT).show();
+    }
+
+    // Loged In
+    public static void isLogIn(Context context){
+        if(firebaseAuth.getCurrentUser()!=null && context instanceof Activity){
+            ((Activity)context).startActivity(new Intent(context , Home_Activity.class));
+        }else{
+            ((Activity)context).startActivity(new Intent(context , UnBoarding_Activity.class));
+
+        }
     }
 
 
