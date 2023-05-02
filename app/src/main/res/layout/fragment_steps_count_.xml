@@ -1,17 +1,222 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:layout_gravity="center"
-    android:background="@color/purple_500"
-    tools:context=".Fragments.StepsCounter_Fragment">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+    <androidx.appcompat.widget.LinearLayoutCompat
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="Steps Counter"
-        android:textSize="80dp"/>
+        android:layout_gravity="center"
+        android:orientation="vertical"
+        tools:context=".Fragments.StepsCounter_Fragment">
 
-</FrameLayout>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/rounded_corner"
+            android:padding="10dp">
+
+            <com.github.anastr.speedviewlib.SpeedView
+                android:id="@+id/awesomeSpeedome2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:sv_centerCircleColor="@color/black"
+                app:sv_indicatorColor="#3A7FC0"
+                app:sv_markColor="#99000000"
+                app:sv_marksNumber="10"
+                app:sv_maxSpeed="100"
+                app:sv_speedometerMode="TOP"
+
+                app:sv_speedometerWidth="30dp"
+                app:sv_trembleDuration="@integer/material_motion_duration_short_2"
+                app:sv_unit="  متر/دقيقة"
+                tools:ignore="MissingConstraints" />
+
+            <!--            <com.github.anastr.speedviewlib.SpeedView-->
+            <!--                android:id="@+id/awesomeSpeedomete"-->
+            <!--                android:layout_width="match_parent"-->
+            <!--                android:layout_height="match_parent"-->
+            <!--                app:layout_constraintEnd_toEndOf="parent"-->
+            <!--                app:layout_constraintStart_toStartOf="parent"-->
+            <!--                app:sv_maxSpeed="100"-->
+            <!--                app:sv_speedometerWidth="14dp"-->
+            <!--                app:sv_speedometerMode="TOP"-->
+            <!--                app:sv_textSize="14dp"-->
+            <!--                app:sv_trembleDuration="@integer/material_motion_duration_short_2"-->
+            <!--                app:sv_unit=" meters/min"-->
+            <!--                app:sv_withTremble="false"-->
+            <!--                tools:ignore="MissingConstraints" />-->
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="2dp"
+            android:layout_marginTop="15dp"
+            android:background="#3A7FC0" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="15dp"
+            android:orientation="horizontal">
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:orientation="vertical">
+
+                <TextView
+                    style="@style/describtion_Black_Color"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="السرعة"
+                    android:textSize="18dp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/tv_Speed"
+                    android:layout_width="74dp"
+                    android:layout_height="44dp"
+                    android:background="@drawable/rounded_corner"
+                    android:gravity="center" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:orientation="vertical">
+
+                <TextView
+                    style="@style/describtion_Black_Color"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="المسافة"
+                    android:textSize="18dp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/tv_Distance"
+                    android:layout_width="74dp"
+                    android:layout_height="44dp"
+                    android:background="@drawable/rounded_corner"
+                    android:gravity="center" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:orientation="vertical">
+
+                <TextView
+                    style="@style/describtion_Black_Color"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="المدة"
+                    android:textSize="18dp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/tv_Time"
+                    android:layout_width="74dp"
+                    android:layout_height="44dp"
+                    android:background="@drawable/rounded_corner"
+                    android:gravity="center" />
+
+            </LinearLayout>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="15dp"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <TextView
+                style="@style/describtion_Black_Color"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="السعرات الحرارية"
+                android:textSize="18dp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/tv_Calories"
+                android:layout_width="74dp"
+                android:layout_height="44dp"
+                android:background="@drawable/rounded_corner"
+                android:gravity="center" />
+
+        </LinearLayout>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+
+            android:layout_marginTop="15dp">
+
+            <ImageView
+                android:id="@+id/image"
+                android:layout_width="150dp"
+                android:layout_height="150dp"
+                android:background="@drawable/circle"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.497"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <TextView
+                    android:id="@+id/steps"
+                    style="@style/title_White_Color"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_horizontal"
+                    android:text="0"
+                    android:textSize="25dp" />
+
+                <TextView
+                    style="@style/title_White_Color"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="خطوة"
+                    android:textSize="25dp" />
+            </LinearLayout>
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/startBut"
+            style="@style/default_Button"
+            android:layout_width="match_parent"
+            android:layout_height="45dp"
+            android:layout_marginTop="20dp"
+            android:text="بدء"
+            android:textColor="@color/white"
+            android:textSize="20dp" />
+
+    </androidx.appcompat.widget.LinearLayoutCompat>
+</layout>

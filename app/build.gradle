@@ -88,6 +88,13 @@ dependencies {
     implementation 'com.github.mmmelik:RoundedImageView:v1.0.1'
     implementation 'com.rishabhharit.roundedimageview:RoundedImageView:0.8.4'
 
+    //Speedo
+    implementation 'com.cardiomood.android:android-widgets:0.1.1'
+    implementation 'com.github.anastr:speedviewlib:1.5.4'
+
+    //Wave
+    implementation "com.scwang.wave:MultiWaveHeader:1.0.0"
+
 
 
 

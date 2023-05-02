@@ -3,7 +3,7 @@
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     xmlns:tools="http://schemas.android.com/tools"
-    android:background="#FFFFFF"
+    android:background="#00B5B3B3"
     android:orientation="vertical">
 
 
@@ -15,8 +15,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         app:SpinKit_Color="#3A7FC0"
-        android:layout_margin="15dp"
-        tools:ignore="MissingConstraints" />
+android:layout_margin="5dp"        tools:ignore="MissingConstraints" />
 
 
 

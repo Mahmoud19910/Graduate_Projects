@@ -1,4 +1,4 @@
-package dev.mah.nassa.gradu_ptojects.Modles;
+package dev.mah.nassa.gradu_ptojects.MVVM;
 
 import android.app.Application;
 import android.content.Context;
@@ -7,12 +7,14 @@ import android.widget.Toast;
 
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.MutableLiveData;
-import androidx.lifecycle.ViewModel;
+
+import com.google.android.gms.tasks.OnSuccessListener;
 
 import java.util.List;
 
-import dev.mah.nassa.gradu_ptojects.Activityes.SignUp_Activity;
 import dev.mah.nassa.gradu_ptojects.Constants.SharedFunctions;
+import dev.mah.nassa.gradu_ptojects.DataBase.AppDatabese;
+import dev.mah.nassa.gradu_ptojects.Modles.UsersInfo;
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
 import io.reactivex.rxjava3.annotations.NonNull;
 import io.reactivex.rxjava3.core.CompletableObserver;
@@ -23,6 +25,8 @@ import io.reactivex.rxjava3.schedulers.Schedulers;
 public class UsersViewModel extends AndroidViewModel {
 
     MutableLiveData<List<UsersInfo>> mutableLiveData = new MutableLiveData<>();
+    MutableLiveData<UsersInfo> mutableLData = new MutableLiveData<>();
+
     UsersInfo usersInfoUid = new UsersInfo();
     UsersInfo getusersInfoUid = new UsersInfo();
     Context context;
@@ -180,7 +184,7 @@ public class UsersViewModel extends AndroidViewModel {
 
     }
 
-    public UsersInfo getUsersByUid(String uid) {
+    public MutableLiveData<UsersInfo> getUsersByUid(String uid ) {
         appDatabese.usersDao().getUsersById(uid)
                 .subscribeOn(Schedulers.computation())
                 .observeOn(AndroidSchedulers.mainThread())
@@ -192,7 +196,7 @@ public class UsersViewModel extends AndroidViewModel {
 
                     @Override
                     public void onNext(@NonNull UsersInfo usersInfo) {
-                        usersInfoUid = usersInfo;
+                       mutableLData.setValue(usersInfo);
                     }
 
                     @Override
@@ -205,7 +209,7 @@ public class UsersViewModel extends AndroidViewModel {
 
                     }
                 });
-        return usersInfoUid;
+        return mutableLData;
     }
 
     //    public UsersInfo getAllByUidUserId (UsersDatabese usersDatabese , String uid ,Context context){

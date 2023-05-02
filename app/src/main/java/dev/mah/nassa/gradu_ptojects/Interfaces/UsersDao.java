@@ -1,4 +1,4 @@
-package dev.mah.nassa.gradu_ptojects.Modles;
+package dev.mah.nassa.gradu_ptojects.Interfaces;
 
 import androidx.room.Dao;
 import androidx.room.Delete;
@@ -8,6 +8,7 @@ import androidx.room.Update;
 
 import java.util.List;
 
+import dev.mah.nassa.gradu_ptojects.Modles.UsersInfo;
 import io.reactivex.rxjava3.core.Completable;
 import io.reactivex.rxjava3.core.Observable;
 @Dao
@@ -31,6 +32,6 @@ public interface UsersDao {
     @Query("delete From usersTable Where uid =:uid")
     Completable deleteByUid (String uid);
 
-    @Query("Select *from usersTable,usersHealthTable  Where uid =:uid  and userId =:uid")
+    @Query("Select * from usersTable Where uid =:uid")
     Observable<UsersInfo> getAllByUidUserId (String uid);
 }

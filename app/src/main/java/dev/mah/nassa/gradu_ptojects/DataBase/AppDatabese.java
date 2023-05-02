@@ -1,4 +1,4 @@
-package dev.mah.nassa.gradu_ptojects.Modles;
+package dev.mah.nassa.gradu_ptojects.DataBase;
 
 import android.content.Context;
 
@@ -6,7 +6,12 @@ import androidx.room.Database;
 import androidx.room.Room;
 import androidx.room.RoomDatabase;
 
-@Database(entities = {UsersInfo.class, Users_Health_Info.class}, version = 3, exportSchema = false)
+import dev.mah.nassa.gradu_ptojects.Interfaces.UsersDao;
+import dev.mah.nassa.gradu_ptojects.Interfaces.UsersHealthDao;
+import dev.mah.nassa.gradu_ptojects.Modles.UsersInfo;
+import dev.mah.nassa.gradu_ptojects.Modles.Users_Health_Info;
+
+@Database(entities = {UsersInfo.class, Users_Health_Info.class}, version = 4, exportSchema = false)
 public abstract class AppDatabese extends RoomDatabase {
     private static AppDatabese instance;
     public abstract UsersDao usersDao();
