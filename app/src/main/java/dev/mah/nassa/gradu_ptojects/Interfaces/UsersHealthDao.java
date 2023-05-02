@@ -1,4 +1,4 @@
-package dev.mah.nassa.gradu_ptojects.Modles;
+package dev.mah.nassa.gradu_ptojects.Interfaces;
 
 import androidx.room.Dao;
 import androidx.room.Delete;
@@ -8,6 +8,7 @@ import androidx.room.Update;
 
 import java.util.List;
 
+import dev.mah.nassa.gradu_ptojects.Modles.Users_Health_Info;
 import io.reactivex.rxjava3.core.Completable;
 import io.reactivex.rxjava3.core.Observable;
 

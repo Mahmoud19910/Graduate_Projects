@@ -15,7 +15,7 @@ import dev.mah.nassa.gradu_ptojects.Constants.SharedFunctions;
 import dev.mah.nassa.gradu_ptojects.DataBase.FireStore_DataBase;
 import dev.mah.nassa.gradu_ptojects.FireBase_Authentication.PhoneAuth;
 import dev.mah.nassa.gradu_ptojects.Interfaces.VerificationIdListener;
-import dev.mah.nassa.gradu_ptojects.Modles.UsersViewModel;
+import dev.mah.nassa.gradu_ptojects.MVVM.UsersViewModel;
 import dev.mah.nassa.gradu_ptojects.databinding.ActivityVerifyForgetPassBinding;
 
 public class VerifyForgetPass_Activity extends AppCompatActivity implements VerificationIdListener {

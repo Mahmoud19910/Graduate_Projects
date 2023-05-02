@@ -43,7 +43,7 @@ public class FragmentUsersInfo1 extends Fragment implements View.OnClickListener
     private Long alarmTime;
     private boolean checkInput = false;
     private boolean checkGender = false;
-    private boolean checkIllness = false;
+    private String checkIllness;
 
 
     @Override
@@ -83,7 +83,7 @@ public class FragmentUsersInfo1 extends Fragment implements View.OnClickListener
 
             case R.id.nextBtUserInfo:
                 checkInput = SharedFunctions.checkEnterdDataInUserInfo(binding.editEage, binding.editLength, binding.editWeight, getContext());
-                if (checkInput == true && checkGender == true && checkIllness == true) {
+                if (checkInput == true && checkGender == true && !checkIllness.isEmpty() ) {
                     listener.getFragmentNumber(2);
                     FragmentManager fragmentManager = getFragmentManager();
                     FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
@@ -94,8 +94,9 @@ public class FragmentUsersInfo1 extends Fragment implements View.OnClickListener
                             binding.editWeight.getText().toString(), binding.editEage.getText().toString(), checkIllness, alarmTime);
                 } else if (checkGender == false) {
                     Toast.makeText(getContext(), "الرجاء اختيار الجنس", Toast.LENGTH_LONG).show();
-                } else if (checkIllness == false) {
+                } else if(checkIllness.isEmpty()){
                     Toast.makeText(getContext(), "الرجاء تحديد هل أنت مصاب بالسكري ؟؟", Toast.LENGTH_LONG).show();
+
                 }
                 break;
 
@@ -124,7 +125,7 @@ public class FragmentUsersInfo1 extends Fragment implements View.OnClickListener
                 binding.timeDialogBt.setVisibility(View.VISIBLE);
                 binding.timeTextView.setVisibility(View.VISIBLE);
                 illness = binding.yes.getText().toString();
-                checkIllness = true;
+                checkIllness = "true";
 
                 break;
             case R.id.no:
@@ -132,7 +133,7 @@ public class FragmentUsersInfo1 extends Fragment implements View.OnClickListener
                 binding.timeDialogBt.setVisibility(View.GONE);
                 binding.timeTextView.setVisibility(View.GONE);
                 illness = binding.no.getText().toString();
-                checkIllness = false;
+                checkIllness = "false";
 
                 break;
         }

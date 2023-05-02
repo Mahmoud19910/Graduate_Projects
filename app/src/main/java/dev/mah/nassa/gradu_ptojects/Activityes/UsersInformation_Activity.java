@@ -19,10 +19,10 @@ import java.util.ArrayList;
 
 import dev.mah.nassa.gradu_ptojects.DataBase.FireStore_DataBase;
 import dev.mah.nassa.gradu_ptojects.Interfaces.UsersInfoListener;
-import dev.mah.nassa.gradu_ptojects.Modles.AppDatabese;
-import dev.mah.nassa.gradu_ptojects.Modles.UsersHealthInfoViewModel;
+import dev.mah.nassa.gradu_ptojects.DataBase.AppDatabese;
+import dev.mah.nassa.gradu_ptojects.MVVM.UsersHealthInfoViewModel;
 import dev.mah.nassa.gradu_ptojects.Modles.UsersInfo;
-import dev.mah.nassa.gradu_ptojects.Modles.UsersViewModel;
+import dev.mah.nassa.gradu_ptojects.MVVM.UsersViewModel;
 import dev.mah.nassa.gradu_ptojects.Modles.Users_Health_Info;
 import dev.mah.nassa.gradu_ptojects.R;
 import dev.mah.nassa.gradu_ptojects.databinding.ActivityUsersInformationBinding;
@@ -30,7 +30,7 @@ import dev.mah.nassa.gradu_ptojects.databinding.ActivityUsersInformationBinding;
 public class UsersInformation_Activity extends AppCompatActivity implements UsersInfoListener {
     private ActivityUsersInformationBinding binding;
     private String phone, pass, name, eage, uid, length, weight, activityLevel, gender, email, photo;
-    private boolean illness;
+    private String illness;
     private Long alarmTime;
     private FirebaseFirestore firestore = FirebaseFirestore.getInstance();
     private UsersHealthInfoViewModel usersHealthInfoViewModel;
@@ -91,7 +91,7 @@ public class UsersInformation_Activity extends AppCompatActivity implements User
 
     // fragment جلب بيانات المستخدم من
     @Override
-    public void getInfoUsers(String gender, String length, String weight, String eage, boolean illness, Long alarmTime) {
+    public void getInfoUsers(String gender, String length, String weight, String eage, String illness, Long alarmTime) {
         this.eage = eage;
         this.gender = gender;
         this.length = length;
@@ -118,8 +118,7 @@ public class UsersInformation_Activity extends AppCompatActivity implements User
                 if (!isFind) {
                     FireStore_DataBase.insertUsersInfo(usersInfo, UsersInformation_Activity.this); // Fire Store حفظ بيانات المستخدم على
                     usersViewModel.insertUsers(usersInfo); // Save Data To Local Data Base
-                    if (illness == true || illness == false) {
-                        Toast.makeText(UsersInformation_Activity.this, "illness", Toast.LENGTH_SHORT).show();
+                    if (!illness.isEmpty()) {
                         AppDatabese appDatabese = AppDatabese.getInstance(UsersInformation_Activity.this);
                         Users_Health_Info usersHealthInfo = new Users_Health_Info(uid, 33.5, 5, true, alarmTime);
                         usersHealthInfoViewModel.insertUsersHealth(usersHealthInfo); // Save Data To Local Data Base

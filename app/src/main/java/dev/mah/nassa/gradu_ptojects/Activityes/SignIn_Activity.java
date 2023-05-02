@@ -6,7 +6,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 
-import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.Uri;
@@ -25,7 +24,7 @@ import dev.mah.nassa.gradu_ptojects.DataBase.FireStore_DataBase;
 import dev.mah.nassa.gradu_ptojects.FireBase_Authentication.Gmai_Auth;
 import dev.mah.nassa.gradu_ptojects.Interfaces.Gmail_Acc_Info_Listener;
 import dev.mah.nassa.gradu_ptojects.Modles.UsersInfo;
-import dev.mah.nassa.gradu_ptojects.Modles.UsersViewModel;
+import dev.mah.nassa.gradu_ptojects.MVVM.UsersViewModel;
 import dev.mah.nassa.gradu_ptojects.R;
 import dev.mah.nassa.gradu_ptojects.databinding.ActivitySignInBinding;
 
@@ -75,22 +74,39 @@ public class SignIn_Activity extends AppCompatActivity implements View.OnClickLi
 
                if(isChecked){
                    SharedFunctions.showProgressBar(SignIn_Activity.this);
-                   usersViewModel.getAllUsers().observe(SignIn_Activity.this, new Observer<List<UsersInfo>>() {
-                       @Override
-                       public void onChanged(List<UsersInfo> usersInfos) {
-                           for(UsersInfo users : usersInfos){
-                               if(users.getPhone().equals(binding.editPhoneSignIn.getText().toString()) && users.getPass().equals(binding.editPassSignIn.getText().toString())){
-                                   startActivity(new Intent(SignIn_Activity.this , Home_Activity.class));
-                                   finish();
-                                   SharedFunctions.isSignIn(true , SignIn_Activity.this);
-                               }else {
-                                   SharedFunctions.dismissDialog();
-                                   Toast.makeText(SignIn_Activity.this, "يرجى التأكد من صحة البيانات", Toast.LENGTH_SHORT).show();
-                               }
+                           if(SharedFunctions.checkInternetConnection(SignIn_Activity.this)){
+                               FireStore_DataBase.signInMethods(binding.editPhoneSignIn.getText().toString(), binding.editPassSignIn.getText().toString(), SignIn_Activity.this, new OnSuccessListener<Boolean>() {
+                                   @Override
+                                   public void onSuccess(Boolean aBoolean) {
+                                       if(aBoolean){
+                                           SharedFunctions.isSignIn(true , SignIn_Activity.this);
+                                       }else{
+                                           SharedFunctions.dismissDialog();
+                                       }
+                                   }
+                               });
 
+                           }else {
+                               usersViewModel.getAllUsers().observe(SignIn_Activity.this, new Observer<List<UsersInfo>>() {
+                                   @Override
+                                   public void onChanged(List<UsersInfo> usersInfos) {
+                                       for(UsersInfo users : usersInfos){
+                                           if(users.getPhone().equals(binding.editPhoneSignIn.getText().toString()) && users.getPass().equals(binding.editPassSignIn.getText().toString())){
+
+                                               //لجلب البيانات الخاصة بكل مستخدم uid ارسال فيمة
+                                               Intent intent = new Intent(SignIn_Activity.this  , Home_Activity.class);
+                                               intent.putExtra("uid" , users.getUid());
+                                               startActivity(intent);
+                                               finish();
+                                               SharedFunctions.isSignIn(true , SignIn_Activity.this);
+                                           }else {
+                                               Toast.makeText(SignIn_Activity.this, "يرجى التأكد من صحة البيانات", Toast.LENGTH_SHORT).show();
+                                           }
+
+                                       }
+                                   }
+                               });
                            }
-                       }
-                   });
                }
 
 
@@ -137,7 +153,9 @@ public class SignIn_Activity extends AppCompatActivity implements View.OnClickLi
                 for(UsersInfo data : usersInfos){
                     if(data.getEmail().equalsIgnoreCase(email)){
 
-                        startActivity(new Intent(SignIn_Activity.this , Home_Activity.class));
+                        Intent intent =new Intent(SignIn_Activity.this , Home_Activity.class);
+                        intent.putExtra("uid" , data.getUid()) ;
+                        startActivity(intent);
                         finish();
                         SharedFunctions.isSignIn(true , SignIn_Activity.this);
                         isFindEmail=true;

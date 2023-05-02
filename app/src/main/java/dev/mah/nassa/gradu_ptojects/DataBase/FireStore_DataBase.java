@@ -24,6 +24,7 @@ import java.util.List;
 import java.util.Map;
 
 import dev.mah.nassa.gradu_ptojects.Activityes.Home_Activity;
+import dev.mah.nassa.gradu_ptojects.Constants.SharedFunctions;
 import dev.mah.nassa.gradu_ptojects.Modles.UsersInfo;
 import dev.mah.nassa.gradu_ptojects.Modles.Users_Health_Info;
 
@@ -53,8 +54,11 @@ public class FireStore_DataBase {
             @Override
             public void onComplete(@NonNull Task<DocumentReference> task) {
                 if (task.isSuccessful()) {
+                    //لجلب البيانات الخاصة بكل مستخدم uid ارسال فيمة
                     //عند اضافة البيانات بنجاح يتم الانتقال الى واجهة الرئيسية
-                    context.startActivity(new Intent(context, Home_Activity.class));
+                    Intent intent = new Intent(context , Home_Activity.class);
+                    intent.putExtra("uid" ,usersInfo.getUid());
+                    context.startActivity(intent);
                     ((Activity) context).finish();
 
                 } else {
@@ -131,13 +135,17 @@ public class FireStore_DataBase {
                QuerySnapshot querySnapshot= task.getResult();
                for(DocumentSnapshot data : querySnapshot.getDocuments()){
                    if(data.get("phone").toString().equalsIgnoreCase(phone) && data.get("pass").toString().equalsIgnoreCase(pass)){
-                       context.startActivity(new Intent(context ,Home_Activity.class));
+
+                       Intent intent = new Intent(context , Home_Activity.class);
+                       intent.putExtra("uid" , data.get("uid").toString());
+                       context.startActivity(intent);
                        ((Activity)context).finish();
                        isFindUser=true;
                       onSuccessListener.onSuccess(isFindUser);
                    }
             }
                if(!isFindUser){
+                   SharedFunctions.dismissDialog();
                    Toast.makeText(context, "فشل التسجيل يرجى التحقق من صحة البيانات!!", Toast.LENGTH_SHORT).show();
                }
             }
