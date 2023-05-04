@@ -20,6 +20,7 @@ import io.reactivex.rxjava3.schedulers.Schedulers;
 public class UsersHealthInfoViewModel extends AndroidViewModel {
 
     MutableLiveData<List<Users_Health_Info>> mutableLiveData = new MutableLiveData<>();
+    MutableLiveData<Users_Health_Info> usersHealthInfoMutableLiveData = new MutableLiveData<>();
     Users_Health_Info usersHealthInfo = new Users_Health_Info();
     Context context;
     AppDatabese appDatabese;
@@ -150,8 +151,8 @@ public class UsersHealthInfoViewModel extends AndroidViewModel {
         return mutableLiveData;
     }
 
-    public Users_Health_Info getUsersHealthById( int id) {
-        appDatabese.usersHealthDao().getUsersHealthById(id)
+    public MutableLiveData<Users_Health_Info> getUsersHealthById( String uid) {
+        appDatabese.usersHealthDao().getUsersHealthById(uid)
                 .subscribeOn(Schedulers.computation())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Observer<Users_Health_Info>() {
@@ -162,7 +163,8 @@ public class UsersHealthInfoViewModel extends AndroidViewModel {
 
                     @Override
                     public void onNext(@io.reactivex.rxjava3.annotations.NonNull Users_Health_Info usersHealthInfo1) {
-                        usersHealthInfo = usersHealthInfo1;
+                        usersHealthInfoMutableLiveData.setValue(usersHealthInfo1);
+
                     }
 
                     @Override
@@ -175,11 +177,11 @@ public class UsersHealthInfoViewModel extends AndroidViewModel {
 
                     }
                 });
-        return usersHealthInfo;
+        return usersHealthInfoMutableLiveData;
     }
 
-    public void deleteUsersHealthById( int id ){
-        appDatabese.usersHealthDao().deleteUsersHealthByUid(id)
+    public void deleteUsersHealthById( String uid ){
+        appDatabese.usersHealthDao().deleteUsersHealthByUid(uid)
                 .subscribeOn(Schedulers.computation())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new CompletableObserver() {

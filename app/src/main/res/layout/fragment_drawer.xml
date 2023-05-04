@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#E6E4E4"
+    android:orientation="vertical"
+    android:padding="15dp"
+    android:gravity="center_horizontal"
+    tools:context=".Fragments.DrawerFragment">
+
+    <ImageView
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:scaleType="fitCenter"
+        android:src="@drawable/mainlogo"/>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Fitness App"
+        android:textSize="25dp"
+        style="@style/title_White_Color"/>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="2dp"
+        android:layout_marginTop="20dp"
+        android:background="@color/black"/>
+
+    <TextView
+        android:id="@+id/account"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="حسابي"
+        android:layout_marginTop="20dp"
+        style="@style/describtion_Black_Color"
+        android:textSize="16dp"/>
+
+    <TextView
+        android:id="@+id/myFoud"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="قائمة وجباتي"
+        android:layout_marginTop="20dp"
+        style="@style/describtion_Black_Color"
+        android:textSize="16dp"/>
+
+    <TextView
+        android:id="@+id/statistics"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="الاحصائيات"
+        android:layout_marginTop="20dp"
+        style="@style/describtion_Black_Color"
+        android:textSize="16dp"/>
+
+    <TextView
+        android:id="@+id/about"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="حول التطبيق"
+        android:layout_marginTop="20dp"
+        style="@style/describtion_Black_Color"
+        android:textSize="16dp"/>
+
+    <TextView
+        android:id="@+id/signOut"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="تسجيل الخروج"
+        android:layout_marginTop="20dp"
+        style="@style/describtion_Black_Color"
+        android:textSize="16dp"/>
+
+
+</LinearLayout>

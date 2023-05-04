@@ -82,4 +82,34 @@ public class Vital_Equations {
                                 return "";
                             }
     }
+
+
+    // تحويل السرعة من متر في الدقيقة الى ميل في الساعة
+    public static double convertSpeesToMilesPerHourse(double speed) {
+
+        return (speed * 60) / 1609.34;
+
+    }
+
+
+    // حساب السعرات الحرارية بواسطة معدل نسبة الأيض و الوزن للشخص
+    public static double calculateCaloriesBurnd(double weight , double metaValue , StopwatchTimer timer){
+        return metaValue*weight*timer.getTimeByHours();
+    }
+
+    // ميثود حساب معدل الأيض
+    public static double calculateMETABOLICEQUIVALENTS(double speedPerHours) {
+
+        if (speedPerHours >= 2 && speedPerHours <= 3.4) {
+            return 2.0;
+        } else if (speedPerHours >= 3.5 && speedPerHours <= 4.9) {
+            return 4.5;
+        } else if (speedPerHours >= 5 && speedPerHours <= 6.9) {
+            return 11.5;
+        } else if (speedPerHours >= 7 && speedPerHours <= 10) {
+            return 16.0;
+        } else {
+            return 0;
+        }
+    }
 }

@@ -17,6 +17,8 @@ import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.ArrayList;
 
+import dev.mah.nassa.gradu_ptojects.Constants.PersonActivityArray;
+import dev.mah.nassa.gradu_ptojects.Constants.Vital_Equations;
 import dev.mah.nassa.gradu_ptojects.DataBase.FireStore_DataBase;
 import dev.mah.nassa.gradu_ptojects.Interfaces.UsersInfoListener;
 import dev.mah.nassa.gradu_ptojects.DataBase.AppDatabese;
@@ -100,7 +102,8 @@ public class UsersInformation_Activity extends AppCompatActivity implements User
         this.alarmTime = alarmTime;
     }
 
-    // مستوى نشاط المستخدم (Interfacece)
+    // بعد اختيار المستخدم مستوى النشاط نقوم بارسال مستوى
+    // النشاط وعليه يتم حساب السعرات الحرارية و كمية المياه و حفظ البيانات المستخدم و البيانات الصحية
     @Override
     public void getActivityLevel(int activityIndex, String activityLeve) {
         UsersInfo usersInfo = new UsersInfo(uid, name, phone, pass, eage, length, weight, activityLeve, gender, photo, email);
@@ -120,7 +123,15 @@ public class UsersInformation_Activity extends AppCompatActivity implements User
                     usersViewModel.insertUsers(usersInfo); // Save Data To Local Data Base
                     if (!illness.isEmpty()) {
                         AppDatabese appDatabese = AppDatabese.getInstance(UsersInformation_Activity.this);
-                        Users_Health_Info usersHealthInfo = new Users_Health_Info(uid, 33.5, 5, true, alarmTime);
+                       String levelActivity = PersonActivityArray.getPersonActivityList().get(activityIndex);
+                        Toast.makeText(UsersInformation_Activity.this, levelActivity+"activityLevel", Toast.LENGTH_SHORT).show();
+                        // حساب السعرات الحرارية للشخص
+                       double caloriesRequorment =  Vital_Equations.caloriDailyRequirment(eage , length , levelActivity , weight , gender);
+
+                       // حساب كمية المياه التي يجب شربها
+                       double waterQuantity = Vital_Equations.waterQuantity(weight);
+                        Toast.makeText(UsersInformation_Activity.this, caloriesRequorment+"calories"+waterQuantity+"water", Toast.LENGTH_SHORT).show();
+                        Users_Health_Info usersHealthInfo = new Users_Health_Info(uid, caloriesRequorment,waterQuantity, true, alarmTime);
                         usersHealthInfoViewModel.insertUsersHealth(usersHealthInfo); // Save Data To Local Data Base
                         FireStore_DataBase.insertUsersHealthInfo(usersHealthInfo, UsersInformation_Activity.this);
                     }

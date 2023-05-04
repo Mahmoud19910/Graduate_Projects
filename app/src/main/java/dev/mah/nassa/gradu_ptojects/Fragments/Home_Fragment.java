@@ -18,11 +18,15 @@ import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.firestore.auth.User;
 
 import java.util.ArrayList;
+import java.util.List;
 
+import dev.mah.nassa.gradu_ptojects.Activityes.Home_Activity;
 import dev.mah.nassa.gradu_ptojects.Constants.PersonActivityArray;
 import dev.mah.nassa.gradu_ptojects.Constants.Vital_Equations;
+import dev.mah.nassa.gradu_ptojects.MVVM.UsersHealthInfoViewModel;
 import dev.mah.nassa.gradu_ptojects.MVVM.UsersViewModel;
 import dev.mah.nassa.gradu_ptojects.Modles.UsersInfo;
+import dev.mah.nassa.gradu_ptojects.Modles.Users_Health_Info;
 import dev.mah.nassa.gradu_ptojects.R;
 import dev.mah.nassa.gradu_ptojects.databinding.FragmentHomeBinding;
 
@@ -38,6 +42,7 @@ public class Home_Fragment extends Fragment {
    private String uid;
    private UsersViewModel usersViewModel;
    private UsersInfo usersInfo;
+   UsersHealthInfoViewModel usersHealthInfoViewModel;
 
     public Home_Fragment(){
     }
@@ -58,19 +63,30 @@ public class Home_Fragment extends Fragment {
         super.onActivityCreated(savedInstanceState);
 
         usersViewModel=ViewModelProviders.of(Home_Fragment.this).get(UsersViewModel.class);
+        usersHealthInfoViewModel=ViewModelProviders.of(Home_Fragment.this).get(UsersHealthInfoViewModel.class);
         progressiveGauge= binding.awesomeSpeedomete;
 
+        Toast.makeText(getContext(), uid+"UID", Toast.LENGTH_SHORT).show();
     usersViewModel.getUsersByUid(uid).observe(this, new Observer<UsersInfo>() {
         @Override
         public void onChanged(UsersInfo usersInfo) {
             progressiveGauge.speedTo((float) Integer.parseInt(usersInfo.getWeight()));
-            binding.waterQuan.setText(Vital_Equations.waterQuantity(usersInfo.getWeight())+"لتر");
-           double caloriDailyRequirment =  Vital_Equations.caloriDailyRequirment(usersInfo.getEage() , usersInfo.getLength() , usersInfo.getActivityLeve()  ,usersInfo.getWeight() , usersInfo.getGender());
-           binding.calorDailyRequirment.setText("kca  "+caloriDailyRequirment+"");
            binding.w.setText(Vital_Equations.calculateFreeBodyMass(usersInfo.getLength() , usersInfo.getWeight())+"");
         }
     });
 
+
+
+    usersHealthInfoViewModel.getUsersHealthById(uid).observe(this, new Observer<Users_Health_Info>() {
+        @Override
+        public void onChanged(Users_Health_Info users_health_info) {
+
+            binding.calorDailyRequirment.setText(String.format("kca "+"%.2f" , users_health_info.getCaloriesNumber())+"  ");
+                        binding.waterQuan.setText(users_health_info.getWaterDrink()+ "لتر");
+
+
+        }
+    });
 
 
 

@@ -100,6 +100,7 @@ public class SignIn_Activity extends AppCompatActivity implements View.OnClickLi
                                                finish();
                                                SharedFunctions.isSignIn(true , SignIn_Activity.this);
                                            }else {
+                                               SharedFunctions.dismissDialog();
                                                Toast.makeText(SignIn_Activity.this, "يرجى التأكد من صحة البيانات", Toast.LENGTH_SHORT).show();
                                            }
 

@@ -3,6 +3,8 @@ package dev.mah.nassa.gradu_ptojects.Constants;
 import android.app.Activity;
 import android.widget.TextView;
 
+import com.google.android.gms.tasks.OnSuccessListener;
+
 import java.text.DecimalFormat;
 import java.util.Timer;
 import java.util.TimerTask;
@@ -35,6 +37,27 @@ public class StopwatchTimer {
                     {
                         textView.setText(getTimerText());
 
+                    }
+                });
+            }
+
+        };
+        timer.scheduleAtFixedRate(timerTask, 0 ,1000);
+    }
+
+    public void startTimer(OnSuccessListener listener) {
+        Activity activity = new Activity();
+        timerTask = new TimerTask() {
+            @Override
+            public void run()
+            {
+                time++;
+                activity.runOnUiThread(new Runnable()
+                {
+                    @Override
+                    public void run()
+                    {
+                        listener.onSuccess(getTimerText());
                     }
                 });
             }

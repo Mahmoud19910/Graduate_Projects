@@ -13,14 +13,14 @@ public class Users_Health_Info {
     @NonNull
     private String userId;
     private double caloriesNumber;
-    private int waterDrink;
+    private double waterDrink;
     private boolean illness;
     private Long medicineTime;
 
     public Users_Health_Info() {
     }
 
-    public Users_Health_Info(String userId, double caloriesNumber, int waterDrink, boolean illness, Long medicineTime) {
+    public Users_Health_Info(String userId, double caloriesNumber, double waterDrink, boolean illness, Long medicineTime) {
         this.userId = userId;
         this.caloriesNumber = caloriesNumber;
         this.waterDrink = waterDrink;
@@ -52,11 +52,11 @@ public class Users_Health_Info {
         this.caloriesNumber = caloriesNumber;
     }
 
-    public int getWaterDrink() {
+    public double getWaterDrink() {
         return waterDrink;
     }
 
-    public void setWaterDrink(int waterDrink) {
+    public void setWaterDrink(double waterDrink) {
         this.waterDrink = waterDrink;
     }
 

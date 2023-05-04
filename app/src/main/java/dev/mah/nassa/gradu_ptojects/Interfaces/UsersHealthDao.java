@@ -28,9 +28,9 @@ public interface UsersHealthDao {
     @Query("Select * from usersHealthTable")
     Observable<List<Users_Health_Info>> getAllUsersHealth();
 
-    @Query("Select * from usersHealthTable where id=:id")
-    Observable<Users_Health_Info> getUsersHealthById(int id);
+    @Query("Select * from usersHealthTable where userId=:uid")
+    Observable<Users_Health_Info> getUsersHealthById(String uid);
 
-    @Query("delete From usersHealthTable Where id =:id")
-    Completable deleteUsersHealthByUid (int id);
+    @Query("delete From usersHealthTable Where userId =:uid")
+    Completable deleteUsersHealthByUid (String uid);
 }
