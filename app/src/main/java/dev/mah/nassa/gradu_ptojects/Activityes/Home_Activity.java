@@ -257,10 +257,7 @@ public class Home_Activity extends AppCompatActivity implements View.OnClickList
             case R.id.drawer:
                 DrawerLayout drawerLayout = findViewById(R.id.drawerLayout);
                 drawerLayout.openDrawer(GravityCompat.START);
-//                Gmai_Auth.onSignOut(Home_Activity.this);
-//                startActivity(new Intent(Home_Activity.this , SignIn_Activity.class));
-//                SharedFunctions.isSignIn(false , Home_Activity.this);
-//                finish();
+
                 break;
         }
     }
