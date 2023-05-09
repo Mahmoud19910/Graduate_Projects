@@ -22,6 +22,7 @@ import android.hardware.SensorManager;
 import android.os.Bundle;
 import android.view.Gravity;
 import android.view.View;
+import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.etebarian.meowbottomnavigation.MeowBottomNavigation;
@@ -65,7 +66,6 @@ public class Home_Activity extends AppCompatActivity implements View.OnClickList
 
     private static final int PERMISSION_REQUEST_ACTIVITY_RECOGNITION = 0;
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -76,7 +76,6 @@ public class Home_Activity extends AppCompatActivity implements View.OnClickList
         // (Steps Fragment) يستخدم لحفظ و ارسال القيم بشكل أوتوماتيكي الى  View Model
         walkingMvvm = ViewModelProviders.of(Home_Activity.this).get(Walking_MVVM.class);
         timer = new StopwatchTimer();
-
 
         binding.parentLayoutHome.setLayoutDirection(View.LAYOUT_DIRECTION_RTL);
         binding.parentLayoutHome.setTextDirection(View.TEXT_DIRECTION_ANY_RTL);
@@ -257,10 +256,7 @@ public class Home_Activity extends AppCompatActivity implements View.OnClickList
             case R.id.drawer:
                 DrawerLayout drawerLayout = findViewById(R.id.drawerLayout);
                 drawerLayout.openDrawer(GravityCompat.START);
-//                Gmai_Auth.onSignOut(Home_Activity.this);
-//                startActivity(new Intent(Home_Activity.this , SignIn_Activity.class));
-//                SharedFunctions.isSignIn(false , Home_Activity.this);
-//                finish();
+
                 break;
         }
     }

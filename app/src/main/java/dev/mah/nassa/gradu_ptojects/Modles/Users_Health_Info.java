@@ -16,6 +16,8 @@ public class Users_Health_Info {
     private double waterDrink;
     private boolean illness;
     private Long medicineTime;
+   
+
 
     public Users_Health_Info() {
     }

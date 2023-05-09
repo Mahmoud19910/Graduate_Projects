@@ -49,7 +49,7 @@ public class FireStore_DataBase {
         mapArray.put("gender", usersInfo.getGender());
         mapArray.put("photo", usersInfo.getPhoto());
         mapArray.put("email", usersInfo.getEmail());
-
+        
         firestore.collection("UsersInfo").add(mapArray).addOnCompleteListener(new OnCompleteListener<DocumentReference>() {
             @Override
             public void onComplete(@NonNull Task<DocumentReference> task) {
