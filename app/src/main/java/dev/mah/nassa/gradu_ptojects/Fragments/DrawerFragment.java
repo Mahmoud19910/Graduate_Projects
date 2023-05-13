@@ -31,6 +31,7 @@ public class DrawerFragment extends Fragment {
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
+    TextView textView;
 
     public DrawerFragment() {
         // Required empty public constructor
@@ -73,7 +74,7 @@ public class DrawerFragment extends Fragment {
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        TextView textView=  getActivity().findViewById(R.id.signOut);
+        textView=  getActivity().findViewById(R.id.signOut);
         textView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
