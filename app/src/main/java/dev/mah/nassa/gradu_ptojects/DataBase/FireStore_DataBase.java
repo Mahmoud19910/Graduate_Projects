@@ -25,8 +25,12 @@ import java.util.Map;
 
 import dev.mah.nassa.gradu_ptojects.Activityes.Home_Activity;
 import dev.mah.nassa.gradu_ptojects.Constants.SharedFunctions;
+import dev.mah.nassa.gradu_ptojects.Modles.Sports_Exercises;
 import dev.mah.nassa.gradu_ptojects.Modles.UsersInfo;
 import dev.mah.nassa.gradu_ptojects.Modles.Users_Health_Info;
+import io.reactivex.rxjava3.core.Observable;
+import io.reactivex.rxjava3.core.ObservableEmitter;
+import io.reactivex.rxjava3.core.ObservableOnSubscribe;
 
 public class FireStore_DataBase {
     static FirebaseFirestore firestore = FirebaseFirestore.getInstance();
@@ -49,7 +53,7 @@ public class FireStore_DataBase {
         mapArray.put("gender", usersInfo.getGender());
         mapArray.put("photo", usersInfo.getPhoto());
         mapArray.put("email", usersInfo.getEmail());
-
+        
         firestore.collection("UsersInfo").add(mapArray).addOnCompleteListener(new OnCompleteListener<DocumentReference>() {
             @Override
             public void onComplete(@NonNull Task<DocumentReference> task) {
@@ -82,6 +86,8 @@ public class FireStore_DataBase {
         mapUsersHealth.put("waterDrink" , usersHealthInfo.getWaterDrink());
         mapUsersHealth.put("illness" , usersHealthInfo.isIllness());
         mapUsersHealth.put("medicineTime" , usersHealthInfo.getMedicineTime());
+        mapUsersHealth.put("burnedCalories" , usersHealthInfo.getBurnedCaloriesNumber());
+        mapUsersHealth.put("caloriesGained" , usersHealthInfo.getCaloriesGained());
 
         firestore.collection("UsersHealthInfo").add(mapUsersHealth).addOnCompleteListener(new OnCompleteListener<DocumentReference>() {
             @Override
@@ -126,7 +132,30 @@ public class FireStore_DataBase {
                 .addOnFailureListener(onFailureListener);
     }
 
+    public static void getUsersById(String uid , Context context , OnSuccessListener onSuccessListener){
+        firestore.collection("UsersInfo")
+                .whereEqualTo("uid",uid)
+                .get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        if(task.isSuccessful()){
+                            if(task.getResult()!=null){
+                                List<DocumentSnapshot> snapshotList = task.getResult().getDocuments();
+                                for(DocumentSnapshot documentSnapshot : snapshotList){
+                                    UsersInfo usersInfo =   documentSnapshot.toObject(UsersInfo.class);
+                                    if(usersInfo!=null){
+                                        onSuccessListener.onSuccess(usersInfo);
+                                    }
+                                }
 
+                            }
+
+                        }else{
+                            Toast.makeText(context, task.getException().getMessage().toString(), Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                });
+    }
     // Check Sign In
     public static void signInMethods(String phone , String pass , Context context , OnSuccessListener<Boolean> onSuccessListener){
         firestore.collection("UsersInfo").get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
@@ -176,7 +205,39 @@ public class FireStore_DataBase {
     }
 
 
+    // Get All Sports Exercices
+    public static Observable<List<Sports_Exercises>> getAllExercices(Context context){
+        return Observable.create(new ObservableOnSubscribe<List<Sports_Exercises>>() {
+            @Override
+            public void subscribe(@io.reactivex.rxjava3.annotations.NonNull ObservableEmitter<List<Sports_Exercises>> emitter) throws Throwable {
 
+                firestore.collection("exercises").get().addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
+                    @Override
+                    public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
+                        List<DocumentSnapshot> snapshotList =  queryDocumentSnapshots.getDocuments();
+                        ArrayList<Sports_Exercises> list = new ArrayList<>();
+
+                        for(DocumentSnapshot documentSnapshot : snapshotList){
+                            String description =(String) documentSnapshot.getData().get("descriptionMeal");
+                            String name = (String) documentSnapshot.getData().get("exerciseName");
+                            String id = (String) documentSnapshot.getData().get("id");
+                            String imGif =(String) documentSnapshot.getData().get("imGif");
+                            list.add(new Sports_Exercises(id , name , description , imGif));
+                        }
+                        emitter.onNext(list);
+                        emitter.onComplete();
+                    }
+                })
+                        .addOnFailureListener(new OnFailureListener() {
+                            @Override
+                            public void onFailure(@NonNull Exception e) {
+                                Toast.makeText(context, "Failer", Toast.LENGTH_SHORT).show();
+                            }
+                        });
+
+            }
+        });
+    }
 
 
 }

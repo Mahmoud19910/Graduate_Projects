@@ -22,6 +22,7 @@ import android.hardware.SensorManager;
 import android.os.Bundle;
 import android.view.Gravity;
 import android.view.View;
+import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.etebarian.meowbottomnavigation.MeowBottomNavigation;
@@ -38,6 +39,7 @@ import dev.mah.nassa.gradu_ptojects.Fragments.Home_Fragment;
 import dev.mah.nassa.gradu_ptojects.Fragments.StepsCounter_Fragment;
 import dev.mah.nassa.gradu_ptojects.Fragments.Training_Fragment;
 import dev.mah.nassa.gradu_ptojects.Interfaces.StartWalkingListener;
+import dev.mah.nassa.gradu_ptojects.MVVM.UsersHealthInfoViewModel;
 import dev.mah.nassa.gradu_ptojects.MVVM.Walking_MVVM;
 import dev.mah.nassa.gradu_ptojects.Modles.UsersInfo;
 import dev.mah.nassa.gradu_ptojects.MVVM.UsersViewModel;
@@ -47,10 +49,12 @@ import dev.mah.nassa.gradu_ptojects.databinding.ActivityHomeBinding;
 public class Home_Activity extends AppCompatActivity implements View.OnClickListener , StartWalkingListener , SensorEventListener {
 
     private UsersViewModel usersViewModel;
+    private Walking_MVVM walkingMvvm;
+    private UsersHealthInfoViewModel usersHealthInfoViewModel;
+
     private ActivityHomeBinding binding;
     private String uid;
     private StopwatchTimer timer;
-    private Walking_MVVM walkingMvvm;
     private SensorManager sensorManager;
     private boolean running = false;
     private float totalSteps = 0f;
@@ -65,7 +69,6 @@ public class Home_Activity extends AppCompatActivity implements View.OnClickList
 
     private static final int PERMISSION_REQUEST_ACTIVITY_RECOGNITION = 0;
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -75,8 +78,8 @@ public class Home_Activity extends AppCompatActivity implements View.OnClickList
         usersViewModel=ViewModelProviders.of(Home_Activity.this).get(UsersViewModel.class);
         // (Steps Fragment) يستخدم لحفظ و ارسال القيم بشكل أوتوماتيكي الى  View Model
         walkingMvvm = ViewModelProviders.of(Home_Activity.this).get(Walking_MVVM.class);
+        usersHealthInfoViewModel=ViewModelProviders.of(Home_Activity.this).get(UsersHealthInfoViewModel.class);
         timer = new StopwatchTimer();
-
 
         binding.parentLayoutHome.setLayoutDirection(View.LAYOUT_DIRECTION_RTL);
         binding.parentLayoutHome.setTextDirection(View.TEXT_DIRECTION_ANY_RTL);
@@ -237,6 +240,8 @@ public class Home_Activity extends AppCompatActivity implements View.OnClickList
             double metaValue = Vital_Equations.calculateMETABOLICEQUIVALENTS(Vital_Equations.convertSpeesToMilesPerHourse(spped));
             double caloriesBurnd = Vital_Equations.calculateCaloriesBurnd(Double.parseDouble(weight),metaValue,timer);
             walkingMvvm.setAllData(String.format("%.2f",distance),String.format("%.2f", spped) ,String.format("%.2f", caloriesBurnd) , Integer.toString(currentSteps));
+            usersHealthInfoViewModel.updateCalories(loadUid() , caloriesBurnd);
+
 
 
         }

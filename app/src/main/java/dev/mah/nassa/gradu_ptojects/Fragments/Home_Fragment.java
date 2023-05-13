@@ -82,7 +82,9 @@ public class Home_Fragment extends Fragment {
         public void onChanged(Users_Health_Info users_health_info) {
 
             binding.calorDailyRequirment.setText(String.format("kca "+"%.2f" , users_health_info.getCaloriesNumber())+"  ");
-                        binding.waterQuan.setText(users_health_info.getWaterDrink()+ "لتر");
+                        binding.waterQuan.setText(String.format("لتر "+"%.2f" , users_health_info.getWaterDrink())+ "  ");
+                        binding.burnedCalories.setText(String.format("kca "+"%.2f" , users_health_info.getBurnedCaloriesNumber())+ "  ");
+                        binding.caloriesGained.setText(String.format("kca "+"%.2f" , users_health_info.getCaloriesGained())+ "  ");
 
 
         }
