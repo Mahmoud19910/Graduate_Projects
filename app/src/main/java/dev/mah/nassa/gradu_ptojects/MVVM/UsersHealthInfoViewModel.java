@@ -200,4 +200,26 @@ public class UsersHealthInfoViewModel extends AndroidViewModel {
                     }
                 });
     }
+
+    public void updateCalories(String uid , double burnedCalories ){
+        appDatabese.usersHealthDao().updateCaloriesById(uid , burnedCalories)
+                .subscribeOn(Schedulers.computation())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new CompletableObserver() {
+                    @Override
+                    public void onSubscribe(@io.reactivex.rxjava3.annotations.NonNull Disposable d) {
+
+                    }
+
+                    @Override
+                    public void onComplete() {
+                        Toast.makeText(context, "Success Update Calories", Toast.LENGTH_SHORT).show();
+                    }
+
+                    @Override
+                    public void onError(@io.reactivex.rxjava3.annotations.NonNull Throwable e) {
+
+                    }
+                });
+    }
 }

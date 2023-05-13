@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
+
     <uses-permission android:name="android.permission.ACTIVITY_RECOGNITION" />
     <uses-permission android:name="android.permission.INTERNET" />
 
@@ -14,11 +15,20 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Gradu_Ptojects"
         tools:targetApi="31">
+        <activity
+            android:name="dev.mah.nassa.gradu_ptojects.Activityes.Exercices_Activity"
+            android:label="Exercices Activity"
+            android:exported="false" >
+            <meta-data
+                android:name="android.app.lib_name"
+                android:value="" />
+        </activity>
 
         <receiver
             android:name=".Modles.AlarmReceiver"
             android:enabled="true"
             android:exported="true" />
+
         <activity
             android:name=".Activityes.Home_Activity"
             android:exported="false">
