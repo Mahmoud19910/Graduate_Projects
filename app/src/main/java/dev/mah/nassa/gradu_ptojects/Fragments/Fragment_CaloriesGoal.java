@@ -18,11 +18,8 @@ import dev.mah.nassa.gradu_ptojects.Modles.Sports_Exercises;
 import dev.mah.nassa.gradu_ptojects.R;
 import dev.mah.nassa.gradu_ptojects.databinding.FragmentCaloriesGoalBinding;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link Fragment_CaloriesGoal#newInstance} factory method to
- * create an instance of this fragment.
- */
+
+
 public class Fragment_CaloriesGoal extends Fragment {
 
     // TODO: Rename parameter arguments, choose names that match
