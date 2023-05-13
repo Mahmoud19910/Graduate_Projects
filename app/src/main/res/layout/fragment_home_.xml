@@ -110,6 +110,7 @@
                       android:textSize="18dp" />
 
                   <TextView
+                      android:id="@+id/burnedCalories"
                       style="@style/describtion_Black_Color"
                       android:layout_width="wrap_content"
                       android:layout_height="wrap_content"
@@ -142,6 +143,7 @@
                       android:textSize="18dp" />
 
                   <TextView
+                      android:id="@+id/caloriesGained"
                       style="@style/describtion_Black_Color"
                       android:layout_width="wrap_content"
                       android:layout_height="wrap_content"

@@ -11,6 +11,7 @@ import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 
 import android.Manifest;
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -32,6 +33,7 @@ import dev.mah.nassa.gradu_ptojects.Constants.SharedFunctions;
 import dev.mah.nassa.gradu_ptojects.Constants.StepsTracking;
 import dev.mah.nassa.gradu_ptojects.Constants.StopwatchTimer;
 import dev.mah.nassa.gradu_ptojects.Constants.Vital_Equations;
+import dev.mah.nassa.gradu_ptojects.DataBase.FireStore_DataBase;
 import dev.mah.nassa.gradu_ptojects.FireBase_Authentication.Gmai_Auth;
 import dev.mah.nassa.gradu_ptojects.Fragments.Doctors_Fragment;
 import dev.mah.nassa.gradu_ptojects.Fragments.FoodCategory_Fragment;
@@ -39,6 +41,7 @@ import dev.mah.nassa.gradu_ptojects.Fragments.Home_Fragment;
 import dev.mah.nassa.gradu_ptojects.Fragments.StepsCounter_Fragment;
 import dev.mah.nassa.gradu_ptojects.Fragments.Training_Fragment;
 import dev.mah.nassa.gradu_ptojects.Interfaces.StartWalkingListener;
+import dev.mah.nassa.gradu_ptojects.MVVM.UsersHealthInfoViewModel;
 import dev.mah.nassa.gradu_ptojects.MVVM.Walking_MVVM;
 import dev.mah.nassa.gradu_ptojects.Modles.UsersInfo;
 import dev.mah.nassa.gradu_ptojects.MVVM.UsersViewModel;
@@ -48,10 +51,12 @@ import dev.mah.nassa.gradu_ptojects.databinding.ActivityHomeBinding;
 public class Home_Activity extends AppCompatActivity implements View.OnClickListener , StartWalkingListener , SensorEventListener {
 
     private UsersViewModel usersViewModel;
+    private Walking_MVVM walkingMvvm;
+    private UsersHealthInfoViewModel usersHealthInfoViewModel;
+
     private ActivityHomeBinding binding;
     private String uid;
     private StopwatchTimer timer;
-    private Walking_MVVM walkingMvvm;
     private SensorManager sensorManager;
     private boolean running = false;
     private float totalSteps = 0f;
@@ -75,6 +80,7 @@ public class Home_Activity extends AppCompatActivity implements View.OnClickList
         usersViewModel=ViewModelProviders.of(Home_Activity.this).get(UsersViewModel.class);
         // (Steps Fragment) يستخدم لحفظ و ارسال القيم بشكل أوتوماتيكي الى  View Model
         walkingMvvm = ViewModelProviders.of(Home_Activity.this).get(Walking_MVVM.class);
+        usersHealthInfoViewModel=ViewModelProviders.of(Home_Activity.this).get(UsersHealthInfoViewModel.class);
         timer = new StopwatchTimer();
 
         binding.parentLayoutHome.setLayoutDirection(View.LAYOUT_DIRECTION_RTL);
@@ -85,6 +91,8 @@ public class Home_Activity extends AppCompatActivity implements View.OnClickList
 
      // Shared Prefrences
      saveUid(uid);
+
+
 
         usersViewModel.getUsersByUid(loadUid()).observe(this, new Observer<UsersInfo>() {
             @Override
@@ -166,6 +174,7 @@ public class Home_Activity extends AppCompatActivity implements View.OnClickList
 
     }
 
+    @SuppressLint("NewApi")
     @Override
     public void onResume() {
         super.onResume();
@@ -236,6 +245,8 @@ public class Home_Activity extends AppCompatActivity implements View.OnClickList
             double metaValue = Vital_Equations.calculateMETABOLICEQUIVALENTS(Vital_Equations.convertSpeesToMilesPerHourse(spped));
             double caloriesBurnd = Vital_Equations.calculateCaloriesBurnd(Double.parseDouble(weight),metaValue,timer);
             walkingMvvm.setAllData(String.format("%.2f",distance),String.format("%.2f", spped) ,String.format("%.2f", caloriesBurnd) , Integer.toString(currentSteps));
+            usersHealthInfoViewModel.updateCalories(loadUid() , caloriesBurnd);
+
 
 
         }

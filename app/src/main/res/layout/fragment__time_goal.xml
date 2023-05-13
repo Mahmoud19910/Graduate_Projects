@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout>
+    <androidx.appcompat.widget.LinearLayoutCompat xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:orientation="vertical"
+        android:gravity="center_horizontal"
+        tools:context=".Fragments.Fragment_CaloriesGoal">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="25dp"
+            android:text="حدد هدفك بالزمن"
+            style="@style/describtion_ShadowPink_Color"/>
+
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:layout_marginTop="30dp"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:gravity="center_horizontal"
+            android:orientation="horizontal">
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:src="@drawable/minus"/>
+            <androidx.appcompat.widget.LinearLayoutCompat
+                android:layout_width="150dp"
+                android:layout_height="50dp"
+                android:orientation="horizontal"
+                android:gravity="center_vertical"
+                android:layout_marginEnd="12dp"
+                android:layout_marginStart="12dp"
+                android:background="@drawable/corner_raduis_card_fill">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="01"
+                    android:gravity="center"
+                    android:layout_weight="1"
+                    style="@style/title_White_Color"/>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text=":"
+                    android:gravity="center"
+
+                    android:layout_weight="1"
+
+                    style="@style/title_White_Color"/>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="30"
+                    android:gravity="center"
+
+                    android:layout_weight="1"
+
+                    style="@style/title_White_Color"/>
+            </androidx.appcompat.widget.LinearLayoutCompat>
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+
+                android:src="@drawable/add"/>
+
+        </androidx.appcompat.widget.LinearLayoutCompat>
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:layout_width="150dp"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="top"
+            android:padding="8dp">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="ساعة"
+                android:gravity="top"
+                android:layout_weight="1"
+                style="@style/describtion_Black_Color"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text=""
+                android:gravity="top"
+
+                android:layout_weight="1"
+
+                style="@style/title_White_Color"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="دقيقية"
+                android:gravity="top"
+
+                android:layout_weight="1"
+
+                style="@style/describtion_Black_Color"/>
+        </androidx.appcompat.widget.LinearLayoutCompat>
+
+        <!-- <de.hdodenhof.circleimageview.CircleImageView-->
+        <!--     android:id="@+id/trainingImage"-->
+        <!--     android:layout_width="170dp"-->
+        <!--     android:layout_height="170dp"-->
+        <!--     android:layout_marginTop="30dp"-->
+        <!--     android:layout_gravity="center"-->
+        <!--     android:src="@drawable/personlogo"-->
+        <!--     app:civ_border_color="#3A7FC0"-->
+        <!--     app:civ_border_width="2dp" />-->
+        <com.mikhaellopez.circularimageview.CircularImageView
+            android:id="@+id/trainingImage"
+            android:layout_width="180dp"
+            android:layout_height="180dp"
+
+            android:src="@drawable/personlogo"
+            app:civ_border_color="#3A7FC0"
+            app:civ_border_width="4dp"
+            app:civ_shadow="true"
+            app:civ_shadow_radius="10dp"
+            app:civ_shadow_color="#3f51b5"/>
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/startBut"
+            style="@style/default_Button"
+            android:layout_width="match_parent"
+            android:layout_height="45dp"
+            android:layout_marginTop="30dp"
+            android:text="بدء"
+            android:textColor="@color/white"
+            android:textSize="20dp" />
+
+    </androidx.appcompat.widget.LinearLayoutCompat>
+</layout>

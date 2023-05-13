@@ -131,7 +131,7 @@ public class UsersInformation_Activity extends AppCompatActivity implements User
                        // حساب كمية المياه التي يجب شربها
                        double waterQuantity = Vital_Equations.waterQuantity(weight);
                         Toast.makeText(UsersInformation_Activity.this, caloriesRequorment+"calories"+waterQuantity+"water", Toast.LENGTH_SHORT).show();
-                        Users_Health_Info usersHealthInfo = new Users_Health_Info(uid, caloriesRequorment,waterQuantity, true, alarmTime);
+                        Users_Health_Info usersHealthInfo = new Users_Health_Info(uid, caloriesRequorment,waterQuantity, true, alarmTime , 0 , 0);
                         usersHealthInfoViewModel.insertUsersHealth(usersHealthInfo); // Save Data To Local Data Base
                         FireStore_DataBase.insertUsersHealthInfo(usersHealthInfo, UsersInformation_Activity.this);
                     }
