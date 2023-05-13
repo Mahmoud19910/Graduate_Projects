@@ -33,4 +33,7 @@ public interface UsersHealthDao {
 
     @Query("delete From usersHealthTable Where userId =:uid")
     Completable deleteUsersHealthByUid (String uid);
+
+    @Query("UPDATE usersHealthTable SET burnedCaloriesNumber = :burnedCal WHERE userId = :uid")
+    Completable updateCaloriesById(String uid, double  burnedCal);
 }

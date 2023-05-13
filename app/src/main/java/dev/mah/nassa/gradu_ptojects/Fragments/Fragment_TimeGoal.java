@@ -1,27 +1,21 @@
 package dev.mah.nassa.gradu_ptojects.Fragments;
 
-import android.content.Intent;
 import android.os.Bundle;
 
-import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
 
-import dev.mah.nassa.gradu_ptojects.Activityes.SignIn_Activity;
-import dev.mah.nassa.gradu_ptojects.Constants.SharedFunctions;
-import dev.mah.nassa.gradu_ptojects.FireBase_Authentication.Gmai_Auth;
 import dev.mah.nassa.gradu_ptojects.R;
 
 /**
  * A simple {@link Fragment} subclass.
- * Use the {@link DrawerFragment#newInstance} factory method to
+ * Use the {@link Fragment_TimeGoal#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class DrawerFragment extends Fragment {
+public class Fragment_TimeGoal extends Fragment {
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -32,7 +26,7 @@ public class DrawerFragment extends Fragment {
     private String mParam1;
     private String mParam2;
 
-    public DrawerFragment() {
+    public Fragment_TimeGoal() {
         // Required empty public constructor
     }
 
@@ -42,11 +36,11 @@ public class DrawerFragment extends Fragment {
      *
      * @param param1 Parameter 1.
      * @param param2 Parameter 2.
-     * @return A new instance of fragment DrawerFragment.
+     * @return A new instance of fragment Fragment_TimeGoal.
      */
     // TODO: Rename and change types and number of parameters
-    public static DrawerFragment newInstance(String param1, String param2) {
-        DrawerFragment fragment = new DrawerFragment();
+    public static Fragment_TimeGoal newInstance(String param1, String param2) {
+        Fragment_TimeGoal fragment = new Fragment_TimeGoal();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);
@@ -67,22 +61,6 @@ public class DrawerFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_drawer, container, false);
-    }
-
-    @Override
-    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
-        super.onActivityCreated(savedInstanceState);
-        TextView textView=  getActivity().findViewById(R.id.signOut);
-        textView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Gmai_Auth.onSignOut(getContext());
-                startActivity(new Intent(getContext(), SignIn_Activity.class));
-                SharedFunctions.isSignIn(false, getContext());
-                getActivity().finish();
-            }
-        });
-
+        return inflater.inflate(R.layout.fragment__time_goal, container, false);
     }
 }
