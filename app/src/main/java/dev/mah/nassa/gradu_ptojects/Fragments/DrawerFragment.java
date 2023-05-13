@@ -74,16 +74,16 @@ public class DrawerFragment extends Fragment {
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        textView=  getActivity().findViewById(R.id.signOut);
-        textView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Gmai_Auth.onSignOut(getContext());
-                startActivity(new Intent(getContext(), SignIn_Activity.class));
-                SharedFunctions.isSignIn(false, getContext());
-                getActivity().finish();
-            }
-        });
+//        textView=  getActivity().findViewById(R.id.signOut);
+//        textView.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                Gmai_Auth.onSignOut(getContext());
+//                startActivity(new Intent(getContext(), SignIn_Activity.class));
+//                SharedFunctions.isSignIn(false, getContext());
+//                getActivity().finish();
+//            }
+//        });
 
     }
 }
