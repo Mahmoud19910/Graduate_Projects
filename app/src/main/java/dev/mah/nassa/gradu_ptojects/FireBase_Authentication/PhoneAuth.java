@@ -50,6 +50,7 @@ public class PhoneAuth {
             @Override
             public void onVerificationFailed(FirebaseException e) {
                 // Verification failed, show error message
+                System.out.println("Verify Error"+ e.getMessage());
                 Toast.makeText(context, "Verification failed: " + e.getMessage(), Toast.LENGTH_LONG).show();
             }
 
