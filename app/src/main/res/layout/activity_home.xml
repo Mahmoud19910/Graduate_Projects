@@ -99,9 +99,10 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
 
+
                 <androidx.fragment.app.FragmentContainerView
                     android:id="@+id/fragmentContainerView"
-                    android:name="dev.mah.nassa.gradu_ptojects.Fragments.DrawerFragment"
+                    android:name="dev.mah.nassa.gradu_ptojects.Fragments.FragmentDrawer"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent" />
             </FrameLayout>

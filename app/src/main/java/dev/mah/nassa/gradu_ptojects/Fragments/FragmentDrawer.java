@@ -9,6 +9,7 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import dev.mah.nassa.gradu_ptojects.Activityes.SignIn_Activity;
 import dev.mah.nassa.gradu_ptojects.Constants.SharedFunctions;
@@ -31,13 +32,17 @@ public class FragmentDrawer extends Fragment {
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        binding.signOut.setOnClickListener(new View.OnClickListener() {
+
+        TextView textView = getActivity().findViewById(R.id.signOut);
+        textView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Gmai_Auth.onSignOut(getContext());
+
+                                Gmai_Auth.onSignOut(getContext());
                 startActivity(new Intent(getContext(), SignIn_Activity.class));
                 SharedFunctions.isSignIn(false, getContext());
                 getActivity().finish();
+
             }
         });
     }
