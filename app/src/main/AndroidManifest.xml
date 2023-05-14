@@ -16,9 +16,16 @@
         android:theme="@style/Theme.Gradu_Ptojects"
         tools:targetApi="31">
         <activity
-            android:name="dev.mah.nassa.gradu_ptojects.Activityes.Exercices_Activity"
-            android:label="Exercices Activity"
-            android:exported="false" >
+            android:name=".Activityes.Profile_Activity"
+            android:exported="false">
+            <meta-data
+                android:name="android.app.lib_name"
+                android:value="" />
+        </activity>
+        <activity
+            android:name=".Activityes.Exercices_Activity"
+            android:exported="false"
+            android:label="Exercices Activity">
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />

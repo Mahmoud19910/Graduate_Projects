@@ -1,0 +1,261 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    >
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        >
+
+        <LinearLayout
+            android:id="@+id/profile_layout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/graylight"
+            android:orientation="vertical">
+
+            <androidx.appcompat.widget.Toolbar
+                android:id="@+id/toolbar"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="#3A7FC0"
+                android:minHeight="?attr/actionBarSize"
+                android:theme="?attr/actionBarTheme"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <ImageView
+                    android:id="@+id/profile_iv_edit"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="start"
+                    android:src="@drawable/ic_baseline_edit_24"
+                    />
+
+                <TextView
+                    android:id="@+id/profile_tv_title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="حسابي"
+                    android:textSize="@dimen/_18ssp"
+                    android:textStyle="bold"
+                    android:textColor="@color/white"
+                    android:layout_gravity="center"
+                    />
+
+                <ImageView
+                    android:id="@+id/profile_iv_back"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/back_ios_new_24"
+                    android:layout_gravity="end"
+                    android:layout_marginEnd="@dimen/_7sdp"
+                    />
+            </androidx.appcompat.widget.Toolbar>
+
+            <ScrollView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                >
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical">
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/_355sdp">
+                        <LinearLayout
+                            android:background="@drawable/gradientbackground_profile"
+                            android:layout_width="match_parent"
+                            android:layout_height="@dimen/_300sdp"
+                            android:orientation="vertical">
+
+                            <com.mikhaellopez.circularimageview.CircularImageView
+                                android:id="@+id/profile_iv_image"
+                                android:layout_width="@dimen/_170sdp"
+                                android:layout_height="@dimen/_170sdp"
+                                android:layout_weight="1"
+                                android:layout_gravity="center_horizontal"
+                                android:scaleType="centerCrop"
+                                android:src="@drawable/user"
+                                app:civ_border_color="#3f51b5"
+                                app:civ_border_width="@dimen/_4sdp"
+                                app:civ_shadow="true"
+                                app:civ_shadow_color="#3f51b5"
+                                app:civ_shadow_radius="@dimen/_10sdp" />
+                            <TextView
+                                android:id="@+id/profile_tv_name"
+                                android:layout_gravity="center_horizontal"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="محمود نصار"
+                                android:textColor="#fff"
+                                android:textStyle="bold"
+                                android:textSize="@dimen/_21ssp"/>
+                        </LinearLayout>
+                        <androidx.cardview.widget.CardView
+                            android:layout_width="@dimen/_280sdp"
+                            android:layout_height="@dimen/_120sdp"
+                            android:layout_centerHorizontal="true"
+                            android:layout_marginTop="@dimen/_220sdp">
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:orientation="horizontal"
+                                android:weightSum="3">
+                                <LinearLayout
+                                    android:gravity="center"
+                                    android:orientation="vertical"
+                                    android:layout_width="0dp"
+                                    android:layout_weight="1"
+                                    android:layout_height="match_parent">
+                                    <TextView
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:text="الوزن"
+                                        android:textSize="@dimen/_20sdp"
+                                        />
+                                    <TextView
+                                        android:id="@+id/profile_tv_weight"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:text="125"
+                                        android:textStyle="bold"
+                                        android:textSize="@dimen/_18sdp"
+                                        android:paddingTop="@dimen/_10sdp"
+                                        android:textColor="@color/startblue"/>
+
+                                </LinearLayout>
+                                <LinearLayout
+                                    android:gravity="center"
+                                    android:orientation="vertical"
+                                    android:layout_width="0dp"
+                                    android:layout_weight="1"
+                                    android:layout_height="match_parent">
+                                    <TextView
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:text="الطول"
+                                        android:textSize="@dimen/_20sdp"
+                                        />
+                                    <TextView
+                                        android:id="@+id/profile_tv_height"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:text="1205"
+                                        android:textStyle="bold"
+                                        android:textSize="@dimen/_18sdp"
+                                        android:paddingTop="@dimen/_10sdp"
+                                        android:textColor="@color/startblue"/>
+
+                                </LinearLayout>
+                                <LinearLayout
+                                    android:gravity="center"
+                                    android:orientation="vertical"
+                                    android:layout_width="0dp"
+                                    android:layout_weight="1"
+                                    android:layout_height="match_parent">
+                                    <TextView
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:text="العمر"
+                                        android:textSize="@dimen/_18sdp"
+                                        />
+                                    <TextView
+                                        android:id="@+id/profile_tv_age"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:text="360"
+                                        android:textStyle="bold"
+                                        android:textSize="@dimen/_20sdp"
+                                        android:paddingTop="@dimen/_10sdp"
+                                        android:textColor="@color/startblue"/>
+
+                                </LinearLayout>
+                            </LinearLayout>
+
+                        </androidx.cardview.widget.CardView>
+                    </RelativeLayout>
+
+                    <LinearLayout
+                        android:layout_width="@dimen/_280sdp"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:layout_gravity="center"
+                        android:layout_marginTop="@dimen/_30sdp"
+                        android:layout_marginBottom="@dimen/_30sdp">
+                        <LinearLayout
+                            android:orientation="horizontal"
+                            android:paddingLeft="@dimen/_25sdp"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content">
+                            <ImageView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:src="@drawable/email_profile"/>
+                            <TextView
+                                android:id="@+id/profile_tv_email"
+                                android:textStyle="bold"
+                                android:layout_gravity="center_vertical"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:paddingStart="@dimen/_20sdp"
+                                android:text="SarmedMohammed@gmail.com"/>
+                        </LinearLayout>
+                        <LinearLayout
+                            android:layout_marginTop="@dimen/_25sdp"
+                            android:orientation="horizontal"
+                            android:paddingLeft="@dimen/_25sdp"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content">
+                            <ImageView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:src="@drawable/phone_android_24"/>
+                            <TextView
+                                android:id="@+id/profile_tv_phone"
+                                android:textStyle="bold"
+                                android:layout_gravity="center_vertical"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:paddingStart="@dimen/_20sdp"
+                                android:text="+970 569052079"/>
+                        </LinearLayout>
+                        <LinearLayout
+                            android:layout_marginTop="@dimen/_25sdp"
+                            android:orientation="horizontal"
+                            android:paddingLeft="@dimen/_25sdp"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content">
+
+                            <Spinner
+                                android:id="@+id/profile_spn"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center_vertical"
+                                android:text="مستوى النشاط"
+                                android:textStyle="bold"
+                                tools:ignore="TouchTargetSizeCheck,SpeakableTextPresentCheck" />
+                        </LinearLayout>
+                    </LinearLayout>
+
+                </LinearLayout>
+
+            </ScrollView>
+
+        </LinearLayout>
+        <com.jpardogo.android.googleprogressbar.library.GoogleProgressBar
+            android:id="@+id/profile_idProgressBar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            app:type="folding_circles"
+            />
+
+    </RelativeLayout>
+
+
+</layout>
