@@ -7,12 +7,14 @@ public class Sports_Exercises implements Serializable {
     private String name;
     private String descriotion;
     private String imageUrl;
+    private String metValue;
 
-    public Sports_Exercises(String id, String name, String descriotion, String imageUrl) {
+    public Sports_Exercises(String id, String name, String descriotion, String imageUrl , String metValue) {
         this.id = id;
         this.name = name;
         this.descriotion = descriotion;
         this.imageUrl = imageUrl;
+        this.setMetValue(metValue);
     }
 
     public String getId() {
@@ -45,5 +47,13 @@ public class Sports_Exercises implements Serializable {
 
     public void setImageUrl(String imageUrl) {
         this.imageUrl = imageUrl;
+    }
+
+    public String getMetValue() {
+        return metValue;
+    }
+
+    public void setMetValue(String metValue) {
+        this.metValue = metValue;
     }
 }

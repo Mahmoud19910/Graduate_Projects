@@ -31,6 +31,7 @@ import com.github.anastr.speedviewlib.SpeedView;
 
 import java.util.ArrayList;
 
+import dev.mah.nassa.gradu_ptojects.Constants.LanguageUtils;
 import dev.mah.nassa.gradu_ptojects.Constants.StopwatchTimer;
 import dev.mah.nassa.gradu_ptojects.Interfaces.StartWalkingListener;
 import dev.mah.nassa.gradu_ptojects.MVVM.Walking_MVVM;
@@ -69,6 +70,8 @@ public class StepsCounter_Fragment extends Fragment {
 
         // Inflate the layout for this fragment
         View view = FragmentStepsCountBinding.inflate(inflater).getRoot();
+        LanguageUtils.changeLanguage(getContext(), "en");
+
         // View Model تحديث البيانات وجلبها من الأكتيفيتي عن طريق
         walkingMvvm = ViewModelProviders.of(getActivity()).get(Walking_MVVM.class);
 

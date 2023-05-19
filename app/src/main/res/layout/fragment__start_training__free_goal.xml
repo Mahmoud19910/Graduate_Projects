@@ -1,0 +1,226 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout>
+<androidx.appcompat.widget.LinearLayoutCompat xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    tools:context=".Fragments.Fragment_StartTraining_FreeGoal">
+
+    <androidx.appcompat.widget.LinearLayoutCompat
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_horizontal"
+        android:orientation="vertical">
+        <androidx.cardview.widget.CardView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+            <androidx.appcompat.widget.LinearLayoutCompat
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="#E4E4E4"
+                android:orientation="horizontal">
+                <androidx.appcompat.widget.LinearLayoutCompat
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_horizontal"
+                    android:orientation="vertical">
+                    <androidx.appcompat.widget.LinearLayoutCompat
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:gravity="center_horizontal|bottom"
+                        android:layout_marginEnd="12dp"
+                        android:layout_marginStart="12dp">
+                        <TextView
+                            android:id="@+id/timeTvFreeGoal"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="00"
+                            android:textSize="25dp"
+                            android:textColor="@color/black"
+                            android:gravity="center"
+                            />
+                    </androidx.appcompat.widget.LinearLayoutCompat>
+                    <androidx.appcompat.widget.LinearLayoutCompat
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:gravity="top|center_horizontal"
+                        android:layout_marginEnd="12dp"
+                        android:layout_marginStart="12dp">
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="ساعة"
+                            android:textSize="16dp"
+                            android:textColor="#888888"
+                            android:gravity="center"
+                            />
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="   "
+                            android:textSize="25dp"
+                            android:textColor="#888888"
+                            android:gravity="center"
+                            />
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="دقيقية"
+                            android:textSize="16dp"
+                            android:textColor="#888888"
+                            android:gravity="center"
+                            />
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="   "
+                            android:textSize="25dp"
+                            android:textColor="#888888"
+                            android:gravity="center" />
+                        <TextView
+                            android:id="@+id/secoundTv"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="ثانية"
+                            android:textSize="16dp"
+                            android:textColor="#888888"
+                            android:gravity="center" />
+                    </androidx.appcompat.widget.LinearLayoutCompat>
+                </androidx.appcompat.widget.LinearLayoutCompat>
+                <View
+                    android:layout_width="3dp"
+                    android:layout_height="match_parent"
+                    android:background="#888888"/>
+                <LinearLayout
+                    android:layout_width="80dp"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:layout_marginEnd="12dp"
+                    android:layout_marginStart="12dp"
+                    android:orientation="vertical">
+                    <TextView
+
+                        android:id="@+id/caloriesCountFreeGoal"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="25dp"
+                        android:textColor="@color/black"
+                        android:gravity="center_horizontal"
+                        android:text="0" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:textSize="16dp"
+                        android:textColor="#888888"
+                        android:gravity="center"
+                        android:text="كالوري" />
+                </LinearLayout>
+
+
+
+
+            </androidx.appcompat.widget.LinearLayoutCompat>
+
+        </androidx.cardview.widget.CardView>
+    </androidx.appcompat.widget.LinearLayoutCompat>
+
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="30dp">
+        <ProgressBar
+            android:id="@+id/progress_VerifyAccount"
+            style="?android:attr/progressBarStyleHorizontal"
+            android:layout_width="300dp"
+            android:layout_height="300dp"
+            android:max="60"
+            android:progress="60"
+            android:progressDrawable="@drawable/progress_shap"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent">
+        </ProgressBar>
+
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/freeGoalStartImage"
+            android:layout_width="210dp"
+            android:layout_height="210dp"
+            android:src="@drawable/personlogo"
+            app:civ_border_color="#FFFFFF"
+            app:civ_border_width="2dp"
+            tools:ignore="MissingClass"
+            app:layout_constraintTop_toTopOf="@+id/progress_VerifyAccount"
+            app:layout_constraintStart_toStartOf="@id/progress_VerifyAccount"
+            app:layout_constraintEnd_toEndOf="@id/progress_VerifyAccount"
+            app:layout_constraintBottom_toBottomOf="@id/progress_VerifyAccount"/>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="30dp"
+        android:layout_weight="1"
+        android:gravity="center_horizontal"
+        android:orientation="horizontal">
+
+        <LinearLayout
+            android:id="@+id/finishBut"
+            android:layout_width="120dp"
+            android:orientation="horizontal"
+            android:gravity="center"
+            android:background="@drawable/stop_but_backgrond"
+            android:layout_height="45dp">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/white"
+                android:text="انهاء"/>
+            <ImageView
+                android:layout_width="25dp"
+                android:layout_height="25dp"
+                android:layout_marginStart="5dp"
+                android:scrollbarSize="18dp"
+                android:src="@drawable/stop_24"/>
+
+        </LinearLayout>
+
+        <View
+            android:layout_width="15dp"
+            android:layout_height="wrap_content"/>
+        <LinearLayout
+            android:id="@+id/stopBut"
+            android:layout_width="120dp"
+            android:orientation="horizontal"
+            android:gravity="center"
+            android:background="@drawable/finish_but_backgrond"
+            android:layout_height="45dp">
+
+
+            <TextView
+                android:id="@+id/stopTv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/white"
+                android:text="توقيف"/>
+            <ImageView
+                android:id="@+id/stioIcon"
+                android:layout_width="25dp"
+                android:layout_height="25dp"
+                android:layout_marginStart="5dp"
+                android:scrollbarSize="18dp"
+                android:src="@drawable/pause_24"/>
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+</androidx.appcompat.widget.LinearLayoutCompat>
+</layout>

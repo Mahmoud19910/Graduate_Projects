@@ -23,11 +23,13 @@ public class Exercices_Adapter extends RecyclerView.Adapter<Exercices_ViewHolder
     private int layout;
     private Context context;
     private List<Sports_Exercises> arrayList;
+    private String uid;
 
-    public Exercices_Adapter(int layout, Context context, List<Sports_Exercises> arrayList) {
+    public Exercices_Adapter(int layout, Context context, List<Sports_Exercises> arrayList,String uid) {
         this.layout = layout;
         this.context = context;
         this.arrayList = arrayList;
+        this.uid=uid;
     }
 
     @NonNull
@@ -48,6 +50,7 @@ public class Exercices_Adapter extends RecyclerView.Adapter<Exercices_ViewHolder
             public void onClick(View v) {
                 Intent intent=new Intent(context , Exercices_Activity.class);
                 intent.putExtra("obj" , arrayList.get(position));
+                intent.putExtra("uid" , uid);
                 context.startActivity(intent);
 
             }

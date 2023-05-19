@@ -1,7 +1,7 @@
 <resources>
     <string name="app_name">Fitness App</string>
-    <string name="sign_UnderLine"><u>تسجيل الدخول</u>.</string>
-    <string name="new_user">مستخدم جديد</string>
+    <string name="sign_UnderLine" translatable="false"><u>تسجيل الدخول</u>.</string>
+    <string name="new_user" translatable="false">مستخدم جديد</string>
     <string name="you_have_account">هل لديك حساب ؟</string>
     <string name="privacy"><u>الشروط و القوانين</u>.</string>
     <string name="signIn">تسجيل دخول</string>
@@ -22,6 +22,11 @@
     <string name="Gender">ما هو جنسك :</string>
     <string name="illness">هل مصاب بالسكري :</string>
     <string name="steps"> خطواتي</string>
+    <string name="caloriesDay">0</string>
+    <string name="caloriesBurned">0</string>
+    <string name="calorie">0</string>
+    <string name="weight">0</string>
+    <string name="water">0</string>
     <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="hello_blank_fragment" translatable="false">Hello blank fragment</string>
 </resources>

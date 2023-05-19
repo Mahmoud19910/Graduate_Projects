@@ -30,6 +30,7 @@ public class Walking_MVVM extends AndroidViewModel {
     public MutableLiveData<String> getIme(){
         return  time;
     }
+
     public void setAllData(String distance , String speed , String caloriedBurnd , String steps){
         ArrayList<String> list = new ArrayList<>();
         list.add(distance);

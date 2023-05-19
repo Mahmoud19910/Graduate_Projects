@@ -6,6 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".Activityes.Exercices_Activity"
+    android:layoutDirection="ltr"
     android:orientation="vertical">
     <androidx.appcompat.widget.LinearLayoutCompat
         android:layout_width="match_parent"
@@ -16,6 +17,7 @@
         android:paddingEnd="@dimen/_10sdp"
         android:orientation="horizontal">
         <ImageView
+            android:id="@+id/backActivityExercices"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:src="@drawable/back_ios_new_24"/>
@@ -37,17 +39,20 @@
         android:gravity="center_vertical"
         tools:ignore="MissingClass">
         <androidx.appcompat.widget.LinearLayoutCompat
+            android:id="@+id/freeGoal_Layout"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:gravity="center"
             android:layout_weight="1"
             android:orientation="vertical">
             <ImageView
+                android:id="@+id/freeGoal_Icon"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:src="@drawable/runing_24"
                />
             <TextView
+                android:id="@+id/freeGoal_Text"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:gravity="center"
@@ -55,19 +60,22 @@
                 style="@style/describtion_Black_Color"
                 android:text="هدف حر"/>
         </androidx.appcompat.widget.LinearLayoutCompat>
+
         <androidx.appcompat.widget.LinearLayoutCompat
+            android:id="@+id/caloriesGoal_Layout"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:gravity="center"
             android:layout_weight="1"
-
             android:orientation="vertical">
             <ImageView
+                android:id="@+id/caloriesGoal_Icon"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:src="@drawable/fire_24"
                 />
             <TextView
+                android:id="@+id/caloriesGoal_Text"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:gravity="center"
@@ -77,6 +85,7 @@
         </androidx.appcompat.widget.LinearLayoutCompat>
 
         <androidx.appcompat.widget.LinearLayoutCompat
+            android:id="@+id/timeGoal_Layout"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:gravity="center"
@@ -84,11 +93,13 @@
 
             android:orientation="vertical">
             <ImageView
+                android:id="@+id/timeGoal_Icon"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:src="@drawable/alarm"
                 />
             <TextView
+                android:id="@+id/timeGoal_Text"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:gravity="center"

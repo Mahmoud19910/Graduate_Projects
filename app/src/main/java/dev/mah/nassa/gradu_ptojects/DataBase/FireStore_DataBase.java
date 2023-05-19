@@ -11,6 +11,7 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -25,6 +26,7 @@ import java.util.Map;
 
 import dev.mah.nassa.gradu_ptojects.Activityes.Home_Activity;
 import dev.mah.nassa.gradu_ptojects.Constants.SharedFunctions;
+import dev.mah.nassa.gradu_ptojects.Modles.Exercise_Details;
 import dev.mah.nassa.gradu_ptojects.Modles.Sports_Exercises;
 import dev.mah.nassa.gradu_ptojects.Modles.UsersInfo;
 import dev.mah.nassa.gradu_ptojects.Modles.Users_Health_Info;
@@ -222,7 +224,8 @@ public class FireStore_DataBase {
                             String name = (String) documentSnapshot.getData().get("exerciseName");
                             String id = (String) documentSnapshot.getData().get("id");
                             String imGif =(String) documentSnapshot.getData().get("imGif");
-                            list.add(new Sports_Exercises(id , name , description , imGif));
+                            String metValue =(String) documentSnapshot.getData().get("metValue");
+                            list.add(new Sports_Exercises(id , name , description , imGif,metValue));
                         }
                         emitter.onNext(list);
                         emitter.onComplete();
@@ -239,5 +242,53 @@ public class FireStore_DataBase {
         });
     }
 
+    public static void update(String collection , String id , UsersInfo usersInfo){
+
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+        CollectionReference collectionRef = db.collection(collection);
+
+// Create a query to find documents with name equal to "Mahmoud"
+        Query query = collectionRef.whereEqualTo("uid", id);
+
+// Execute the query
+        query.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                if (task.isSuccessful()) {
+                    for (DocumentSnapshot document : task.getResult()) {
+                        // Update each matching document
+                        document.getReference().set(usersInfo)
+                                .addOnCompleteListener(new OnCompleteListener<Void>() {
+                                    @Override
+                                    public void onComplete(@NonNull Task<Void> task) {
+                                        if (task.isSuccessful()) {
+                                            // Document updated successfully
+                                        } else {
+                                            // Error updating document
+                                        }
+                                    }
+                                });
+                    }
+                } else {
+                    // Error getting documents
+                }
+            }
+        });
+    }
+
+    public static void insertOrUpdateExerciseDetails(Exercise_Details exercise_details , Context context){
+        firestore.collection("ExerciseDetails").add(exercise_details).addOnCompleteListener(new OnCompleteListener<DocumentReference>() {
+            @Override
+            public void onComplete(@NonNull Task<DocumentReference> task) {
+               task.addOnFailureListener(new OnFailureListener() {
+                   @Override
+                   public void onFailure(@NonNull Exception e) {
+                       Toast.makeText(context, e.getMessage().toString(), Toast.LENGTH_SHORT).show();
+                   }
+               });
+            }
+        });
+
+    }
 
 }

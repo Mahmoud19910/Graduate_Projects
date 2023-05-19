@@ -9,13 +9,22 @@
         android:gravity="center_horizontal"
         tools:context=".Fragments.Fragment_CaloriesGoal">
 
+        <androidx.cardview.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="5dp">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:orientation="vertical">
         <TextView
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textSize="25dp"
-            android:text="حدد هدفك"
+            android:gravity="center"
+            android:text=" حدد هدفك بالزمن"
             style="@style/describtion_ShadowPink_Color"/>
-
         <androidx.appcompat.widget.LinearLayoutCompat
             android:layout_marginTop="30dp"
             android:layout_width="match_parent"
@@ -23,6 +32,7 @@
             android:gravity="center_horizontal"
             android:orientation="horizontal">
             <ImageView
+                android:id="@+id/decreaseTimeBut"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
@@ -36,9 +46,10 @@
                 android:layout_marginStart="12dp"
                 android:background="@drawable/corner_raduis_card_fill">
                 <TextView
+                    android:id="@+id/hourseTv"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="01"
+                    android:text="00"
                     android:gravity="center"
                     android:layout_weight="1"
                     style="@style/title_White_Color"/>
@@ -52,6 +63,7 @@
 
                     style="@style/title_White_Color"/>
                 <TextView
+                    android:id="@+id/minutesTv"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="30"
@@ -63,6 +75,7 @@
             </androidx.appcompat.widget.LinearLayoutCompat>
 
             <ImageView
+                android:id="@+id/increaseTimeBut"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
@@ -71,61 +84,56 @@
 
         </androidx.appcompat.widget.LinearLayoutCompat>
         <androidx.appcompat.widget.LinearLayoutCompat
-            android:layout_width="150dp"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            android:gravity="top"
-            android:padding="8dp">
+            android:gravity="center_horizontal">
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="ساعة"
                 android:gravity="top"
-                android:layout_weight="1"
                 style="@style/describtion_Black_Color"/>
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text=""
+                android:text="       "
                 android:gravity="top"
-
-                android:layout_weight="1"
-
                 style="@style/title_White_Color"/>
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="دقيقية"
                 android:gravity="top"
-
-                android:layout_weight="1"
-
                 style="@style/describtion_Black_Color"/>
         </androidx.appcompat.widget.LinearLayoutCompat>
+        </LinearLayout>
+        </androidx.cardview.widget.CardView>
 
-        <!-- <de.hdodenhof.circleimageview.CircleImageView-->
-        <!--     android:id="@+id/trainingImage"-->
-        <!--     android:layout_width="170dp"-->
-        <!--     android:layout_height="170dp"-->
-        <!--     android:layout_marginTop="30dp"-->
-        <!--     android:layout_gravity="center"-->
-        <!--     android:src="@drawable/personlogo"-->
-        <!--     app:civ_border_color="#3A7FC0"-->
-        <!--     app:civ_border_width="2dp" />-->
-        <com.mikhaellopez.circularimageview.CircularImageView
-            android:id="@+id/trainingImage"
-            android:layout_width="180dp"
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="180dp"
+            android:layout_marginTop="30dp"
+            android:padding="3dp"
+            android:elevation="5dp"
+            android:background="@drawable/corner_raduis_card_fill_topright_bottom_left">
 
-            android:src="@drawable/personlogo"
-            app:civ_border_color="#3A7FC0"
-            app:civ_border_width="4dp"
-            app:civ_shadow="true"
-            app:civ_shadow_radius="10dp"
-            app:civ_shadow_color="#3f51b5"/>
+            <com.rishabhharit.roundedimageview.RoundedImageView
+                android:id="@+id/timeGoalImage"
+                android:layout_width="match_parent"
+                android:layout_height="180dp"
+                app:cornerRadius="25dp"
+                app:roundedCorners="bottomLeft|topRight"
+                android:src="@drawable/calori_card_photo"
+                android:scaleType="fitXY"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                />
+        </LinearLayout>
 
         <androidx.appcompat.widget.AppCompatButton
-            android:id="@+id/startBut"
+            android:id="@+id/timeGoalBut"
             style="@style/default_Button"
             android:layout_width="match_parent"
             android:layout_height="45dp"
