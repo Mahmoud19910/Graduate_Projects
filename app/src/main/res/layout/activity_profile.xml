@@ -41,8 +41,11 @@
                     android:layout_height="wrap_content"
                     android:text="حسابي"
                     android:textSize="@dimen/_18ssp"
-                    android:textStyle="bold"
                     android:textColor="@color/white"
+                    android:shadowColor="@color/black"
+                    android:shadowDx="0"
+                    android:shadowDy="3"
+                    android:shadowRadius="6"
                     android:layout_gravity="center"
                     />
 
@@ -81,7 +84,7 @@
                                 android:layout_gravity="center_horizontal"
                                 android:scaleType="centerCrop"
                                 android:src="@drawable/user"
-                                app:civ_border_color="#3f51b5"
+                                app:civ_border_color="#3A7FC0"
                                 app:civ_border_width="@dimen/_4sdp"
                                 app:civ_shadow="true"
                                 app:civ_shadow_color="#3f51b5"
@@ -185,8 +188,30 @@
                         android:layout_height="wrap_content"
                         android:orientation="vertical"
                         android:layout_gravity="center"
-                        android:layout_marginTop="@dimen/_30sdp"
+                        android:layout_marginTop="@dimen/_5sdp"
                         android:layout_marginBottom="@dimen/_30sdp">
+                        <LinearLayout
+                            android:orientation="horizontal"
+                            android:paddingLeft="@dimen/_25sdp"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginBottom="@dimen/_20sdp"
+                            >
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="مستوى نشاطك :  "
+                                android:layout_gravity="center_vertical"
+                                android:textStyle="bold"
+                                />
+                            <TextView
+                                android:id="@+id/profile_tv_activityLeve"
+                                android:layout_gravity="center_vertical"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text=""
+                                tools:ignore="TouchTargetSizeCheck,SpeakableTextPresentCheck" />
+                        </LinearLayout>
                         <LinearLayout
                             android:orientation="horizontal"
                             android:paddingLeft="@dimen/_25sdp"
@@ -195,6 +220,7 @@
                             <ImageView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
+                                android:layout_gravity="center_vertical"
                                 android:src="@drawable/email_profile"/>
                             <TextView
                                 android:id="@+id/profile_tv_email"
@@ -202,7 +228,7 @@
                                 android:layout_gravity="center_vertical"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:paddingStart="@dimen/_20sdp"
+                                android:paddingStart="@dimen/_5sdp"
                                 android:text="SarmedMohammed@gmail.com"/>
                         </LinearLayout>
                         <LinearLayout
@@ -214,6 +240,7 @@
                             <ImageView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
+                                android:layout_gravity="center_vertical"
                                 android:src="@drawable/phone_android_24"/>
                             <TextView
                                 android:id="@+id/profile_tv_phone"
@@ -221,7 +248,7 @@
                                 android:layout_gravity="center_vertical"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:paddingStart="@dimen/_20sdp"
+                                android:paddingStart="@dimen/_5sdp"
                                 android:text="+970 569052079"/>
                         </LinearLayout>
                         <LinearLayout
@@ -230,15 +257,19 @@
                             android:paddingLeft="@dimen/_25sdp"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content">
-
-                            <Spinner
-                                android:id="@+id/profile_spn"
+                            <ImageView
+                                android:layout_width="@dimen/_40sdp"
+                                android:layout_height="@dimen/_24sdp"
+                                android:layout_gravity="center_vertical"
+                                android:scaleType="fitEnd"
+                                android:src="@drawable/gender"/>
+                            <TextView
+                                android:id="@+id/profile_tv_gender"
+                                android:textStyle="bold"
+                                android:layout_gravity="center_vertical"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:layout_gravity="center_vertical"
-                                android:text="مستوى النشاط"
-                                android:textStyle="bold"
-                                tools:ignore="TouchTargetSizeCheck,SpeakableTextPresentCheck" />
+                                android:text=""/>
                         </LinearLayout>
                     </LinearLayout>
 

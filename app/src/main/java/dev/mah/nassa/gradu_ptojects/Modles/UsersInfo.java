@@ -7,7 +7,7 @@ import androidx.room.PrimaryKey;
 import java.io.Serializable;
 
 @Entity(tableName = "usersTable")
-public class UsersInfo {
+public class UsersInfo implements Serializable{
     @PrimaryKey
     @NonNull
     private String uid ;
@@ -24,6 +24,15 @@ public class UsersInfo {
     private String gender ;
     private String photo ;
     private String email;
+    private int itemSpn;
+
+    public int getItemSpn() {
+        return itemSpn;
+    }
+
+    public void setItemSpn(int itemSpn) {
+        this.itemSpn = itemSpn;
+    }
 
     public UsersInfo() {
     }
@@ -42,6 +51,17 @@ public class UsersInfo {
         this.photo = photo;
         this.email = email;
     }
+    public UsersInfo(String uid, String name, String phone,  String eage, String length, String weight, String email) {
+        this.uid = uid;
+        this.name = name;
+        this.phone = phone;
+        this.eage = eage;
+        this.length = length;
+        this.weight = weight;
+        this.email = email;
+    }
+
+
     public String getUid() {
         return uid;
     }
