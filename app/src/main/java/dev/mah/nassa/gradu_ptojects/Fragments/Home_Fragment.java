@@ -1,5 +1,6 @@
 package dev.mah.nassa.gradu_ptojects.Fragments;
 
+import android.content.res.Configuration;
 import android.os.Bundle;
 
 import androidx.annotation.Nullable;
@@ -19,8 +20,10 @@ import com.google.firebase.firestore.auth.User;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 import dev.mah.nassa.gradu_ptojects.Activityes.Home_Activity;
+import dev.mah.nassa.gradu_ptojects.Constants.LanguageUtils;
 import dev.mah.nassa.gradu_ptojects.Constants.PersonActivityArray;
 import dev.mah.nassa.gradu_ptojects.Constants.Vital_Equations;
 import dev.mah.nassa.gradu_ptojects.MVVM.UsersHealthInfoViewModel;
@@ -55,6 +58,8 @@ public class Home_Fragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         binding=FragmentHomeBinding.inflate(inflater);
+
+        LanguageUtils.changeLanguage(requireContext(), "en");
         return binding.getRoot();
     }
 

@@ -1,0 +1,172 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:tools="http://schemas.android.com/tools"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+<androidx.appcompat.widget.LinearLayoutCompat
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layoutDirection="ltr"
+    android:orientation="vertical"
+    tools:context=".Fragments.Fragment_StartTraining_CaloriesGoal">
+
+    <TextView
+        android:id="@+id/caloriesCount"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="25dp"
+        android:textColor="@color/black"
+        android:gravity="center_horizontal"
+        android:text="0" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="25dp"
+        android:layout_marginTop="15dp"
+        android:textColor="#6C6B6B"
+        android:gravity="center_horizontal"
+        android:text="كالوري" />
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="30dp">
+        <ProgressBar
+            android:id="@+id/progress_VerifyAccount"
+            style="?android:attr/progressBarStyleHorizontal"
+            android:layout_width="330dp"
+            android:layout_height="330dp"
+            android:max="60"
+            android:progress="0"
+            android:progressDrawable="@drawable/progress_shap"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent">
+        </ProgressBar>
+
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/caloriStartImage"
+            android:layout_width="240dp"
+            android:layout_height="240dp"
+            android:scaleType="centerCrop"
+            android:src="@drawable/personlogo"
+            app:civ_border_color="#FFFFFF"
+            app:civ_border_width="2dp"
+            app:layout_constraintBottom_toBottomOf="@id/progress_VerifyAccount"
+            app:layout_constraintEnd_toEndOf="@id/progress_VerifyAccount"
+            app:layout_constraintStart_toStartOf="@id/progress_VerifyAccount"
+            app:layout_constraintTop_toTopOf="@+id/progress_VerifyAccount"
+            tools:ignore="MissingClass" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <androidx.appcompat.widget.LinearLayoutCompat
+        android:layout_marginTop="30dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_horizontal"
+        android:orientation="horizontal">
+        <androidx.cardview.widget.CardView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="6dp"
+                android:background="#E4E4E4"
+                android:orientation="horizontal">
+
+                <androidx.appcompat.widget.LinearLayoutCompat
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:orientation="horizontal"
+                    android:gravity="center"
+                    android:layoutDirection="rtl"
+                    android:layout_marginEnd="12dp"
+                    android:layout_marginStart="12dp">
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/timer2_24"/>
+                    <TextView
+                        android:id="@+id/timeCaloriTv"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="00"
+                        android:layout_marginStart="6dp"
+                        android:gravity="center"
+                        android:layout_weight="1" />
+
+                </androidx.appcompat.widget.LinearLayoutCompat>
+            </LinearLayout>
+        </androidx.cardview.widget.CardView>
+    </androidx.appcompat.widget.LinearLayoutCompat>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="30dp"
+        android:layout_weight="1"
+        android:gravity="center_horizontal"
+        android:orientation="horizontal">
+
+        <LinearLayout
+            android:id="@+id/finishBut"
+            android:layout_width="120dp"
+            android:orientation="horizontal"
+            android:gravity="center"
+            android:background="@drawable/stop_but_backgrond"
+            android:layout_height="45dp">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/white"
+                android:text="انهاء"/>
+            <ImageView
+                android:layout_width="25dp"
+                android:layout_height="25dp"
+                android:layout_marginStart="5dp"
+                android:scrollbarSize="18dp"
+                android:src="@drawable/stop_24"/>
+
+        </LinearLayout>
+
+        <View
+            android:layout_width="15dp"
+            android:layout_height="wrap_content"/>
+        <LinearLayout
+            android:id="@+id/stopBut"
+            android:layout_width="120dp"
+            android:orientation="horizontal"
+            android:gravity="center"
+            android:background="@drawable/finish_but_backgrond"
+            android:layout_height="45dp">
+
+
+            <TextView
+                android:id="@+id/stopTv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/white"
+                android:text="توقيف"/>
+            <ImageView
+                android:id="@+id/stioIcon"
+                android:layout_width="25dp"
+                android:layout_height="25dp"
+                android:layout_marginStart="5dp"
+                android:scrollbarSize="18dp"
+                android:src="@drawable/pause_24"/>
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+
+
+
+
+
+
+
+</androidx.appcompat.widget.LinearLayoutCompat>
+</layout>
