@@ -86,6 +86,16 @@ public class Home_Activity extends AppCompatActivity implements View.OnClickList
         binding.parentLayoutHome.setTextDirection(View.TEXT_DIRECTION_ANY_RTL);
 
 
+     //الانتقال الى ال البروفايل
+        binding.userImage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(Home_Activity.this, "User", Toast.LENGTH_SHORT).show();
+                startActivity(new Intent(getBaseContext() , Profile_Activity.class));
+            }
+        });
+     // Shared Prefrences
+     saveUid(uid);
         Intent intent = getIntent();
         uid = intent.getStringExtra("uid");
 

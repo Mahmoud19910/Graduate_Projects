@@ -3,6 +3,7 @@ package dev.mah.nassa.gradu_ptojects.DataBase;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.util.Log;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -291,4 +292,47 @@ public class FireStore_DataBase {
 
     }
 
-}
+    //inside this method we are passing our updated values
+    //تحتاج الميثود ثلاث مدخلات
+    //1 - اسم الكولكشن الموجود في الفاير ستور
+    //2- ال id الخاص بالاوبجكت
+    //الاوبجكت بعد تعديله
+    public static void updateObject(String collection,String uid,Object object) {
+
+            CollectionReference collectionRef = firestore.collection(collection);
+
+            // Create a query to find documents with uid equal to "uid"
+            Query query = collectionRef.whereEqualTo("uid", uid);
+
+            // Execute the query
+            query.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                @Override
+                public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                    if (task.isSuccessful()) {
+                        for (DocumentSnapshot document : task.getResult()) {
+                            // Update each matching document
+                            document.getReference().set(object)
+                                    .addOnCompleteListener(new OnCompleteListener<Void>() {
+                                        @Override
+                                        public void onComplete(@NonNull Task<Void> task) {
+                                            if (task.isSuccessful()) {
+                                                // Document updated successfully
+                                                Log.d("FirestoreUpdate", "Document updated successfully!");
+                                            } else {
+                                                // Error updating document
+                                                Log.e("FirestoreUpdate", "Error updating document", task.getException());
+                                            }
+                                        }
+                                    });
+                        }
+                    } else {
+                        // Error getting documents
+                        Log.e("FirestoreQuery", "Error getting documents", task.getException());
+                    }
+                }
+            });
+        }
+
+    }
+
+
