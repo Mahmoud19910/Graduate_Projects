@@ -14,6 +14,8 @@ import android.text.TextUtils;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
@@ -30,6 +32,7 @@ import java.util.UUID;
 import dev.mah.nassa.gradu_ptojects.Constants.PersonActivityArray;
 import dev.mah.nassa.gradu_ptojects.DataBase.FireStore_DataBase;
 import dev.mah.nassa.gradu_ptojects.Modles.UsersInfo;
+import dev.mah.nassa.gradu_ptojects.R;
 import dev.mah.nassa.gradu_ptojects.databinding.ActivityProfileEditeBinding;
 
 public class ProfileEdite_Activity extends AppCompatActivity implements AdapterView.OnItemSelectedListener{
@@ -48,10 +51,8 @@ public class ProfileEdite_Activity extends AppCompatActivity implements AdapterV
     private FirebaseStorage storage;
     private StorageReference storageReference;
 
-    //متغير للحصول على قيمة spinner الحالية
-    String nameSp;
-    int i;
-
+    private String activityLeveSpin,gender;
+    private boolean checkGender = false;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -65,6 +66,22 @@ public class ProfileEdite_Activity extends AppCompatActivity implements AdapterV
         //الحصول على بيانات المستخدم
         Intent intent = getIntent();
         usersInfo = (UsersInfo) intent.getSerializableExtra("profile");
+
+        // Uncheck or reset the radio buttons initially
+         binding.groupradio.clearCheck();
+         binding.groupradio.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+             @Override
+             public void onCheckedChanged(RadioGroup group, int checkedId) {
+                 // The flow will come here when
+                 // any of the radio buttons in the radioGroup
+                 // has been clicked
+
+                 // Check which radio button has been clicked
+
+             }
+         });
+
+
         //Spinner Ad
         ArrayAdapter ad
                 = new ArrayAdapter(
@@ -92,17 +109,17 @@ public class ProfileEdite_Activity extends AppCompatActivity implements AdapterV
 
                 // validating the text fields if empty or not.
                 if(TextUtils.isEmpty(binding.profileEditTvName.getText())){
-                    binding.profileEditTvName.setError("Please enter Name");
+                    binding.profileEditTvName.setError("ارجاء ادخال الأسم");
                 } else if (TextUtils.isEmpty(binding.profileEditTvPhone.getText())) {
-                    binding.profileEditTvPhone.setError("Please enter Phone");
+                    binding.profileEditTvPhone.setError("ارجاء ادخال رقم الهاتف");
                 } else if (TextUtils.isEmpty(binding.profileEditTvEmail.getText())) {
-                    binding.profileEditTvEmail.setError("Please enter Email");
+                    binding.profileEditTvEmail.setError("ارجاء ادخال حسابك جيميل");
                 } else if (TextUtils.isEmpty(binding.profileEditTvWeight.getText())){
-                    binding.profileEditTvWeight.setError("Please enter Weight");
+                    binding.profileEditTvWeight.setError("ارجاء ادخال وزنك");
                 } else if (TextUtils.isEmpty( binding.profileEditTvHeight.getText())) {
-                    binding.profileEditTvHeight.setError("Please enter height");
+                    binding.profileEditTvHeight.setError("ارجاء ادخال طولك");
                 }else if (TextUtils.isEmpty( binding.profileEditTvAge.getText())){
-                    binding.profileEditTvAge.setError("Please enter age");
+                    binding.profileEditTvAge.setError("ارجاء ادخال عمرك");
                 }
                 else {
                     // calling method to add data to Firebase Firestore.
@@ -112,7 +129,7 @@ public class ProfileEdite_Activity extends AppCompatActivity implements AdapterV
                             binding.profileEditTvWeight.getText().toString(),binding.profileEditTvEmail.getText().toString());
 
                     usersInfoUpdate.setPhoto(usersInfo.getPhoto());
-                    usersInfoUpdate.setActivityLeve(nameSp);
+                    usersInfoUpdate.setActivityLeve(activityLeveSpin);
                     usersInfoUpdate.setGender(usersInfo.getGender());
                     usersInfoUpdate.setPass(usersInfo.getPass());
                     if (imageUri == null) {
@@ -213,6 +230,7 @@ public class ProfileEdite_Activity extends AppCompatActivity implements AdapterV
             }
         }
     }
+
     // UploadImage method
     private void uploadImage() {
         if (imageUri != null) {
@@ -283,13 +301,32 @@ public class ProfileEdite_Activity extends AppCompatActivity implements AdapterV
         }
     }
 
+    //الحصول على قيمة ال position Spinner
     @Override
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-        nameSp = PersonActivityArray.getPersonActivityList().get(position);
+        activityLeveSpin = PersonActivityArray.getPersonActivityList().get(position);
     }
 
     @Override
     public void onNothingSelected(AdapterView<?> parent) {
 
+    }
+
+
+    //Listener Radio
+    public void onRadioButtonClicked(View view) {
+
+        // Check which radio button was clicked
+        switch(view.getId()) {
+            case R.id.male:
+                gender = binding.radioButtonMale.getText().toString();
+                checkGender = true;
+                break;
+
+            case R.id.female:
+                gender = binding.radioButtonFemale.getText().toString();
+                checkGender = true;
+                break;
+        }
     }
 }
