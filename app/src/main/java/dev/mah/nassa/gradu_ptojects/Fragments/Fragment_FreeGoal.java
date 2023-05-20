@@ -2,65 +2,67 @@ package dev.mah.nassa.gradu_ptojects.Fragments;
 
 import android.os.Bundle;
 
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
+import com.rishabhharit.roundedimageview.RoundedImageView;
+
+import dev.mah.nassa.gradu_ptojects.Constants.LanguageUtils;
+import dev.mah.nassa.gradu_ptojects.Constants.SharedFunctions;
+import dev.mah.nassa.gradu_ptojects.Modles.Sports_Exercises;
 import dev.mah.nassa.gradu_ptojects.R;
+import dev.mah.nassa.gradu_ptojects.databinding.FragmentFreeGoalBinding;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link Fragment_FreeGoal#newInstance} factory method to
- * create an instance of this fragment.
- */
-public class Fragment_FreeGoal extends Fragment {
 
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
+public class Fragment_FreeGoal extends Fragment implements View.OnClickListener {
 
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
-
-    public Fragment_FreeGoal() {
-        // Required empty public constructor
-    }
-
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment Fragment_FreeGoal.
-     */
-    // TODO: Rename and change types and number of parameters
-    public static Fragment_FreeGoal newInstance(String param1, String param2) {
-        Fragment_FreeGoal fragment = new Fragment_FreeGoal();
-        Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
-        return fragment;
-    }
-
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
-    }
+    private FragmentFreeGoalBinding binding;
+    private Sports_Exercises sports_exercises;
+    private int indexFrag;
+    private String uid;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        binding = FragmentFreeGoalBinding.inflate(inflater, container, false); // Assign the inflated binding object to 'binding'
+        View view = binding.getRoot();
+        LanguageUtils.changeLanguage(getContext(), "en");
+        Bundle bundle = getArguments();
+        sports_exercises = (Sports_Exercises) bundle.getSerializable("obj");
+        indexFrag =  bundle.getInt("indexFrag");
+        uid = bundle.getString("uid");
+
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment__free_goal, container, false);
+        return view;
+    }
+
+    @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        RoundedImageView freeGoalImage = binding.freeGoalImage;
+
+        Glide.with(getContext())
+                .asGif() // Enable support for GIF type
+                .load(sports_exercises.getImageUrl())
+                .into(freeGoalImage);
+
+        binding.freeGoalStartBut.setOnClickListener(this);
+
+    }
+
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()){
+            case R.id.freeGoalStartBut:
+                SharedFunctions.dialogStartTraining(getContext() , indexFrag , sports_exercises , null , uid);
+                SharedFunctions.countDownTimer.start();
+                break;
+        }
     }
 }

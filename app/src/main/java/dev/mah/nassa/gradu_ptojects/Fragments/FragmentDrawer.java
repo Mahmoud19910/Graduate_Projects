@@ -11,6 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import dev.mah.nassa.gradu_ptojects.Activityes.ActivitesStats;
 import dev.mah.nassa.gradu_ptojects.Activityes.SignIn_Activity;
 import dev.mah.nassa.gradu_ptojects.Constants.SharedFunctions;
 import dev.mah.nassa.gradu_ptojects.FireBase_Authentication.Gmai_Auth;
@@ -33,8 +34,9 @@ public class FragmentDrawer extends Fragment {
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
-        TextView textView = getActivity().findViewById(R.id.signOut);
-        textView.setOnClickListener(new View.OnClickListener() {
+        TextView signOut = getActivity().findViewById(R.id.signOut);
+        TextView stats = getActivity().findViewById(R.id.statistics);
+        signOut.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
@@ -43,6 +45,13 @@ public class FragmentDrawer extends Fragment {
                 SharedFunctions.isSignIn(false, getContext());
                 getActivity().finish();
 
+            }
+        });
+
+        stats.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(getContext() , ActivitesStats.class));
             }
         });
     }

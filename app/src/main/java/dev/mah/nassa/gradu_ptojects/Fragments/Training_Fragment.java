@@ -31,8 +31,15 @@ import dev.mah.nassa.gradu_ptojects.databinding.FragmentTrainingBinding;
  */
 public class Training_Fragment extends Fragment {
 
-    FireStore_MVVM fireStore_mvvm;
-    FragmentTrainingBinding binding;
+    private FireStore_MVVM fireStore_mvvm;
+    private FragmentTrainingBinding binding;
+    private String uid;
+    public Training_Fragment(String uid){
+        this.uid=uid;
+    }
+    public Training_Fragment( ){
+
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -44,16 +51,11 @@ public class Training_Fragment extends Fragment {
         fireStore_mvvm.getAllSportsExercises(new OnSuccessListener<List<Sports_Exercises>>() {
             @Override
             public void onSuccess(List<Sports_Exercises> sports_exercises) {
-                Exercices_Adapter exercices_adapter  = new Exercices_Adapter(R.layout.exercices_item_design , getContext() , sports_exercises);
+                Exercices_Adapter exercices_adapter  = new Exercices_Adapter(R.layout.exercices_item_design , getContext() , sports_exercises,uid);
                 LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
                 linearLayoutManager.setOrientation(linearLayoutManager.VERTICAL);
                 binding.recyclerExercices.setLayoutManager(linearLayoutManager);
                 binding.recyclerExercices.setAdapter(exercices_adapter);
-
-                for(Sports_Exercises data : sports_exercises){
-                    Toast.makeText(getContext(), data.getId(), Toast.LENGTH_SHORT).show();
-                    Toast.makeText(getContext(), data.getName(), Toast.LENGTH_SHORT).show();
-                }
             }
         });
 
