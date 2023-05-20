@@ -71,7 +71,6 @@ public class Home_Fragment extends Fragment {
         usersHealthInfoViewModel=ViewModelProviders.of(Home_Fragment.this).get(UsersHealthInfoViewModel.class);
         progressiveGauge= binding.awesomeSpeedomete;
 
-        Toast.makeText(getContext(), uid+"UID", Toast.LENGTH_SHORT).show();
     usersViewModel.getUsersByUid(uid).observe(this, new Observer<UsersInfo>() {
         @Override
         public void onChanged(UsersInfo usersInfo) {
@@ -82,18 +81,21 @@ public class Home_Fragment extends Fragment {
 
 
 
-    usersHealthInfoViewModel.getUsersHealthById(uid).observe(this, new Observer<Users_Health_Info>() {
-        @Override
-        public void onChanged(Users_Health_Info users_health_info) {
+        usersHealthInfoViewModel.getUsersHealthById(uid).observe(this, new Observer<Users_Health_Info>() {
+            @Override
+            public void onChanged(Users_Health_Info users_health_info) {
 
-            binding.calorDailyRequirment.setText(String.format("kca "+"%.2f" , users_health_info.getCaloriesNumber())+"  ");
-                        binding.waterQuan.setText(String.format("لتر "+"%.2f" , users_health_info.getWaterDrink())+ "  ");
-                        binding.burnedCalories.setText(String.format("kca "+"%.2f" , users_health_info.getBurnedCaloriesNumber())+ "  ");
-                        binding.caloriesGained.setText(String.format("kca "+"%.2f" , users_health_info.getCaloriesGained())+ "  ");
+                Toast.makeText(getContext(), users_health_info.getUserId()+ "Home Uid", Toast.LENGTH_LONG).show();
+                binding.calorDailyRequirment.setText(String.format("kca "+"%.2f" , users_health_info.getCaloriesNumber())+"  ");
+                binding.waterQuan.setText(String.format("لتر "+"%.2f" , users_health_info.getWaterDrink())+ "  ");
+                binding.burnedCalories.setText(String.format("kca "+"%.2f" , users_health_info.getBurnedCaloriesNumber())+ "  ");
+                binding.caloriesGained.setText(String.format("kca "+"%.2f" , users_health_info.getCaloriesGained())+ "  ");
 
 
-        }
-    });
+            }
+        });
+
+
 
 
 

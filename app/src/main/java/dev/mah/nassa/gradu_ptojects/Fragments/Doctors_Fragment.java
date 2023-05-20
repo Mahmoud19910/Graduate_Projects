@@ -1,13 +1,25 @@
 package dev.mah.nassa.gradu_ptojects.Fragments;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+
+import java.util.ArrayList;
+
+import dev.mah.nassa.gradu_ptojects.DataBase.FireStore_DataBase;
+import dev.mah.nassa.gradu_ptojects.Modles.UsersInfo;
 import dev.mah.nassa.gradu_ptojects.R;
 
 /**
@@ -63,4 +75,12 @@ public class Doctors_Fragment extends Fragment {
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_doctors_, container, false);
     }
+
+    @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+
+    }
+
+
 }

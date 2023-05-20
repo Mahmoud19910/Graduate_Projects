@@ -93,7 +93,7 @@ public class Fragment_StartTraining_CaloriesGoal extends Fragment implements Vie
         requireActivity().getOnBackPressedDispatcher().addCallback(getViewLifecycleOwner(), new OnBackPressedCallback(true) {
             @Override
             public void handleOnBackPressed() {
-                SharedFunctions.finishTrainingDialog(caloriNumber, String.valueOf(caloriesBurned), getContext(), sports_exercises, new OnSuccessListener() {
+                SharedFunctions.finishTrainingDialog(caloriNumber, String.valueOf(caloriesBurned), getContext(), uid , sports_exercises, new OnSuccessListener() {
                     @Override
                     public void onSuccess(Object o) {
                         if(((Boolean)o)==true){
@@ -133,7 +133,7 @@ public class Fragment_StartTraining_CaloriesGoal extends Fragment implements Vie
 
             case R.id.finishBut:
                 // Create an AlertDialog.Builder instance
-                SharedFunctions.finishTrainingDialog(caloriNumber, String.valueOf(caloriesBurned),getContext() , sports_exercises , new OnSuccessListener() {
+                SharedFunctions.finishTrainingDialog(caloriNumber, String.valueOf(caloriesBurned),getContext() , uid ,  sports_exercises , new OnSuccessListener() {
                     @Override
                     public void onSuccess(Object o) {
 

@@ -20,7 +20,7 @@ public class UsersInfo implements Serializable{
     private String length ;
     @NonNull
     private String weight;
-    private String activityLeve ;
+    private String activityLevel ;
     private String gender ;
     private String photo ;
     private String email;
@@ -38,7 +38,7 @@ public class UsersInfo implements Serializable{
     }
 
 
-    public UsersInfo(String uid, String name, String phone, String pass, String eage, String length, String weight, String activityLeve, String gender, String photo, String email) {
+    public UsersInfo(String uid, String name, String phone, String pass, String eage, String length, String weight, String activityLevel, String gender, String photo, String email) {
         this.uid = uid;
         this.name = name;
         this.phone = phone;
@@ -46,7 +46,7 @@ public class UsersInfo implements Serializable{
         this.eage = eage;
         this.length = length;
         this.weight = weight;
-        this.activityLeve = activityLeve;
+        this.activityLevel = activityLevel;
         this.gender = gender;
         this.photo = photo;
         this.email = email;
@@ -118,12 +118,12 @@ public class UsersInfo implements Serializable{
         this.weight = weight;
     }
 
-    public String getActivityLeve() {
-        return activityLeve;
+    public String getActivityLevel() {
+        return activityLevel;
     }
 
-    public void setActivityLeve(String activityLeve) {
-        this.activityLeve = activityLeve;
+    public void setActivityLevel(String activityLevel) {
+        this.activityLevel = activityLevel;
     }
 
     public String getGender() {

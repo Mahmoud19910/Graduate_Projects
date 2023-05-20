@@ -52,7 +52,7 @@ public class FireStore_DataBase {
         mapArray.put("eage", usersInfo.getEage());
         mapArray.put("length", usersInfo.getLength());
         mapArray.put("weight", usersInfo.getWeight());
-        mapArray.put("activityLevel", usersInfo.getActivityLeve());
+        mapArray.put("activityLevel", usersInfo.getActivityLevel());
         mapArray.put("gender", usersInfo.getGender());
         mapArray.put("photo", usersInfo.getPhoto());
         mapArray.put("email", usersInfo.getEmail());
@@ -84,12 +84,12 @@ public class FireStore_DataBase {
     public static void insertUsersHealthInfo(Users_Health_Info usersHealthInfo, Context context) {
         Map<String , Object> mapUsersHealth=new HashMap<>();
         mapUsersHealth.put("id" , usersHealthInfo.getId());
-        mapUsersHealth.put("userIdid" , usersHealthInfo.getUserId());
+        mapUsersHealth.put("userId" , usersHealthInfo.getUserId());
         mapUsersHealth.put("caloriesNumber" , usersHealthInfo.getCaloriesNumber());
         mapUsersHealth.put("waterDrink" , usersHealthInfo.getWaterDrink());
         mapUsersHealth.put("illness" , usersHealthInfo.isIllness());
         mapUsersHealth.put("medicineTime" , usersHealthInfo.getMedicineTime());
-        mapUsersHealth.put("burnedCalories" , usersHealthInfo.getBurnedCaloriesNumber());
+        mapUsersHealth.put("burnedCaloriesNumber" , usersHealthInfo.getBurnedCaloriesNumber());
         mapUsersHealth.put("caloriesGained" , usersHealthInfo.getCaloriesGained());
 
         firestore.collection("UsersHealthInfo").add(mapUsersHealth).addOnCompleteListener(new OnCompleteListener<DocumentReference>() {
@@ -135,29 +135,35 @@ public class FireStore_DataBase {
                 .addOnFailureListener(onFailureListener);
     }
 
+
     public static void getUsersById(String uid , Context context , OnSuccessListener onSuccessListener){
-        firestore.collection("UsersInfo")
-                .whereEqualTo("uid",uid)
-                .get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-                    @Override
-                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                        if(task.isSuccessful()){
-                            if(task.getResult()!=null){
-                                List<DocumentSnapshot> snapshotList = task.getResult().getDocuments();
-                                for(DocumentSnapshot documentSnapshot : snapshotList){
-                                    UsersInfo usersInfo =   documentSnapshot.toObject(UsersInfo.class);
-                                    if(usersInfo!=null){
-                                        onSuccessListener.onSuccess(usersInfo);
-                                    }
-                                }
-
-                            }
-
-                        }else{
-                            Toast.makeText(context, task.getException().getMessage().toString(), Toast.LENGTH_SHORT).show();
-                        }
+        firestore.collection("UsersInfo").whereEqualTo("uid" , uid)
+                .get()
+                .addOnSuccessListener(querySnapshot -> {
+                    // Iterate over the documents in the query result
+                    for (QueryDocumentSnapshot document : querySnapshot) {
+                        // Access the data of each document
+                        String uid2 =  document.getString("uid");
+                        String name =  document.getString("name");
+                        String phone =  document.getString("phone");
+                        String pass =  document.getString("pass");
+                        String eage =  document.getString("eage");
+                        String length =  document.getString("length");
+                        String weight =  document.getString("weight");
+                        String activityLevel =  document.getString("activityLevel");
+                        String gender =  document.getString("gender");
+                        String photo =  document.getString("photo");
+                        String email =  document.getString("email");
+                        UsersInfo usersInfo =   new UsersInfo(uid2 , name , phone , pass , eage , length , weight,activityLevel,gender,photo,email);
+                        onSuccessListener.onSuccess(usersInfo);
                     }
+                })
+                .addOnFailureListener(e -> {
+                    // Handle any errors that occurred during the query
+                    System.out.println("Error getting documents: " + e.getMessage());
                 });
+
+
     }
     // Check Sign In
     public static void signInMethods(String phone , String pass , Context context , OnSuccessListener<Boolean> onSuccessListener){

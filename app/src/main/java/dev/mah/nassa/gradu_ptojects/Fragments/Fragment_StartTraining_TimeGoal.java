@@ -2,6 +2,7 @@ package dev.mah.nassa.gradu_ptojects.Fragments;
 
 import android.os.Bundle;
 
+import androidx.activity.OnBackPressedCallback;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
@@ -98,6 +99,23 @@ public class Fragment_StartTraining_TimeGoal extends Fragment implements TimerLi
         binding.finishBut.setOnClickListener(this);
         binding.stopBut.setOnClickListener(this);
 
+        requireActivity().getOnBackPressedDispatcher().addCallback(getViewLifecycleOwner(), new OnBackPressedCallback(true) {
+            @Override
+            public void handleOnBackPressed() {
+                SharedFunctions.finishTrainingDialog(timeGoal, String.valueOf(caloriesBurned), getContext(), uid , sports_exercises, new OnSuccessListener() {
+                    @Override
+                    public void onSuccess(Object o) {
+                        if(((Boolean)o)==true){
+                            // ايقاف المؤقت حفظ النشاط في قاعدة البيانات
+                            timer.timerTask.cancel();
+
+                        }else {
+                            timer.timerTask.cancel();
+                        }
+                    }
+                });
+            }
+        });
 
     }
 
@@ -123,7 +141,7 @@ public class Fragment_StartTraining_TimeGoal extends Fragment implements TimerLi
 
             case R.id.finishBut:
                 // Create an AlertDialog.Builder instance
-                SharedFunctions.finishTrainingDialog(timeGoal, String.valueOf(timer.getTimeByHours()), getContext(), sports_exercises, new OnSuccessListener() {
+                SharedFunctions.finishTrainingDialog(timeGoal, String.valueOf(timer.getTimeByHours()), getContext(), uid , sports_exercises, new OnSuccessListener() {
                     @Override
                     public void onSuccess(Object o) {
 

@@ -265,7 +265,7 @@ public class SharedFunctions {
 
     }
 
-    public static void finishTrainingDialog(String goal, String achivmentGoal, Context context, Sports_Exercises sports_exercises, OnSuccessListener listener) {
+    public static void finishTrainingDialog(String goal, String achivmentGoal, Context context, String uid , Sports_Exercises sports_exercises, OnSuccessListener listener) {
         AlertDialog.Builder builder = new AlertDialog.Builder(context);
         // Set the dialog title and message
         builder.setTitle("إنهاء النشاط").setMessage("هل أنت متأكد من انهاء النشاط ؟؟");
@@ -283,6 +283,7 @@ public class SharedFunctions {
                     listener.onSuccess(false);
                     Intent intent = new Intent(context, Exercices_Activity.class);
                     intent.putExtra("obj", sports_exercises);
+                    intent.putExtra("uid" , uid);
                     ((Activity) context).startActivity(intent);
                     ((Activity) context).finish();
 
@@ -291,6 +292,7 @@ public class SharedFunctions {
                     listener.onSuccess(true);
                         Intent intent = new Intent(context, Exercices_Activity.class);
                         intent.putExtra("obj", sports_exercises);
+                        intent.putExtra("uid" , uid);
                         ((Activity) context).startActivity(intent);
                         ((Activity) context).finish();
 

@@ -3,6 +3,8 @@ package dev.mah.nassa.gradu_ptojects.Activityes;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProviders;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
@@ -30,15 +32,21 @@ import java.io.IOException;
 import java.util.UUID;
 
 import dev.mah.nassa.gradu_ptojects.Constants.PersonActivityArray;
+import dev.mah.nassa.gradu_ptojects.Constants.Vital_Equations;
 import dev.mah.nassa.gradu_ptojects.DataBase.FireStore_DataBase;
+import dev.mah.nassa.gradu_ptojects.MVVM.UsersHealthInfoViewModel;
+import dev.mah.nassa.gradu_ptojects.MVVM.UsersViewModel;
 import dev.mah.nassa.gradu_ptojects.Modles.UsersInfo;
+import dev.mah.nassa.gradu_ptojects.Modles.Users_Health_Info;
 import dev.mah.nassa.gradu_ptojects.R;
 import dev.mah.nassa.gradu_ptojects.databinding.ActivityProfileEditeBinding;
 
-public class ProfileEdite_Activity extends AppCompatActivity implements AdapterView.OnItemSelectedListener{
+public class ProfileEdite_Activity extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
 
+    private UsersViewModel usersViewModel;
+    private UsersHealthInfoViewModel usersHealthInfoViewModel;
     private ActivityProfileEditeBinding binding;
-    private UsersInfo usersInfo,usersInfoUpdate;
+    private UsersInfo usersInfo, usersInfoUpdate;
 
     FirebaseFirestore db;
     // Uri indicates, where the image will be picked from
@@ -51,11 +59,15 @@ public class ProfileEdite_Activity extends AppCompatActivity implements AdapterV
     private FirebaseStorage storage;
     private StorageReference storageReference;
 
-    private String activityLeveSpin,gender;
+    private String activityLeveSpin, gender;
     private boolean checkGender = false;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        usersViewModel = ViewModelProviders.of(ProfileEdite_Activity.this).get(UsersViewModel.class);
+        usersHealthInfoViewModel = ViewModelProviders.of(ProfileEdite_Activity.this).get(UsersHealthInfoViewModel.class);
         binding = ActivityProfileEditeBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
         binding.profileEditSpn.setOnItemSelectedListener(ProfileEdite_Activity.this);
@@ -68,18 +80,18 @@ public class ProfileEdite_Activity extends AppCompatActivity implements AdapterV
         usersInfo = (UsersInfo) intent.getSerializableExtra("profile");
 
         // Uncheck or reset the radio buttons initially
-         binding.groupradio.clearCheck();
-         binding.groupradio.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
-             @Override
-             public void onCheckedChanged(RadioGroup group, int checkedId) {
-                 // The flow will come here when
-                 // any of the radio buttons in the radioGroup
-                 // has been clicked
+        binding.groupradio.clearCheck();
+        binding.groupradio.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(RadioGroup group, int checkedId) {
+                // The flow will come here when
+                // any of the radio buttons in the radioGroup
+                // has been clicked
 
-                 // Check which radio button has been clicked
+                // Check which radio button has been clicked
 
-             }
-         });
+            }
+        });
 
 
         //Spinner Ad
@@ -108,34 +120,35 @@ public class ProfileEdite_Activity extends AppCompatActivity implements AdapterV
             public void onClick(View v) {
 
                 // validating the text fields if empty or not.
-                if(TextUtils.isEmpty(binding.profileEditTvName.getText())){
+                if (TextUtils.isEmpty(binding.profileEditTvName.getText())) {
                     binding.profileEditTvName.setError("ارجاء ادخال الأسم");
                 } else if (TextUtils.isEmpty(binding.profileEditTvPhone.getText())) {
                     binding.profileEditTvPhone.setError("ارجاء ادخال رقم الهاتف");
                 } else if (TextUtils.isEmpty(binding.profileEditTvEmail.getText())) {
                     binding.profileEditTvEmail.setError("ارجاء ادخال حسابك جيميل");
-                } else if (TextUtils.isEmpty(binding.profileEditTvWeight.getText())){
+                } else if (TextUtils.isEmpty(binding.profileEditTvWeight.getText())) {
                     binding.profileEditTvWeight.setError("ارجاء ادخال وزنك");
-                } else if (TextUtils.isEmpty( binding.profileEditTvHeight.getText())) {
+                } else if (TextUtils.isEmpty(binding.profileEditTvHeight.getText())) {
                     binding.profileEditTvHeight.setError("ارجاء ادخال طولك");
-                }else if (TextUtils.isEmpty( binding.profileEditTvAge.getText())){
+                } else if (TextUtils.isEmpty(binding.profileEditTvAge.getText())) {
                     binding.profileEditTvAge.setError("ارجاء ادخال عمرك");
-                }
-                else {
+                } else {
                     // calling method to add data to Firebase Firestore.
                     //ارسال الأوبجكت بعد تعديل عليه الى الفاير ستور
-                    usersInfoUpdate = new UsersInfo(usersInfo.getUid(),binding.profileEditTvName.getText().toString(),binding.profileEditTvPhone.getText().toString()
-                            ,binding.profileEditTvAge.getText().toString(),binding.profileEditTvHeight.getText().toString(),
-                            binding.profileEditTvWeight.getText().toString(),binding.profileEditTvEmail.getText().toString());
+                    usersInfoUpdate = new UsersInfo(usersInfo.getUid(), binding.profileEditTvName.getText().toString(), binding.profileEditTvPhone.getText().toString()
+                            , binding.profileEditTvAge.getText().toString(), binding.profileEditTvHeight.getText().toString(),
+                            binding.profileEditTvWeight.getText().toString(), binding.profileEditTvEmail.getText().toString());
 
                     usersInfoUpdate.setPhoto(usersInfo.getPhoto());
-                    usersInfoUpdate.setActivityLeve(activityLeveSpin);
+                    usersInfoUpdate.setActivityLevel(activityLeveSpin);
                     usersInfoUpdate.setGender(usersInfo.getGender());
                     usersInfoUpdate.setPass(usersInfo.getPass());
                     if (imageUri == null) {
-                        FireStore_DataBase.updateObject("UsersInfo",usersInfo.getUid(),usersInfoUpdate);
+                        // تعديل بيانات المستخدم في قاعدة البيانات المحلية
+                        usersViewModel.updateUsers(usersInfoUpdate);
+                        getUsersHealthUpdate();
                         Intent intent1 = new Intent();
-                        intent1.putExtra("profile" ,usersInfoUpdate);
+                        intent1.putExtra("profile", usersInfoUpdate);
                         setResult(RESULT_OK, intent1);
                         finish();
                     } else uploadImage();
@@ -150,24 +163,31 @@ public class ProfileEdite_Activity extends AppCompatActivity implements AdapterV
             public void onClick(View v) {
                 //finish();
                 binding.profileEditSpn.setSelection(usersInfo.getItemSpn());
-                Toast.makeText(getBaseContext(), "item"+usersInfo.getItemSpn(), Toast.LENGTH_SHORT).show();
+                Toast.makeText(getBaseContext(), "item" + usersInfo.getItemSpn(), Toast.LENGTH_SHORT).show();
             }
         });
 
-       binding.profileEditIvImage.setOnClickListener(new View.OnClickListener() {
-           @Override
-           public void onClick(View v) {
-               SelectImage();
-           }
-       });
+        binding.profileEditIvImage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                SelectImage();
+            }
+        });
     }
 
     //عرض البيانات من intent
-    private void gitIntentShowActivity(){
-        Glide.with(getBaseContext())
-                .load(usersInfo.getPhoto())
-                .diskCacheStrategy(DiskCacheStrategy.ALL)
-                .into(binding.profileEditIvImage);
+    private void gitIntentShowActivity() {
+
+        if(usersInfo.getPhoto()==null || usersInfo.getPhoto().isEmpty()){
+            binding.profileEditIvImage.setImageDrawable(getDrawable(R.drawable.user));
+
+        }else {
+            Glide.with(getBaseContext())
+                    .load(usersInfo.getPhoto())
+                    .diskCacheStrategy(DiskCacheStrategy.ALL)
+                    .into(binding.profileEditIvImage);
+        }
+
         binding.profileEditSpn.setSelection(usersInfo.getItemSpn());
         binding.profileEditTvName.setText(usersInfo.getName());
         binding.profileEditTvAge.setText(usersInfo.getEage());
@@ -190,12 +210,12 @@ public class ProfileEdite_Activity extends AppCompatActivity implements AdapterV
                         "Select Image from here..."),
                 PICK_IMAGE_REQUEST);
     }
+
     // Override onActivityResult method
     @Override
     protected void onActivityResult(int requestCode,
                                     int resultCode,
-                                    Intent data)
-    {
+                                    Intent data) {
 
         super.onActivityResult(requestCode,
                 resultCode,
@@ -224,7 +244,7 @@ public class ProfileEdite_Activity extends AppCompatActivity implements AdapterV
                                 getContentResolver(),
                                 imageUri);
                 binding.profileEditIvImage.setImageBitmap(bitmap);
-            }  catch (IOException e) {
+            } catch (IOException e) {
                 // Log the exception
                 e.printStackTrace();
             }
@@ -266,10 +286,10 @@ public class ProfileEdite_Activity extends AppCompatActivity implements AdapterV
                     Toast.makeText(this, "Uri", Toast.LENGTH_SHORT).show();
 
                     usersInfoUpdate.setPhoto(downloadUrl);
-                    FireStore_DataBase.updateObject("UsersInfo",usersInfo.getUid(),usersInfoUpdate);
+                    FireStore_DataBase.updateObject("UsersInfo", usersInfo.getUid(), usersInfoUpdate);
 
                     Intent intent1 = new Intent();
-                    intent1.putExtra("profile" ,usersInfoUpdate);
+                    intent1.putExtra("profile", usersInfoUpdate);
                     setResult(RESULT_OK, intent1);
                     finish();
                     // Use the download URL to display the image or save it to a database
@@ -317,7 +337,7 @@ public class ProfileEdite_Activity extends AppCompatActivity implements AdapterV
     public void onRadioButtonClicked(View view) {
 
         // Check which radio button was clicked
-        switch(view.getId()) {
+        switch (view.getId()) {
             case R.id.male:
                 gender = binding.radioButtonMale.getText().toString();
                 checkGender = true;
@@ -328,5 +348,30 @@ public class ProfileEdite_Activity extends AppCompatActivity implements AdapterV
                 checkGender = true;
                 break;
         }
+    }
+
+    // ميثود تحديث وتعديل بينات الصحية عند التعديل على البيانات الشخصية
+    public void getUsersHealthUpdate() {
+        usersHealthInfoViewModel.getUsersHealthById(usersInfo.getUid()).observe(ProfileEdite_Activity.this, new Observer<Users_Health_Info>() {
+            @Override
+            public void onChanged(Users_Health_Info usersHealthInfo) {
+
+                double calories = Vital_Equations.caloriDailyRequirment(binding.profileEditTvAge.getText().toString(), binding.profileEditTvHeight.getText().toString(),
+                        activityLeveSpin, binding.profileEditTvWeight.getText().toString(), usersInfoUpdate.getGender());
+                double water = Vital_Equations.waterQuantity(binding.profileEditTvWeight.getText().toString());
+                usersHealthInfo.setCaloriesNumber(calories);
+                usersHealthInfo.setWaterDrink(water);
+                usersHealthInfo.setCaloriesGained(0.0);
+                usersHealthInfo.setBurnedCaloriesNumber(0.0);
+                usersHealthInfoViewModel.updateUsersHealth(usersHealthInfo);
+
+                // تعديل البيانات الصحية في فايربيز
+                FireStore_DataBase.updateObject("UsersInfo", usersInfo.getUid(), usersInfoUpdate);
+                FireStore_DataBase.updateObject("UsersHealthInfo", usersInfo.getUid(), usersHealthInfo);
+
+
+            }
+        });
+
     }
 }

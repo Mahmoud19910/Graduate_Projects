@@ -17,9 +17,16 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Gradu_Ptojects"
         tools:targetApi="31">
+
+        <activity
+            android:name=".Activityes.StartTraining_Activity"
+            android:exported="false">
+            <meta-data
+                android:name="android.app.lib_name"
+                android:value="" />
+        </activity>
         <activity
             android:name=".Activityes.ProfileEdite_Activity"
-            android:name=".Activityes.ActivitesStats"
             android:exported="false">
             <meta-data
                 android:name="android.app.lib_name"
@@ -27,13 +34,21 @@
         </activity>
         <activity
             android:name=".Activityes.Profile_Activity"
-            android:exported="false">
-            android:name=".Activityes.StartTraining_Activity"
-            android:exported="true">
+            android:exported="false"
+            tools:ignore="DuplicateActivity">
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />
         </activity>
+        <activity
+            android:name=".Activityes.ActivitesStats"
+            android:exported="false"
+            tools:ignore="DuplicateActivity">
+            <meta-data
+                android:name="android.app.lib_name"
+                android:value="" />
+        </activity>
+
         <activity
             android:name=".Activityes.Exercices_Activity"
             android:exported="false"
