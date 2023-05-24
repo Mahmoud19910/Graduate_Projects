@@ -79,21 +79,6 @@ public class ProfileEdite_Activity extends AppCompatActivity implements AdapterV
         Intent intent = getIntent();
         usersInfo = (UsersInfo) intent.getSerializableExtra("profile");
 
-        // Uncheck or reset the radio buttons initially
-        binding.groupradio.clearCheck();
-        binding.groupradio.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(RadioGroup group, int checkedId) {
-                // The flow will come here when
-                // any of the radio buttons in the radioGroup
-                // has been clicked
-
-                // Check which radio button has been clicked
-
-            }
-        });
-
-
         //Spinner Ad
         ArrayAdapter ad
                 = new ArrayAdapter(
@@ -141,10 +126,13 @@ public class ProfileEdite_Activity extends AppCompatActivity implements AdapterV
 
                     usersInfoUpdate.setPhoto(usersInfo.getPhoto());
                     usersInfoUpdate.setActivityLevel(activityLeveSpin);
-                    usersInfoUpdate.setGender(usersInfo.getGender());
+                    if (checkGender) {
+                        usersInfoUpdate.setGender(gender);
+                    }else usersInfoUpdate.setGender(usersInfo.getGender());
                     usersInfoUpdate.setPass(usersInfo.getPass());
                     if (imageUri == null) {
                         // تعديل بيانات المستخدم في قاعدة البيانات المحلية
+                        FireStore_DataBase.updateObject("UsersInfo", usersInfo.getUid(), usersInfoUpdate);
                         usersViewModel.updateUsers(usersInfoUpdate);
                         getUsersHealthUpdate();
                         Intent intent1 = new Intent();
@@ -161,9 +149,7 @@ public class ProfileEdite_Activity extends AppCompatActivity implements AdapterV
         binding.profileEditIvBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //finish();
-                binding.profileEditSpn.setSelection(usersInfo.getItemSpn());
-                Toast.makeText(getBaseContext(), "item" + usersInfo.getItemSpn(), Toast.LENGTH_SHORT).show();
+                finish();
             }
         });
 
@@ -195,6 +181,13 @@ public class ProfileEdite_Activity extends AppCompatActivity implements AdapterV
         binding.profileEditTvWeight.setText(usersInfo.getWeight());
         binding.profileEditTvEmail.setText(usersInfo.getEmail());
         binding.profileEditTvPhone.setText(usersInfo.getPhone());
+        if (usersInfo.getGender().equals("ذكر")){
+            binding.groupradio.check(R.id.radioButton_male);
+
+        }else{
+            binding.groupradio.check(R.id.radioButton_female);
+        }
+
     }
 
     // Select Image method
@@ -335,19 +328,21 @@ public class ProfileEdite_Activity extends AppCompatActivity implements AdapterV
 
     //Listener Radio
     public void onRadioButtonClicked(View view) {
-
+        boolean checked = ((RadioButton) view).isChecked();
+        String str="";
         // Check which radio button was clicked
-        switch (view.getId()) {
-            case R.id.male:
+        switch(view.getId()) {
+            case R.id.radioButton_male:
                 gender = binding.radioButtonMale.getText().toString();
                 checkGender = true;
                 break;
 
-            case R.id.female:
+            case R.id.radioButton_female:
                 gender = binding.radioButtonFemale.getText().toString();
                 checkGender = true;
                 break;
         }
+        Toast.makeText(getApplicationContext(), gender, Toast.LENGTH_SHORT).show();
     }
 
     // ميثود تحديث وتعديل بينات الصحية عند التعديل على البيانات الشخصية
