@@ -364,7 +364,7 @@ public class ProfileEdite_Activity extends AppCompatActivity implements AdapterV
                 usersHealthInfo.setCaloriesGained(0.0);
                 usersHealthInfo.setBurnedCaloriesNumber(0.0);
                 usersHealthInfoViewModel.updateUsersHealth(usersHealthInfo);
-
+                
                 // تعديل البيانات الصحية في فايربيز
                 FireStore_DataBase.updateObject("UsersInfo", usersInfo.getUid(), usersInfoUpdate);
                 FireStore_DataBase.updateObject("UsersHealthInfo", usersInfo.getUid(), usersHealthInfo);
