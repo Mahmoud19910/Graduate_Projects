@@ -25,6 +25,8 @@ import android.view.View;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.etebarian.meowbottomnavigation.MeowBottomNavigation;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -101,6 +103,10 @@ public class Home_Activity extends AppCompatActivity implements View.OnClickList
             @Override
             public void onChanged(UsersInfo usersInfo) {
                 binding.userNmae.setText(usersInfo.getName());
+                Glide.with(getBaseContext())
+                        .load(usersInfo.getPhoto())
+                        .diskCacheStrategy(DiskCacheStrategy.ALL)
+                        .into(binding.userImage);
                 weight = usersInfo.getWeight();
 
             }
