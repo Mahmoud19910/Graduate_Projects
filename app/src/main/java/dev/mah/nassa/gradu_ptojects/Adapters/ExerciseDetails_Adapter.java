@@ -42,7 +42,7 @@ public class ExerciseDetails_Adapter extends RecyclerView.Adapter<ExerciseDetail
         holder.time.setText(detailsList.get(position).getExerciseTime() );
         holder.dateTv.setText(detailsList.get(position).getDate() );
         holder.date.setText(detailsList.get(position).getDate() );
-        holder.calories.setText(detailsList.get(position).getCaloriesBurned() + "سعرة حرارية");
+        holder.calories.setText(String.format("%.2f", Double.parseDouble(detailsList.get(position).getCaloriesBurned())) + "سعرة حرارية");
 
         ViewGroup.LayoutParams layoutParams =  holder.tableLayout.getLayoutParams();
         if((position+1) != detailsList.size()){

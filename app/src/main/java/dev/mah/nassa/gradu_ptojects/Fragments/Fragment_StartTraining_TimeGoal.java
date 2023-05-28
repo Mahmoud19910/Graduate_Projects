@@ -169,7 +169,7 @@ public class Fragment_StartTraining_TimeGoal extends Fragment implements TimerLi
         binding.timerTimeGoal.setText(time);
         if (weight != null && sports_exercises.getMetValue() != null) {
             caloriesBurned = Vital_Equations.calculateCaloriesBurnd(Double.parseDouble(weight), Double.parseDouble(sports_exercises.getMetValue()), timer);
-            binding.caloriesTimeGoalTv.setText(caloriesBurned + "");
+            binding.caloriesTimeGoalTv.setText(String.format("%.2f" , caloriesBurned)+" ");
             binding.progressVerifyAccount.setProgress(progressedValue += 3, true);
 
         }
