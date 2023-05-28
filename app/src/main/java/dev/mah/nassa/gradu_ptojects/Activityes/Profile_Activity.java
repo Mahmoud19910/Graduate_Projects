@@ -70,7 +70,7 @@ public class Profile_Activity extends AppCompatActivity {
                 binding.profileTvWeight.setText(usersInfo.getWeight());
                 binding.profileTvEmail.setText(usersInfo.getEmail());
                 binding.profileTvPhone.setText(usersInfo.getPhone());
-                binding.profileTvActivityLeve.setText(usersInfo.getActivityLevel());
+                binding.profileTvActivityLeve.setText(usersInfo.getActivityLevel().replaceAll("\n"," "));
                 binding.profileTvGender.setText(usersInfo.getGender());
                 //أظهار تصميم بعد الحصول على البيانات
                 binding.profileLayout.setVisibility(View.VISIBLE);
@@ -91,7 +91,6 @@ public class Profile_Activity extends AppCompatActivity {
         binding.profileIvEdit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(Profile_Activity.this, "Edit", Toast.LENGTH_SHORT).show();
                 int position= itemSpin(usersInfo.getActivityLevel() , PersonActivityArray.getPersonActivityList());
                 Intent intent = new Intent(getBaseContext() , ProfileEdite_Activity.class);
 
@@ -101,6 +100,15 @@ public class Profile_Activity extends AppCompatActivity {
                 }else {
                     int positionUpdate= itemSpin(usersInfoEdite.getActivityLevel() , PersonActivityArray.getPersonActivityList());
                     usersInfo.setItemSpn(positionUpdate);
+                    usersInfo.setPhoto(usersInfoEdite.getPhoto());
+                    usersInfo.setName(usersInfoEdite.getName());
+                    usersInfo.setWeight(usersInfoEdite.getWeight());
+                    usersInfo.setLength(usersInfoEdite.getLength());
+                    usersInfo.setEage(usersInfoEdite.getEage());
+                    usersInfo.setPhoto(usersInfoEdite.getPhoto());
+                    usersInfo.setEmail(usersInfoEdite.getEmail());
+                    usersInfo.setPhone(usersInfoEdite.getPhone());
+                    usersInfo.setGender(usersInfoEdite.getGender());
                 }
 
                 intent.putExtra("profile" ,usersInfo);
@@ -150,7 +158,7 @@ public class Profile_Activity extends AppCompatActivity {
             binding.profileTvWeight.setText(usersInfoEdite.getWeight());
             binding.profileTvEmail.setText(usersInfoEdite.getEmail());
             binding.profileTvPhone.setText(usersInfoEdite.getPhone());
-            binding.profileTvActivityLeve.setText(usersInfoEdite.getActivityLevel());
+            binding.profileTvActivityLeve.setText(usersInfoEdite.getActivityLevel().replaceAll("\n"," "));
             binding.profileTvGender.setText(usersInfoEdite.getGender());
             isRequestCode = true;
         }
