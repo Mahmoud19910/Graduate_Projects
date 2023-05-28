@@ -80,16 +80,10 @@ public class ProfileEdite_Activity extends AppCompatActivity implements AdapterV
         usersInfo = (UsersInfo) intent.getSerializableExtra("profile");
 
         //Spinner Ad
-        ArrayAdapter ad
-                = new ArrayAdapter(
-                this,
-                android.R.layout.simple_spinner_item,
-                PersonActivityArray.getPersonActivityList());
+        ArrayAdapter ad = new ArrayAdapter(this, android.R.layout.simple_spinner_item, PersonActivityArray.getPersonActivityList());
         // set simple layout resource file
         // for each item of spinner
-        ad.setDropDownViewResource(
-                android.R.layout
-                        .simple_spinner_dropdown_item);
+        ad.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 
         // Set the ArrayAdapter (ad) data on the
         // Spinner which binds data to spinner
@@ -132,9 +126,11 @@ public class ProfileEdite_Activity extends AppCompatActivity implements AdapterV
                     usersInfoUpdate.setPass(usersInfo.getPass());
                     if (imageUri == null) {
                         // تعديل بيانات المستخدم في قاعدة البيانات المحلية
+
                         FireStore_DataBase.updateObject("UsersInfo", usersInfo.getUid(), usersInfoUpdate);
                         usersViewModel.updateUsers(usersInfoUpdate);
                         getUsersHealthUpdate();
+
                         Intent intent1 = new Intent();
                         intent1.putExtra("profile", usersInfoUpdate);
                         setResult(RESULT_OK, intent1);
@@ -197,32 +193,20 @@ public class ProfileEdite_Activity extends AppCompatActivity implements AdapterV
         Intent intent = new Intent();
         intent.setType("image/*");
         intent.setAction(Intent.ACTION_GET_CONTENT);
-        startActivityForResult(
-                Intent.createChooser(
-                        intent,
-                        "Select Image from here..."),
-                PICK_IMAGE_REQUEST);
+        startActivityForResult(Intent.createChooser(intent, "Select Image from here..."),PICK_IMAGE_REQUEST);
     }
 
     // Override onActivityResult method
     @Override
-    protected void onActivityResult(int requestCode,
-                                    int resultCode,
-                                    Intent data) {
-
-        super.onActivityResult(requestCode,
-                resultCode,
-                data);
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
 
         // checking request code and result code
         // if request code is PICK_IMAGE_REQUEST and
         // resultCode is RESULT_OK
         // then set image in the image view
         imageUri = data.getData();
-        if (requestCode == PICK_IMAGE_REQUEST
-                && resultCode == RESULT_OK
-                && data != null
-                && data.getData() != null) {
+        if (requestCode == PICK_IMAGE_REQUEST && resultCode == RESULT_OK && data != null && data.getData() != null) {
 
             // Get the URI of the selected image from the intent data
             imageUri = data.getData();
@@ -230,12 +214,7 @@ public class ProfileEdite_Activity extends AppCompatActivity implements AdapterV
 
                 // Setting image on image view using Bitmap
 
-                Bitmap bitmap = MediaStore
-                        .Images
-                        .Media
-                        .getBitmap(
-                                getContentResolver(),
-                                imageUri);
+                Bitmap bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), imageUri);
                 binding.profileEditIvImage.setImageBitmap(bitmap);
             } catch (IOException e) {
                 // Log the exception
@@ -251,11 +230,7 @@ public class ProfileEdite_Activity extends AppCompatActivity implements AdapterV
             progressDialog.setTitle("Uploading...");
             progressDialog.show();
             // Defining the child of storageReference
-            StorageReference ref
-                    = storageReference
-                    .child(
-                            "UserInfo/"
-                                    + UUID.randomUUID().toString());
+            StorageReference ref = storageReference.child("UserInfo/" + UUID.randomUUID().toString());
 
             // adding listeners on upload
             // or failure of image
@@ -268,17 +243,15 @@ public class ProfileEdite_Activity extends AppCompatActivity implements AdapterV
                     // Image uploaded successfully
                     // Dismiss dialog
                     progressDialog.dismiss();
-                    Toast
-                            .makeText(ProfileEdite_Activity.this,
-                                    "Image Uploaded!!",
-                                    Toast.LENGTH_SHORT)
-                            .show();
+                    Toast.makeText(ProfileEdite_Activity.this, "Image Uploaded!!", Toast.LENGTH_SHORT).show();
 
 
                     downloadUrl = uri.toString();
                     Toast.makeText(this, "Uri", Toast.LENGTH_SHORT).show();
 
                     usersInfoUpdate.setPhoto(downloadUrl);
+                    usersViewModel.updateUsers(usersInfoUpdate);
+                    getUsersHealthUpdate();
                     FireStore_DataBase.updateObject("UsersInfo", usersInfo.getUid(), usersInfoUpdate);
 
                     Intent intent1 = new Intent();
@@ -293,22 +266,14 @@ public class ProfileEdite_Activity extends AppCompatActivity implements AdapterV
                 // ...
                 // Error, Image not uploaded
                 progressDialog.dismiss();
-                Toast
-                        .makeText(ProfileEdite_Activity.this,
-                                "Failed " + exception.getMessage(),
-                                Toast.LENGTH_SHORT)
-                        .show();
+                Toast.makeText(ProfileEdite_Activity.this, "Failed " + exception.getMessage(), Toast.LENGTH_SHORT).show();
             }).addOnProgressListener(new OnProgressListener<UploadTask.TaskSnapshot>() {
                 @Override
                 public void onProgress(@NonNull UploadTask.TaskSnapshot snapshot) {
                     // Progress Listener for loading
                     // percentage on the dialog box
 
-                    double progress = (100.0 * snapshot.getBytesTransferred()
-                            / snapshot.getTotalByteCount());
-                    progressDialog.setMessage(
-                            "Uploaded "
-                                    + (int) progress + "%");
+                    double progress = (100.0 * snapshot.getBytesTransferred() / snapshot.getTotalByteCount());progressDialog.setMessage("Uploaded " + (int) progress + "%");
                 }
             });
         }

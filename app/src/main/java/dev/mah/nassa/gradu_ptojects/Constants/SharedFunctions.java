@@ -11,6 +11,7 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.CountDownTimer;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
@@ -18,6 +19,7 @@ import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.RadioGroup;
 import android.widget.TextView;
@@ -165,7 +167,10 @@ public class SharedFunctions {
 
     //Dismiss Dialog
     public static void dismissDialog() {
-        dialog.dismiss();
+        if(dialog != null){
+            dialog.dismiss();
+
+        }
     }
 
 
@@ -326,6 +331,7 @@ public class SharedFunctions {
       return  dateFormat.format(currentTime);
     }
 
+    //Get Date At the moment
     public static String getDateAtTheMoment(){
         Calendar calendar = Calendar.getInstance();
         int year = calendar.get(Calendar.YEAR);
@@ -334,4 +340,8 @@ public class SharedFunctions {
         String date  = day+"/"+month+"/"+ year+"";
         return date;
     }
+
+
+
+
 }

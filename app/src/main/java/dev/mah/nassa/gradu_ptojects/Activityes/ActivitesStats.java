@@ -6,7 +6,9 @@ import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Toast;
@@ -14,6 +16,7 @@ import android.widget.Toast;
 import java.util.List;
 
 import dev.mah.nassa.gradu_ptojects.Adapters.ExerciseDetails_Adapter;
+import dev.mah.nassa.gradu_ptojects.Constants.SharedFunctions;
 import dev.mah.nassa.gradu_ptojects.MVVM.ExersiseDetails_MVVM;
 import dev.mah.nassa.gradu_ptojects.Modles.Exercise_Details;
 import dev.mah.nassa.gradu_ptojects.R;
@@ -39,7 +42,6 @@ public class ActivitesStats extends AppCompatActivity {
         exersiseDetails_mvvm.getAllExersiseDetails().observe(this, new Observer<List<Exercise_Details>>() {
             @Override
             public void onChanged(List<Exercise_Details> exercise_details) {
-                Toast.makeText(ActivitesStats.this, exercise_details.size()+"size", Toast.LENGTH_SHORT).show();
                 ExerciseDetails_Adapter exerciseDetails_adapter = new ExerciseDetails_Adapter(R.layout.exercise_details_item_design , exercise_details , ActivitesStats.this);
                 LinearLayoutManager layoutManager = new LinearLayoutManager(ActivitesStats.this);
                 layoutManager.setReverseLayout(true);
@@ -57,5 +59,13 @@ public class ActivitesStats extends AppCompatActivity {
                 finish();
             }
         });
+
+    }
+
+
+    // جلب رقم المعرف للمستخد
+    private String loadUid() {
+        SharedPreferences sharedPreferences = getSharedPreferences("saveUid", Context.MODE_PRIVATE);
+        return sharedPreferences.getString("uid", "");
     }
 }

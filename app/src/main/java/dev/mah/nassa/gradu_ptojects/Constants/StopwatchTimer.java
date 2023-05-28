@@ -131,4 +131,12 @@ public class StopwatchTimer {
         return  Double.parseDouble(decimalFormat.format(min));
 
     }
+
+    public void finishTimer() {
+        if (timerTask != null) {
+            timerTask.cancel();
+            timerTask = null;
+            time = 0.0;
+        }
+    }
 }
