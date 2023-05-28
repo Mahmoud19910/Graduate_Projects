@@ -83,7 +83,7 @@ public class FragmentUsersInfo1 extends Fragment implements View.OnClickListener
 
             case R.id.nextBtUserInfo:
                 checkInput = SharedFunctions.checkEnterdDataInUserInfo(binding.editEage, binding.editLength, binding.editWeight, getContext());
-                if (checkInput == true && checkGender == true && !checkIllness.isEmpty() ) {
+                if (checkInput == true && checkGender == true && checkIllness!=null ) {
                     listener.getFragmentNumber(2);
                     FragmentManager fragmentManager = getFragmentManager();
                     FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
@@ -92,9 +92,13 @@ public class FragmentUsersInfo1 extends Fragment implements View.OnClickListener
                     fragmentTransaction.commit();
                     listener.getInfoUsers(gender, binding.editLength.getText().toString(),
                             binding.editWeight.getText().toString(), binding.editEage.getText().toString(), checkIllness, alarmTime);
-                } else if (checkGender == false) {
+                }
+                else
+                    if (checkGender == false) {
                     Toast.makeText(getContext(), "الرجاء اختيار الجنس", Toast.LENGTH_LONG).show();
-                } else if(checkIllness.isEmpty()){
+                }
+                    else
+                        if(checkIllness == null ){
                     Toast.makeText(getContext(), "الرجاء تحديد هل أنت مصاب بالسكري ؟؟", Toast.LENGTH_LONG).show();
 
                 }

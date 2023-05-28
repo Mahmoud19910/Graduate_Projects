@@ -20,21 +20,16 @@ import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
 import android.os.Bundle;
-import android.view.Gravity;
 import android.view.View;
-import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.etebarian.meowbottomnavigation.MeowBottomNavigation;
 import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.firebase.firestore.FirebaseFirestore;
 
 import dev.mah.nassa.gradu_ptojects.Constants.SharedFunctions;
-import dev.mah.nassa.gradu_ptojects.Constants.StepsTracking;
 import dev.mah.nassa.gradu_ptojects.Constants.StopwatchTimer;
 import dev.mah.nassa.gradu_ptojects.Constants.Vital_Equations;
-import dev.mah.nassa.gradu_ptojects.DataBase.FireStore_DataBase;
-import dev.mah.nassa.gradu_ptojects.FireBase_Authentication.Gmai_Auth;
+import dev.mah.nassa.gradu_ptojects.DataBase.RealTime_DataBase;
 import dev.mah.nassa.gradu_ptojects.Fragments.Doctors_Fragment;
 import dev.mah.nassa.gradu_ptojects.Fragments.FoodCategory_Fragment;
 import dev.mah.nassa.gradu_ptojects.Fragments.Home_Fragment;
@@ -48,14 +43,14 @@ import dev.mah.nassa.gradu_ptojects.MVVM.UsersViewModel;
 import dev.mah.nassa.gradu_ptojects.R;
 import dev.mah.nassa.gradu_ptojects.databinding.ActivityHomeBinding;
 
-public class Home_Activity extends AppCompatActivity implements View.OnClickListener, StartWalkingListener, SensorEventListener {
+public class Home_Activity extends AppCompatActivity implements View.OnClickListener, StartWalkingListener, SensorEventListener  {
 
     private UsersViewModel usersViewModel;
     private Walking_MVVM walkingMvvm;
     private UsersHealthInfoViewModel usersHealthInfoViewModel;
     private ActivityHomeBinding binding;
     public static String uid;
-    private StopwatchTimer timer;
+    public static StopwatchTimer timer;
     private SensorManager sensorManager;
     private boolean running = false;
     private float totalSteps = 0f;
@@ -66,7 +61,8 @@ public class Home_Activity extends AppCompatActivity implements View.OnClickList
     private float distance;
     private int currentSteps;
     private boolean isPlay = false;
-    private String weight;
+    private String weight , timeAtMomment;
+    private double caloriesBurnd;
 
     private static final int PERMISSION_REQUEST_ACTIVITY_RECOGNITION = 0;
 
@@ -76,25 +72,40 @@ public class Home_Activity extends AppCompatActivity implements View.OnClickList
         binding = ActivityHomeBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
+        MeowBottomNavigation bottomNavigation = findViewById(R.id.navigateBar);
+
+        Intent intent = getIntent();
+        uid = intent.getStringExtra("uid");
+        // Steps Fragmentو   Doctor Fragment قيمة منطقية أن المستخدم قادم من
+        boolean isFromDoctorFragment = intent.getBooleanExtra("fromDoctorFragment" , false);
+        boolean isFromStepsFragment = intent.getBooleanExtra("isStepsCount" , false);
+
+        // Set Main Layout (Home Activity)
+        if(isFromDoctorFragment == true){
+            replace(new Doctors_Fragment());
+            bottomNavigation.show(5, false);
+
+        }else {
+            replace(new Home_Fragment(loadUid()));
+            bottomNavigation.show(3, false);
+        }
+
+
+        saveUid(uid);
+
+        // عند دخول المستخدم تعديل القيمة الى true أي أنه متصل بالتطبيق الآن
+        RealTime_DataBase.updateSession(loadUid() , true , Home_Activity.this);
+
         usersViewModel = ViewModelProviders.of(Home_Activity.this).get(UsersViewModel.class);
         // (Steps Fragment) يستخدم لحفظ و ارسال القيم بشكل أوتوماتيكي الى  View Model
         walkingMvvm = ViewModelProviders.of(Home_Activity.this).get(Walking_MVVM.class);
         usersHealthInfoViewModel = ViewModelProviders.of(Home_Activity.this).get(UsersHealthInfoViewModel.class);
+
         timer = new StopwatchTimer();
 
         binding.parentLayoutHome.setLayoutDirection(View.LAYOUT_DIRECTION_RTL);
         binding.parentLayoutHome.setTextDirection(View.TEXT_DIRECTION_ANY_RTL);
 
-
-
-
-     // Shared Prefrences
-     saveUid(uid);
-        Intent intent = getIntent();
-        uid = intent.getStringExtra("uid");
-
-        // Shared Prefrences
-        saveUid(uid);
 
 
         usersViewModel.getUsersByUid(loadUid()).observe(this, new Observer<UsersInfo>() {
@@ -110,16 +121,13 @@ public class Home_Activity extends AppCompatActivity implements View.OnClickList
         binding.drawer.setOnClickListener(this);
         binding.userImage.setOnClickListener(this);
 
-        // Set Main Layout (Home Activity)
-        FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
-        fragmentTransaction.replace(R.id.frame, new Home_Fragment(loadUid()));
-        fragmentTransaction.commit();
 
 
-        MeowBottomNavigation bottomNavigation = findViewById(R.id.navigateBar);
+
+
+
 
         // set default layout
-        bottomNavigation.show(3, false);
         bottomNavigation.add(new MeowBottomNavigation.Model(1, R.drawable.article_24));
         bottomNavigation.add(new MeowBottomNavigation.Model(2, R.drawable.walk_24));
         bottomNavigation.add(new MeowBottomNavigation.Model(3, R.drawable.ic_baseline_home_24));
@@ -219,8 +227,9 @@ public class Home_Activity extends AppCompatActivity implements View.OnClickList
         // Disable tracking and stop sensor listener
         running = false;
         sensorManager.unregisterListener(this);
-        timer.timerTask.cancel();
-        Toast.makeText(getApplicationContext(), timer.getTimeByHours() + "", Toast.LENGTH_LONG).show();
+        if(timer.timerTask!=null){
+            timer.timerTask.cancel();
+        }
     }
 
     @Override
@@ -245,8 +254,8 @@ public class Home_Activity extends AppCompatActivity implements View.OnClickList
             double minTime = timer.getTimeByMinutes();
             spped = distance / minTime;
             double metaValue = Vital_Equations.calculateMETABOLICEQUIVALENTS(Vital_Equations.convertSpeesToMilesPerHourse(spped));
-            double caloriesBurnd = Vital_Equations.calculateCaloriesBurnd(Double.parseDouble(weight), metaValue, timer);
-            walkingMvvm.setAllData(String.format("%.2f", distance), String.format("%.2f", spped), String.format("%.2f", caloriesBurnd), Integer.toString(currentSteps));
+             caloriesBurnd = Vital_Equations.calculateCaloriesBurnd(Double.parseDouble(weight), metaValue, timer);
+            walkingMvvm.setAllData(String.format("%.2f", distance), String.format("%.2f", spped), String.format("%.2f", caloriesBurnd), Integer.toString(currentSteps) , timeAtMomment);
             usersHealthInfoViewModel.updateCalories(loadUid(), caloriesBurnd);
 
 
@@ -274,13 +283,57 @@ public class Home_Activity extends AppCompatActivity implements View.OnClickList
         }
     }
 
+    // Implementation Wallking Interface
+    @Override
+    public void startWalkingListener(boolean isStart , boolean isFinishTraining) {
 
-    // Method to replace layout On Navigation
-    private void replace(Fragment fragment) {
-        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-        transaction.replace(R.id.frame, fragment);
-        transaction.commit();
+        if (isFinishTraining ==true){
+            distance = 0.0f;
+            spped = 0.0;
+            timer.finishTimer();
+            caloriesBurnd = 0.0;
+            currentSteps=0;
+
+            walkingMvvm.setAllData(String.format("%.2f", distance), String.format("%.2f", spped), String.format("%.2f", caloriesBurnd), Integer.toString(currentSteps) , timeAtMomment);
+            walkingMvvm.setTime("0");
+        }
+        else
+        if (isStart) { // بدء المشي
+           timeAtMomment =  SharedFunctions.getTimeAtTheMoment(); // وقت بداية التمرين
+            timer.startTimer(new OnSuccessListener() { // بدء المؤقت
+                @Override
+                public void onSuccess(Object o) {
+                    walkingMvvm.setTime(o.toString());
+                }
+            });
+            startTracking();
+
+            //fragment ليبقى الزر على وضعه عند الرحوع الى  true ارسال قيمة
+            walkingMvvm.setIsStart(true);
+        } else {
+            stopTracking();
+            walkingMvvm.setIsStart(false);
+        }
     }
+
+
+
+    // عند تدمير يتم الاشعار المستخدمين أنه تم الخروج وغير متصل
+    @Override
+    public void onBackPressed() {
+        RealTime_DataBase.updateSession(loadUid() , false , Home_Activity.this);
+        Home_Activity.this.finishAffinity();
+    }
+
+    // عند تدمير يتم الاشعار المستخدمين أنه تم الخروج وغير متصل
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        RealTime_DataBase.updateSession(loadUid() , false , Home_Activity.this);
+
+    }
+
+
 
     // حفظ رقم المعرف للمستخد
     private void saveUid(String uid) {
@@ -302,24 +355,15 @@ public class Home_Activity extends AppCompatActivity implements View.OnClickList
     }
 
 
-    // Implementation Wallking Interface
-    @Override
-    public void startWalkingListener(boolean isStart) {
-        if (isStart) { // بدء المشي
-            timer.startTimer(new OnSuccessListener() { // بدء المؤقت
-                @Override
-                public void onSuccess(Object o) {
-                    walkingMvvm.setTime(o.toString());
-                }
-            });
-            startTracking();
-
-            //fragment ليبقى الزر على وضعه عند الرحوع الى  true ارسال قيمة
-            walkingMvvm.setIsStart(true);
-        } else {
-            stopTracking();
-            walkingMvvm.setIsStart(false);
-        }
+    // Method to replace layout On Navigation
+    private void replace(Fragment fragment) {
+        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+        transaction.replace(R.id.frame, fragment);
+        transaction.commit();
     }
+
+
+
+
 
 }

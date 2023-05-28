@@ -20,11 +20,13 @@ import java.util.ArrayList;
 import dev.mah.nassa.gradu_ptojects.Constants.PersonActivityArray;
 import dev.mah.nassa.gradu_ptojects.Constants.Vital_Equations;
 import dev.mah.nassa.gradu_ptojects.DataBase.FireStore_DataBase;
+import dev.mah.nassa.gradu_ptojects.DataBase.RealTime_DataBase;
 import dev.mah.nassa.gradu_ptojects.Interfaces.UsersInfoListener;
 import dev.mah.nassa.gradu_ptojects.DataBase.AppDatabese;
 import dev.mah.nassa.gradu_ptojects.MVVM.UsersHealthInfoViewModel;
 import dev.mah.nassa.gradu_ptojects.Modles.UsersInfo;
 import dev.mah.nassa.gradu_ptojects.MVVM.UsersViewModel;
+import dev.mah.nassa.gradu_ptojects.Modles.Users_Chat;
 import dev.mah.nassa.gradu_ptojects.Modles.Users_Health_Info;
 import dev.mah.nassa.gradu_ptojects.R;
 import dev.mah.nassa.gradu_ptojects.databinding.ActivityUsersInformationBinding;
@@ -124,7 +126,6 @@ public class UsersInformation_Activity extends AppCompatActivity implements User
                     if (!illness.isEmpty()) {
                         AppDatabese appDatabese = AppDatabese.getInstance(UsersInformation_Activity.this);
                        String levelActivity = PersonActivityArray.getPersonActivityList().get(activityIndex);
-                        Toast.makeText(UsersInformation_Activity.this, levelActivity+"activityLevel", Toast.LENGTH_SHORT).show();
                         // حساب السعرات الحرارية للشخص
                        double caloriesRequorment =  Vital_Equations.caloriDailyRequirment(eage , length , levelActivity , weight , gender);
 

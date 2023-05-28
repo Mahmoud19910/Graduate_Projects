@@ -64,6 +64,10 @@ public class Gmai_Auth {
                     String name=account.getDisplayName();
                     Uri photoUrl=account.getPhotoUrl();
                     gmail_acc_info_listener.getGmailInfoListener(name , photoUrl , email , id);
+                }else {
+                    Toast.makeText(context, "تأكد من اتصالك بالانترنت !!", Toast.LENGTH_SHORT).show();
+                    SharedFunctions.dismissDialog();
+
                 }
 
             } catch (Exception e) {

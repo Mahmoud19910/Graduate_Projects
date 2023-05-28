@@ -29,11 +29,15 @@ public class StepsTracking implements SensorEventListener {
     private  float distance;
     private  int currentSteps;
     private boolean isPlay=false;
+    private String timeAtMomment;
+
     public StepsTracking(Context context){
+        timeAtMomment = SharedFunctions.getTimeAtTheMoment();
         timer=new StopwatchTimer();
         walkingMvvm = new ViewModelProvider((ViewModelStoreOwner) context.getApplicationContext(),
                 ViewModelProvider.AndroidViewModelFactory.getInstance(((Application) context.getApplicationContext())))
-                .get(Walking_MVVM.class);        sensorManager=(SensorManager) context.getSystemService(Context.SENSOR_SERVICE);
+                .get(Walking_MVVM.class);
+        sensorManager=(SensorManager) context.getSystemService(Context.SENSOR_SERVICE);
 
     }
 
@@ -60,7 +64,7 @@ public class StepsTracking implements SensorEventListener {
             spped = distance / minTime;
             double metaValue = calculateMETABOLICEQUIVALENTS(convertSpeesToMilesPerHourse(spped));
 
-            walkingMvvm.setAllData(String.format("%.2f",distance),String.format("%.2f", spped) ,String.format("%.2f", (metaValue*70*timer.getTimeByHours())) , Integer.toString(currentSteps) );
+            walkingMvvm.setAllData(String.format("%.2f",distance),String.format("%.2f", spped) ,String.format("%.2f", (metaValue*70*timer.getTimeByHours())) , Integer.toString(currentSteps) , timeAtMomment);
 
 
         }

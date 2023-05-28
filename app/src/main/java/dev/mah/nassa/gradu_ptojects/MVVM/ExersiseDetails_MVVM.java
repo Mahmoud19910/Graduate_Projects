@@ -26,6 +26,7 @@ public class ExersiseDetails_MVVM extends AndroidViewModel {
     public ExerciseDetailsDao exerciseDetailsDao;
     Context context;
     MutableLiveData<List<Exercise_Details>> mutableLiveDataExercie = new MutableLiveData<>();
+    MutableLiveData<List<Exercise_Details>> mutableLiveDataUidAndDate = new MutableLiveData<>();
 
     public ExersiseDetails_MVVM(@NonNull Application application) {
         super(application);
@@ -104,5 +105,35 @@ public class ExersiseDetails_MVVM extends AndroidViewModel {
 
                     }
                 });
+    }
+
+    public MutableLiveData<List<Exercise_Details>> getExerciseByDateAndUid(String uid , String date){
+        exerciseDetailsDao.getExerciseByDateAndUid(uid , date)
+                .subscribeOn(Schedulers.computation())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Observer<List<Exercise_Details>>() {
+                    @Override
+                    public void onSubscribe(@io.reactivex.rxjava3.annotations.NonNull Disposable d) {
+
+                    }
+
+                    @Override
+                    public void onNext(@io.reactivex.rxjava3.annotations.NonNull List<Exercise_Details> exercise_details) {
+
+                        mutableLiveDataUidAndDate.setValue(exercise_details);
+                    }
+
+                    @Override
+                    public void onError(@io.reactivex.rxjava3.annotations.NonNull Throwable e) {
+
+                    }
+
+                    @Override
+                    public void onComplete() {
+
+                    }
+                });
+
+        return mutableLiveDataUidAndDate;
     }
 }
