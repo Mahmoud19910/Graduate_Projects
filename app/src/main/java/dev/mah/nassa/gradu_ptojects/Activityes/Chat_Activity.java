@@ -153,15 +153,15 @@ public class Chat_Activity extends AppCompatActivity {
                 Doctor doctors = (Doctor) o;
                 doctorId = doctors.getId();
 
-                // فحص أن المستخدم الذي في الدردرشة متصل أم لا
-                    if(doctors.getId().equals(loadReciverId())){
-                        if(doctors.isSesion()){
-                            binding.block.setImageDrawable(getDrawable(R.drawable.online));
-
-                        }else {
-                            binding.block.setImageDrawable(getDrawable(R.drawable.ofline));
-                        }
-                    }
+//                // فحص أن المستخدم الذي في الدردرشة متصل أم لا
+//                    if(doctors.getId().equals(loadReciverId())){
+//                        if(doctors.isSesion()){
+//                            binding.block.setImageDrawable(getDrawable(R.drawable.online));
+//
+//                        }else {
+//                            binding.block.setImageDrawable(getDrawable(R.drawable.ofline));
+//                        }
+//                    }
 
 
             }

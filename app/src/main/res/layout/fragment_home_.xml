@@ -12,6 +12,7 @@
   <androidx.constraintlayout.widget.ConstraintLayout
       android:layout_width="match_parent"
       android:layout_height="188dp"
+      android:id="@+id/caloeiLayout"
       android:background="@drawable/card_view_shape">
 
       <LinearLayout
@@ -166,6 +167,7 @@
   </androidx.constraintlayout.widget.ConstraintLayout>
 
     <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/weightLayout"
         android:layout_marginTop="18dp"
         android:layout_width="match_parent"
         android:layout_height="188dp"
@@ -259,6 +261,7 @@
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/watertLayout"
         android:layout_marginTop="18dp"
         android:layout_width="match_parent"
         android:layout_height="188dp"

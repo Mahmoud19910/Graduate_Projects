@@ -8,12 +8,15 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 
+import android.os.CountDownTimer;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.SeekBar;
 import android.widget.Toast;
 
+import com.daimajia.androidanimations.library.Techniques;
+import com.daimajia.androidanimations.library.YoYo;
 import com.github.anastr.speedviewlib.ProgressiveGauge;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.firestore.auth.User;
@@ -81,6 +84,40 @@ public class Home_Fragment extends Fragment {
         exersiseDetails_mvvm = ViewModelProviders.of(Home_Fragment.this).get(ExersiseDetails_MVVM.class);
 
         progressiveGauge = binding.awesomeSpeedomete;
+        binding.caloeiLayout.setVisibility(View.INVISIBLE);
+        binding.weightLayout.setVisibility(View.INVISIBLE);
+        binding.watertLayout.setVisibility(View.INVISIBLE);
+
+       CountDownTimer countDownTimer = new CountDownTimer(1000000, 1000) {
+            @Override
+            public void onTick(long millisUntilFinished) {
+
+                int timer = (int) (millisUntilFinished / 1000);
+
+                switch (timer){
+                    case 996:
+                        binding.caloeiLayout.setVisibility(View.VISIBLE);
+                        YoYo.with(Techniques.ZoomInDown).duration(700).repeat(0).playOn(binding.caloeiLayout);
+                        break;
+                    case 994:
+                        binding.weightLayout.setVisibility(View.VISIBLE);
+                        YoYo.with(Techniques.ZoomInUp).duration(700).repeat(0).playOn(binding.weightLayout);
+
+                        break;
+                    case 992:
+                        binding.watertLayout.setVisibility(View.VISIBLE);
+                        YoYo.with(Techniques.SlideInLeft).duration(700).repeat(0).playOn(binding.watertLayout);
+                        break;
+                }
+            }
+
+            @Override
+            public void onFinish() {
+
+            }
+
+        };
+        countDownTimer.start();
 
         usersViewModel.getUsersByUid(uid).observe(this, new Observer<UsersInfo>() {
             @Override

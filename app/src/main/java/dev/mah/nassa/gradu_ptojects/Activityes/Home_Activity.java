@@ -25,6 +25,8 @@ import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.daimajia.androidanimations.library.Techniques;
+import com.daimajia.androidanimations.library.YoYo;
 import com.etebarian.meowbottomnavigation.MeowBottomNavigation;
 import com.google.android.gms.tasks.OnSuccessListener;
 
@@ -65,6 +67,7 @@ public class Home_Activity extends AppCompatActivity implements View.OnClickList
     private boolean isPlay = false;
     private String weight , timeAtMomment;
     private double caloriesBurnd;
+    private boolean internetCheck;
 
     private static final int PERMISSION_REQUEST_ACTIVITY_RECOGNITION = 0;
 
@@ -75,6 +78,8 @@ public class Home_Activity extends AppCompatActivity implements View.OnClickList
         setContentView(binding.getRoot());
 
         MeowBottomNavigation bottomNavigation = findViewById(R.id.navigateBar);
+         internetCheck =  SharedFunctions.checkInternetConnection(Home_Activity.this);
+
 
         Intent intent = getIntent();
         uid = intent.getStringExtra("uid");
@@ -96,7 +101,9 @@ public class Home_Activity extends AppCompatActivity implements View.OnClickList
         saveUid(uid);
 
         // عند دخول المستخدم تعديل القيمة الى true أي أنه متصل بالتطبيق الآن
-        RealTime_DataBase.updateSession(loadUid() , true , Home_Activity.this);
+        if(internetCheck){
+            RealTime_DataBase.updateSession(loadUid() , true , Home_Activity.this);
+        }
 
         usersViewModel = ViewModelProviders.of(Home_Activity.this).get(UsersViewModel.class);
         // (Steps Fragment) يستخدم لحفظ و ارسال القيم بشكل أوتوماتيكي الى  View Model
@@ -327,7 +334,9 @@ public class Home_Activity extends AppCompatActivity implements View.OnClickList
     // عند تدمير يتم الاشعار المستخدمين أنه تم الخروج وغير متصل
     @Override
     public void onBackPressed() {
-        RealTime_DataBase.updateSession(loadUid() , false , Home_Activity.this);
+       if(internetCheck){
+           RealTime_DataBase.updateSession(loadUid() , false , Home_Activity.this);
+       }
         Home_Activity.this.finishAffinity();
     }
 
@@ -335,8 +344,9 @@ public class Home_Activity extends AppCompatActivity implements View.OnClickList
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        RealTime_DataBase.updateSession(loadUid() , false , Home_Activity.this);
-
+        if(internetCheck){
+            RealTime_DataBase.updateSession(loadUid() , false , Home_Activity.this);
+        }
     }
 
 
