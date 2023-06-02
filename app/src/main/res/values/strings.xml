@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Fitness App</string>
+    <string name="app_name">CaloMate</string>
     <string name="sign_UnderLine" translatable="false"><u>تسجيل الدخول</u>.</string>
     <string name="new_user" translatable="false">مستخدم جديد</string>
     <string name="you_have_account">هل لديك حساب ؟</string>

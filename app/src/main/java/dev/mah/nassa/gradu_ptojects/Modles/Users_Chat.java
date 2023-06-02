@@ -6,13 +6,15 @@ public class Users_Chat {
     private String photoUrl;
     private String phone;
     private boolean isSession;
+    private String token;
 
-    public Users_Chat(String id, String name, String photoUrl, String phone, boolean isSession) {
+    public Users_Chat(String id, String name, String photoUrl, String phone, boolean isSession , String token) {
         this.id = id;
         this.name = name;
         this.photoUrl = photoUrl;
         this.phone = phone;
         this.isSession = isSession;
+        this.setToken(token);
     }
 
     public Users_Chat() {
@@ -56,5 +58,13 @@ public class Users_Chat {
 
     public void setSession(boolean session) {
         isSession = session;
+    }
+
+    public String getToken() {
+        return token;
+    }
+
+    public void setToken(String token) {
+        this.token = token;
     }
 }

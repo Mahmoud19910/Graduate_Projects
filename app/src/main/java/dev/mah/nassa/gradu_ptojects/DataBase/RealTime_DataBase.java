@@ -13,10 +13,13 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.util.UUID;
+
 import dev.mah.nassa.gradu_ptojects.Activityes.Home_Activity;
 import dev.mah.nassa.gradu_ptojects.Adapters.DoctorAdapter_Horisintal;
 import dev.mah.nassa.gradu_ptojects.Adapters.DoctorsAdapter;
 import dev.mah.nassa.gradu_ptojects.Modles.Doctor;
+import dev.mah.nassa.gradu_ptojects.Modles.Notifications;
 import dev.mah.nassa.gradu_ptojects.Modles.Users_Chat;
 
 public class RealTime_DataBase {
@@ -117,6 +120,16 @@ public class RealTime_DataBase {
             public void onCancelled(@NonNull DatabaseError error) {
 
                 Toast.makeText(context, error.getMessage().toString()+"", Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
+    public static void insertNotification(Notifications notifications , String doctorId , Context context) {
+        DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference("Notifications").child(doctorId);
+        databaseReference.child(UUID.randomUUID().toString()).setValue(notifications).addOnSuccessListener(new OnSuccessListener<Void>() {
+            @Override
+            public void onSuccess(Void unused) {
+                Toast.makeText(context, "Success", Toast.LENGTH_SHORT).show();
             }
         });
     }

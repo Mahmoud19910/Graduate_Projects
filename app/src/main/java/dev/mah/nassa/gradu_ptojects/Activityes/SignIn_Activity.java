@@ -29,6 +29,7 @@ import dev.mah.nassa.gradu_ptojects.Modles.UsersInfo;
 import dev.mah.nassa.gradu_ptojects.MVVM.UsersViewModel;
 import dev.mah.nassa.gradu_ptojects.Modles.Users_Chat;
 import dev.mah.nassa.gradu_ptojects.R;
+import dev.mah.nassa.gradu_ptojects.Services_Firebase.CloudMessaging;
 import dev.mah.nassa.gradu_ptojects.databinding.ActivitySignInBinding;
 
 public class SignIn_Activity extends AppCompatActivity implements View.OnClickListener , Gmail_Acc_Info_Listener {
@@ -150,20 +151,30 @@ public class SignIn_Activity extends AppCompatActivity implements View.OnClickLi
     public void getGmailInfoListener(String name, Uri photoUri, String email, String id) {
         saveUid(id);
         String photo;
-
-
-
         if(photoUri!=null){
             photo=photoUri.toString();
-            // حفظ في المستخدم ريال تايم
-            Users_Chat usersChat = new Users_Chat(id , name , photo , "" , true);
-            RealTime_DataBase.addUsersToRealTime(SignIn_Activity.this , id , usersChat );
+
         }else {
             photo="";
-            // حفظ في المستخدم ريال تايم
-            Users_Chat usersChat = new Users_Chat(id , name , photo , "" , true);
-            RealTime_DataBase.addUsersToRealTime(SignIn_Activity.this , id , usersChat );
         }
+
+        //لارسال الاشعارات و تخزينها في قاعدة البيانات Token جلب
+        CloudMessaging.getToken(SignIn_Activity.this, new OnSuccessListener() {
+            @Override
+            public void onSuccess(Object o) {
+               if(photo!=null){
+                   // حفظ في المستخدم ريال تايم
+                   Users_Chat usersChat = new Users_Chat(id , name , photo , "" , true , o.toString());
+                   RealTime_DataBase.addUsersToRealTime(SignIn_Activity.this , id , usersChat );
+               }else {
+                   // حفظ في المستخدم ريال تايم
+                   Users_Chat usersChat = new Users_Chat(id , name , photo , "" , true , o.toString());
+                   RealTime_DataBase.addUsersToRealTime(SignIn_Activity.this , id , usersChat );
+               }
+            }
+        });
+
+
         FireStore_DataBase.getAllUsersInfo(new OnSuccessListener<ArrayList<UsersInfo>>() {
             @Override
             public void onSuccess(ArrayList<UsersInfo> usersInfos) {
