@@ -44,6 +44,7 @@ import dev.mah.nassa.gradu_ptojects.MVVM.UsersHealthInfoViewModel;
 import dev.mah.nassa.gradu_ptojects.MVVM.Walking_MVVM;
 import dev.mah.nassa.gradu_ptojects.Modles.UsersInfo;
 import dev.mah.nassa.gradu_ptojects.MVVM.UsersViewModel;
+import dev.mah.nassa.gradu_ptojects.Notifications.ChatBackroubd;
 import dev.mah.nassa.gradu_ptojects.R;
 import dev.mah.nassa.gradu_ptojects.databinding.ActivityHomeBinding;
 
@@ -334,6 +335,10 @@ public class Home_Activity extends AppCompatActivity implements View.OnClickList
     // عند تدمير يتم الاشعار المستخدمين أنه تم الخروج وغير متصل
     @Override
     public void onBackPressed() {
+        // Start the background service with senderRoom as an extra
+        Intent serviceIntent = new Intent(Home_Activity.this, ChatBackroubd.class);
+        startService(serviceIntent);
+
        if(internetCheck){
            RealTime_DataBase.updateSession(loadUid() , false , Home_Activity.this);
        }
@@ -344,12 +349,45 @@ public class Home_Activity extends AppCompatActivity implements View.OnClickList
     @Override
     protected void onDestroy() {
         super.onDestroy();
+        Toast.makeText(this, "Destroy", Toast.LENGTH_SHORT).show();
+
+        // Start the background service with senderRoom as an extra
+        Intent serviceIntent = new Intent(Home_Activity.this, ChatBackroubd.class);
+        startService(serviceIntent);
+
         if(internetCheck){
             RealTime_DataBase.updateSession(loadUid() , false , Home_Activity.this);
         }
     }
 
+    @Override
+    protected void onPause() {
+        super.onPause();
+        Toast.makeText(this, "Pause", Toast.LENGTH_SHORT).show();
 
+        // Start the background service with senderRoom as an extra
+        Intent serviceIntent = new Intent(Home_Activity.this, ChatBackroubd.class);
+        startService(serviceIntent);
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        Toast.makeText(this, "Stop", Toast.LENGTH_SHORT).show();
+
+        // Start the background service with senderRoom as an extra
+        Intent serviceIntent = new Intent(Home_Activity.this, ChatBackroubd.class);
+        startService(serviceIntent);
+    }
+
+    @Override
+    protected void onRestart() {
+        super.onRestart();
+        Toast.makeText(this, "Restart", Toast.LENGTH_SHORT).show();
+        // Start the background service with senderRoom as an extra
+        Intent serviceIntent = new Intent(Home_Activity.this, ChatBackroubd.class);
+        startService(serviceIntent);
+    }
 
     // حفظ رقم المعرف للمستخد
     private void saveUid(String uid) {

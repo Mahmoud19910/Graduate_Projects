@@ -18,10 +18,11 @@ public class Doctor implements Serializable {
     private String address;
     private String description;
     private boolean isSesion;
+    private String token;
     public Doctor() {
     }
 
-    public Doctor(String id, String image, String name, String number, String specialization, String address, String description , boolean isSesion) {
+    public Doctor(String id, String image, String name, String number, String specialization, String address, String description , boolean isSesion , String token) {
         this.id = id;
         this.image = image;
         this.name = name;
@@ -30,6 +31,7 @@ public class Doctor implements Serializable {
         this.address = address;
         this.description = description;
         this.setSesion(isSesion);
+        this.setToken(token);
     }
 
     public Doctor(String image, String name, String number, String specialization, String address, String description) {
@@ -106,5 +108,13 @@ public class Doctor implements Serializable {
 
     public void setSpecialization(String specialization) {
         this.specialization = specialization;
+    }
+
+    public String getToken() {
+        return token;
+    }
+
+    public void setToken(String token) {
+        this.token = token;
     }
 }
