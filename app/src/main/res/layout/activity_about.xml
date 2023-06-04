@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.appcompat.widget.LinearLayoutCompat xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layoutDirection="ltr"
+    android:orientation="vertical"
+    tools:context=".Activityes.About_Activity">
+    <androidx.appcompat.widget.LinearLayoutCompat
+        android:layout_width="match_parent"
+        android:layout_height="56dp"
+        android:background="#3A7FC0"
+        android:gravity="center"
+        android:paddingStart="@dimen/_10sdp"
+        android:paddingEnd="@dimen/_10sdp"
+        android:orientation="horizontal">
+        <ImageView
+            android:id="@+id/backActivityAbout"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/back_ios_new_24"/>
+        <TextView
+            android:id="@+id/titleStartTraining"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="حول التطبيق"
+            android:gravity="center"
+            android:layout_weight="1"
+            android:textSize="18dp"
+            style="@style/title_White_Color"/>
+    </androidx.appcompat.widget.LinearLayoutCompat>
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="10dp"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="مرحبًا بك في تطبيق CaloMate!"
+            android:textSize="22dp"
+            android:textColor="@color/black"/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:gravity="end"
+            android:text="  CaloMate هو تطبيق مبتكر يهدف إلى علاج مشكلة السمنة وارتفاع نسبة الإصابة بمرض السكري في المجتمع. نعلم أن السمنة تعد من بين أبرز الأسباب التي تؤدي إلى الإصابة بمرض السكري، ومن الصعب على العديد من الأفراد الحصول على المعلومات الصحيحة والفعالة حول كيفية إدارة وزنهم والحفاظ على نظام غذائي صحي.
+توفر CaloMate وسيلة فعالة ومناسبة لمساعدتك في تحقيق أهدافك الصحية المتعلقة بإدارة الوزن والتخلص من السمنة الزائدة، وزيادة النشاط البدني، وحرق السعرات الحرارية. يتميز التطبيق بمجموعة متنوعة من الميزات المفيدة التي تشمل "
+            android:textColor="@color/black"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:text="
+1- حساب السعرات الحرارية: يساعدك التطبيق في حساب سعرات الطعام التي تستهلكها والتحكم في السعرات الحرارية المتبقية لتحقيق أهدافك الصحية. \n
+2- تذكير بالدواء وكمية المياه: يساعدك CaloMate في تذكيرك بمواعيد تناول الدواء وكمية المياه التي يجب عليك شربها للحفاظ على ترطيب جسمك. \n
+3- تمارين منزلية: يقدم التطبيق مجموعة من التمارين المنزلية المصممة خصيصًا لمساعدتك في زيادة النشاط البدني وحرق السعرات الحرارية. \n
+4- عداد الخطوات: يمكنك تتبع عدد الخطوات التي تقوم بها يوميًا ومراقبة مستوى النشاط البدني اليومي الخاص بك. \n
+5-
+مراقبة السعرات الحرارية للوجبات: يمكنك تتبع ومراقبة مستويات السعرات الحرارية للوجبات التي تستهلكها للمساعدة في تحقيق توازن صحي في نظامك الغذائي. \n
+"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layoutDirection="rtl"
+            android:layout_marginTop="10dp"
+        android:textColor="@color/black"
+            android:text="
+وهناك المزيد! يتضمن التطبيق فريقًا من الأطباء المتخصصين في تقديم الاستشارات الطبية عبر الدردشة، حيث يمكنك طرح أسئلتك والحصول على النصائح الطبية المهمة لصحتك. \n
+نحن في CaloMate ملتزمون بتقديم أدوات ومعلومات شاملة وموثوقة لمساعدتك في تحقيق أهدافك الصحية. نحن نعتقد أنه باتباع نمط حياة صحي ومتوازن، يمكنك تحسين صحتك والشعور بأفضل حالة ممكنة. \n
+
+انضم إلينا اليوم وابدأ رحلتك نحو الحياة الصحية والنشاط البدني. دع CaloMate يرافقك في هذه الرحلة ويساعدك على تحقيق أهدافك الصحية!"/>
+
+
+    </LinearLayout>
+    </ScrollView>
+</androidx.appcompat.widget.LinearLayoutCompat>

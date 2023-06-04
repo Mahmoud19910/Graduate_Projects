@@ -266,8 +266,6 @@ public class Chat_Activity extends AppCompatActivity {
                 name = usersInfo.getName();
                 photo = usersInfo.getPhoto();
 
-                    Toast.makeText(Chat_Activity.this, usersInfo.getActivityLevel()+" Level", Toast.LENGTH_SHORT).show();
-
 
             }
         });
@@ -334,7 +332,6 @@ public class Chat_Activity extends AppCompatActivity {
                 // ...
                 // Error, Image not uploaded
                 progressDialog.dismiss();
-                Toast.makeText(context, "Failed " + exception.getMessage(), Toast.LENGTH_SHORT).show();
             }).addOnProgressListener(new OnProgressListener<UploadTask.TaskSnapshot>() {
                 @Override
                 public void onProgress(@NonNull UploadTask.TaskSnapshot snapshot) {

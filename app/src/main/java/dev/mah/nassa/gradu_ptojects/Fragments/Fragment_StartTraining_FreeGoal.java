@@ -115,7 +115,7 @@ public class Fragment_StartTraining_FreeGoal extends Fragment implements View.On
 
                 if(caloriesBurned != 0){
                     timer.timerTask.cancel();
-                    CustomDialog dialog = new CustomDialog(getContext() , timeGoal , String.valueOf(caloriesBurned));
+                    CustomDialog dialog = new CustomDialog(getContext() , timeGoal , String.format("%.2f", caloriesBurned));
                     dialog.setCanceledOnTouchOutside(false);
                     dialog.show();
                 }else {

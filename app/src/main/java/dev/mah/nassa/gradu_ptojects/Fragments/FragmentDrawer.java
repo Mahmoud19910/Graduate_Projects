@@ -11,6 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import dev.mah.nassa.gradu_ptojects.Activityes.About_Activity;
 import dev.mah.nassa.gradu_ptojects.Activityes.ActivitesStats;
 import dev.mah.nassa.gradu_ptojects.Activityes.Home_Activity;
 import dev.mah.nassa.gradu_ptojects.Activityes.Profile_Activity;
@@ -39,6 +40,7 @@ public class FragmentDrawer extends Fragment {
         TextView signOut = getActivity().findViewById(R.id.signOut);
         TextView stats = getActivity().findViewById(R.id.statistics);
         TextView account = getActivity().findViewById(R.id.account);
+        TextView about = getActivity().findViewById(R.id.about);
         signOut.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -65,5 +67,14 @@ public class FragmentDrawer extends Fragment {
                 getActivity().startActivity(intent);
             }
         });
+
+        about.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                getActivity().startActivity(new Intent(getContext() , About_Activity.class));
+                getActivity().finish();
+            }
+        });
+
     }
 }
