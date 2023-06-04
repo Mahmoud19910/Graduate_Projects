@@ -1,6 +1,8 @@
 package dev.mah.nassa.gradu_ptojects.Adapters;
 
 import android.content.Context;
+import android.os.Handler;
+import android.os.Looper;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -37,41 +39,46 @@ public class ExerciseDetails_Adapter extends RecyclerView.Adapter<ExerciseDetail
     @Override
     public void onBindViewHolder(@NonNull ExerciseDetails_ViewHolder holder, int position) {
 
-        holder.exerciseDuration.setText(detailsList.get(position).getExerciseDuration() + "ساعة");
-        holder.nameExercise.setText(detailsList.get(position).getExerciseName() );
-        holder.time.setText(detailsList.get(position).getExerciseTime() );
-        holder.dateTv.setText(detailsList.get(position).getDate() );
-        holder.date.setText(detailsList.get(position).getDate() );
-        holder.calories.setText(String.format("%.2f", Double.parseDouble(detailsList.get(position).getCaloriesBurned())) + "سعرة حرارية");
 
-        ViewGroup.LayoutParams layoutParams =  holder.tableLayout.getLayoutParams();
-        if((position+1) != detailsList.size()){
-           layoutParams.height=0;
-           holder.tableLayout.setLayoutParams(layoutParams);
-            holder.iconDrop.setRotation(360);
-        }else {
-            layoutParams.height=450;
-            holder.tableLayout.setLayoutParams(layoutParams);
-            holder.iconDrop.setRotation(270);
-        }
+                holder.exerciseDuration.setText(detailsList.get(position).getExerciseDuration() + "ساعة");
+                holder.nameExercise.setText(detailsList.get(position).getExerciseName() );
+                holder.time.setText(detailsList.get(position).getExerciseTime() );
+                holder.dateTv.setText(detailsList.get(position).getDate() );
+                holder.date.setText(detailsList.get(position).getDate() );
+                holder.calories.setText(String.format("%.2f", Double.parseDouble(detailsList.get(position).getCaloriesBurned())) + "سعرة حرارية");
 
-        holder.linearLayout.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if(dropDown==false){
+                ViewGroup.LayoutParams layoutParams =  holder.tableLayout.getLayoutParams();
+                if((position+1) != detailsList.size()){
                     layoutParams.height=0;
+                    holder.tableLayout.setLayoutParams(layoutParams);
                     holder.iconDrop.setRotation(360);
-                    holder.tableLayout.setLayoutParams(layoutParams);
-                    dropDown=true;
                 }else {
-                    dropDown=false;
                     layoutParams.height=450;
-                    holder.iconDrop.setRotation(270);
                     holder.tableLayout.setLayoutParams(layoutParams);
-
+                    holder.iconDrop.setRotation(270);
                 }
-            }
-        });
+
+                holder.linearLayout.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        if(dropDown==false){
+                            layoutParams.height=0;
+                            holder.iconDrop.setRotation(360);
+                            holder.tableLayout.setLayoutParams(layoutParams);
+                            dropDown=true;
+                        }else {
+                            dropDown=false;
+                            layoutParams.height=450;
+                            holder.iconDrop.setRotation(270);
+                            holder.tableLayout.setLayoutParams(layoutParams);
+
+                        }
+                    }
+                });
+
+
+
+
     }
 
     @Override

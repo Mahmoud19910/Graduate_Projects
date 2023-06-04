@@ -59,7 +59,6 @@ public class Fragment_CaloriesGoal extends Fragment implements View.OnClickListe
         super.onActivityCreated(savedInstanceState);
         RoundedImageView circleImageView = binding.trainingImage;
         Glide.with(getContext())
-                .asGif() // Enable support for GIF type
                 .load(sports_exercises.getImageUrl())
                 .into(circleImageView);
 

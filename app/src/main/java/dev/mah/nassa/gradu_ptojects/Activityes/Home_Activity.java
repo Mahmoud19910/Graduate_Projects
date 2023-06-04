@@ -39,6 +39,7 @@ import dev.mah.nassa.gradu_ptojects.Fragments.FoodCategory_Fragment;
 import dev.mah.nassa.gradu_ptojects.Fragments.Home_Fragment;
 import dev.mah.nassa.gradu_ptojects.Fragments.StepsCounter_Fragment;
 import dev.mah.nassa.gradu_ptojects.Fragments.Training_Fragment;
+import dev.mah.nassa.gradu_ptojects.Interfaces.SetStepsCountInActivity;
 import dev.mah.nassa.gradu_ptojects.Interfaces.StartWalkingListener;
 import dev.mah.nassa.gradu_ptojects.MVVM.UsersHealthInfoViewModel;
 import dev.mah.nassa.gradu_ptojects.MVVM.Walking_MVVM;
@@ -48,7 +49,7 @@ import dev.mah.nassa.gradu_ptojects.Notifications.ChatBackroubd;
 import dev.mah.nassa.gradu_ptojects.R;
 import dev.mah.nassa.gradu_ptojects.databinding.ActivityHomeBinding;
 
-public class Home_Activity extends AppCompatActivity implements View.OnClickListener, StartWalkingListener, SensorEventListener  {
+public class Home_Activity extends AppCompatActivity implements View.OnClickListener, StartWalkingListener, SensorEventListener, SetStepsCountInActivity {
 
     private UsersViewModel usersViewModel;
     private Walking_MVVM walkingMvvm;
@@ -66,9 +67,10 @@ public class Home_Activity extends AppCompatActivity implements View.OnClickList
     private float distance;
     private int currentSteps;
     private boolean isPlay = false;
-    private String weight , timeAtMomment;
+    private String weight, timeAtMomment;
     private double caloriesBurnd;
     private boolean internetCheck;
+    private MeowBottomNavigation bottomNavigation;
 
     private static final int PERMISSION_REQUEST_ACTIVITY_RECOGNITION = 0;
 
@@ -78,22 +80,22 @@ public class Home_Activity extends AppCompatActivity implements View.OnClickList
         binding = ActivityHomeBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
-        MeowBottomNavigation bottomNavigation = findViewById(R.id.navigateBar);
-         internetCheck =  SharedFunctions.checkInternetConnection(Home_Activity.this);
+        bottomNavigation = findViewById(R.id.navigateBar);
+        internetCheck = SharedFunctions.checkInternetConnection(Home_Activity.this);
 
 
         Intent intent = getIntent();
         uid = intent.getStringExtra("uid");
         // Steps Fragmentو   Doctor Fragment قيمة منطقية أن المستخدم قادم من
-        boolean isFromDoctorFragment = intent.getBooleanExtra("fromDoctorFragment" , false);
-        boolean isFromStepsFragment = intent.getBooleanExtra("isStepsCount" , false);
+        boolean isFromDoctorFragment = intent.getBooleanExtra("fromDoctorFragment", false);
+        boolean isFromStepsFragment = intent.getBooleanExtra("isStepsCount", false);
 
         // Set Main Layout (Home Activity)
-        if(isFromDoctorFragment == true){
+        if (isFromDoctorFragment == true) {
             replace(new Doctors_Fragment());
             bottomNavigation.show(5, false);
 
-        }else {
+        } else {
             replace(new Home_Fragment(loadUid()));
             bottomNavigation.show(3, false);
         }
@@ -102,8 +104,8 @@ public class Home_Activity extends AppCompatActivity implements View.OnClickList
         saveUid(uid);
 
         // عند دخول المستخدم تعديل القيمة الى true أي أنه متصل بالتطبيق الآن
-        if(internetCheck){
-            RealTime_DataBase.updateSession(loadUid() , true , Home_Activity.this);
+        if (internetCheck) {
+            RealTime_DataBase.updateSession(loadUid(), true, Home_Activity.this);
         }
 
         usersViewModel = ViewModelProviders.of(Home_Activity.this).get(UsersViewModel.class);
@@ -115,7 +117,6 @@ public class Home_Activity extends AppCompatActivity implements View.OnClickList
 
         binding.parentLayoutHome.setLayoutDirection(View.LAYOUT_DIRECTION_RTL);
         binding.parentLayoutHome.setTextDirection(View.TEXT_DIRECTION_ANY_RTL);
-
 
 
         usersViewModel.getUsersByUid(loadUid()).observe(this, new Observer<UsersInfo>() {
@@ -134,11 +135,6 @@ public class Home_Activity extends AppCompatActivity implements View.OnClickList
         // Listener
         binding.drawer.setOnClickListener(this);
         binding.userImage.setOnClickListener(this);
-
-
-
-
-
 
 
         // set default layout
@@ -229,7 +225,6 @@ public class Home_Activity extends AppCompatActivity implements View.OnClickList
         Sensor stepSensor = sensorManager.getDefaultSensor(Sensor.TYPE_STEP_COUNTER);
 
         if (stepSensor == null) {
-//            Toast.makeText(getContext(), "No sensor detected on this device", Toast.LENGTH_SHORT).show();
         } else {
             sensorManager.registerListener(this, stepSensor, SensorManager.SENSOR_DELAY_UI);
         }
@@ -241,7 +236,7 @@ public class Home_Activity extends AppCompatActivity implements View.OnClickList
         // Disable tracking and stop sensor listener
         running = false;
         sensorManager.unregisterListener(this);
-        if(timer.timerTask!=null){
+        if (timer.timerTask != null) {
             timer.timerTask.cancel();
         }
     }
@@ -268,8 +263,8 @@ public class Home_Activity extends AppCompatActivity implements View.OnClickList
             double minTime = timer.getTimeByMinutes();
             spped = distance / minTime;
             double metaValue = Vital_Equations.calculateMETABOLICEQUIVALENTS(Vital_Equations.convertSpeesToMilesPerHourse(spped));
-             caloriesBurnd = Vital_Equations.calculateCaloriesBurnd(Double.parseDouble(weight), metaValue, timer);
-            walkingMvvm.setAllData(String.format("%.2f", distance), String.format("%.2f", spped), String.format("%.2f", caloriesBurnd), Integer.toString(currentSteps) , timeAtMomment);
+            caloriesBurnd = Vital_Equations.calculateCaloriesBurnd(Double.parseDouble(weight), metaValue, timer);
+            walkingMvvm.setAllData(String.format("%.2f", distance), String.format("%.2f", spped), String.format("%.2f", caloriesBurnd), Integer.toString(currentSteps), timeAtMomment);
             usersHealthInfoViewModel.updateCalories(loadUid(), caloriesBurnd);
 
 
@@ -291,29 +286,28 @@ public class Home_Activity extends AppCompatActivity implements View.OnClickList
                 break;
 
             case R.id.userImage:
-                Intent intent =new Intent(Home_Activity.this, Profile_Activity.class);
+                Intent intent = new Intent(Home_Activity.this, Profile_Activity.class);
                 startActivity(intent);
                 break;
+
         }
     }
 
     // Implementation Wallking Interface
     @Override
-    public void startWalkingListener(boolean isStart , boolean isFinishTraining) {
+    public void startWalkingListener(boolean isStart, boolean isFinishTraining) {
 
-        if (isFinishTraining ==true){
+        if (isFinishTraining == true) {
             distance = 0.0f;
             spped = 0.0;
             timer.finishTimer();
             caloriesBurnd = 0.0;
-            currentSteps=0;
+            currentSteps = 0;
 
-            walkingMvvm.setAllData(String.format("%.2f", distance), String.format("%.2f", spped), String.format("%.2f", caloriesBurnd), Integer.toString(currentSteps) , timeAtMomment);
+            walkingMvvm.setAllData(String.format("%.2f", distance), String.format("%.2f", spped), String.format("%.2f", caloriesBurnd), Integer.toString(currentSteps), timeAtMomment);
             walkingMvvm.setTime("0");
-        }
-        else
-        if (isStart) { // بدء المشي
-           timeAtMomment =  SharedFunctions.getTimeAtTheMoment(); // وقت بداية التمرين
+        } else if (isStart) { // بدء المشي
+            timeAtMomment = SharedFunctions.getTimeAtTheMoment(); // وقت بداية التمرين
             timer.startTimer(new OnSuccessListener() { // بدء المؤقت
                 @Override
                 public void onSuccess(Object o) {
@@ -331,7 +325,6 @@ public class Home_Activity extends AppCompatActivity implements View.OnClickList
     }
 
 
-
     // عند تدمير يتم الاشعار المستخدمين أنه تم الخروج وغير متصل
     @Override
     public void onBackPressed() {
@@ -339,9 +332,9 @@ public class Home_Activity extends AppCompatActivity implements View.OnClickList
         Intent serviceIntent = new Intent(Home_Activity.this, ChatBackroubd.class);
         startService(serviceIntent);
 
-       if(internetCheck){
-           RealTime_DataBase.updateSession(loadUid() , false , Home_Activity.this);
-       }
+        if (internetCheck) {
+            RealTime_DataBase.updateSession(loadUid(), false, Home_Activity.this);
+        }
         Home_Activity.this.finishAffinity();
     }
 
@@ -349,21 +342,19 @@ public class Home_Activity extends AppCompatActivity implements View.OnClickList
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        Toast.makeText(this, "Destroy", Toast.LENGTH_SHORT).show();
 
         // Start the background service with senderRoom as an extra
         Intent serviceIntent = new Intent(Home_Activity.this, ChatBackroubd.class);
         startService(serviceIntent);
 
-        if(internetCheck){
-            RealTime_DataBase.updateSession(loadUid() , false , Home_Activity.this);
+        if (internetCheck) {
+            RealTime_DataBase.updateSession(loadUid(), false, Home_Activity.this);
         }
     }
 
     @Override
     protected void onPause() {
         super.onPause();
-        Toast.makeText(this, "Pause", Toast.LENGTH_SHORT).show();
 
         // Start the background service with senderRoom as an extra
         Intent serviceIntent = new Intent(Home_Activity.this, ChatBackroubd.class);
@@ -373,7 +364,6 @@ public class Home_Activity extends AppCompatActivity implements View.OnClickList
     @Override
     protected void onStop() {
         super.onStop();
-        Toast.makeText(this, "Stop", Toast.LENGTH_SHORT).show();
 
         // Start the background service with senderRoom as an extra
         Intent serviceIntent = new Intent(Home_Activity.this, ChatBackroubd.class);
@@ -383,10 +373,16 @@ public class Home_Activity extends AppCompatActivity implements View.OnClickList
     @Override
     protected void onRestart() {
         super.onRestart();
-        Toast.makeText(this, "Restart", Toast.LENGTH_SHORT).show();
         // Start the background service with senderRoom as an extra
         Intent serviceIntent = new Intent(Home_Activity.this, ChatBackroubd.class);
         startService(serviceIntent);
+    }
+
+    // استقبال قيمة فراقمنت عداد الخطوات من الهوم فراقمنت عند الضغط على زر خطوات
+    @Override
+    public void setStepsListener(int indexFrag) {
+        replace(new StepsCounter_Fragment());
+        bottomNavigation.show(indexFrag, false);
     }
 
     // حفظ رقم المعرف للمستخد
@@ -395,7 +391,6 @@ public class Home_Activity extends AppCompatActivity implements View.OnClickList
             SharedPreferences sharedPreferences = getSharedPreferences("saveUid", Context.MODE_PRIVATE);
             SharedPreferences.Editor editor = sharedPreferences.edit();
             editor.putString("uid", uid);
-            Toast.makeText(this, "save", Toast.LENGTH_SHORT).show();
             editor.apply();
         }
 
@@ -404,7 +399,6 @@ public class Home_Activity extends AppCompatActivity implements View.OnClickList
     // جلب رقم المعرف للمستخد
     private String loadUid() {
         SharedPreferences sharedPreferences = getSharedPreferences("saveUid", Context.MODE_PRIVATE);
-        Toast.makeText(this, "load", Toast.LENGTH_SHORT).show();
         return sharedPreferences.getString("uid", "");
     }
 
@@ -415,9 +409,6 @@ public class Home_Activity extends AppCompatActivity implements View.OnClickList
         transaction.replace(R.id.frame, fragment);
         transaction.commit();
     }
-
-
-
 
 
 }
