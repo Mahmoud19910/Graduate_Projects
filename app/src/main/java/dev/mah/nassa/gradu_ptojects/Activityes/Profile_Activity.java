@@ -21,6 +21,7 @@ import com.google.android.gms.tasks.OnSuccessListener;
 import java.util.ArrayList;
 
 import dev.mah.nassa.gradu_ptojects.Constants.PersonActivityArray;
+import dev.mah.nassa.gradu_ptojects.Constants.SharedFunctions;
 import dev.mah.nassa.gradu_ptojects.DataBase.FireStore_DataBase;
 import dev.mah.nassa.gradu_ptojects.MVVM.UsersViewModel;
 import dev.mah.nassa.gradu_ptojects.Modles.UsersInfo;
@@ -31,6 +32,7 @@ public class Profile_Activity extends AppCompatActivity {
     private ActivityProfileBinding binding;
     private UsersInfo usersInfo,usersInfoEdite;
     private String uid;
+    private UsersViewModel usersViewModel;
 
     boolean isRequestCode = false;
     @Override
@@ -38,6 +40,7 @@ public class Profile_Activity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
 
         binding = ActivityProfileBinding.inflate(getLayoutInflater());
+        usersViewModel = ViewModelProviders.of(this).get(UsersViewModel.class);
         setContentView(binding.getRoot());
 
         //اظهار ال ProgressBar
@@ -48,36 +51,75 @@ public class Profile_Activity extends AppCompatActivity {
 
         //الحصول على بيانات المستخدم من FireStore
         //Show data User
-        FireStore_DataBase.getUsersById(loadUid(), this, new OnSuccessListener() {
-            @Override
-            public void onSuccess(Object o) {
+       boolean internetConection =  SharedFunctions.checkInternetConnection(getBaseContext());
 
-                //ProgressBar اخفاء ال
-                binding.profileIdProgressBar.setVisibility(View.GONE);
+       if(internetConection){
+           Toast.makeText(this, "on", Toast.LENGTH_SHORT).show();
+           FireStore_DataBase.getUsersById(loadUid(), this, new OnSuccessListener() {
+               @Override
+               public void onSuccess(Object o) {
 
-                usersInfo = (UsersInfo) o;
-                if(usersInfo.getPhoto()==null || usersInfo.getPhoto().isEmpty()){
-                    binding.profileIvImage.setImageDrawable(getDrawable(R.drawable.user));
-                }else {
-                    Glide.with(getBaseContext())
-                            .load(usersInfo.getPhoto())
-                            .diskCacheStrategy(DiskCacheStrategy.ALL)
-                            .into(binding.profileIvImage);
-                }
-                binding.profileTvName.setText(usersInfo.getName());
-                binding.profileTvAge.setText(usersInfo.getEage());
-                binding.profileTvHeight.setText(usersInfo.getLength());
-                binding.profileTvWeight.setText(usersInfo.getWeight());
-                binding.profileTvEmail.setText(usersInfo.getEmail());
-                binding.profileTvPhone.setText(usersInfo.getPhone());
-                binding.profileTvActivityLeve.setText(usersInfo.getActivityLevel().replaceAll("\n"," "));
-                binding.profileTvGender.setText(usersInfo.getGender());
-                //أظهار تصميم بعد الحصول على البيانات
-                binding.profileLayout.setVisibility(View.VISIBLE);
-                isRequestCode =false;
-            }
+                   //ProgressBar اخفاء ال
+                   binding.profileIdProgressBar.setVisibility(View.GONE);
 
-        });
+                   usersInfo = (UsersInfo) o;
+                   if(usersInfo.getPhoto()==null || usersInfo.getPhoto().isEmpty()){
+                       binding.profileIvImage.setImageDrawable(getDrawable(R.drawable.user));
+                   }else {
+                       Glide.with(getBaseContext())
+                               .load(usersInfo.getPhoto())
+                               .diskCacheStrategy(DiskCacheStrategy.ALL)
+                               .into(binding.profileIvImage);
+                   }
+                   binding.profileTvName.setText(usersInfo.getName());
+                   binding.profileTvAge.setText(usersInfo.getEage());
+                   binding.profileTvHeight.setText(usersInfo.getLength());
+                   binding.profileTvWeight.setText(usersInfo.getWeight());
+                   binding.profileTvEmail.setText(usersInfo.getEmail());
+                   binding.profileTvPhone.setText(usersInfo.getPhone());
+                   binding.profileTvActivityLeve.setText(usersInfo.getActivityLevel().replaceAll("\n"," "));
+                   binding.profileTvGender.setText(usersInfo.getGender());
+                   //أظهار تصميم بعد الحصول على البيانات
+                   binding.profileLayout.setVisibility(View.VISIBLE);
+                   isRequestCode =false;
+               }
+
+           });
+       }else {
+           Toast.makeText(this, "off", Toast.LENGTH_SHORT).show();
+
+           usersViewModel.getUsersByUid(loadUid()).observe(Profile_Activity.this, new Observer<UsersInfo>() {
+               @Override
+               public void onChanged(UsersInfo usersInfo2) {
+
+                   usersInfo = usersInfo2;
+                   //ProgressBar اخفاء ال
+                   binding.profileIdProgressBar.setVisibility(View.GONE);
+
+                   if(usersInfo.getPhoto()==null || usersInfo.getPhoto().isEmpty()){
+                       binding.profileIvImage.setImageDrawable(getDrawable(R.drawable.user));
+                   }else {
+                       Glide.with(getBaseContext())
+                               .load(usersInfo.getPhoto())
+                               .diskCacheStrategy(DiskCacheStrategy.ALL)
+                               .into(binding.profileIvImage);
+                   }
+                   binding.profileTvName.setText(usersInfo.getName());
+                   binding.profileTvAge.setText(usersInfo.getEage());
+                   binding.profileTvHeight.setText(usersInfo.getLength());
+                   binding.profileTvWeight.setText(usersInfo.getWeight());
+                   binding.profileTvEmail.setText(usersInfo.getEmail());
+                   binding.profileTvPhone.setText(usersInfo.getPhone());
+                   binding.profileTvActivityLeve.setText(usersInfo.getActivityLevel().replaceAll("\n"," "));
+                   binding.profileTvGender.setText(usersInfo.getGender());
+                   //أظهار تصميم بعد الحصول على البيانات
+                   binding.profileLayout.setVisibility(View.VISIBLE);
+                   isRequestCode =false;
+
+               }
+           });
+       }
+
 
         //رجوع لصفحة home
         binding.profileIvBack.setOnClickListener(new View.OnClickListener() {

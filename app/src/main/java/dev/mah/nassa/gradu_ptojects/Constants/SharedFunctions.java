@@ -8,7 +8,10 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.ConnectivityManager;
+import android.net.Network;
+import android.net.NetworkCapabilities;
 import android.net.NetworkInfo;
+import android.os.Build;
 import android.os.CountDownTimer;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
@@ -178,8 +181,11 @@ public class SharedFunctions {
     public static boolean checkInternetConnection(Context context) {
         ConnectivityManager connectivityManager = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo networkInfo = connectivityManager.getActiveNetworkInfo();
+        Network network = connectivityManager.getActiveNetwork();
         return networkInfo != null && networkInfo.isConnected();
     }
+
+
 
     // Create Timer Dialog to start training
     public static void dialogStartTraining(Context context, int indexFrag, Sports_Exercises sports_exercises, String value, String uid) {

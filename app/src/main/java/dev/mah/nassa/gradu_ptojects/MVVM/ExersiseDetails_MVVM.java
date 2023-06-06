@@ -36,7 +36,7 @@ public class ExersiseDetails_MVVM extends AndroidViewModel {
 
     public MutableLiveData<List<Exercise_Details>> getAllExersiseDetails(){
         exerciseDetailsDao.getAllExercise_Details()
-                .subscribeOn(Schedulers.computation())
+                .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Observer<List<Exercise_Details>>() {
                     @Override
@@ -65,7 +65,7 @@ public class ExersiseDetails_MVVM extends AndroidViewModel {
 
     public void insertExersiseDetails(Exercise_Details exercise_details){
         exerciseDetailsDao.exersuseDetailsInsert(exercise_details)
-                .subscribeOn(Schedulers.computation())
+                .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new CompletableObserver() {
                     @Override
@@ -87,7 +87,7 @@ public class ExersiseDetails_MVVM extends AndroidViewModel {
 
     public void deleteAllExerciseDetails(){
         exerciseDetailsDao.deleteAllExersuseDetails()
-                .subscribeOn(Schedulers.computation())
+                .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new CompletableObserver() {
                     @Override

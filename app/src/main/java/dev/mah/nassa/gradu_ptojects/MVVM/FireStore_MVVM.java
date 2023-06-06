@@ -34,7 +34,7 @@ public class FireStore_MVVM extends AndroidViewModel {
     public void getAllSportsExercises(OnSuccessListener<List<Sports_Exercises>> onSuccessListener){
 
         FireStore_DataBase.getAllExercices(context)
-                .subscribeOn(Schedulers.computation())
+                .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Observer<List<Sports_Exercises>>() {
                     @Override
