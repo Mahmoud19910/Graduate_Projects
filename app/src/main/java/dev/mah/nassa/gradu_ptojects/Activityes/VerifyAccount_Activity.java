@@ -37,8 +37,6 @@ public class VerifyAccount_Activity extends AppCompatActivity implements View.On
 
 
 
-        Toast.makeText(this, phone+pass, Toast.LENGTH_SHORT).show();
-
         // وضع اتجاه النص و الواجهات من الاليمين الى اليسار لغة عربية
         binding.parentLayoutVerifyAccount.setLayoutDirection(View.LAYOUT_DIRECTION_RTL);
         binding.parentLayoutVerifyAccount.setTextDirection(View.TEXT_DIRECTION_ANY_RTL);

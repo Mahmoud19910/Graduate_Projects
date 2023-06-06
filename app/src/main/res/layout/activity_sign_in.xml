@@ -127,25 +127,48 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
-                android:drawableEnd="@drawable/phone_android_24"
+                android:drawableEnd="@drawable/phone_android_2"
                 android:gravity="end"
                 android:hint="رقم الهاتف"
                 android:inputType="phone"
                 android:maxLines="1"
                 android:padding="10dp" />
 
-            <EditText
-                android:id="@+id/editPass_SignIn"
-                style="@style/edit_Text"
+            <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
                 android:layout_marginTop="15dp"
-                android:drawableEnd="@drawable/eye_24"
+                android:textDirection="rtl"
+                android:layoutDirection="rtl"
                 android:gravity="end"
-                android:hint="كلمة المرور"
-                android:inputType="textPassword"
-                android:maxLines="1"
-                android:padding="10dp" />
+                android:layout_height="wrap_content">
+                <EditText
+                    android:id="@+id/editPass_SignIn"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    style="@style/edit_Text"
+                    android:hint="كلمة المرور"
+                    android:padding="10dp"
+                    android:textDirection="ltr"
+                    android:gravity="end"
+                    android:layoutDirection="rtl"
+                    android:inputType="textVisiblePassword"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    android:maxLines="1" />
+
+                <ImageView
+                    android:paddingEnd="10dp"
+                    android:id="@+id/eyePass"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintBottom_toBottomOf="@id/editPass_SignIn"
+                    android:src="@drawable/lock_24"/>
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
 
 
             <androidx.appcompat.widget.AppCompatButton

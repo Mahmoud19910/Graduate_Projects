@@ -11,6 +11,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
+import android.text.method.PasswordTransformationMethod;
 import android.view.View;
 import android.widget.Toast;
 
@@ -38,6 +39,8 @@ public class SignIn_Activity extends AppCompatActivity implements View.OnClickLi
     private SharedPreferences preferences;
     private boolean isFindEmail=false; // لمعرفة هل تم التسجيل من قبل لتنفيذ عملية الدخول مباشرة
     private UsersViewModel usersViewModel;
+    private boolean showPass = false;
+
 
 
     @Override
@@ -60,6 +63,9 @@ public class SignIn_Activity extends AppCompatActivity implements View.OnClickLi
         binding.gmailButSignIn.setOnClickListener(this);
         binding.backSignInBt.setOnClickListener(this);
         binding.signUpButInSignIn.setOnClickListener(this);
+        binding.eyePass.setOnClickListener(this);
+        binding.editPassSignIn.setTransformationMethod(new PasswordTransformationMethod());
+
 
 
     }
@@ -134,6 +140,21 @@ public class SignIn_Activity extends AppCompatActivity implements View.OnClickLi
                 startActivity(new Intent(getApplicationContext() , SignUp_Activity.class));
                 finish();
                 break;
+
+            case R.id.eyePass:
+                if (showPass == false) {
+                    showPass = true;
+                    binding.editPassSignIn.setTransformationMethod(null);
+                    binding.eyePass.setImageResource(R.drawable.lock_open_24);
+
+                } else {
+                    showPass = false;
+                    binding.editPassSignIn.setTransformationMethod(new PasswordTransformationMethod());
+                    binding.eyePass.setImageResource(R.drawable.lock_24);
+
+                }
+                break;
+
         }
 
     }
