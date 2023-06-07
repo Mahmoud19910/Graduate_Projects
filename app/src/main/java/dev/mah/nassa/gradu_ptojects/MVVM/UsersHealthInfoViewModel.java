@@ -33,7 +33,7 @@ public class UsersHealthInfoViewModel extends AndroidViewModel {
 
     public void insertUsersHealth(Users_Health_Info usersHealthInfo) {
         appDatabese.usersHealthDao().usersHealthInsert(usersHealthInfo)
-                .subscribeOn(Schedulers.computation())
+                .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new CompletableObserver() {
                     @Override
@@ -57,7 +57,7 @@ public class UsersHealthInfoViewModel extends AndroidViewModel {
 
     public void updateUsersHealth( Users_Health_Info usersHealthInfo) {
         appDatabese.usersHealthDao().usersHealthUpdate(usersHealthInfo)
-                .subscribeOn(Schedulers.computation())
+                .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new CompletableObserver() {
                     @Override
@@ -79,7 +79,7 @@ public class UsersHealthInfoViewModel extends AndroidViewModel {
 
     public void deleteUsersHealth(Users_Health_Info usersHealthInfo) {
         appDatabese.usersHealthDao().usersHealthDelete(usersHealthInfo)
-                .subscribeOn(Schedulers.computation())
+                .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new CompletableObserver() {
                     @Override
@@ -101,7 +101,7 @@ public class UsersHealthInfoViewModel extends AndroidViewModel {
 
     public void deleteAllUsersHealth() {
         appDatabese.usersHealthDao().deleteAllUsersHealth()
-                .subscribeOn(Schedulers.computation())
+                .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new CompletableObserver() {
                     @Override
@@ -123,7 +123,7 @@ public class UsersHealthInfoViewModel extends AndroidViewModel {
 
     public MutableLiveData<List<Users_Health_Info>> getAllUsersHealth() {
         appDatabese.usersHealthDao().getAllUsersHealth()
-                .subscribeOn(Schedulers.computation())
+                .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Observer<List<Users_Health_Info>>() {
                     @Override
@@ -153,7 +153,7 @@ public class UsersHealthInfoViewModel extends AndroidViewModel {
 
     public MutableLiveData<Users_Health_Info> getUsersHealthById( String uid) {
         appDatabese.usersHealthDao().getUsersHealthById(uid)
-                .subscribeOn(Schedulers.computation())
+                .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Observer<Users_Health_Info>() {
                     @Override
@@ -182,7 +182,7 @@ public class UsersHealthInfoViewModel extends AndroidViewModel {
 
     public void deleteUsersHealthById( String uid ){
         appDatabese.usersHealthDao().deleteUsersHealthByUid(uid)
-                .subscribeOn(Schedulers.computation())
+                .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new CompletableObserver() {
                     @Override
@@ -203,7 +203,7 @@ public class UsersHealthInfoViewModel extends AndroidViewModel {
 
     public void updateCalories(String uid , double burnedCalories ){
         appDatabese.usersHealthDao().updateCaloriesById(uid , burnedCalories)
-                .subscribeOn(Schedulers.computation())
+                .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new CompletableObserver() {
                     @Override

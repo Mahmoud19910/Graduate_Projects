@@ -27,7 +27,10 @@ import dev.mah.nassa.gradu_ptojects.Activityes.UsersInformation_Activity;
 import dev.mah.nassa.gradu_ptojects.Activityes.VerifyForgetPass_Activity;
 import dev.mah.nassa.gradu_ptojects.Constants.SharedFunctions;
 import dev.mah.nassa.gradu_ptojects.DataBase.FireStore_DataBase;
+import dev.mah.nassa.gradu_ptojects.DataBase.RealTime_DataBase;
 import dev.mah.nassa.gradu_ptojects.Interfaces.VerificationIdListener;
+import dev.mah.nassa.gradu_ptojects.Modles.Users_Chat;
+import dev.mah.nassa.gradu_ptojects.Services_Firebase.CloudMessaging;
 
 
 public class PhoneAuth {
@@ -95,6 +98,15 @@ public class PhoneAuth {
                             intent.putExtra("phone",phone);
                             intent.putExtra("pass",pass);
                             intent.putExtra("uid",uid);
+
+                            CloudMessaging.getToken(context, new OnSuccessListener() {
+                                @Override
+                                public void onSuccess(Object o) {
+                                    Users_Chat usersChat  = new Users_Chat(uid , name , " " , phone , true , o.toString());
+                                    RealTime_DataBase.addUsersToRealTime(context , uid , usersChat);
+
+                                }
+                            });
 
                             context.startActivity(intent);
                             ((Activity) context).finish();

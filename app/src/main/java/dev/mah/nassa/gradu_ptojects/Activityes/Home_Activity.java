@@ -71,6 +71,7 @@ public class Home_Activity extends AppCompatActivity implements View.OnClickList
     private double caloriesBurnd;
     private boolean internetCheck;
     private MeowBottomNavigation bottomNavigation;
+    private DrawerLayout drawerLayout;
 
     private static final int PERMISSION_REQUEST_ACTIVITY_RECOGNITION = 0;
 
@@ -80,6 +81,7 @@ public class Home_Activity extends AppCompatActivity implements View.OnClickList
         binding = ActivityHomeBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
+        drawerLayout = findViewById(R.id.drawerLayout);
         bottomNavigation = findViewById(R.id.navigateBar);
         internetCheck = SharedFunctions.checkInternetConnection(Home_Activity.this);
 
@@ -150,23 +152,37 @@ public class Home_Activity extends AppCompatActivity implements View.OnClickList
             public void onClickItem(MeowBottomNavigation.Model item) {
                 switch (item.getId()) {
                     case 1:
+                        if(drawerLayout.isOpen()){
+                            drawerLayout.close();
+                        }
                         replace(new FoodCategory_Fragment());
 
                         break;
                     case 2:
+                        if(drawerLayout.isOpen()){
+                            drawerLayout.close();
+                        }
                         replace(new StepsCounter_Fragment());
                         break;
                     case 3:
-
+                        if(drawerLayout.isOpen()){
+                            drawerLayout.close();
+                        }
                         Home_Fragment home_fragment = new Home_Fragment(loadUid());
                         replace(home_fragment);
 
                         break;
                     case 4:
+                        if(drawerLayout.isOpen()){
+                            drawerLayout.close();
+                        }
                         replace(new Training_Fragment(loadUid()));
 
                         break;
                     case 5:
+                        if(drawerLayout.isOpen()){
+                            drawerLayout.close();
+                        }
                         replace(new Doctors_Fragment());
 
                         break;
@@ -281,8 +297,8 @@ public class Home_Activity extends AppCompatActivity implements View.OnClickList
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.drawer:
-                DrawerLayout drawerLayout = findViewById(R.id.drawerLayout);
                 drawerLayout.openDrawer(GravityCompat.START);
+
                 break;
 
             case R.id.userImage:

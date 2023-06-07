@@ -41,7 +41,7 @@ public class UsersViewModel extends AndroidViewModel {
 
     public void insertUsers( UsersInfo usersInfo) {
         appDatabese.usersDao().usersInsert(usersInfo)
-                .subscribeOn(Schedulers.computation())
+                .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new CompletableObserver() {
                     @Override
@@ -66,7 +66,7 @@ public class UsersViewModel extends AndroidViewModel {
 
     public void updateUsers( UsersInfo usersInfo) {
         appDatabese.usersDao().usersUpdate(usersInfo)
-                .subscribeOn(Schedulers.computation())
+                .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new CompletableObserver() {
                     @Override
@@ -88,7 +88,7 @@ public class UsersViewModel extends AndroidViewModel {
 
     public void deleteUsers( UsersInfo usersInfo) {
         appDatabese.usersDao().usersDelete(usersInfo)
-                .subscribeOn(Schedulers.computation())
+                .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new CompletableObserver() {
                     @Override
@@ -110,7 +110,7 @@ public class UsersViewModel extends AndroidViewModel {
 
     public void deleteAllUsers( Context context) {
         appDatabese.usersDao().deleteAllUsers()
-                .subscribeOn(Schedulers.computation())
+                .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new CompletableObserver() {
                     @Override
@@ -132,7 +132,7 @@ public class UsersViewModel extends AndroidViewModel {
 
     public MutableLiveData<List<UsersInfo>> getAllUsers() {
         appDatabese.usersDao().getAllUsers()
-                .subscribeOn(Schedulers.computation())
+                .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Observer<List<UsersInfo>>() {
                     @Override
@@ -163,7 +163,7 @@ public class UsersViewModel extends AndroidViewModel {
 
     public void deleteByUidUsers( String uid) {
         appDatabese.usersDao().deleteByUid(uid)
-                .subscribeOn(Schedulers.computation())
+                .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new CompletableObserver() {
                     @Override
@@ -186,7 +186,7 @@ public class UsersViewModel extends AndroidViewModel {
 
     public MutableLiveData<UsersInfo> getUsersByUid(String uid ) {
         appDatabese.usersDao().getUsersById(uid)
-                .subscribeOn(Schedulers.computation())
+                .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Observer<UsersInfo>() {
                     @Override
@@ -226,7 +226,7 @@ public class UsersViewModel extends AndroidViewModel {
 //    }
     public UsersInfo getAllByUidUserId( String uid) {
         appDatabese.usersDao().getAllByUidUserId(uid)
-                .subscribeOn(Schedulers.computation())
+                .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Observer<UsersInfo>() {
                     @Override
@@ -254,7 +254,7 @@ public class UsersViewModel extends AndroidViewModel {
 
     public void updatePass(String newPass , String phone){
         appDatabese.usersDao().updatePassword(newPass , phone)
-                .subscribeOn(Schedulers.computation())
+                .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new CompletableObserver() {
                     @Override

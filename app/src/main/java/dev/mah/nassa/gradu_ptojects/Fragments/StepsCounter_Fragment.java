@@ -36,9 +36,11 @@ import com.github.anastr.speedviewlib.SpeedView;
 import java.util.ArrayList;
 
 import dev.mah.nassa.gradu_ptojects.Activityes.Home_Activity;
+import dev.mah.nassa.gradu_ptojects.Constants.CustomDialog;
 import dev.mah.nassa.gradu_ptojects.Constants.LanguageUtils;
 import dev.mah.nassa.gradu_ptojects.Constants.SharedFunctions;
 import dev.mah.nassa.gradu_ptojects.Constants.StopwatchTimer;
+import dev.mah.nassa.gradu_ptojects.DataBase.FireStore_DataBase;
 import dev.mah.nassa.gradu_ptojects.Interfaces.StartWalkingListener;
 import dev.mah.nassa.gradu_ptojects.MVVM.ExersiseDetails_MVVM;
 import dev.mah.nassa.gradu_ptojects.MVVM.Walking_MVVM;
@@ -61,7 +63,7 @@ public class StepsCounter_Fragment extends Fragment {
     private SpeedView awesomeSpeedometer;
     private StartWalkingListener listener;
     private Walking_MVVM walkingMvvm;
-    private String timeAtMomment ;
+    private String timeAtMomment , caloriesBurned ;
     private ExersiseDetails_MVVM exersiseDetails_mvvm;
 
 
@@ -100,6 +102,7 @@ public class StepsCounter_Fragment extends Fragment {
                 distanceTv.setText(strings.get(0) + " m");
                 speedTv.setText(strings.get(1) + " m/min");
                 caloriesTv.setText(strings.get(2));
+                caloriesBurned = strings.get(2);
                 stepsTv.setText(strings.get(3));
                 timeAtMomment = strings.get(4);
 
@@ -173,14 +176,18 @@ public class StepsCounter_Fragment extends Fragment {
         finishBut.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                listener.startWalkingListener(false , true);
                 isStart = true;
                 stopTv.setText("بدء");
                 startIcon.setImageDrawable(getActivity().getDrawable(R.drawable.play_arrow_24));
-                Exercise_Details exercise_details = new Exercise_Details(loadUid() , caloriesTv.getText().toString() , timeAtMomment ,  SharedFunctions.getDateAtTheMoment() , "رياضة المشي" ,String.valueOf(Home_Activity.timer.getTimeByHours()));
-                if(exercise_details != null || !caloriesTv.getText().toString().isEmpty() || caloriesTv.getText().toString() != null){
-//                    exersiseDetails_mvvm.insertExersiseDetails(exercise_details);
+                if( !caloriesTv.getText().toString().isEmpty() && caloriesTv.getText().toString() != null && Double.parseDouble(caloriesTv.getText().toString()) > 0.0){
+                    Exercise_Details exercise_details = new Exercise_Details(loadUid() , caloriesTv.getText().toString() , timeAtMomment ,  SharedFunctions.getDateAtTheMoment() , "رياضة المشي" ,String.valueOf(Home_Activity.timer.getTimeByHours()));
+                    exersiseDetails_mvvm.insertExersiseDetails(exercise_details);
+                    FireStore_DataBase.insertOrUpdateExerciseDetails(exercise_details , getContext());
+
+                    CustomDialog dialog = new CustomDialog(getContext() , timerTv.getText().toString() , caloriesBurned);
+                    dialog.show();
                 }
+                listener.startWalkingListener(false , true);
                 getActivity().startActivity(new Intent(getContext() , Home_Activity.class));
 
             }

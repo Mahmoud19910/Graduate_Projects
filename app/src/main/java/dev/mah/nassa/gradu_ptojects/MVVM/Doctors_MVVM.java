@@ -36,7 +36,7 @@ public class Doctors_MVVM extends AndroidViewModel {
 
     public void insertDoctors(Doctor doctor){
         appDatabese.doctorsDao().doctorInsert(doctor)
-                .subscribeOn(Schedulers.computation())
+                .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new CompletableObserver() {
                     @Override
@@ -58,7 +58,7 @@ public class Doctors_MVVM extends AndroidViewModel {
 
     public void deletAllDoctor(){
         appDatabese.doctorsDao().deleteAllDoctor()
-                .subscribeOn(Schedulers.computation())
+                .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new CompletableObserver() {
                     @Override
@@ -80,7 +80,7 @@ public class Doctors_MVVM extends AndroidViewModel {
 
     public MutableLiveData<List<Doctor>> getAllDoctors(){
         appDatabese.doctorsDao().getAllDoctor()
-                .subscribeOn(Schedulers.computation())
+                .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Observer<List<Doctor>>() {
                     @Override
@@ -108,7 +108,7 @@ public class Doctors_MVVM extends AndroidViewModel {
 
     public void deleteById(String id){
         appDatabese.doctorsDao().deleteById(id)
-                .subscribeOn(Schedulers.computation())
+                .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new CompletableObserver() {
                     @Override

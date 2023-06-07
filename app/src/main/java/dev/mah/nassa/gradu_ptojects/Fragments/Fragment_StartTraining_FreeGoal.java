@@ -22,8 +22,11 @@ import dev.mah.nassa.gradu_ptojects.Constants.CustomDialog;
 import dev.mah.nassa.gradu_ptojects.Constants.LanguageUtils;
 import dev.mah.nassa.gradu_ptojects.Constants.SharedFunctions;
 import dev.mah.nassa.gradu_ptojects.Constants.StopwatchTimer;
+import dev.mah.nassa.gradu_ptojects.DataBase.FireStore_DataBase;
 import dev.mah.nassa.gradu_ptojects.Interfaces.TimerListener;
+import dev.mah.nassa.gradu_ptojects.MVVM.ExersiseDetails_MVVM;
 import dev.mah.nassa.gradu_ptojects.MVVM.UsersViewModel;
+import dev.mah.nassa.gradu_ptojects.Modles.Exercise_Details;
 import dev.mah.nassa.gradu_ptojects.Modles.Sports_Exercises;
 import dev.mah.nassa.gradu_ptojects.Modles.UsersInfo;
 import dev.mah.nassa.gradu_ptojects.R;
@@ -40,6 +43,8 @@ public class Fragment_StartTraining_FreeGoal extends Fragment implements View.On
     private String weight;
     private double caloriesBurned;
     private UsersViewModel usersViewModel;
+    private ExersiseDetails_MVVM exercisedetails_mvvm;
+
 
 
     @Override
@@ -63,6 +68,7 @@ public class Fragment_StartTraining_FreeGoal extends Fragment implements View.On
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
+
         binding.progressVerifyAccount.setMax(100);
         binding.progressVerifyAccount.setProgress(100);
 
@@ -79,6 +85,7 @@ public class Fragment_StartTraining_FreeGoal extends Fragment implements View.On
                 .into(binding.freeGoalStartImage);
 
         usersViewModel = ViewModelProviders.of(Fragment_StartTraining_FreeGoal.this).get(UsersViewModel.class);
+        exercisedetails_mvvm = ViewModelProviders.of(Fragment_StartTraining_FreeGoal.this).get(ExersiseDetails_MVVM.class);
 
         // جلب وزن الشخص لحساب السعرات الحرارية
         usersViewModel.getUsersByUid(uid).observe(this, new Observer<UsersInfo>() {
@@ -115,8 +122,13 @@ public class Fragment_StartTraining_FreeGoal extends Fragment implements View.On
 
                 if(caloriesBurned != 0){
                     timer.timerTask.cancel();
+                    Exercise_Details exercise_details = new Exercise_Details(uid , String.valueOf(caloriesBurned) ,  SharedFunctions.getTimeAtTheMoment() , SharedFunctions.getDateAtTheMoment()
+                            , sports_exercises.getName(), String.valueOf(timer.getTimeByHours()));
+
+                    exercisedetails_mvvm.insertExersiseDetails(exercise_details);
+                    FireStore_DataBase.insertOrUpdateExerciseDetails(exercise_details , getContext());
+
                     CustomDialog dialog = new CustomDialog(getContext() , timeGoal , String.format("%.2f", caloriesBurned));
-                    dialog.setCanceledOnTouchOutside(false);
                     dialog.show();
                 }else {
                     Toast.makeText(getContext(), "! للأسف لم تقم بأي نشاط ", Toast.LENGTH_LONG).show();
@@ -134,6 +146,7 @@ public class Fragment_StartTraining_FreeGoal extends Fragment implements View.On
 
     @Override
     public void getTimer(String time) {
+        timeGoal = time;
         binding.timeTvFreeGoal.setText(time);
         if (weight != null && sports_exercises.getMetValue() != null) {
             caloriesBurned = (Double.parseDouble(weight) * Double.parseDouble(sports_exercises.getMetValue()) * timer.getTimeByHours());

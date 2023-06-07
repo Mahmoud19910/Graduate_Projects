@@ -147,7 +147,7 @@
                 android:textDirection="rtl"
                 android:layoutDirection="rtl"
                 android:layout_marginTop="15dp"
-                android:drawableEnd="@drawable/phone_android_24"
+                android:drawableEnd="@drawable/phone_android_2"
                 android:maxLines="1"/>
 
             <androidx.constraintlayout.widget.ConstraintLayout

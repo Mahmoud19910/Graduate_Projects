@@ -108,6 +108,7 @@ public class Home_Fragment extends Fragment implements View.OnClickListener {
         binding.weightLayout.setVisibility(View.INVISIBLE);
         binding.watertLayout.setVisibility(View.INVISIBLE);
         binding.cardGoals.setVisibility(View.INVISIBLE);
+        binding.progress.setVisibility(View.VISIBLE);
 
         // Listeners
         binding.timeBut.setOnClickListener(this);
@@ -124,17 +125,18 @@ public class Home_Fragment extends Fragment implements View.OnClickListener {
 
                 switch (timer){
                     case 998:
+                        binding.progress.setVisibility(View.INVISIBLE);
+
                         binding.cardGoals.setVisibility(View.VISIBLE);
                         YoYo.with(Techniques.RollIn).duration(700).repeat(0).playOn(binding.cardGoals);
                         binding.caloeiLayout.setVisibility(View.VISIBLE);
                         YoYo.with(Techniques.BounceInLeft).duration(1000).repeat(0).playOn(binding.caloeiLayout);
-                        break;
-                    case 997:
                         binding.weightLayout.setVisibility(View.VISIBLE);
                         YoYo.with(Techniques.ZoomInUp).duration(900).repeat(0).playOn(binding.weightLayout);
                         binding.watertLayout.setVisibility(View.VISIBLE);
                         YoYo.with(Techniques.SlideInLeft).duration(900).repeat(0).playOn(binding.watertLayout);
                         break;
+//
                 }
             }
 
@@ -160,7 +162,6 @@ public class Home_Fragment extends Fragment implements View.OnClickListener {
             @Override
             public void onChanged(Users_Health_Info users_health_info) {
 
-                Toast.makeText(getContext(), users_health_info.getUserId() + "Home Uid", Toast.LENGTH_LONG).show();
                 binding.calorDailyRequirment.setText(String.format("kca " + "%.2f", users_health_info.getCaloriesNumber()) + "  ");
                 binding.waterQuan.setText(String.format("لتر " + "%.2f", users_health_info.getWaterDrink()) + "  ");
                 binding.caloriesGained.setText(String.format("kca " + "%.2f", users_health_info.getCaloriesGained()) + "  ");
@@ -176,8 +177,11 @@ public class Home_Fragment extends Fragment implements View.OnClickListener {
             public void onChanged(List<Exercise_Details> exercise_details) {
 
                 for (Exercise_Details details : exercise_details) {
-                    double calo = Double.parseDouble(details.getCaloriesBurned());
-                    totalCaloBurned += calo;
+                    if (details.getCaloriesBurned() != null || !details.getCaloriesBurned().isEmpty()){
+                        double calo = Double.parseDouble(details.getCaloriesBurned());
+                        totalCaloBurned += calo;
+                    }
+
                 }
 
                 binding.burnedCalories.setText(String.format("%.2f", totalCaloBurned) + "سعرة");
