@@ -32,6 +32,9 @@ public interface ExerciseDetailsDao {
     @Query("Select * from Exercise_Details where uid=:uid")
     Observable<Exercise_Details> getExercise_DetailsById(String uid);
 
+    @Query("Select * from Exercise_Details where uid=:uid AND date=:date")
+    Observable<List<Exercise_Details>> getExerciseByDateAndUid(String uid , String date);
+
     @Query("delete From Exercise_Details Where uid =:uid")
     Completable deleteExercise_DetailsByUid (String uid);
 

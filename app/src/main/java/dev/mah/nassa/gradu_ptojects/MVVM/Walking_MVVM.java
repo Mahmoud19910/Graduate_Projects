@@ -31,12 +31,13 @@ public class Walking_MVVM extends AndroidViewModel {
         return  time;
     }
 
-    public void setAllData(String distance , String speed , String caloriedBurnd , String steps){
+    public void setAllData(String distance , String speed , String caloriedBurnd , String steps , String timeAtTheMomment){
         ArrayList<String> list = new ArrayList<>();
         list.add(distance);
         list.add(speed);
         list.add(caloriedBurnd);
         list.add(steps);
+        list.add(timeAtTheMomment);
 
         walkingData.setValue(list);
     }

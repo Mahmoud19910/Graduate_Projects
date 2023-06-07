@@ -45,7 +45,6 @@ public class Fragment_TimeGoal extends Fragment implements View.OnClickListener 
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         Glide.with(getContext())
-                .asGif()
                 .load(sports_exercises.getImageUrl())
                 .into(binding.timeGoalImage);
 

@@ -35,20 +35,34 @@ public class Exercices_Activity extends AppCompatActivity implements View.OnClic
         Intent intent = getIntent();
        sports_exercises = (Sports_Exercises) intent.getSerializableExtra("obj");
        uid=intent.getStringExtra("uid");
+       fragmentIndex = intent.getIntExtra("fragmentIndex" , 1);
+
 
         // Set Default Fragment
-        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-        Bundle bundle= new Bundle();
-        bundle.putSerializable("obj" , sports_exercises);
-        bundle.putInt("indexFrag" , fragmentIndex);
-        bundle.putString("uid" , uid);
+        switch (fragmentIndex){
+            case 0:
+                replace(new Fragment_TimeGoal() , sports_exercises , 0 , uid);
+                break;
+            case 1:
+                replace(new Fragment_CaloriesGoal(), sports_exercises , 1 , uid);
+                break;
+            case 2:
+                replace(new Fragment_FreeGoal() , sports_exercises , 2 , uid);
+                break;
 
-        Fragment_CaloriesGoal fragment_caloriesGoal =  new Fragment_CaloriesGoal();
-       fragment_caloriesGoal.setArguments(bundle);
-        transaction.replace(R.id.framExercices,fragment_caloriesGoal);
-        transaction.commit();
-        binding.caloriesGoalIcon.setColorFilter(getResources().getColor(R.color.red));
-        binding.caloriesGoalText.setTextColor(getColor(R.color.black));
+        }
+//        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+//        Bundle bundle= new Bundle();
+//        bundle.putSerializable("obj" , sports_exercises);
+//        bundle.putInt("indexFrag" , fragmentIndex);
+//        bundle.putString("uid" , uid);
+//
+//        Fragment_CaloriesGoal fragment_caloriesGoal =  new Fragment_CaloriesGoal();
+//       fragment_caloriesGoal.setArguments(bundle);
+//        transaction.replace(R.id.framExercices,fragment_caloriesGoal);
+//        transaction.commit();
+//        binding.caloriesGoalIcon.setColorFilter(getResources().getColor(R.color.red));
+//        binding.caloriesGoalText.setTextColor(getColor(R.color.black));
 
         binding.titleExercices.setText(sports_exercises.getName());
 

@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.Uri;
@@ -21,11 +22,14 @@ import java.util.List;
 
 import dev.mah.nassa.gradu_ptojects.Constants.SharedFunctions;
 import dev.mah.nassa.gradu_ptojects.DataBase.FireStore_DataBase;
+import dev.mah.nassa.gradu_ptojects.DataBase.RealTime_DataBase;
 import dev.mah.nassa.gradu_ptojects.FireBase_Authentication.Gmai_Auth;
 import dev.mah.nassa.gradu_ptojects.Interfaces.Gmail_Acc_Info_Listener;
 import dev.mah.nassa.gradu_ptojects.Modles.UsersInfo;
 import dev.mah.nassa.gradu_ptojects.MVVM.UsersViewModel;
+import dev.mah.nassa.gradu_ptojects.Modles.Users_Chat;
 import dev.mah.nassa.gradu_ptojects.R;
+import dev.mah.nassa.gradu_ptojects.Services_Firebase.CloudMessaging;
 import dev.mah.nassa.gradu_ptojects.databinding.ActivitySignInBinding;
 
 public class SignIn_Activity extends AppCompatActivity implements View.OnClickListener , Gmail_Acc_Info_Listener {
@@ -71,8 +75,8 @@ public class SignIn_Activity extends AppCompatActivity implements View.OnClickLi
 
             case R.id.signIn_But:
                boolean isChecked =  SharedFunctions.checkEnterdDataInSignIn(binding.editPassSignIn , binding.editPhoneSignIn , SignIn_Activity.this);
-
-               if(isChecked){
+              boolean internetCheck =  SharedFunctions.checkInternetConnection(SignIn_Activity.this);
+               if(isChecked && internetCheck){
                    SharedFunctions.showProgressBar(SignIn_Activity.this);
                            if(SharedFunctions.checkInternetConnection(SignIn_Activity.this)){
                                FireStore_DataBase.signInMethods(binding.editPhoneSignIn.getText().toString(), binding.editPassSignIn.getText().toString(), SignIn_Activity.this, new OnSuccessListener<Boolean>() {
@@ -108,6 +112,9 @@ public class SignIn_Activity extends AppCompatActivity implements View.OnClickLi
                                    }
                                });
                            }
+               }else {
+                   Toast.makeText(this, "يرجى التأكد من اتصالك بالشبكة !!", Toast.LENGTH_SHORT).show();
+                   SharedFunctions.dismissDialog();
                }
 
 
@@ -142,12 +149,32 @@ public class SignIn_Activity extends AppCompatActivity implements View.OnClickLi
 
     @Override
     public void getGmailInfoListener(String name, Uri photoUri, String email, String id) {
+        saveUid(id);
         String photo;
         if(photoUri!=null){
             photo=photoUri.toString();
+
         }else {
             photo="";
         }
+
+        //لارسال الاشعارات و تخزينها في قاعدة البيانات Token جلب
+        CloudMessaging.getToken(SignIn_Activity.this, new OnSuccessListener() {
+            @Override
+            public void onSuccess(Object o) {
+               if(photo!=null){
+                   // حفظ في المستخدم ريال تايم
+                   Users_Chat usersChat = new Users_Chat(id , name , photo , "" , true , o.toString());
+                   RealTime_DataBase.addUsersToRealTime(SignIn_Activity.this , id , usersChat );
+               }else {
+                   // حفظ في المستخدم ريال تايم
+                   Users_Chat usersChat = new Users_Chat(id , name , photo , "" , true , o.toString());
+                   RealTime_DataBase.addUsersToRealTime(SignIn_Activity.this , id , usersChat );
+               }
+            }
+        });
+
+
         FireStore_DataBase.getAllUsersInfo(new OnSuccessListener<ArrayList<UsersInfo>>() {
             @Override
             public void onSuccess(ArrayList<UsersInfo> usersInfos) {
@@ -170,6 +197,7 @@ public class SignIn_Activity extends AppCompatActivity implements View.OnClickLi
                     intent.putExtra("photo" ,photo);
                     intent.putExtra("email" , email);
                     intent.putExtra("uid" , id);
+
                     startActivity(intent);
                     SharedFunctions.isSignIn(true , SignIn_Activity.this);
                 }
@@ -185,6 +213,16 @@ public class SignIn_Activity extends AppCompatActivity implements View.OnClickLi
     }
 
 
+    // حفظ رقم المعرف للمستخد
+    private void saveUid(String uid) {
+        if (uid != null) {
+            SharedPreferences sharedPreferences = getSharedPreferences("saveUid", Context.MODE_PRIVATE);
+            SharedPreferences.Editor editor = sharedPreferences.edit();
+            editor.putString("uid", uid);
+            Toast.makeText(this, "save", Toast.LENGTH_SHORT).show();
+            editor.apply();
+        }
 
+    }
 
 }

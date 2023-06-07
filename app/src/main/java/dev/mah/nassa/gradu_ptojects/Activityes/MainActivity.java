@@ -7,8 +7,13 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.Toast;
 
+import com.daimajia.androidanimations.library.Techniques;
+import com.daimajia.androidanimations.library.YoYo;
 import com.google.firebase.auth.FirebaseAuth;
 
 import java.util.Locale;
@@ -26,9 +31,15 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        LinearLayout linearLayout = findViewById(R.id.parentLayout);
+        ImageView imageView = findViewById(R.id.mainLogog);
+
+        imageView.setVisibility(View.INVISIBLE);
+        imageView.setVisibility(View.VISIBLE);
+        YoYo.with(Techniques.ZoomIn).duration(1300).repeat(0).playOn(imageView);
+
         SharedPreferences sharedPreferences=getSharedPreferences("isLoged" , Context.MODE_PRIVATE);
        boolean isSignIn = sharedPreferences.getBoolean("isSignIn",false);
-        Toast.makeText(this, isSignIn+"", Toast.LENGTH_SHORT).show();
         Timer timer = new Timer();
         timer.schedule(new TimerTask() {
             @Override

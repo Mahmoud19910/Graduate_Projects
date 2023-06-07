@@ -48,7 +48,6 @@ public class Fragment_FreeGoal extends Fragment implements View.OnClickListener 
         RoundedImageView freeGoalImage = binding.freeGoalImage;
 
         Glide.with(getContext())
-                .asGif() // Enable support for GIF type
                 .load(sports_exercises.getImageUrl())
                 .into(freeGoalImage);
 

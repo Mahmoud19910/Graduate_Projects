@@ -148,7 +148,7 @@ public class Fragment_StartTraining_TimeGoal extends Fragment implements TimerLi
                         if (((Boolean) o) == true) {
                             // ايقاف المؤقت حفظ النشاط في قاعدة البيانات
                             timer.timerTask.cancel();
-                            Exercise_Details exercise_details = new Exercise_Details(uid , String.valueOf(caloriesBurned) ,  SharedFunctions.getTimeAtTheMoment() , SharedFunctions.getDateAtTheMoment()
+                            Exercise_Details exercise_details = new Exercise_Details(uid , String.format("%.2f", caloriesBurned) ,  SharedFunctions.getTimeAtTheMoment() , SharedFunctions.getDateAtTheMoment()
                                     , sports_exercises.getName() , String.valueOf(timer.getTimeByHours()));
                             FireStore_DataBase.insertOrUpdateExerciseDetails(exercise_details, getContext());
                             exercisedetails_mvvm.insertExersiseDetails(exercise_details);
@@ -169,7 +169,7 @@ public class Fragment_StartTraining_TimeGoal extends Fragment implements TimerLi
         binding.timerTimeGoal.setText(time);
         if (weight != null && sports_exercises.getMetValue() != null) {
             caloriesBurned = Vital_Equations.calculateCaloriesBurnd(Double.parseDouble(weight), Double.parseDouble(sports_exercises.getMetValue()), timer);
-            binding.caloriesTimeGoalTv.setText(caloriesBurned + "");
+            binding.caloriesTimeGoalTv.setText(String.format("%.2f" , caloriesBurned)+" ");
             binding.progressVerifyAccount.setProgress(progressedValue += 3, true);
 
         }
@@ -186,7 +186,7 @@ public class Fragment_StartTraining_TimeGoal extends Fragment implements TimerLi
                     , sports_exercises.getName() , String.valueOf(timer.getTimeByHours()));
             exercisedetails_mvvm.insertExersiseDetails(exercise_details);
             FireStore_DataBase.insertOrUpdateExerciseDetails(exercise_details, getContext());
-            CustomDialog dialog = new CustomDialog(getContext(), time, String.valueOf(caloriesBurned));
+            CustomDialog dialog = new CustomDialog(getContext(), time, String.format("%.2f", caloriesBurned));
             dialog.show();
 
         }

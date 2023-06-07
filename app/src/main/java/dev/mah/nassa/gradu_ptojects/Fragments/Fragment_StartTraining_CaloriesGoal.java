@@ -161,7 +161,7 @@ public class Fragment_StartTraining_CaloriesGoal extends Fragment implements Vie
         binding.timeCaloriTv.setText(time);
         if (weight != null && sports_exercises.getMetValue() != null) {
             caloriesBurned = (Double.parseDouble(weight) * Double.parseDouble(sports_exercises.getMetValue()) * timer.getTimeByHours());
-            binding.caloriesCount.setText(caloriesBurned + "");
+            binding.caloriesCount.setText(String.format("%.2f", caloriesBurned) + "");
             binding.progressVerifyAccount.setProgress((int) caloriesBurned, true);
         }
 
@@ -173,7 +173,7 @@ public class Fragment_StartTraining_CaloriesGoal extends Fragment implements Vie
             exercisedetails_mvvm.insertExersiseDetails(exercise_details);
             FireStore_DataBase.insertOrUpdateExerciseDetails(exercise_details , getContext());
 
-            CustomDialog dialog = new CustomDialog(getContext() , time , String.valueOf(caloriesBurned));
+            CustomDialog dialog = new CustomDialog(getContext() , time , String.format("%.2f", caloriesBurned));
             dialog.show();
 
 

@@ -19,11 +19,14 @@ import com.google.android.gms.tasks.OnSuccessListener;
 import java.util.ArrayList;
 
 import dev.mah.nassa.gradu_ptojects.DataBase.FireStore_DataBase;
+import dev.mah.nassa.gradu_ptojects.DataBase.RealTime_DataBase;
 import dev.mah.nassa.gradu_ptojects.FireBase_Authentication.Gmai_Auth;
 import dev.mah.nassa.gradu_ptojects.Interfaces.Gmail_Acc_Info_Listener;
 import dev.mah.nassa.gradu_ptojects.Constants.SharedFunctions;
 import dev.mah.nassa.gradu_ptojects.Modles.UsersInfo;
+import dev.mah.nassa.gradu_ptojects.Modles.Users_Chat;
 import dev.mah.nassa.gradu_ptojects.R;
+import dev.mah.nassa.gradu_ptojects.Services_Firebase.CloudMessaging;
 import dev.mah.nassa.gradu_ptojects.databinding.ActivitySignUpBinding;
 
 public class SignUp_Activity extends AppCompatActivity implements View.OnClickListener, Gmail_Acc_Info_Listener {
@@ -67,9 +70,11 @@ public class SignUp_Activity extends AppCompatActivity implements View.OnClickLi
 
             case R.id.signUp_But:
 
-                checkInputs = SharedFunctions.
-                        checkEnterdDataInSignUp(binding.editName, binding.editPhone, binding.editPass, binding.checkbox, this);
-                if (checkInputs == true) {
+                checkInputs = SharedFunctions.checkEnterdDataInSignUp(binding.editName, binding.editPhone, binding.editPass, binding.checkbox, this);
+                boolean internetCheck = SharedFunctions.checkInternetConnection(SignUp_Activity.this);
+               String phoneCheck =  binding.editPhone.getText().toString();
+                if (checkInputs == true && internetCheck == true && phoneCheck.contains("+972") || phoneCheck.contains("+970") && phoneCheck.length() == 13) {
+                    SharedFunctions.showProgressBar(SignUp_Activity.this);
                     Intent goToVerifyAccount = new Intent(this, VerifyAccount_Activity.class);
                     goToVerifyAccount.putExtra("name", binding.editName.getText().toString());
                     goToVerifyAccount.putExtra("phone", binding.editPhone.getText().toString());
@@ -77,6 +82,21 @@ public class SignUp_Activity extends AppCompatActivity implements View.OnClickLi
                     startActivity(goToVerifyAccount);
                     finish();
                 }
+                else
+                if(!internetCheck){
+                    Toast.makeText(this, "يرجى التأكد من اتصالك بالشبكة !!", Toast.LENGTH_SHORT).show();
+                    SharedFunctions.dismissDialog();
+                }
+                else
+                    if(!checkInputs){
+                        Toast.makeText(this, "يرجى التأكد من ادخال كافة الحقول  !!", Toast.LENGTH_SHORT).show();
+                    }
+                    else
+                        if(!phoneCheck.contains("+972") || !phoneCheck.contains("+970") || phoneCheck.length() > 13){
+                            Toast.makeText(this, "الرقم المدخل خاطئ  !!", Toast.LENGTH_SHORT).show();
+
+                        }
+
                 break;
 
             case R.id.backSignUp_Bt:
@@ -91,7 +111,6 @@ public class SignUp_Activity extends AppCompatActivity implements View.OnClickLi
                 break;
 
             case R.id.signInBut_InSignUp:
-                SharedFunctions.showProgressBar(SignUp_Activity.this);
                 startActivity(new Intent(getApplicationContext(), SignIn_Activity.class));
                 finish();
                 break;
@@ -129,12 +148,35 @@ public class SignUp_Activity extends AppCompatActivity implements View.OnClickLi
 
     @Override
     public void getGmailInfoListener(String name, Uri photoUri, String email, String id) {
+
+        saveUid(id);
         String photo;
+
         if (photoUri != null) {
             photo = photoUri.toString();
+
         } else {
             photo = "";
         }
+
+
+        //لارسال الاشعارات و تخزينها في قاعدة البيانات Token جلب
+        CloudMessaging.getToken(SignUp_Activity.this, new OnSuccessListener() {
+            @Override
+            public void onSuccess(Object o) {
+               if(photo!=null){
+                   // حفظ في المستخدم ريال تايم
+                   Users_Chat usersChat = new Users_Chat(id , name , photo , "" , true , o.toString());
+                   RealTime_DataBase.addUsersToRealTime(SignUp_Activity.this , id , usersChat );
+               } else {
+                   // حفظ في المستخدم ريال تايم
+                   Users_Chat usersChat = new Users_Chat(id , name , photo , "" , true , o.toString());
+                   RealTime_DataBase.addUsersToRealTime(SignUp_Activity.this , id , usersChat );
+               }
+            }
+        });
+
+
 
         // جلب البيانات لمعرفة أن المستخدم مسجل من قبل لتسجيل الدخول مباشرة
         FireStore_DataBase.getAllUsersInfo(new OnSuccessListener<ArrayList<UsersInfo>>() {
@@ -157,6 +199,7 @@ public class SignUp_Activity extends AppCompatActivity implements View.OnClickLi
                     intent.putExtra("photo", photo);
                     intent.putExtra("email", email);
                     intent.putExtra("uid", id);
+
                     startActivity(intent);
                     SharedFunctions.isSignIn(true , SignUp_Activity.this);
                 }
@@ -172,5 +215,16 @@ public class SignUp_Activity extends AppCompatActivity implements View.OnClickLi
 
     }
 
+    // حفظ رقم المعرف للمستخد
+    private void saveUid(String uid) {
+        if (uid != null) {
+            SharedPreferences sharedPreferences = getSharedPreferences("saveUid", Context.MODE_PRIVATE);
+            SharedPreferences.Editor editor = sharedPreferences.edit();
+            editor.putString("uid", uid);
+            Toast.makeText(this, "save", Toast.LENGTH_SHORT).show();
+            editor.apply();
+        }
+
+    }
 
 }

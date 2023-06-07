@@ -117,6 +117,7 @@ public class Profile_Activity extends AppCompatActivity {
         });
     }
 
+
     // جلب رقم المعرف للمستخد
     private String loadUid(){
         SharedPreferences sharedPreferences = getSharedPreferences("saveUid" , Context.MODE_PRIVATE);

@@ -176,7 +176,10 @@ public class SharedFunctions {
 
     //Dismiss Dialog
     public static void dismissDialog() {
-        dialog.dismiss();
+        if(dialog != null){
+            dialog.dismiss();
+
+        }
     }
 
 
@@ -337,6 +340,7 @@ public class SharedFunctions {
       return  dateFormat.format(currentTime);
     }
 
+    //Get Date At the moment
     public static String getDateAtTheMoment(){
         Calendar calendar = Calendar.getInstance();
         int year = calendar.get(Calendar.YEAR);
@@ -519,4 +523,5 @@ public class SharedFunctions {
         dialog.show();
         return dialog;
     }
+
 }
