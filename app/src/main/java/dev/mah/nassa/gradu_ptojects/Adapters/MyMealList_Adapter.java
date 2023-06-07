@@ -55,7 +55,7 @@ public class MyMealList_Adapter extends RecyclerView.Adapter<MyMealList_Adapter.
             holder.tableLayout.setLayoutParams(layoutParams);
             holder.iconDrop.setRotation(360);
         }else {
-            layoutParams.height=450;
+            layoutParams.height=-2;
             holder.tableLayout.setLayoutParams(layoutParams);
             holder.iconDrop.setRotation(270);
         }
@@ -70,7 +70,7 @@ public class MyMealList_Adapter extends RecyclerView.Adapter<MyMealList_Adapter.
                     dropDown=true;
                 }else {
                     dropDown=false;
-                    layoutParams.height=450;
+                    layoutParams.height=-2;
                     holder.iconDrop.setRotation(270);
                     holder.tableLayout.setLayoutParams(layoutParams);
 

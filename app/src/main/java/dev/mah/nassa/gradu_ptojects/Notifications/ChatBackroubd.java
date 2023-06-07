@@ -151,7 +151,7 @@ public class ChatBackroubd extends Service {
     // Create the foreground service notification
     private Notification createNotification() {
         Intent notificationIntent = new Intent(this, MainActivity.class); // Replace with your main activity class
-        PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, notificationIntent, 0);
+        PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, notificationIntent, PendingIntent.FLAG_MUTABLE);
 
         NotificationCompat.Builder builder = new NotificationCompat.Builder(this, CHANNEL_ID)
                 .setContentTitle("CaloMate")
