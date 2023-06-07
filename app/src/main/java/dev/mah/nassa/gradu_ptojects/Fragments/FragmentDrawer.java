@@ -13,6 +13,7 @@ import android.widget.TextView;
 
 import dev.mah.nassa.gradu_ptojects.Activityes.ActivitesStats;
 import dev.mah.nassa.gradu_ptojects.Activityes.Home_Activity;
+import dev.mah.nassa.gradu_ptojects.Activityes.MyMealList_Activity;
 import dev.mah.nassa.gradu_ptojects.Activityes.Profile_Activity;
 import dev.mah.nassa.gradu_ptojects.Activityes.SignIn_Activity;
 import dev.mah.nassa.gradu_ptojects.Constants.SharedFunctions;
@@ -39,6 +40,7 @@ public class FragmentDrawer extends Fragment {
         TextView signOut = getActivity().findViewById(R.id.signOut);
         TextView stats = getActivity().findViewById(R.id.statistics);
         TextView account = getActivity().findViewById(R.id.account);
+        TextView food = getActivity().findViewById(R.id.myFoud);
         signOut.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -63,6 +65,13 @@ public class FragmentDrawer extends Fragment {
             public void onClick(View v) {
                 Intent intent =new Intent(getContext(), Profile_Activity.class);
                 getActivity().startActivity(intent);
+            }
+        });
+
+        food.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(getContext() , MyMealList_Activity.class));
             }
         });
     }

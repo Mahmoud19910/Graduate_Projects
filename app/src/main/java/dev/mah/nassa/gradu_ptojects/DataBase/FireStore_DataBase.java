@@ -1,12 +1,18 @@
 package dev.mah.nassa.gradu_ptojects.DataBase;
 
+import static dev.mah.nassa.gradu_ptojects.Activityes.Home_Activity.uid;
+
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.util.Log;
+import android.view.View;
+import android.widget.Adapter;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
@@ -28,6 +34,8 @@ import java.util.Map;
 import dev.mah.nassa.gradu_ptojects.Activityes.Home_Activity;
 import dev.mah.nassa.gradu_ptojects.Constants.SharedFunctions;
 import dev.mah.nassa.gradu_ptojects.Modles.Exercise_Details;
+import dev.mah.nassa.gradu_ptojects.Modles.FoodCategory;
+import dev.mah.nassa.gradu_ptojects.Modles.My_Meal_List;
 import dev.mah.nassa.gradu_ptojects.Modles.Sports_Exercises;
 import dev.mah.nassa.gradu_ptojects.Modles.UsersInfo;
 import dev.mah.nassa.gradu_ptojects.Modles.Users_Health_Info;
@@ -38,8 +46,6 @@ import io.reactivex.rxjava3.core.ObservableOnSubscribe;
 public class FireStore_DataBase {
     static FirebaseFirestore firestore = FirebaseFirestore.getInstance();
     public static boolean isFindUser=false;
-    public static boolean isFind=false;
-
 
     //UsersInfo(Collection)
     public static void insertUsersInfo(UsersInfo usersInfo, Context context) {
@@ -106,6 +112,36 @@ public class FireStore_DataBase {
 
     }
 
+    //Food Meal(Collection)
+    public static void insertMeal(My_Meal_List mealList, Context context) {
+        firestore.collection("MyMeal").add(mealList).addOnCompleteListener(new OnCompleteListener<DocumentReference>() {
+            @Override
+            public void onComplete(@NonNull Task<DocumentReference> task) {
+                if(task.isSuccessful()){
+                    Toast.makeText(context, "Added Health", Toast.LENGTH_SHORT).show();
+                }else{
+                    Toast.makeText(context, "Fail Health", Toast.LENGTH_SHORT).show();
+
+                }
+            }
+        });
+
+    }
+    //Food Meal(Collection)
+    public static void insertMeal(FoodCategory foodCategory, Context context) {
+        firestore.collection("MyMeal").add(foodCategory).addOnCompleteListener(new OnCompleteListener<DocumentReference>() {
+            @Override
+            public void onComplete(@NonNull Task<DocumentReference> task) {
+                if(task.isSuccessful()){
+                    Toast.makeText(context, "Added Health", Toast.LENGTH_SHORT).show();
+                }else{
+                    Toast.makeText(context, "Fail Health", Toast.LENGTH_SHORT).show();
+
+                }
+            }
+        });
+
+    }
     // Get All Data(Users Info)
     public static void getAllUsersInfo(OnSuccessListener<ArrayList<UsersInfo>> onsuccess , OnFailureListener onFailureListener){
         ArrayList<UsersInfo> usersInfoArrayList =new ArrayList<>();
@@ -339,6 +375,85 @@ public class FireStore_DataBase {
             });
         }
 
+    public static void getAllData (Context context, String collection ,String uid ,OnSuccessListener onSuccessListener){
+
+        ArrayList<My_Meal_List> foodCategories = new ArrayList<>();
+        firestore.collection(collection).whereEqualTo("uid" , uid).get().addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
+                    @Override
+                    public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
+
+                        if (!queryDocumentSnapshots.isEmpty()) {
+
+                            List<DocumentSnapshot> list = queryDocumentSnapshots.getDocuments();
+                            for (DocumentSnapshot d : list) {
+
+                                My_Meal_List c = d.toObject(My_Meal_List.class);
+
+                                c.setId(d.getId());
+
+                                foodCategories.add(c);
+                                onSuccessListener.onSuccess(foodCategories);
+                            }
+                        } else {
+                            // if the snapshot is empty we are displaying a toast message.
+                        }
+                    }
+                }).addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        // if we do not get any data or any error we are displaying
+                        // a toast message that we do not get any data
+                    }
+                });
+
     }
+    //FoodCategory_Fragment food
+    public static void getAllDatas (Context context, String collection ,OnSuccessListener onSuccessListener){
+
+        ArrayList<FoodCategory> foodCategories = new ArrayList<>();
+        firestore.collection(collection).get()
+                .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
+                    @Override
+                    public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
+                        // after getting the data we are calling on success method
+                        // and inside this method we are checking if the received
+                        // query snapshot is empty or not.
+                        if (!queryDocumentSnapshots.isEmpty()) {
+                            // if the snapshot is not empty we are
+                            // hiding our progress bar and adding
+                            // our data in a list.
+                            List<DocumentSnapshot> list = queryDocumentSnapshots.getDocuments();
+                            for (DocumentSnapshot d : list) {
+                                // after getting this list we are passing
+                                // that list to our object class.
+                                FoodCategory c = d.toObject(FoodCategory.class);
+
+                                // below is the updated line of code which we have to
+                                // add to pass the document id inside our modal class.
+                                // we are setting our document id with d.getId() method
+                                c.setId(d.getId());
+
+                                // and we will pass this object class
+                                // inside our arraylist which we have
+                                // created for recycler view.
+                                foodCategories.add(c);
+                                onSuccessListener.onSuccess(foodCategories);
+                            }
+                        } else {
+                            // if the snapshot is empty we are displaying a toast message.
+                        }
+                    }
+                }).addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        // if we do not get any data or any error we are displaying
+                        // a toast message that we do not get any data
+                    }
+                });
+
+    }
+
+
+}
 
 
