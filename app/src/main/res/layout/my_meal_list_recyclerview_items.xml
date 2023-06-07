@@ -1,0 +1,199 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<androidx.appcompat.widget.LinearLayoutCompat xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+android:layout_height="wrap_content"
+android:layoutDirection="rtl"
+android:padding="10dp"
+android:orientation="vertical">
+
+<androidx.appcompat.widget.LinearLayoutCompat
+    android:id="@+id/meal_linear"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal">
+    <ImageView
+        android:id="@+id/myMealList_RV_im_dropIcon"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/pink_back_ios_new_24"/>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="التاريخ"
+        android:layout_marginStart="15dp"
+        android:layout_marginEnd="15dp"
+        style="@style/describtion_ShadowBlack_Color"
+        android:textSize="16dp"/>
+    <TextView
+        android:id="@+id/myMealList_RV_dateTv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="10/10/2022"
+        style="@style/describtion_ShadowBlack_Color"
+        android:textSize="16dp"/>
+
+</androidx.appcompat.widget.LinearLayoutCompat>
+
+<TableLayout
+    android:id="@+id/myMealList_RV_tb_tableDetails"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="20dp"
+    android:background="@color/blue"
+    android:padding="1dp">
+
+    <TableRow
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:text="اسم الوجبة"
+            android:gravity="center"
+            android:layout_margin="1dp"
+            android:textSize="18dp"
+            android:background="@color/white"
+            android:layout_weight="1"
+            style="@style/describtion_ShadowBlack_Color"/>
+
+        <TextView
+            android:id="@+id/myMealList_RV_tv_name"
+            style="@style/describtion_ShadowPink_Color"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_margin="1dp"
+            android:layout_weight="1"
+            android:background="@color/white"
+            android:gravity="center"
+            android:text="تين"
+            tools:ignore="TextContrastCheck" />
+
+    </TableRow>
+
+    <TableRow
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:text="السعرات الحرارية المحروقة"
+            android:gravity="center"
+            android:layout_margin="1dp"
+            android:textSize="18dp"
+            android:background="@color/white"
+            android:layout_weight="1"
+            style="@style/describtion_ShadowBlack_Color"/>
+
+        <TextView
+            android:id="@+id/myMealList_RV_tv_calories"
+            style="@style/describtion_ShadowPink_Color"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_margin="1dp"
+            android:layout_weight="1"
+            android:background="@color/white"
+            android:gravity="center"
+            android:text="200 سعرة"
+            tools:ignore="TextContrastCheck" />
+
+    </TableRow>
+    <TableRow
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:text="الوزن "
+            android:gravity="center"
+            android:layout_margin="1dp"
+            android:textSize="18dp"
+            android:background="@color/white"
+            android:layout_weight="1"
+            style="@style/describtion_ShadowBlack_Color"/>
+
+        <TextView
+            android:id="@+id/myMealList_RV_tv_weightMeal"
+            style="@style/describtion_ShadowPink_Color"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_margin="1dp"
+            android:layout_weight="1"
+            android:background="@color/white"
+            android:gravity="center"
+            android:text="23"
+            tools:ignore="TextContrastCheck" />
+
+    </TableRow>
+<!--    <TableRow-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="wrap_content">-->
+
+<!--        <TextView-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="40dp"-->
+<!--            android:text="التاريخ "-->
+<!--            android:gravity="center"-->
+<!--            android:layout_margin="1dp"-->
+<!--            android:textSize="18dp"-->
+<!--            android:background="@color/white"-->
+<!--            android:layout_weight="1"-->
+<!--            style="@style/describtion_ShadowBlack_Color"/>-->
+
+<!--        <TextView-->
+<!--            android:id="@+id/myMealList_RV_tv_date"-->
+<!--            style="@style/describtion_ShadowPink_Color"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="match_parent"-->
+<!--            android:layout_margin="1dp"-->
+<!--            android:layout_weight="1"-->
+<!--            android:background="@color/white"-->
+<!--            android:gravity="center"-->
+<!--            android:text="2\2\2023"-->
+<!--            tools:ignore="TextContrastCheck" />-->
+
+<!--    </TableRow>-->
+    <TableRow
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:text="الوقت"
+            android:gravity="center"
+            android:layout_margin="1dp"
+            android:textSize="18dp"
+            android:background="@color/white"
+            android:layout_weight="1"
+            style="@style/describtion_ShadowBlack_Color"/>
+
+        <TextView
+            android:id="@+id/myMealList_RV_tv_time"
+            style="@style/describtion_ShadowPink_Color"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_margin="1dp"
+            android:layout_weight="1"
+            android:background="@color/white"
+            android:gravity="center"
+            android:text="12:20 pm"
+            tools:ignore="TextContrastCheck" />
+
+    </TableRow>
+
+
+
+</TableLayout>
+
+<View
+    android:layout_width="match_parent"
+    android:layout_height="2dp"
+    android:layout_marginTop="10dp"
+    android:background="#E32C83"/>
+
+</androidx.appcompat.widget.LinearLayoutCompat>

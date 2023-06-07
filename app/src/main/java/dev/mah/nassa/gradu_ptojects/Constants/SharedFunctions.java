@@ -1,5 +1,6 @@
 package dev.mah.nassa.gradu_ptojects.Constants;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.Dialog;
 import android.app.TimePickerDialog;
@@ -10,6 +11,7 @@ import android.content.SharedPreferences;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.CountDownTimer;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
@@ -19,6 +21,7 @@ import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.RadioGroup;
@@ -28,6 +31,8 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AlertDialog;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.google.android.gms.tasks.OnSuccessListener;
 
 import java.text.SimpleDateFormat;
@@ -37,7 +42,11 @@ import java.util.Locale;
 
 import dev.mah.nassa.gradu_ptojects.Activityes.Exercices_Activity;
 import dev.mah.nassa.gradu_ptojects.Activityes.Home_Activity;
+import dev.mah.nassa.gradu_ptojects.Activityes.MyMealList_Activity;
 import dev.mah.nassa.gradu_ptojects.Activityes.StartTraining_Activity;
+import dev.mah.nassa.gradu_ptojects.DataBase.FireStore_DataBase;
+import dev.mah.nassa.gradu_ptojects.Modles.FoodCategory;
+import dev.mah.nassa.gradu_ptojects.Modles.My_Meal_List;
 import dev.mah.nassa.gradu_ptojects.Modles.Sports_Exercises;
 import dev.mah.nassa.gradu_ptojects.R;
 
@@ -45,7 +54,7 @@ public class SharedFunctions {
 
     public static CountDownTimer countDownTimer;
     static Dialog dialog;
-
+    static int counter=0;
     // ميثود التحقق من البيانات في واجهة مستخدم جديد
     public static boolean checkEnterdDataInSignUp(EditText editName, EditText editPhone, EditText editPass, CheckBox checkBox, Context context) {
         boolean check = true;
@@ -342,6 +351,177 @@ public class SharedFunctions {
     }
 
 
+    //ديلوك لاضافة في قائمة وجباتي
+    @SuppressLint("NewApi")
+    public static Dialog createFoodDialog(Context context ,String uid, FoodCategory foodCategory){
 
+
+        Dialog dialog = new Dialog(context);
+        View view = LayoutInflater.from(context).inflate(R.layout.dialog_food_section, null, false);
+        LinearLayout linearLayout =  view.findViewById(R.id.layoutDialog);
+        linearLayout.setBackgroundColor(context.getColor(R.color.white));
+        linearLayout.setBackground(context.getDrawable(R.drawable.corner_raduis_card_food_dialog));
+        dialog.setContentView(view);
+        Window dialogWindow = dialog.getWindow();
+        dialogWindow.setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
+        dialogWindow.setBackgroundDrawableResource(R.drawable.food_shabe_background);
+        dialogWindow.setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
+
+       //inflate
+        Button cancel,add;
+        ImageView foodImages,plus,minus;
+        TextView caloriesMeal,weight,foodName;
+
+
+        cancel = view.findViewById(R.id.dialogFood_cancel);
+        add = view.findViewById(R.id.dialogFood_add);
+        foodImages = view.findViewById(R.id.dialogImage);
+        caloriesMeal = view.findViewById(R.id.dialogFood_caloriesMeal);
+        weight= view.findViewById(R.id.dialogFood_weight);
+        foodName= view.findViewById(R.id.dialogFood_name);
+        plus = view.findViewById(R.id.dialogFood_plus);
+        minus = view.findViewById(R.id.dialogFood_minus);
+
+        Glide.with(context)
+                .load(foodCategory.getFilePath())
+                .diskCacheStrategy(DiskCacheStrategy.ALL)
+                .into(foodImages);
+
+        foodName.setText(foodCategory.getNameMeal());
+        weight.setText(foodCategory.getWeightMeal());
+        cancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(context, "cancel", Toast.LENGTH_SHORT).show();
+                dialog.dismiss();
+            }
+        });
+
+        add.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                My_Meal_List mealList = new My_Meal_List(uid,foodCategory.getId(),foodCategory.getNameMeal()
+                        ,foodCategory.getCaloriesMeal(),getTimeAtTheMoment(),getDateAtTheMoment()
+                        ,weight.getText().toString());
+                FireStore_DataBase.insertMeal(mealList , view.getContext());
+                context.startActivity(new Intent(view.getContext(), MyMealList_Activity.class));
+            }
+        });
+
+
+        plus.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                counter = Integer.parseInt(weight.getText().toString());
+                counter++;
+               weight.setText(counter+"");
+            }
+        });
+
+
+        minus.setOnClickListener(new View.OnClickListener() {
+            @SuppressLint("SuspiciousIndentation")
+            @Override
+            public void onClick(View v) {
+                if (counter>1)
+                counter = Integer.parseInt(weight.getText().toString());
+                counter--;
+                weight.setText(counter+"");
+            }
+        });
+
+        caloriesMeal.setText(foodCategory.getCaloriesMeal());
+        dialog.setCanceledOnTouchOutside(true);
+        dialogWindow.getDecorView().setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+
+                if(event.getAction()== MotionEvent.ACTION_DOWN){
+                    dialog.dismiss();
+                    return true;
+                }
+                return false;
+             }
+        });
+        dialog.show();
+        return dialog;
+}
+
+    //ديلوك اكتفتي My Meal List
+    //عند ضغط على زر الاضافة
+    @SuppressLint("NewApi")
+    public static Dialog createFoodDialog(Context context , String uid ,OnSuccessListener onSuccessListener){
+        Dialog dialog = new Dialog(context);
+        View view = LayoutInflater.from(context).inflate(R.layout.dialog_meal_list, null, false);
+        LinearLayout linearLayout =  view.findViewById(R.id.layoutDialog);
+        linearLayout.setBackgroundColor(context.getColor(R.color.white));
+        linearLayout.setBackground(context.getDrawable(R.drawable.corner_raduis_card_food_dialog));
+        dialog.setContentView(view);
+        Window dialogWindow = dialog.getWindow();
+        dialogWindow.setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
+        dialogWindow.setBackgroundDrawableResource(R.drawable.food_shabe_background);
+        dialogWindow.setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
+
+        //inflate
+        EditText meal_caloriesMeal , meal_name, meal_weight;
+        ImageView plus,minus;
+        meal_caloriesMeal = view.findViewById(R.id.dialogMeal_caloriesMeal);
+        meal_name = view.findViewById(R.id.dialogMeal_name);
+        meal_weight = view.findViewById(R.id.dialogMeal_weight);
+        @SuppressLint({"MissingInflatedId", "LocalSuppress"})
+        Button cancel = view.findViewById(R.id.dialogMeal_cancel);
+
+        cancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(context, "cancel", Toast.LENGTH_SHORT).show();
+                dialog.dismiss();
+            }
+        });
+        @SuppressLint({"MissingInflatedId", "LocalSuppress"})
+        Button add = view.findViewById(R.id.dialogMeal_add);
+
+        add.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                // validating the text fields if empty or not.
+                if(TextUtils.isEmpty(meal_name.getText())){
+                    meal_name.setError("قم بأدخال اسم الوجبة");
+                } else if (TextUtils.isEmpty(meal_caloriesMeal.getText())) {
+                    meal_caloriesMeal.setError("قم بأدخال عدد سعرات");
+                } else if (TextUtils.isEmpty(meal_weight.getText())) {
+                    meal_weight.setError("قم بأدخال وزن الوجبة");
+                }
+                else {
+                    // calling method to add data to Firebase Firestore.
+                    My_Meal_List mealList = new My_Meal_List(uid,null,meal_name.getText().toString()
+                            ,meal_caloriesMeal.getText().toString(),getTimeAtTheMoment(),getDateAtTheMoment()
+                            ,meal_weight.getText().toString());
+                    //fireStore add Meal
+                    FireStore_DataBase.insertMeal(mealList , view.getContext());
+                    onSuccessListener.onSuccess(mealList);
+                    dialog.dismiss();
+                }
+
+            }
+        });
+
+        dialog.setCanceledOnTouchOutside(true);
+        dialogWindow.getDecorView().setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+
+                if(event.getAction()== MotionEvent.ACTION_DOWN){
+                    dialog.dismiss();
+                    return true;
+                }
+                return false;
+            }
+        });
+        dialog.show();
+        return dialog;
+    }
 
 }

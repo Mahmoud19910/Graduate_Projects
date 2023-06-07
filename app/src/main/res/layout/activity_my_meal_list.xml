@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    >
+
+    <androidx.coordinatorlayout.widget.CoordinatorLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        >
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <androidx.appcompat.widget.Toolbar
+                android:id="@+id/toolbar"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="#3A7FC0"
+                android:minHeight="?attr/actionBarSize"
+                android:theme="?attr/actionBarTheme"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <TextView
+                    android:id="@+id/myMeal_tv_title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:shadowColor="@color/black"
+                    android:shadowDx="0"
+                    android:shadowDy="3"
+                    android:shadowRadius="6"
+                    android:text="قائمة وجباتي"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/_18ssp" />
+
+                <ImageView
+                    android:id="@+id/myMeal_iv_back"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="start"
+                    android:layout_marginEnd="@dimen/_7sdp"
+                    android:src="@drawable/back_ios_new_24" />
+            </androidx.appcompat.widget.Toolbar>
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:layout_marginTop="30dp"
+    android:layout_marginEnd="30dp"
+    android:layout_marginStart="30dp"
+    >
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/myMealList_rv_recycler"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/_420sdp" />
+
+    <androidx.appcompat.widget.LinearLayoutCompat
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/_40sdp"
+        android:background="@drawable/corner_raduis_card2"
+        android:backgroundTint="#E32C83"
+        android:layoutDirection="rtl"
+        android:gravity="center"
+        android:padding="10dp">
+
+<TextView
+    android:id="@+id/myMealList_tv_salary"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:textSize="20sp"
+    android:shadowRadius="2"
+    android:shadowDy="6"
+    android:textColor="@color/white"
+    android:shadowColor="@color/black"
+
+    />
+    </androidx.appcompat.widget.LinearLayoutCompat>
+</LinearLayout>
+
+
+        </LinearLayout>
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/add_food_list"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="right|bottom"
+            android:layout_margin="16dp"
+            android:src="@drawable/my_meal_list_add_24"
+            app:backgroundTint="#0079FF"
+            tools:ignore="MissingConstraints,SpeakableTextPresentCheck" />
+    </androidx.coordinatorlayout.widget.CoordinatorLayout>
+</layout>
