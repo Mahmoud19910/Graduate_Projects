@@ -10,8 +10,14 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+import androidx.viewpager2.widget.CompositePageTransformer;
+import androidx.viewpager2.widget.MarginPageTransformer;
+import androidx.viewpager2.widget.ViewPager2;
 
 import android.os.CountDownTimer;
+import android.os.Handler;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -30,16 +36,21 @@ import java.util.Locale;
 
 import dev.mah.nassa.gradu_ptojects.Activityes.ActivitesStats;
 import dev.mah.nassa.gradu_ptojects.Activityes.Exercices_Activity;
+import dev.mah.nassa.gradu_ptojects.Activityes.FoodSection_Activity;
 import dev.mah.nassa.gradu_ptojects.Activityes.Home_Activity;
+import dev.mah.nassa.gradu_ptojects.Adapters.OfferMealHomeHZ_Adapter;
+import dev.mah.nassa.gradu_ptojects.Adapters.ParentFood_Adapter;
 import dev.mah.nassa.gradu_ptojects.Constants.LanguageUtils;
 import dev.mah.nassa.gradu_ptojects.Constants.PersonActivityArray;
 import dev.mah.nassa.gradu_ptojects.Constants.SharedFunctions;
 import dev.mah.nassa.gradu_ptojects.Constants.Vital_Equations;
+import dev.mah.nassa.gradu_ptojects.DataBase.FireStore_DataBase;
 import dev.mah.nassa.gradu_ptojects.Interfaces.SetStepsCountInActivity;
 import dev.mah.nassa.gradu_ptojects.MVVM.ExersiseDetails_MVVM;
 import dev.mah.nassa.gradu_ptojects.MVVM.UsersHealthInfoViewModel;
 import dev.mah.nassa.gradu_ptojects.MVVM.UsersViewModel;
 import dev.mah.nassa.gradu_ptojects.Modles.Exercise_Details;
+import dev.mah.nassa.gradu_ptojects.Modles.FoodCategory;
 import dev.mah.nassa.gradu_ptojects.Modles.Sports_Exercises;
 import dev.mah.nassa.gradu_ptojects.Modles.UsersInfo;
 import dev.mah.nassa.gradu_ptojects.Modles.Users_Health_Info;
@@ -64,7 +75,8 @@ public class Home_Fragment extends Fragment implements View.OnClickListener {
     private double totalCaloBurned;
     private Sports_Exercises sports_exercises;
     private SetStepsCountInActivity stepsCountInActivityListener;
-
+    private ArrayList<FoodCategory>foodCategories;
+    private Handler sHandler = new Handler();
 
     public Home_Fragment() {
     }
@@ -88,6 +100,39 @@ public class Home_Fragment extends Fragment implements View.OnClickListener {
         binding = FragmentHomeBinding.inflate(inflater);
 
         LanguageUtils.changeLanguage(requireContext(), "en");
+        FireStore_DataBase.getAllDatas(getContext(), "Food_Category", new OnSuccessListener() {
+            @Override
+            public void onSuccess(Object o) {
+                foodCategories = (ArrayList<FoodCategory>) o;
+                binding.fragmentHomeViewPager2.setAdapter(new OfferMealHomeHZ_Adapter(getContext() , foodCategories , binding.fragmentHomeViewPager2));
+                binding.fragmentHomeViewPager2.setOffscreenPageLimit(3);
+                binding.fragmentHomeViewPager2.setCurrentItem(1,false);
+                binding.fragmentHomeViewPager2.setClipChildren(false);
+                binding.fragmentHomeViewPager2.setClipToPadding(false);
+                binding.fragmentHomeViewPager2.getChildAt(0).setOverScrollMode(RecyclerView.OVER_SCROLL_NEVER);
+                CompositePageTransformer compositePageTransformer = new CompositePageTransformer();
+                compositePageTransformer.addTransformer(new MarginPageTransformer(40));
+                compositePageTransformer.addTransformer(new ViewPager2.PageTransformer() {
+                    @Override
+                    public void transformPage(@NonNull View page, float position) {
+                        float r = 1 - Math.abs(position);
+                        page.setScaleY(0.85f + r * 0.15f);
+
+                    }
+                });
+
+                binding.fragmentHomeViewPager2.setPageTransformer(compositePageTransformer);
+                binding.fragmentHomeViewPager2.registerOnPageChangeCallback(new ViewPager2.OnPageChangeCallback() {
+                    @Override
+                    public void onPageSelected(int position) {
+                        super.onPageSelected(position);
+                        sHandler.removeCallbacks(runnable);
+                        sHandler.postDelayed(runnable , 2000);
+                    }
+                });
+            }
+        });
+
         return binding.getRoot();
     }
 
@@ -221,5 +266,23 @@ public class Home_Fragment extends Fragment implements View.OnClickListener {
                 stepsCountInActivityListener.setStepsListener(2);
                 break;
         }
+    }
+    private Runnable runnable = new Runnable() {
+        @Override
+        public void run() {
+            binding.fragmentHomeViewPager2.setCurrentItem(binding.fragmentHomeViewPager2.getCurrentItem() + 1);
+        }
+    };
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        sHandler.postDelayed(runnable , 2000);
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        sHandler.postDelayed(runnable , 2000);
     }
 }
