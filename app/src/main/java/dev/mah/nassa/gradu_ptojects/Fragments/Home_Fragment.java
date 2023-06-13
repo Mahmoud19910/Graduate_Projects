@@ -47,6 +47,7 @@ import dev.mah.nassa.gradu_ptojects.Constants.Vital_Equations;
 import dev.mah.nassa.gradu_ptojects.DataBase.FireStore_DataBase;
 import dev.mah.nassa.gradu_ptojects.Interfaces.SetStepsCountInActivity;
 import dev.mah.nassa.gradu_ptojects.MVVM.ExersiseDetails_MVVM;
+import dev.mah.nassa.gradu_ptojects.MVVM.FoodCategory_MVVM;
 import dev.mah.nassa.gradu_ptojects.MVVM.UsersHealthInfoViewModel;
 import dev.mah.nassa.gradu_ptojects.MVVM.UsersViewModel;
 import dev.mah.nassa.gradu_ptojects.Modles.Exercise_Details;
@@ -77,6 +78,7 @@ public class Home_Fragment extends Fragment implements View.OnClickListener {
     private SetStepsCountInActivity stepsCountInActivityListener;
     private ArrayList<FoodCategory>foodCategories;
     private Handler sHandler = new Handler();
+    private FoodCategory_MVVM foodCategoryMvvm;
 
     public Home_Fragment() {
     }
@@ -100,38 +102,6 @@ public class Home_Fragment extends Fragment implements View.OnClickListener {
         binding = FragmentHomeBinding.inflate(inflater);
 
         LanguageUtils.changeLanguage(requireContext(), "en");
-        FireStore_DataBase.getAllDatas(getContext(), "Food_Category", new OnSuccessListener() {
-            @Override
-            public void onSuccess(Object o) {
-                foodCategories = (ArrayList<FoodCategory>) o;
-                binding.fragmentHomeViewPager2.setAdapter(new OfferMealHomeHZ_Adapter(getContext() , foodCategories , binding.fragmentHomeViewPager2));
-                binding.fragmentHomeViewPager2.setOffscreenPageLimit(3);
-                binding.fragmentHomeViewPager2.setCurrentItem(1,false);
-                binding.fragmentHomeViewPager2.setClipChildren(false);
-                binding.fragmentHomeViewPager2.setClipToPadding(false);
-                binding.fragmentHomeViewPager2.getChildAt(0).setOverScrollMode(RecyclerView.OVER_SCROLL_NEVER);
-                CompositePageTransformer compositePageTransformer = new CompositePageTransformer();
-                compositePageTransformer.addTransformer(new MarginPageTransformer(40));
-                compositePageTransformer.addTransformer(new ViewPager2.PageTransformer() {
-                    @Override
-                    public void transformPage(@NonNull View page, float position) {
-                        float r = 1 - Math.abs(position);
-                        page.setScaleY(0.85f + r * 0.15f);
-
-                    }
-                });
-
-                binding.fragmentHomeViewPager2.setPageTransformer(compositePageTransformer);
-                binding.fragmentHomeViewPager2.registerOnPageChangeCallback(new ViewPager2.OnPageChangeCallback() {
-                    @Override
-                    public void onPageSelected(int position) {
-                        super.onPageSelected(position);
-                        sHandler.removeCallbacks(runnable);
-                        sHandler.postDelayed(runnable , 2000);
-                    }
-                });
-            }
-        });
 
         return binding.getRoot();
     }
@@ -147,6 +117,7 @@ public class Home_Fragment extends Fragment implements View.OnClickListener {
         usersViewModel = ViewModelProviders.of(Home_Fragment.this).get(UsersViewModel.class);
         usersHealthInfoViewModel = ViewModelProviders.of(Home_Fragment.this).get(UsersHealthInfoViewModel.class);
         exersiseDetails_mvvm = ViewModelProviders.of(Home_Fragment.this).get(ExersiseDetails_MVVM.class);
+        foodCategoryMvvm = ViewModelProviders.of(Home_Fragment.this).get(FoodCategory_MVVM.class);
 
         progressiveGauge = binding.awesomeSpeedomete;
         binding.caloeiLayout.setVisibility(View.INVISIBLE);
@@ -182,7 +153,7 @@ public class Home_Fragment extends Fragment implements View.OnClickListener {
                         binding.watertLayout.setVisibility(View.VISIBLE);
                         YoYo.with(Techniques.SlideInLeft).duration(900).repeat(0).playOn(binding.watertLayout);
                         break;
-//
+
                 }
             }
 
@@ -234,6 +205,39 @@ public class Home_Fragment extends Fragment implements View.OnClickListener {
             }
         });
 
+        // جلب الوجبات لعرضها بشكل أفقي
+        foodCategoryMvvm.getAllFoodCategory().observe(Home_Fragment.this, new Observer<List<FoodCategory>>() {
+            @Override
+            public void onChanged(List<FoodCategory> foodCategoryList) {
+                foodCategories = (ArrayList<FoodCategory>) foodCategoryList;
+                binding.fragmentHomeViewPager2.setAdapter(new OfferMealHomeHZ_Adapter(getContext() , foodCategories , binding.fragmentHomeViewPager2));
+                binding.fragmentHomeViewPager2.setOffscreenPageLimit(3);
+                binding.fragmentHomeViewPager2.setCurrentItem(1,false);
+                binding.fragmentHomeViewPager2.setClipChildren(false);
+                binding.fragmentHomeViewPager2.setClipToPadding(false);
+                binding.fragmentHomeViewPager2.getChildAt(0).setOverScrollMode(RecyclerView.OVER_SCROLL_NEVER);
+                CompositePageTransformer compositePageTransformer = new CompositePageTransformer();
+                compositePageTransformer.addTransformer(new MarginPageTransformer(40));
+                compositePageTransformer.addTransformer(new ViewPager2.PageTransformer() {
+                    @Override
+                    public void transformPage(@NonNull View page, float position) {
+                        float r = 1 - Math.abs(position);
+                        page.setScaleY(0.85f + r * 0.15f);
+
+                    }
+                });
+
+                binding.fragmentHomeViewPager2.setPageTransformer(compositePageTransformer);
+                binding.fragmentHomeViewPager2.registerOnPageChangeCallback(new ViewPager2.OnPageChangeCallback() {
+                    @Override
+                    public void onPageSelected(int position) {
+                        super.onPageSelected(position);
+                        sHandler.removeCallbacks(runnable);
+                        sHandler.postDelayed(runnable , 2000);
+                    }
+                });
+            }
+        });
 
     }
 

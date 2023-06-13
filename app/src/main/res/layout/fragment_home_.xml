@@ -669,7 +669,6 @@
                     android:layout_height="wrap_content"
                     android:paddingStart="80dp"
                     android:paddingEnd="80dp"
-                    android:layout_marginTop="@dimen/_10sdp"
                     android:layout_marginBottom="@dimen/_50sdp"
                     />
             </LinearLayout>
