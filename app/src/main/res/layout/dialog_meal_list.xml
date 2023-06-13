@@ -43,10 +43,12 @@
         style="@style/describtion_Black_Color"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
         android:layout_alignParentEnd="true"
-        android:text="السعرات:"
-        android:layout_marginEnd="@dimen/_13sdp"
         android:layout_gravity="end"
+        android:layout_marginTop="6dp"
+        android:layout_marginEnd="12dp"
+        android:text="السعرات:"
         android:textSize="@dimen/_14ssp" />
 
     <EditText
@@ -66,19 +68,21 @@
 
     <TextView
         android:id="@+id/dialogFood_startname"
+        style="@style/describtion_Black_Color"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="اسم الوجبة :"
-        android:layout_marginEnd="@dimen/_40sdp"
-        style="@style/describtion_Black_Color"
-        android:layout_toStartOf="@+id/dialogMeal_caloriesMeal"
+        android:layout_alignParentTop="true"
         android:layout_gravity="end"
-        android:textSize="@dimen/_15ssp"/>
+        android:layout_marginTop="5dp"
+        android:layout_marginEnd="9dp"
+        android:layout_toStartOf="@+id/dialogMeal_caloriesMeal"
+        android:text="اسم الوجبة :"
+        android:textSize="@dimen/_15ssp" />
 
     <EditText
         android:id="@+id/dialogMeal_name"
         style="@style/describtion_Black_Color"
-        android:layout_width="@dimen/_50sdp"
+        android:layout_width="@dimen/_150sdp"
         android:layout_height="@dimen/_26sdp"
         android:background="@drawable/corner_raduis_card_food_dialog"
         android:layout_toStartOf="@+id/dialogFood_startname"

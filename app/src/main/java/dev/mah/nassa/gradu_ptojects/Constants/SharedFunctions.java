@@ -430,10 +430,11 @@ public class SharedFunctions {
             @SuppressLint("SuspiciousIndentation")
             @Override
             public void onClick(View v) {
-                if (counter>1)
                 counter = Integer.parseInt(weight.getText().toString());
-                counter--;
-                weight.setText(counter+"");
+                if (counter>=6){
+                    counter--;
+                    weight.setText(counter+"");
+                }
             }
         });
 
