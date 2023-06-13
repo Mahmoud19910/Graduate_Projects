@@ -243,11 +243,9 @@ public class ProfileEdite_Activity extends AppCompatActivity implements AdapterV
                     // Image uploaded successfully
                     // Dismiss dialog
                     progressDialog.dismiss();
-                    Toast.makeText(ProfileEdite_Activity.this, "Image Uploaded!!", Toast.LENGTH_SHORT).show();
 
 
                     downloadUrl = uri.toString();
-                    Toast.makeText(this, "Uri", Toast.LENGTH_SHORT).show();
 
                     usersInfoUpdate.setPhoto(downloadUrl);
                     usersViewModel.updateUsers(usersInfoUpdate);
@@ -273,7 +271,8 @@ public class ProfileEdite_Activity extends AppCompatActivity implements AdapterV
                     // Progress Listener for loading
                     // percentage on the dialog box
 
-                    double progress = (100.0 * snapshot.getBytesTransferred() / snapshot.getTotalByteCount());progressDialog.setMessage("Uploaded " + (int) progress + "%");
+                    double progress = (100.0 * snapshot.getBytesTransferred() / snapshot.getTotalByteCount());
+                    progressDialog.setMessage("Uploaded " + (int) progress + "%");
                 }
             });
         }

@@ -33,6 +33,7 @@ import android.widget.TimePicker;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AlertDialog;
+import androidx.lifecycle.ViewModelProviders;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
@@ -42,12 +43,15 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
+import java.util.UUID;
 
 import dev.mah.nassa.gradu_ptojects.Activityes.Exercices_Activity;
+import dev.mah.nassa.gradu_ptojects.Activityes.FoodSection_Activity;
 import dev.mah.nassa.gradu_ptojects.Activityes.Home_Activity;
 import dev.mah.nassa.gradu_ptojects.Activityes.MyMealList_Activity;
 import dev.mah.nassa.gradu_ptojects.Activityes.StartTraining_Activity;
 import dev.mah.nassa.gradu_ptojects.DataBase.FireStore_DataBase;
+import dev.mah.nassa.gradu_ptojects.MVVM.My_Meal_MVVM;
 import dev.mah.nassa.gradu_ptojects.Modles.FoodCategory;
 import dev.mah.nassa.gradu_ptojects.Modles.My_Meal_List;
 import dev.mah.nassa.gradu_ptojects.Modles.Sports_Exercises;
@@ -58,6 +62,7 @@ public class SharedFunctions {
     public static CountDownTimer countDownTimer;
     static Dialog dialog;
     static int counter=0;
+    public static My_Meal_MVVM my_meal_mvvm;
     // ميثود التحقق من البيانات في واجهة مستخدم جديد
     public static boolean checkEnterdDataInSignUp(EditText editName, EditText editPhone, EditText editPass, CheckBox checkBox, Context context) {
         boolean check = true;
@@ -188,10 +193,12 @@ public class SharedFunctions {
 
     // Check Internet Connection
     public static boolean checkInternetConnection(Context context) {
-        ConnectivityManager connectivityManager = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
-        NetworkInfo networkInfo = connectivityManager.getActiveNetworkInfo();
-        Network network = connectivityManager.getActiveNetwork();
-        return networkInfo != null && networkInfo.isConnected();
+        try {
+            String command = "ping -c 1 google.com";
+            return (Runtime.getRuntime().exec(command).waitFor() == 0);
+        } catch (Exception e) {
+            return false;
+        }
     }
 
 
@@ -359,8 +366,14 @@ public class SharedFunctions {
 
     //ديلوك لاضافة في قائمة وجباتي
     @SuppressLint("NewApi")
-    public static Dialog createFoodDialog(Context context ,String uid, FoodCategory foodCategory){
+    public static Dialog createFoodDialog(String activity ,  Context context ,String uid, FoodCategory foodCategory){
 
+        if(activity.equals("Home")){
+             my_meal_mvvm = ViewModelProviders.of((Home_Activity)context).get(My_Meal_MVVM.class);
+        }else {
+            my_meal_mvvm = ViewModelProviders.of((FoodSection_Activity)context).get(My_Meal_MVVM.class);
+
+        }
 
         Dialog dialog = new Dialog(context);
         View view = LayoutInflater.from(context).inflate(R.layout.dialog_food_section, null, false);
@@ -407,10 +420,11 @@ public class SharedFunctions {
             @Override
             public void onClick(View v) {
 
-                My_Meal_List mealList = new My_Meal_List(uid,foodCategory.getId(),foodCategory.getNameMeal()
+                My_Meal_List mealList = new My_Meal_List(uid,UUID.randomUUID().toString(),foodCategory.getNameMeal()
                         ,foodCategory.getCaloriesMeal(),getTimeAtTheMoment(),getDateAtTheMoment()
                         ,weight.getText().toString());
                 FireStore_DataBase.insertMeal(mealList , view.getContext());
+                my_meal_mvvm.insertMy_Meal_List(mealList);
                 context.startActivity(new Intent(view.getContext(), MyMealList_Activity.class));
             }
         });
@@ -459,6 +473,8 @@ public class SharedFunctions {
     //عند ضغط على زر الاضافة
     @SuppressLint("NewApi")
     public static Dialog createFoodDialog(Context context , String uid ,OnSuccessListener onSuccessListener){
+        My_Meal_MVVM my_meal_mvvm = ViewModelProviders.of((MyMealList_Activity)context).get(My_Meal_MVVM.class);
+
         Dialog dialog = new Dialog(context);
         View view = LayoutInflater.from(context).inflate(R.layout.dialog_meal_list, null, false);
         LinearLayout linearLayout =  view.findViewById(R.id.layoutDialog);
@@ -503,11 +519,13 @@ public class SharedFunctions {
                 }
                 else {
                     // calling method to add data to Firebase Firestore.
-                    My_Meal_List mealList = new My_Meal_List(uid,null,meal_name.getText().toString()
+                    My_Meal_List mealList = new My_Meal_List(uid, UUID.randomUUID().toString(),meal_name.getText().toString()
                             ,meal_caloriesMeal.getText().toString(),getTimeAtTheMoment(),getDateAtTheMoment()
                             ,meal_weight.getText().toString());
                     //fireStore add Meal
                     FireStore_DataBase.insertMeal(mealList , view.getContext());
+                    my_meal_mvvm.insertMy_Meal_List(mealList);
+
                     onSuccessListener.onSuccess(mealList);
                     dialog.dismiss();
                 }

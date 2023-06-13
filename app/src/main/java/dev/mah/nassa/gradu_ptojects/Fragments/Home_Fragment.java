@@ -160,6 +160,7 @@ public class Home_Fragment extends Fragment implements View.OnClickListener {
         binding.freeBut.setOnClickListener(this);
         binding.caloriBut.setOnClickListener(this);
         binding.stepsBut.setOnClickListener(this);
+        binding.startBurned.setOnClickListener(this);
 
 
        CountDownTimer countDownTimer = new CountDownTimer(1000000, 1000) {
@@ -264,6 +265,14 @@ public class Home_Fragment extends Fragment implements View.OnClickListener {
 
             case R.id.stepsBut:
                 stepsCountInActivityListener.setStepsListener(2);
+                break;
+
+            case R.id.startBurned:
+                Intent intent3 = new Intent(getContext() , Exercices_Activity.class);
+                intent3.putExtra("obj" , sports_exercises);
+                intent3.putExtra("uid" , uid);
+                intent3.putExtra("fragmentIndex" , 1);
+                getActivity().startActivity(intent3);
                 break;
         }
     }

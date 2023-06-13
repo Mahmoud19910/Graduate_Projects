@@ -30,7 +30,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
-            android:layout_marginBottom="45dp">
+           >
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -42,7 +42,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="200dp"
                     android:layout_marginStart="5dp"
-                    android:layout_marginTop="5dp"
+                    android:layout_marginTop="10dp"
                     android:layout_marginEnd="5dp"
                     android:outlineSpotShadowColor="@color/black"
                     android:shadowColor="@color/black"
@@ -57,7 +57,7 @@
 
                         <LinearLayout
                             android:layout_width="match_parent"
-                            android:layout_height="50dp"
+                            android:layout_height="44dp"
                             android:gravity="center"
                             android:orientation="horizontal">
 
@@ -417,6 +417,7 @@
                             </LinearLayout>
 
                             <androidx.appcompat.widget.AppCompatButton
+                                android:id="@+id/startBurned"
                                 style="@style/default_Button"
                                 android:layout_width="70dp"
                                 android:layout_height="37dp"
@@ -558,6 +559,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="188dp"
                     android:layout_marginTop="18dp"
+                    android:layout_marginBottom="60dp"
                     android:background="@drawable/card_view_shape">
 
                     <LinearLayout

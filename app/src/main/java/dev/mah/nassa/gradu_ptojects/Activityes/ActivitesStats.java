@@ -55,7 +55,6 @@ public class ActivitesStats extends AppCompatActivity {
         binding.backActivityExercices.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(ActivitesStats.this , Home_Activity.class));
                 finish();
             }
         });

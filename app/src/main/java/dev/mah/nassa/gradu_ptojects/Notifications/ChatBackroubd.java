@@ -74,12 +74,12 @@ public class ChatBackroubd extends Service {
                 databaseReference.removeValue().addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
                     public void onSuccess(Void unused) {
-                        Toast.makeText(ChatBackroubd.this, "dleted", Toast.LENGTH_SHORT).show();
+//                        Toast.makeText(ChatBackroubd.this, "dleted", Toast.LENGTH_SHORT).show();
                     }
                 }).addOnFailureListener(new OnFailureListener() {
                     @Override
                     public void onFailure(@NonNull Exception e) {
-                        Toast.makeText(ChatBackroubd.this, e.getMessage().toString()+"", Toast.LENGTH_SHORT).show();
+//                        Toast.makeText(ChatBackroubd.this, e.getMessage().toString()+"", Toast.LENGTH_SHORT).show();
                     }
                 });
 

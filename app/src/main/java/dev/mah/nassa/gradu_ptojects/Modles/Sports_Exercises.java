@@ -1,8 +1,16 @@
 package dev.mah.nassa.gradu_ptojects.Modles;
 
+import androidx.annotation.NonNull;
+import androidx.room.DeleteTable;
+import androidx.room.Entity;
+import androidx.room.PrimaryKey;
+
 import java.io.Serializable;
 
+@Entity
 public class Sports_Exercises implements Serializable {
+    @PrimaryKey
+    @NonNull
     private String id;
     private String name;
     private String descriotion;
