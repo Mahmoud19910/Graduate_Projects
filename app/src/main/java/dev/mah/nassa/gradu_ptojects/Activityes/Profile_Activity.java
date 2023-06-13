@@ -54,7 +54,6 @@ public class Profile_Activity extends AppCompatActivity {
        boolean internetConection =  SharedFunctions.checkInternetConnection(getBaseContext());
 
        if(internetConection){
-           Toast.makeText(this, "on", Toast.LENGTH_SHORT).show();
            FireStore_DataBase.getUsersById(loadUid(), this, new OnSuccessListener() {
                @Override
                public void onSuccess(Object o) {
@@ -86,7 +85,6 @@ public class Profile_Activity extends AppCompatActivity {
 
            });
        }else {
-           Toast.makeText(this, "off", Toast.LENGTH_SHORT).show();
 
            usersViewModel.getUsersByUid(loadUid()).observe(Profile_Activity.this, new Observer<UsersInfo>() {
                @Override
@@ -163,7 +161,6 @@ public class Profile_Activity extends AppCompatActivity {
     // جلب رقم المعرف للمستخد
     private String loadUid(){
         SharedPreferences sharedPreferences = getSharedPreferences("saveUid" , Context.MODE_PRIVATE);
-        Toast.makeText(this, "load", Toast.LENGTH_SHORT).show();
         return sharedPreferences.getString("uid" , "");
     }
 
