@@ -201,7 +201,7 @@ public class Chat_Activity extends AppCompatActivity {
                         sendMessaging(messageText, "");
 
                         // حفظ الاشعار في قاعدة البيانات لارسالها للمستقبل
-                        Notifications notifications = new Notifications(doctor.getId(), doctor.getToken() ,  messagesModles.getSenderName(), messageText);
+                        Notifications notifications = new Notifications(doctor.getId(), doctor.getToken() ,  name, messageText);
                         RealTime_DataBase.insertNotification(notifications , doctor.getId() , Chat_Activity.this);
                     } else {
                         uploadImage(uri, Chat_Activity.this, new OnSuccessListener() {
@@ -216,6 +216,7 @@ public class Chat_Activity extends AppCompatActivity {
 
                             }
                         });
+                        uri = null;
                     }
 
                 }
@@ -228,6 +229,13 @@ public class Chat_Activity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 checkGalleryPermission();
+            }
+        });
+
+        binding.mic.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(Chat_Activity.this, "الخدمة غير فعالة حالياً", Toast.LENGTH_SHORT).show();
             }
         });
 
@@ -267,21 +275,22 @@ public class Chat_Activity extends AppCompatActivity {
                 photo = usersInfo.getPhoto();
 
 
+                String messageId = databaseReferenceSender.push().getKey();
+
+                MessagesModles mesg = new MessagesModles(messId, message, messgePhotot, name, doctor.getId(), loadUid(), photo, SharedFunctions.getTimeAtTheMoment(), messageId);
+                messageAdapter.addMessage(mesg);
+
+                databaseReferenceSender
+                        .child(messageId)
+                        .setValue(mesg);
+
+                databaseReferenceReciver
+                        .child(messageId)
+                        .setValue(mesg);
             }
         });
 
-        String messageId = databaseReferenceSender.push().getKey();
 
-        MessagesModles mesg = new MessagesModles(messId, message, messgePhotot, name, doctor.getId(), loadUid(), photo, SharedFunctions.getTimeAtTheMoment(), messageId);
-        messageAdapter.addMessage(mesg);
-
-        databaseReferenceSender
-                .child(messageId)
-                .setValue(mesg);
-
-        databaseReferenceReciver
-                .child(messageId)
-                .setValue(mesg);
     }
 
     // Check Gallery Permission

@@ -2,6 +2,9 @@ package dev.mah.nassa.gradu_ptojects.Adapters;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.os.Handler;
+import android.os.Looper;
+import android.os.Message;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,8 +12,14 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.daimajia.androidanimations.library.Techniques;
+import com.daimajia.androidanimations.library.YoYo;
+
 import java.util.ArrayList;
 import java.util.LinkedHashSet;
+import java.util.logging.ConsoleHandler;
+
 import dev.mah.nassa.gradu_ptojects.Modles.FoodCategory;
 import dev.mah.nassa.gradu_ptojects.R;
 
@@ -42,10 +51,13 @@ public class ParentFood_Adapter extends RecyclerView.Adapter<ParentFood_Adapter.
 
         ArrayList<FoodCategory> horizontalFoodList = new ArrayList<>();
 
+
         if(ss != null ){
             if (position < ss.size()) {
 
                 holder.foodName.setText(ss.get(position));
+                YoYo.with(Techniques.FlipInX).duration(1000).playOn(holder.foodName);
+                YoYo.with(Techniques.FlipInX).duration(1000).playOn(holder.childRecyclerView);
 
                 for(FoodCategory foodCategory : foodCategoryArrayList){
 

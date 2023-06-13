@@ -30,6 +30,7 @@ import com.daimajia.androidanimations.library.YoYo;
 import com.etebarian.meowbottomnavigation.MeowBottomNavigation;
 import com.google.android.gms.tasks.OnSuccessListener;
 
+import dev.mah.nassa.gradu_ptojects.Constants.CheckRoomIsEmpty;
 import dev.mah.nassa.gradu_ptojects.Constants.SharedFunctions;
 import dev.mah.nassa.gradu_ptojects.Constants.StopwatchTimer;
 import dev.mah.nassa.gradu_ptojects.Constants.Vital_Equations;
@@ -81,13 +82,24 @@ public class Home_Activity extends AppCompatActivity implements View.OnClickList
         binding = ActivityHomeBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
+        Intent intent = getIntent();
+        uid = intent.getStringExtra("uid");
+
+        CheckRoomIsEmpty checkRoomIsEmpty = new CheckRoomIsEmpty(Home_Activity.this);
+        checkRoomIsEmpty.checkFoodCategoryBase();
+        checkRoomIsEmpty.checkUsersHealthBase(loadUid());
+        checkRoomIsEmpty.checkUsersInfoBase(loadUid());
+        checkRoomIsEmpty.checkMyMealBase(loadUid());
+        checkRoomIsEmpty.checkDoctorsBase();
+        checkRoomIsEmpty.checkExerxciseDetailsBase(loadUid());
+        checkRoomIsEmpty.checkSportExerciseBase();
+
         drawerLayout = findViewById(R.id.drawerLayout);
         bottomNavigation = findViewById(R.id.navigateBar);
         internetCheck = SharedFunctions.checkInternetConnection(Home_Activity.this);
 
 
-        Intent intent = getIntent();
-        uid = intent.getStringExtra("uid");
+
         // Steps Fragmentو   Doctor Fragment قيمة منطقية أن المستخدم قادم من
         boolean isFromDoctorFragment = intent.getBooleanExtra("fromDoctorFragment", false);
         boolean isFromStepsFragment = intent.getBooleanExtra("isStepsCount", false);

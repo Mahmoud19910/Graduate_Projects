@@ -21,6 +21,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 
+import dev.mah.nassa.gradu_ptojects.Activityes.FoodSection_Activity;
 import dev.mah.nassa.gradu_ptojects.Constants.SharedFunctions;
 import dev.mah.nassa.gradu_ptojects.Modles.FoodCategory;
 import dev.mah.nassa.gradu_ptojects.R;
@@ -55,14 +56,14 @@ public class FoodSection_Adapter extends RecyclerView.Adapter<FoodSection_Adapte
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                SharedFunctions.createFoodDialog(holder.itemView.getContext() ,loadUid(), foodCategoryArrayList.get(position));
+                SharedFunctions.createFoodDialog("FoodSection" , holder.itemView.getContext() ,loadUid(), foodCategoryArrayList.get(position));
 
             }
         });
         holder.foodSectionAdd.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                SharedFunctions.createFoodDialog(holder.itemView.getContext() ,loadUid(), foodCategoryArrayList.get(position));
+                SharedFunctions.createFoodDialog("FoodSection" , holder.itemView.getContext() ,loadUid(), foodCategoryArrayList.get(position));
             }
         });
     }

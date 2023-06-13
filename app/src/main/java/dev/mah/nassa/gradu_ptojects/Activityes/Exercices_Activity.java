@@ -91,7 +91,6 @@ public class Exercices_Activity extends AppCompatActivity implements View.OnClic
                 break;
 
             case R.id.backActivityExercices:
-                startActivity(new Intent(Exercices_Activity.this , Home_Activity.class));
                 finish();
                 break;
 

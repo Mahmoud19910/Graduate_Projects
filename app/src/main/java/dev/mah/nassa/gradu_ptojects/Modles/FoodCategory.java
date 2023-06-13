@@ -1,12 +1,16 @@
 package dev.mah.nassa.gradu_ptojects.Modles;
 
 import androidx.annotation.NonNull;
+import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
 import java.io.Serializable;
 
+@Entity
 public class FoodCategory implements Serializable {
         private String uid ;
+        @PrimaryKey
+        @NonNull
         private String id;
         private String filePath , departmentName,nameMeal,caloriesMeal,time , date ,weightMeal;
 

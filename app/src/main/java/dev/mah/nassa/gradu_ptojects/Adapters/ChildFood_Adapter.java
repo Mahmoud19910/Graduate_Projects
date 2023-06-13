@@ -17,6 +17,7 @@ import com.bumptech.glide.load.engine.DiskCacheStrategy;
 
 import java.util.ArrayList;
 
+import dev.mah.nassa.gradu_ptojects.Activityes.Home_Activity;
 import dev.mah.nassa.gradu_ptojects.Constants.SharedFunctions;
 import dev.mah.nassa.gradu_ptojects.Modles.FoodCategory;
 import dev.mah.nassa.gradu_ptojects.R;
@@ -49,7 +50,7 @@ public class ChildFood_Adapter extends RecyclerView.Adapter<ChildFood_Adapter.My
         holder.foodImages.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                SharedFunctions.createFoodDialog(holder.itemView.getContext() ,loadUid(), foodCategoryArrayList.get(position));
+                SharedFunctions.createFoodDialog("Home" , holder.itemView.getContext() ,loadUid(), foodCategoryArrayList.get(position));
             }
         });
     }

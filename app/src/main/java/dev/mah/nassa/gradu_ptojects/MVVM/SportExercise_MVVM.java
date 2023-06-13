@@ -8,14 +8,11 @@ import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.MutableLiveData;
 
-import com.google.android.gms.tasks.OnSuccessListener;
-
 import java.util.List;
 
-import dev.mah.nassa.gradu_ptojects.Adapters.DoctorsAdapter;
 import dev.mah.nassa.gradu_ptojects.DataBase.AppDatabese;
-import dev.mah.nassa.gradu_ptojects.DataBase.RealTime_DataBase;
 import dev.mah.nassa.gradu_ptojects.Modles.Doctor;
+import dev.mah.nassa.gradu_ptojects.Modles.Sports_Exercises;
 import dev.mah.nassa.gradu_ptojects.Modles.UsersInfo;
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
 import io.reactivex.rxjava3.core.CompletableObserver;
@@ -23,19 +20,20 @@ import io.reactivex.rxjava3.core.Observer;
 import io.reactivex.rxjava3.disposables.Disposable;
 import io.reactivex.rxjava3.schedulers.Schedulers;
 
-public class Doctors_MVVM extends AndroidViewModel {
+public class SportExercise_MVVM extends AndroidViewModel {
+    MutableLiveData<List<Sports_Exercises>> mutableLiveDataSports_Exercises = new MutableLiveData<>();
+    MutableLiveData<Sports_Exercises> mutableLData = new MutableLiveData<>();
 
-    MutableLiveData<List<Doctor>> mutableLiveDataDoctor = new MutableLiveData<>();
     private Context context;
     private AppDatabese appDatabese;
-    public Doctors_MVVM(@NonNull Application application) {
+    public SportExercise_MVVM(@NonNull Application application) {
         super(application);
         context = application.getApplicationContext();
         appDatabese = AppDatabese.getInstance(context);
     }
 
-    public void insertDoctors(Doctor doctor){
-        appDatabese.doctorsDao().doctorInsert(doctor)
+    public void insertSportExercise(Sports_Exercises sports_Exercises){
+        appDatabese.sports_exercises_dao().sports_ExercisesInsert(sports_Exercises)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new CompletableObserver() {
@@ -46,51 +44,29 @@ public class Doctors_MVVM extends AndroidViewModel {
 
                     @Override
                     public void onComplete() {
+                        Toast.makeText(context, "Success Insert", Toast.LENGTH_SHORT).show();
                     }
 
                     @Override
                     public void onError(@io.reactivex.rxjava3.annotations.NonNull Throwable e) {
-//                        Toast.makeText(context, e.getMessage().toString(), Toast.LENGTH_SHORT).show();
 
                     }
                 });
     }
 
-    public void deletAllDoctor(){
-        appDatabese.doctorsDao().deleteAllDoctor()
+    public MutableLiveData<List<Sports_Exercises>> getAllSports_Exercises(){
+        appDatabese.sports_exercises_dao().getAllSports_Exercises()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new CompletableObserver() {
+                .subscribe(new Observer<List<Sports_Exercises>>() {
                     @Override
                     public void onSubscribe(@io.reactivex.rxjava3.annotations.NonNull Disposable d) {
 
                     }
 
                     @Override
-                    public void onComplete() {
-                    }
-
-                    @Override
-                    public void onError(@io.reactivex.rxjava3.annotations.NonNull Throwable e) {
-//                        Toast.makeText(context, e.getMessage().toString(), Toast.LENGTH_SHORT).show();
-
-                    }
-                });
-    }
-
-    public MutableLiveData<List<Doctor>> getAllDoctors(){
-        appDatabese.doctorsDao().getAllDoctor()
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Observer<List<Doctor>>() {
-                    @Override
-                    public void onSubscribe(@io.reactivex.rxjava3.annotations.NonNull Disposable d) {
-
-                    }
-
-                    @Override
-                    public void onNext(@io.reactivex.rxjava3.annotations.NonNull List<Doctor> doctorList) {
-                        mutableLiveDataDoctor.setValue(doctorList);
+                    public void onNext(@io.reactivex.rxjava3.annotations.NonNull List<Sports_Exercises> sports_Exercises) {
+                        mutableLiveDataSports_Exercises.setValue(sports_Exercises);
                     }
 
                     @Override
@@ -103,28 +79,37 @@ public class Doctors_MVVM extends AndroidViewModel {
 
                     }
                 });
-        return mutableLiveDataDoctor;
+        return mutableLiveDataSports_Exercises;
     }
 
-    public void deleteById(String id){
-        appDatabese.doctorsDao().deleteById(id)
+    public MutableLiveData<Sports_Exercises> getSports_ExercisesByUid(String id ) {
+        appDatabese.sports_exercises_dao().getSports_ExercisesById(id)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new CompletableObserver() {
+                .subscribe(new Observer<Sports_Exercises>() {
                     @Override
                     public void onSubscribe(@io.reactivex.rxjava3.annotations.NonNull Disposable d) {
 
                     }
 
                     @Override
-                    public void onComplete() {
-                        Toast.makeText(context, "deleted", Toast.LENGTH_SHORT).show();
+                    public void onNext(@io.reactivex.rxjava3.annotations.NonNull Sports_Exercises sports_Exercises) {
+                        mutableLData.setValue(sports_Exercises);
                     }
 
                     @Override
                     public void onError(@io.reactivex.rxjava3.annotations.NonNull Throwable e) {
 
                     }
+
+                    @Override
+                    public void onComplete() {
+
+                    }
                 });
+        return mutableLData;
     }
+
+
+
 }

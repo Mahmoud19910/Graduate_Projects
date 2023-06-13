@@ -112,7 +112,20 @@ public class FireStore_DataBase {
 
     }
 
-    //Food Meal(Collection)
+    public static void getUsersHealthInfo(Context context , OnSuccessListener onSuccessListener) {
+        firestore.collection("UsersHealthInfo").get().addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
+            @Override
+            public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
+                List<DocumentSnapshot> snapshotList = queryDocumentSnapshots.getDocuments();
+                for(DocumentSnapshot documentSnapshot : snapshotList){
+                   Users_Health_Info usersHealthInfo = documentSnapshot.toObject(Users_Health_Info.class);
+                   onSuccessListener.onSuccess(usersHealthInfo);
+                }
+            }
+        });
+    }
+
+        //Food Meal(Collection)
     public static void insertMeal(My_Meal_List mealList, Context context) {
         firestore.collection("MyMeal").add(mealList).addOnCompleteListener(new OnCompleteListener<DocumentReference>() {
             @Override
@@ -332,6 +345,27 @@ public class FireStore_DataBase {
             }
         });
 
+    }
+
+    public static void getAllExerciseDetails(OnSuccessListener onSuccessListener){
+        firestore.collection("ExerciseDetails").get().addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
+            @Override
+            public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
+
+               List<DocumentSnapshot> snapshotList =  queryDocumentSnapshots.getDocuments();
+               for(DocumentSnapshot documentSnapshot : snapshotList){
+
+                   Exercise_Details exerciseDetails = documentSnapshot.toObject(Exercise_Details.class);
+                   onSuccessListener.onSuccess(exerciseDetails);
+               }
+
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+
+            }
+        });
     }
 
     //inside this method we are passing our updated values

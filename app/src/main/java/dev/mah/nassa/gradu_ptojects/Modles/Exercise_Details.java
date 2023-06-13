@@ -15,6 +15,9 @@ public class Exercise_Details {
     private String exerciseName;
     private String exerciseDuration;
 
+    public Exercise_Details() {
+    }
+
     public Exercise_Details(String uid, String caloriesBurned, String exerciseTime, String date, String exerciseName, String exerciseDuration) {
         this.uid = uid;
         this.caloriesBurned = caloriesBurned;
