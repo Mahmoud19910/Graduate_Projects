@@ -27,8 +27,13 @@ public interface My_Meal_List_Dao {
 
     @Query("Select * from My_Meal_List")
     Observable<List<My_Meal_List>> getAllMy_Meal_List();
+
+    @Query("Select * from My_Meal_List where uid=:uid AND date=:date")
+    Observable<List<My_Meal_List>>  getMy_Meal_ListByIdAndDate(String uid , String date);
+
     @Query("Select * from My_Meal_List where uid=:uid")
     Observable<My_Meal_List>  getMy_Meal_ListById(String uid);
+
     @Query("delete From My_Meal_List Where uid =:uid")
     Completable deleteMy_Meal_ListUid (String uid);
 

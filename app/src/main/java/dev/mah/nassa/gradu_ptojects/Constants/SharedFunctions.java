@@ -8,12 +8,14 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.drawable.Drawable;
 import android.net.ConnectivityManager;
 import android.net.Network;
 import android.net.NetworkCapabilities;
 import android.net.NetworkInfo;
 import android.os.Build;
 import android.os.CountDownTimer;
+import android.text.Layout;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
@@ -62,6 +64,7 @@ public class SharedFunctions {
     public static CountDownTimer countDownTimer;
     static Dialog dialog;
     static int counter=0;
+    static int totalCalories;
     public static My_Meal_MVVM my_meal_mvvm;
     // ميثود التحقق من البيانات في واجهة مستخدم جديد
     public static boolean checkEnterdDataInSignUp(EditText editName, EditText editPhone, EditText editPass, CheckBox checkBox, Context context) {
@@ -411,7 +414,6 @@ public class SharedFunctions {
         cancel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(context, "cancel", Toast.LENGTH_SHORT).show();
                 dialog.dismiss();
             }
         });
@@ -421,7 +423,7 @@ public class SharedFunctions {
             public void onClick(View v) {
 
                 My_Meal_List mealList = new My_Meal_List(uid,UUID.randomUUID().toString(),foodCategory.getNameMeal()
-                        ,foodCategory.getCaloriesMeal(),getTimeAtTheMoment(),getDateAtTheMoment()
+                        ,caloriesMeal.getText().toString() ,getTimeAtTheMoment(),getDateAtTheMoment()
                         ,weight.getText().toString());
                 FireStore_DataBase.insertMeal(mealList , view.getContext());
                 my_meal_mvvm.insertMy_Meal_List(mealList);
@@ -434,8 +436,11 @@ public class SharedFunctions {
             @Override
             public void onClick(View v) {
                 counter = Integer.parseInt(weight.getText().toString());
-                counter++;
-               weight.setText(counter+"");
+                counter+=5;
+
+                totalCalories = (counter*Integer.parseInt(foodCategory.getCaloriesMeal()));
+                caloriesMeal.setText(totalCalories+"");
+                weight.setText(counter+"");
             }
         });
 
@@ -446,7 +451,9 @@ public class SharedFunctions {
             public void onClick(View v) {
                 counter = Integer.parseInt(weight.getText().toString());
                 if (counter>=6){
-                    counter--;
+                    counter-=5;
+                    totalCalories = (counter*Integer.parseInt(foodCategory.getCaloriesMeal()));
+                    caloriesMeal.setText(totalCalories+"");
                     weight.setText(counter+"");
                 }
             }
@@ -547,6 +554,14 @@ public class SharedFunctions {
         });
         dialog.show();
         return dialog;
+    }
+
+    public static void customToaste(int layout , Context context){
+        View view = LayoutInflater.from(context).inflate(layout , null , false);
+        Toast toast = new Toast(context);
+        toast.setView(view);
+        toast.setDuration(Toast.LENGTH_LONG);
+        toast.show();
     }
 
 }

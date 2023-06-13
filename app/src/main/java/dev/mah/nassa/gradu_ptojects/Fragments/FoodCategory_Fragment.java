@@ -15,6 +15,7 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnFailureListener;
@@ -47,6 +48,7 @@ public class FoodCategory_Fragment extends Fragment{
     private boolean internetConnection;
     private RecyclerView parentFoodRecyclerView;
     private SwipeRefreshLayout swipeRefreshLayout;
+    private ProgressBar progressBar;
 
     public FoodCategory_Fragment() {
         // Required empty public constructor
@@ -58,14 +60,18 @@ public class FoodCategory_Fragment extends Fragment{
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_food_category_, container, false);
          parentFoodRecyclerView = view.findViewById(R.id.FragmentFood_parent_recyclerView);
+         progressBar = view.findViewById(R.id.progress);
        internetConnection =  SharedFunctions.checkInternetConnection(getContext());
          swipeRefreshLayout = view.findViewById(R.id.swipeRefreshLayout);
 
         if(internetConnection){
-            Toast.makeText(getContext(), "firebase", Toast.LENGTH_SHORT).show();
+
             FireStore_DataBase.getAllDatas(getContext(), "Food_Category", new OnSuccessListener() {
                 @Override
                 public void onSuccess(Object o) {
+
+                    progressBar.setVisibility(View.INVISIBLE);
+
                     foodCategories = (ArrayList<FoodCategory>) o;
                     parentFoodRecyclerView.setHasFixedSize(true);
                     parentLayoutManager = new LinearLayoutManager(getContext());
@@ -86,6 +92,7 @@ public class FoodCategory_Fragment extends Fragment{
                     FireStore_DataBase.getAllDatas(getContext(), "Food_Category", new OnSuccessListener() {
                         @Override
                         public void onSuccess(Object o) {
+
                             foodCategories = (ArrayList<FoodCategory>) o;
                             parentFoodRecyclerView.setHasFixedSize(true);
                             parentLayoutManager = new LinearLayoutManager(getContext());
@@ -117,6 +124,7 @@ public class FoodCategory_Fragment extends Fragment{
             foodCategoryMvvm.getAllFoodCategory().observe(FoodCategory_Fragment.this, new Observer<List<FoodCategory>>() {
                 @Override
                 public void onChanged(List<FoodCategory> foodCategoryList) {
+                    progressBar.setVisibility(View.INVISIBLE);
                     parentFoodRecyclerView.setHasFixedSize(true);
                     parentLayoutManager = new LinearLayoutManager(getContext());
                     parentFoodRecyclerView.setLayoutManager(parentLayoutManager);

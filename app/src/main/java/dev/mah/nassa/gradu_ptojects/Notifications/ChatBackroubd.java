@@ -130,7 +130,7 @@ public class ChatBackroubd extends Service {
     // جلب رقم المعرف للمستخد
     private String loadUid() {
         SharedPreferences sharedPreferences = getSharedPreferences("saveUid", Context.MODE_PRIVATE);
-        Toast.makeText(this, "load", Toast.LENGTH_SHORT).show();
+//        Toast.makeText(this, "load", Toast.LENGTH_SHORT).show();
         return sharedPreferences.getString("uid", "");
     }
 

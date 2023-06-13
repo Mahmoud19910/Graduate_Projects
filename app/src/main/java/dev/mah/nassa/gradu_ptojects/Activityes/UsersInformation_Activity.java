@@ -126,8 +126,9 @@ public class UsersInformation_Activity extends AppCompatActivity implements User
                     if (!illness.isEmpty()) {
                         AppDatabese appDatabese = AppDatabese.getInstance(UsersInformation_Activity.this);
                        String levelActivity = PersonActivityArray.getPersonActivityList().get(activityIndex);
+
                         // حساب السعرات الحرارية للشخص
-                       double caloriesRequorment =  Vital_Equations.caloriDailyRequirment(eage , length , levelActivity , weight , gender);
+                       double caloriesRequorment =  Vital_Equations.caloriDailyRequirment(UsersInformation_Activity.this , eage , length , levelActivity , weight , gender);
 
                        // حساب كمية المياه التي يجب شربها
                        double waterQuantity = Vital_Equations.waterQuantity(weight);

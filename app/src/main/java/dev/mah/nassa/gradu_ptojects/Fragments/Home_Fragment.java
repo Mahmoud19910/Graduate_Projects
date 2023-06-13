@@ -48,10 +48,12 @@ import dev.mah.nassa.gradu_ptojects.DataBase.FireStore_DataBase;
 import dev.mah.nassa.gradu_ptojects.Interfaces.SetStepsCountInActivity;
 import dev.mah.nassa.gradu_ptojects.MVVM.ExersiseDetails_MVVM;
 import dev.mah.nassa.gradu_ptojects.MVVM.FoodCategory_MVVM;
+import dev.mah.nassa.gradu_ptojects.MVVM.My_Meal_MVVM;
 import dev.mah.nassa.gradu_ptojects.MVVM.UsersHealthInfoViewModel;
 import dev.mah.nassa.gradu_ptojects.MVVM.UsersViewModel;
 import dev.mah.nassa.gradu_ptojects.Modles.Exercise_Details;
 import dev.mah.nassa.gradu_ptojects.Modles.FoodCategory;
+import dev.mah.nassa.gradu_ptojects.Modles.My_Meal_List;
 import dev.mah.nassa.gradu_ptojects.Modles.Sports_Exercises;
 import dev.mah.nassa.gradu_ptojects.Modles.UsersInfo;
 import dev.mah.nassa.gradu_ptojects.Modles.Users_Health_Info;
@@ -74,11 +76,13 @@ public class Home_Fragment extends Fragment implements View.OnClickListener {
     private UsersHealthInfoViewModel usersHealthInfoViewModel;
     private ExersiseDetails_MVVM exersiseDetails_mvvm;
     private double totalCaloBurned;
+    private double totalCaloEarend;
     private Sports_Exercises sports_exercises;
     private SetStepsCountInActivity stepsCountInActivityListener;
     private ArrayList<FoodCategory>foodCategories;
     private Handler sHandler = new Handler();
     private FoodCategory_MVVM foodCategoryMvvm;
+    private My_Meal_MVVM my_meal_mvvm;
 
     public Home_Fragment() {
     }
@@ -118,6 +122,7 @@ public class Home_Fragment extends Fragment implements View.OnClickListener {
         usersHealthInfoViewModel = ViewModelProviders.of(Home_Fragment.this).get(UsersHealthInfoViewModel.class);
         exersiseDetails_mvvm = ViewModelProviders.of(Home_Fragment.this).get(ExersiseDetails_MVVM.class);
         foodCategoryMvvm = ViewModelProviders.of(Home_Fragment.this).get(FoodCategory_MVVM.class);
+        my_meal_mvvm = ViewModelProviders.of(Home_Fragment.this).get(My_Meal_MVVM.class);
 
         progressiveGauge = binding.awesomeSpeedomete;
         binding.caloeiLayout.setVisibility(View.INVISIBLE);
@@ -202,6 +207,22 @@ public class Home_Fragment extends Fragment implements View.OnClickListener {
                 }
 
                 binding.burnedCalories.setText(String.format("%.2f", totalCaloBurned) + "سعرة");
+            }
+        });
+
+        my_meal_mvvm.getMy_Meal_ListByUidAndDate(uid , SharedFunctions.getDateAtTheMoment()).observe(Home_Fragment.this, new Observer<List<My_Meal_List>>() {
+            @Override
+            public void onChanged(List<My_Meal_List> my_meal_lists) {
+
+                for(My_Meal_List mealList : my_meal_lists){
+
+                    if(!mealList.getCaloriesMeal().isEmpty() || mealList.getCaloriesMeal()!=null){
+                        double cal = Double.parseDouble(mealList.getCaloriesMeal());
+                        totalCaloEarend+=cal;
+                    }
+                }
+
+                binding.caloriesGained.setText(String.format("%.2f", totalCaloEarend) + "سعرة");
             }
         });
 

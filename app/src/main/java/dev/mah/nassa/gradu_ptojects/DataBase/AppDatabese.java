@@ -21,7 +21,7 @@ import dev.mah.nassa.gradu_ptojects.Modles.Sports_Exercises;
 import dev.mah.nassa.gradu_ptojects.Modles.UsersInfo;
 import dev.mah.nassa.gradu_ptojects.Modles.Users_Health_Info;
 
-@Database(entities = {UsersInfo.class, Users_Health_Info.class , Exercise_Details.class , Doctor.class , FoodCategory.class , My_Meal_List.class , Sports_Exercises.class}, version = 14, exportSchema = false)
+@Database(entities = {UsersInfo.class, Users_Health_Info.class , Exercise_Details.class , Doctor.class , FoodCategory.class , My_Meal_List.class , Sports_Exercises.class}, version = 15, exportSchema = false)
 public abstract class AppDatabese extends RoomDatabase {
     private static AppDatabese instance;
     public abstract UsersDao usersDao();

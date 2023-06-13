@@ -4,6 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="#0DFBFBFB"
+    android:layoutDirection="rtl"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <LinearLayout
@@ -31,22 +32,18 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="1dp"
+            android:gravity="center"
             android:orientation="horizontal">
-<RelativeLayout
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:layout_marginTop="@dimen/_8sdp"
-    android:layout_weight="1"
->
 
     <TextView
         android:id="@+id/dialogFood_calories"
         style="@style/describtion_Black_Color"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:layout_alignParentEnd="true"
         android:text="السعرات:"
         android:layout_marginEnd="@dimen/_12sdp"
+        android:gravity="center"
         android:layout_gravity="end"
         android:textSize="@dimen/_14ssp" />
 
@@ -54,10 +51,11 @@
         android:id="@+id/dialogFood_caloriesMeal"
         style="@style/describtion_Black_Color"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:layout_marginEnd="@dimen/_12sdp"
         android:layout_toStartOf="@+id/dialogFood_calories"
         android:text="277 سعرة"
+        android:gravity="center"
         android:textSize="@dimen/_12ssp"
         android:layout_gravity="start"
         />
@@ -65,7 +63,8 @@
     <TextView
         android:id="@+id/dialogFood_startname"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
+        android:gravity="center"
         android:text="اسم الوجبة :"
         android:layout_marginEnd="@dimen/_20sdp"
         style="@style/describtion_Black_Color"
@@ -77,12 +76,12 @@
         android:id="@+id/dialogFood_name"
         style="@style/describtion_Black_Color"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
+        android:gravity="center"
         android:layout_toStartOf="@+id/dialogFood_startname"
         android:text="التين"
         android:layout_gravity="start"
         android:textSize="@dimen/_12ssp" />
-</RelativeLayout>
 
         </LinearLayout>
 
@@ -93,22 +92,22 @@
        android:layout_marginTop="@dimen/_10sdp"
        android:orientation="horizontal"
 >
-
+       <TextView
+           style="@style/describtion_Black_Color"
+           android:layout_width="match_parent"
+           android:layout_height="match_parent"
+           android:gravity="center"
+           android:text="الوزن : "
+           android:textSize="@dimen/_14ssp" />
        <TextView
            android:id="@+id/dialogFood_weight"
            style="@style/describtion_Black_Color"
            android:layout_width="match_parent"
-           android:layout_height="wrap_content"
+           android:layout_height="match_parent"
            android:gravity="center"
            android:text=" 100غم"
            android:textSize="@dimen/_12ssp" />
-       <TextView
-           style="@style/describtion_Black_Color"
-           android:layout_width="match_parent"
-           android:layout_height="wrap_content"
-           android:gravity="center"
-           android:text="الوزن : "
-           android:textSize="@dimen/_14ssp" />
+
    </LinearLayout>
         <LinearLayout
             android:layout_width="match_parent"

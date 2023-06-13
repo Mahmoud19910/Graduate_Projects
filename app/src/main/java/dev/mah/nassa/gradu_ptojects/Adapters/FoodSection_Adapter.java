@@ -56,14 +56,14 @@ public class FoodSection_Adapter extends RecyclerView.Adapter<FoodSection_Adapte
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                SharedFunctions.createFoodDialog("FoodSection" , holder.itemView.getContext() ,loadUid(), foodCategoryArrayList.get(position));
-
+          SharedFunctions.createFoodDialog("FoodSection" , holder.itemView.getContext() ,loadUid(), foodCategoryArrayList.get(position));
             }
         });
         holder.foodSectionAdd.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                SharedFunctions.createFoodDialog("FoodSection" , holder.itemView.getContext() ,loadUid(), foodCategoryArrayList.get(position));
+            SharedFunctions.createFoodDialog("FoodSection" , holder.itemView.getContext() ,loadUid(), foodCategoryArrayList.get(position));
+
             }
         });
     }

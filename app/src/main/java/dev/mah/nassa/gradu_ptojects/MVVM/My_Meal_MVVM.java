@@ -23,6 +23,7 @@ import io.reactivex.rxjava3.schedulers.Schedulers;
 public class My_Meal_MVVM extends AndroidViewModel {
 
     MutableLiveData<List<My_Meal_List>> mutableLiveData = new MutableLiveData<>();
+    MutableLiveData<List<My_Meal_List>> liveData = new MutableLiveData<>();
     MutableLiveData<My_Meal_List> mutableLData = new MutableLiveData<>();
 
     Context context;
@@ -52,7 +53,7 @@ public class My_Meal_MVVM extends AndroidViewModel {
 
                     @Override
                     public void onError(@NonNull Throwable e) {
-                        Toast.makeText(context, e.getMessage(), Toast.LENGTH_LONG).show();
+//                        Toast.makeText(context, e.getMessage(), Toast.LENGTH_LONG).show();
 
                     }
                 });
@@ -206,5 +207,34 @@ public class My_Meal_MVVM extends AndroidViewModel {
         return mutableLData;
     }
 
+
+    public MutableLiveData<List<My_Meal_List>> getMy_Meal_ListByUidAndDate(String uid , String date) {
+        appDatabese.my_meal_list_dao().getMy_Meal_ListByIdAndDate(uid , date)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Observer<List<My_Meal_List>>() {
+                    @Override
+                    public void onSubscribe(@NonNull Disposable d) {
+
+                    }
+
+                    @Override
+                    public void onNext(@NonNull List<My_Meal_List> my_meal_lists) {
+                        liveData.setValue(my_meal_lists);
+                    }
+
+                    @Override
+                    public void onError(@NonNull Throwable e) {
+
+                    }
+
+                    @Override
+                    public void onComplete() {
+
+                    }
+                });
+
+        return liveData;
+    }
 
 }

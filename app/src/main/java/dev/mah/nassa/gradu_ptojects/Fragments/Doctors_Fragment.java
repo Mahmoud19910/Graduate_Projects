@@ -27,6 +27,7 @@ import dev.mah.nassa.gradu_ptojects.DataBase.RealTime_DataBase;
 import dev.mah.nassa.gradu_ptojects.MVVM.Doctors_MVVM;
 import dev.mah.nassa.gradu_ptojects.MVVM.RealTime_MVVM;
 import dev.mah.nassa.gradu_ptojects.Modles.Doctor;
+import dev.mah.nassa.gradu_ptojects.R;
 import dev.mah.nassa.gradu_ptojects.databinding.FragmentDoctorsBinding;
 
 /**
@@ -108,7 +109,7 @@ public class Doctors_Fragment extends Fragment {
 
         }else {
 
-            Toast.makeText(getContext(), "للأسف أنت غير  متصل بالشبكة !!", Toast.LENGTH_SHORT).show();
+            SharedFunctions.customToaste(R.layout.internet_toast_shape , getContext());
 
             doctors_mvvm.getAllDoctors().observe(this, new Observer<List<Doctor>>() {
                 @Override

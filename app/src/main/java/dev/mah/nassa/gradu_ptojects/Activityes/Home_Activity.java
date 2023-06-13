@@ -137,10 +137,18 @@ public class Home_Activity extends AppCompatActivity implements View.OnClickList
             @Override
             public void onChanged(UsersInfo usersInfo) {
                 binding.userNmae.setText(usersInfo.getName());
-                Glide.with(getBaseContext())
-                        .load(usersInfo.getPhoto())
-                        .diskCacheStrategy(DiskCacheStrategy.ALL)
-                        .into(binding.userImage);
+                if((usersInfo.getPhoto() == null) || usersInfo.getPhoto().isEmpty()){
+                    Glide.with(getBaseContext())
+                            .load(R.drawable.personlogo)
+                            .diskCacheStrategy(DiskCacheStrategy.ALL)
+                            .into(binding.userImage);
+                }else {
+                    Glide.with(getBaseContext())
+                            .load(usersInfo.getPhoto())
+                            .diskCacheStrategy(DiskCacheStrategy.ALL)
+                            .into(binding.userImage);
+                }
+
                 weight = usersInfo.getWeight();
 
             }

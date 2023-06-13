@@ -377,8 +377,14 @@ public class FireStore_DataBase {
 
             CollectionReference collectionRef = firestore.collection(collection);
 
+        Query query;
             // Create a query to find documents with uid equal to "uid"
-            Query query = collectionRef.whereEqualTo("uid", uid);
+        if(collection.equals("UsersHealthInfo")){
+             query= collectionRef.whereEqualTo("userId", uid);
+        }else {
+            query = collectionRef.whereEqualTo("uid", uid);
+
+        }
 
             // Execute the query
             query.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {

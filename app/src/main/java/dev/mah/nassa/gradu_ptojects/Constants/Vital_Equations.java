@@ -1,5 +1,8 @@
 package dev.mah.nassa.gradu_ptojects.Constants;
 
+import android.content.Context;
+import android.widget.Toast;
+
 public class Vital_Equations {
 
     // حساب كمية المياه
@@ -9,7 +12,7 @@ public class Vital_Equations {
     }
 
     // حساب السعرات الحرارية اليومية
-    public static double caloriDailyRequirment(String eage, String length, String activityLevel, String weight, String gender) {
+    public static double caloriDailyRequirment(Context context , String eage, String length, String activityLevel, String weight, String gender) {
         double e = Double.parseDouble(eage);
         double l = Double.parseDouble(length);
         double w = Double.parseDouble(weight);
@@ -19,7 +22,7 @@ public class Vital_Equations {
         if (gender.equals("male")) {
             BMR = (10 * w) + (6.25 * l) - (5 * e) + 5;
         } else {
-            BMR = (10 * w) + (6.25 * l) - (5 * e) + 161;
+            BMR = (10 * w) + (6.25 * l) - (5 * e) - 161;
         }
 
         switch (activityLevel) {
@@ -31,15 +34,18 @@ public class Vital_Equations {
             case "نشاط خفيف\n" +
                     " (تمارين خفيفة / رياضة 1-3 في الأسبوع)":
                 totalCalori = BMR * 1.375;
+
                 break;
 
             case "نشاط متوسط\n" +
                     " (تمارين معتدلة / رياضة 3-5في الأسبوع)":
                 totalCalori = BMR * 1.55;
+
                 break;
             case "نشاط عالي\n" +
                     " (تمارين شاقة / رياضة 6-7في الأسبوع)":
                 totalCalori = BMR * 1.725;
+
                 break;
             case "نشاط فائق \n" +
                     " (تمارين صعبة جدا / تدريب مضاعف)":

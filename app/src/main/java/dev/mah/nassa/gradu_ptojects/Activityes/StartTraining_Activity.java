@@ -4,8 +4,13 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentTransaction;
 
 import android.content.Intent;
+import android.media.MediaPlayer;
+import android.net.Uri;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.Toast;
 
+import java.io.IOException;
 import java.util.ArrayList;
 
 import dev.mah.nassa.gradu_ptojects.Constants.LanguageUtils;
@@ -26,6 +31,8 @@ public class StartTraining_Activity extends AppCompatActivity {
     boolean isGoalAchived = false;
     private String goal, achivmentGoal;
     private StopwatchTimer timer;
+    boolean musicIsPlay = true;
+    private MediaPlayer mediaPlayer;
 
 
     @Override
@@ -33,6 +40,8 @@ public class StartTraining_Activity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         binding = ActivityStartTrainingBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
+
+        mediaPlayer =MediaPlayer.create(StartTraining_Activity.this , R.raw.sport_music);
 
         LanguageUtils.changeLanguage(StartTraining_Activity.this, "en");
 
@@ -46,9 +55,48 @@ public class StartTraining_Activity extends AppCompatActivity {
 
         binding.titleStartTraining.setText(sports_exercises.getName());
 
+        binding.music.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                try {
+                    if (musicIsPlay) {
+                        mediaPlayer.stop();
+                        mediaPlayer.reset();
+                        mediaPlayer.setLooping(true);
+                        mediaPlayer.setDataSource(StartTraining_Activity.this, Uri.parse("android.resource://" + getPackageName() + "/" + R.raw.sport_music));
+                        mediaPlayer.prepare();
+                        mediaPlayer.start();
+                        binding.music.setImageDrawable(getDrawable(R.drawable.music_note_24));
+                        musicIsPlay = false;
+                    } else {
+                        mediaPlayer.stop();
+                        mediaPlayer.reset();
+                        binding.music.setImageDrawable(getDrawable(R.drawable.music_off_24));
+                        musicIsPlay = true;
+                    }
+                } catch (IOException e) {
+                    Toast.makeText(StartTraining_Activity.this, e.getMessage().toString()+"", Toast.LENGTH_SHORT).show();
+
+                }
+
+
+
+
+            }
+        });
+
 
     }
 
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if (mediaPlayer != null) {
+            mediaPlayer.release();
+            mediaPlayer = null;
+        }
+    }
 
     // is used to replace fragment
     private void replace(int indexFrag, Sports_Exercises sports_exercises) {

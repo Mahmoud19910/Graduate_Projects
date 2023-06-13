@@ -21,6 +21,7 @@ import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Toast;
 
@@ -87,11 +88,17 @@ public class Chat_Activity extends AppCompatActivity {
         binding = ActivityChatBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
+        SharedFunctions.customToaste(R.layout.internet_toast_shape , Chat_Activity.this);
 
         // فحص الاتصال بالانترنت
         boolean internet = SharedFunctions.checkInternetConnection(this);
         if (!internet) {
-            Toast.makeText(this, "للأسف أنت غير متصل بالانترنت !! ", Toast.LENGTH_LONG).show();
+            SharedFunctions.customToaste(R.layout.internet_toast_shape , Chat_Activity.this);
+//            View view = LayoutInflater.from(Chat_Activity.this).inflate(R.layout.internet_toast_shape , null , false);
+//            Toast toast = new Toast(Chat_Activity.this);
+//            toast.setView(view);
+//            toast.setDuration(Toast.LENGTH_LONG);
+//            toast.show();
         }
 
         usersViewModel = ViewModelProviders.of(this).get(UsersViewModel.class);

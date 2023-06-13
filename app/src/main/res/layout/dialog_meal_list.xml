@@ -4,6 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="#0DFBFBFB"
+    android:layoutDirection="rtl"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <LinearLayout
@@ -15,7 +16,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         android:background="@drawable/corner_raduis_card_food_dialog"
         app:layout_constraintStart_toStartOf="parent"
-        android:padding="@dimen/_6sdp"
+        android:padding="@dimen/_10sdp"
         app:layout_constraintBottom_toBottomOf="parent">
 
         <TextView
@@ -31,33 +32,32 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/_7sdp"
+            android:gravity="center_vertical"
             android:orientation="horizontal">
-<RelativeLayout
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:layout_weight="1"
->
+
 
     <TextView
         android:id="@+id/dialogFood_calories"
         style="@style/describtion_Black_Color"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:layout_alignParentTop="true"
         android:layout_alignParentEnd="true"
+        android:gravity="center"
         android:layout_gravity="end"
         android:layout_marginTop="6dp"
-        android:layout_marginEnd="12dp"
+        android:layout_marginEnd="5dp"
         android:text="السعرات:"
         android:textSize="@dimen/_14ssp" />
 
     <EditText
         android:id="@+id/dialogMeal_caloriesMeal"
         style="@style/describtion_Black_Color"
-        android:layout_width="@dimen/_40sdp"
-        android:layout_height="@dimen/_30sdp"
+        android:layout_width="@dimen/_50sdp"
+        android:layout_height="@dimen/_26sdp"
         android:background="@drawable/corner_raduis_card_food_dialog"
-        android:layout_marginEnd="@dimen/_13sdp"
+        android:layout_weight="1"
+        android:layout_marginEnd="10dp"
         android:inputType="number"
         android:gravity="center"
         android:layout_toStartOf="@+id/dialogFood_calories"
@@ -70,11 +70,11 @@
         android:id="@+id/dialogFood_startname"
         style="@style/describtion_Black_Color"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
+        android:gravity="center"
         android:layout_alignParentTop="true"
         android:layout_gravity="end"
         android:layout_marginTop="5dp"
-        android:layout_marginEnd="9dp"
         android:layout_toStartOf="@+id/dialogMeal_caloriesMeal"
         android:text="اسم الوجبة :"
         android:textSize="@dimen/_15ssp" />
@@ -82,17 +82,16 @@
     <EditText
         android:id="@+id/dialogMeal_name"
         style="@style/describtion_Black_Color"
-        android:layout_width="@dimen/_150sdp"
+        android:layout_width="@dimen/_67sdp"
         android:layout_height="@dimen/_26sdp"
         android:background="@drawable/corner_raduis_card_food_dialog"
         android:layout_toStartOf="@+id/dialogFood_startname"
         android:text="التين"
         android:inputType="textPersonName"
         android:layout_gravity="start"
-        android:layout_marginStart="@dimen/_5sdp"
+        android:layout_marginStart="5dp"
         android:gravity="center"
         android:textSize="@dimen/_14ssp" />
-</RelativeLayout>
 
         </LinearLayout>
 <LinearLayout
@@ -100,8 +99,16 @@
     android:layout_height="wrap_content"
     android:orientation="horizontal"
     android:layout_gravity="center"
-    android:layout_marginTop="@dimen/_25sdp"
-    >
+    android:layout_marginTop="@dimen/_25sdp">
+
+    <TextView
+        style="@style/describtion_Black_Color"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:gravity="center"
+        android:text="الوزن :"
+        android:textSize="@dimen/_15ssp" />
 
     <EditText
         android:id="@+id/dialogMeal_weight"
@@ -114,14 +121,7 @@
         android:inputType="number"
         android:text="100"
         android:textSize="@dimen/_14ssp" />
-    <TextView
-        style="@style/describtion_Black_Color"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:gravity="center"
-        android:text="الوزن :"
-        android:textSize="@dimen/_15ssp" />
+
 
 </LinearLayout>
 

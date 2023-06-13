@@ -1,8 +1,10 @@
 package dev.mah.nassa.gradu_ptojects.Adapters;
 
 import android.annotation.SuppressLint;
+import android.app.Dialog;
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.icu.text.LocaleDisplayNames;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -50,7 +52,8 @@ public class ChildFood_Adapter extends RecyclerView.Adapter<ChildFood_Adapter.My
         holder.foodImages.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                SharedFunctions.createFoodDialog("Home" , holder.itemView.getContext() ,loadUid(), foodCategoryArrayList.get(position));
+        SharedFunctions.createFoodDialog("Home" , holder.itemView.getContext() ,loadUid(), foodCategoryArrayList.get(position));
+
             }
         });
     }

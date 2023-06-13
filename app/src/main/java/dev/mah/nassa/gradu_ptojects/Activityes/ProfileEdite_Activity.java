@@ -315,7 +315,7 @@ public class ProfileEdite_Activity extends AppCompatActivity implements AdapterV
             @Override
             public void onChanged(Users_Health_Info usersHealthInfo) {
 
-                double calories = Vital_Equations.caloriDailyRequirment(binding.profileEditTvAge.getText().toString(), binding.profileEditTvHeight.getText().toString(),
+                double calories = Vital_Equations.caloriDailyRequirment(ProfileEdite_Activity.this , binding.profileEditTvAge.getText().toString(), binding.profileEditTvHeight.getText().toString(),
                         activityLeveSpin, binding.profileEditTvWeight.getText().toString(), usersInfoUpdate.getGender());
                 double water = Vital_Equations.waterQuantity(binding.profileEditTvWeight.getText().toString());
                 usersHealthInfo.setCaloriesNumber(calories);
@@ -325,8 +325,8 @@ public class ProfileEdite_Activity extends AppCompatActivity implements AdapterV
                 usersHealthInfoViewModel.updateUsersHealth(usersHealthInfo);
                 
                 // تعديل البيانات الصحية في فايربيز
-                FireStore_DataBase.updateObject("UsersInfo", usersInfo.getUid(), usersInfoUpdate);
                 FireStore_DataBase.updateObject("UsersHealthInfo", usersInfo.getUid(), usersHealthInfo);
+                FireStore_DataBase.updateObject("UsersInfo", usersInfo.getUid(), usersInfoUpdate);
 
 
             }
