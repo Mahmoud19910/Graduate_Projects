@@ -130,6 +130,8 @@ public class Home_Fragment extends Fragment implements View.OnClickListener {
         binding.watertLayout.setVisibility(View.INVISIBLE);
         binding.cardGoals.setVisibility(View.INVISIBLE);
         binding.progress.setVisibility(View.VISIBLE);
+        binding.caloriLayout.setVisibility(View.INVISIBLE);
+        binding.weightLay.setVisibility(View.INVISIBLE);
 
         // Listeners
         binding.timeBut.setOnClickListener(this);
@@ -149,12 +151,21 @@ public class Home_Fragment extends Fragment implements View.OnClickListener {
                     case 998:
                         binding.progress.setVisibility(View.INVISIBLE);
 
+                        binding.caloeiLayout.setVisibility(View.VISIBLE);
+                        binding.caloriLayout.setVisibility(View.VISIBLE);
+                        YoYo.with(Techniques.BounceInLeft).duration(1000).repeat(0).playOn(binding.caloeiLayout);
+                        YoYo.with(Techniques.BounceInLeft).duration(1000).repeat(0).playOn(binding.caloriLayout);
+
                         binding.cardGoals.setVisibility(View.VISIBLE);
                         YoYo.with(Techniques.RollIn).duration(700).repeat(0).playOn(binding.cardGoals);
-                        binding.caloeiLayout.setVisibility(View.VISIBLE);
-                        YoYo.with(Techniques.BounceInLeft).duration(1000).repeat(0).playOn(binding.caloeiLayout);
+
+
+
                         binding.weightLayout.setVisibility(View.VISIBLE);
+                        binding.weightLay.setVisibility(View.VISIBLE);
                         YoYo.with(Techniques.ZoomInUp).duration(900).repeat(0).playOn(binding.weightLayout);
+                        YoYo.with(Techniques.ZoomInUp).duration(900).repeat(0).playOn(binding.weightLay);
+
                         binding.watertLayout.setVisibility(View.VISIBLE);
                         YoYo.with(Techniques.SlideInLeft).duration(900).repeat(0).playOn(binding.watertLayout);
                         break;
@@ -174,7 +185,15 @@ public class Home_Fragment extends Fragment implements View.OnClickListener {
             @Override
             public void onChanged(UsersInfo usersInfo) {
                 progressiveGauge.speedTo((float) Integer.parseInt(usersInfo.getWeight()));
-                binding.w.setText(Vital_Equations.calculateFreeBodyMass(usersInfo.getLength(), usersInfo.getWeight()) + "");
+              String freeBodyMass =   Vital_Equations.calculateFreeBodyMass(usersInfo.getLength(), usersInfo.getWeight());
+                binding.w.setText(freeBodyMass + "");
+
+                if(freeBodyMass.equals("وزنك ضمن الحد الطبيعي حافظ على هذا المستوى")){
+                    binding.weightPerfect.setText(usersInfo.getWeight() +"كجم");
+                }else {
+                    double weightPerfect = Vital_Equations.calculatePerfectWeight(usersInfo.getLength());
+                    binding.weightPerfect.setText(String.format("%.2f" , weightPerfect)+" كجم ");
+                }
             }
         });
 
@@ -187,6 +206,8 @@ public class Home_Fragment extends Fragment implements View.OnClickListener {
                 binding.calorDailyRequirment.setText(String.format("kca " + "%.2f", users_health_info.getCaloriesNumber()) + "  ");
                 binding.waterQuan.setText(String.format("لتر " + "%.2f", users_health_info.getWaterDrink()) + "  ");
                 binding.caloriesGained.setText(String.format("kca " + "%.2f", users_health_info.getCaloriesGained()) + "  ");
+                binding.caloriNeedToLooseWeight.setText(String.format("kca " + "%.2f", (users_health_info.getCaloriesNumber()-1000))+"");
+                binding.caloriNeedToIncreaseWeight.setText(String.format("kca " + "%.2f", (users_health_info.getCaloriesNumber()+1000))+"");
 
 
             }

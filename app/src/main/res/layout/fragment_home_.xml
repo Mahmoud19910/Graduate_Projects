@@ -37,6 +37,228 @@
                 android:layout_height="wrap_content"
                 android:orientation="vertical">
 
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/caloeiLayout"
+                    android:layout_width="match_parent"
+                    android:layout_height="188dp"
+                    android:background="@drawable/card_view_shape">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:padding="10dp"
+                        app:layout_constraintBottom_toTopOf="@id/roundedImageView3"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent">
+
+                        <ImageView
+                            android:layout_width="25dp"
+                            android:layout_height="26dp"
+                            android:layout_gravity="center"
+                            android:src="@drawable/calori_icon" />
+
+                        <TextView
+                            style="@style/describtion_ShadowPink_Color"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:text="حرق السعرات"
+                            android:textSize="20dp" />
+                    </LinearLayout>
+
+
+                    <com.rishabhharit.roundedimageview.RoundedImageView
+                        android:id="@+id/roundedImageView3"
+                        android:layout_width="match_parent"
+                        android:layout_height="148dp"
+                        android:alpha="0.5"
+                        android:scaleType="centerCrop"
+                        android:src="@drawable/calori_card_photo"
+                        app:cornerRadius="23dp"
+                        android:background="@drawable/card_view_shape"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:roundedCorners="topLeft|topRight"
+                        tools:ignore="MissingClass" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="148dp"
+                        android:background="@drawable/card_view_shape"
+                        android:gravity="center_horizontal"
+                        android:orientation="vertical"
+                        android:padding="10dp"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:gravity="center"
+                            android:orientation="horizontal">
+
+                            <TextView
+                                style="@style/describtion_Black_Color"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="احتياجك اليومي"
+                                android:textColor="@color/black"
+                                android:textSize="18dp" />
+
+                            <TextView
+                                android:id="@+id/calorDailyRequirment"
+                                style="@style/describtion_Black_Color"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="@string/caloriesDay"
+                                android:textColor="@color/black"
+                                android:textSize="18dp" />
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="15dp"
+                            android:gravity="center_horizontal"
+                            android:orientation="horizontal">
+
+
+                            <LinearLayout
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:gravity="center"
+                                android:orientation="vertical">
+
+                                <TextView
+                                    style="@style/describtion_Black_Color"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:gravity="center_horizontal"
+                                    android:text="السعرات المحروقة"
+                                    android:textColor="@color/black"
+                                    android:textSize="18dp" />
+
+                                <TextView
+                                    android:id="@+id/burnedCalories"
+                                    style="@style/describtion_Black_Color"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="@string/caloriesBurned"
+                                    android:textColor="@color/black"
+                                    android:textSize="18dp" />
+                            </LinearLayout>
+
+                            <androidx.appcompat.widget.AppCompatButton
+                                android:id="@+id/startBurned"
+                                style="@style/default_Button"
+                                android:layout_width="70dp"
+                                android:layout_height="37dp"
+                                android:layout_marginTop="47dp"
+                                android:layout_weight="1"
+                                android:text="ابدأ حرق " />
+
+                            <LinearLayout
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:gravity="center"
+                                android:orientation="vertical">
+
+                                <TextView
+                                    style="@style/describtion_Black_Color"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:gravity="center_horizontal"
+                                    android:text="السعرات المكتسبة"
+                                    android:textColor="@color/black"
+                                    android:textSize="18dp" />
+
+                                <TextView
+                                    android:id="@+id/caloriesGained"
+                                    style="@style/describtion_Black_Color"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="@string/calorie"
+                                    android:textColor="@color/black"
+                                    android:textSize="18dp" />
+                            </LinearLayout>
+
+
+                        </LinearLayout>
+
+
+                    </LinearLayout>
+
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+                <LinearLayout
+                    android:id="@+id/caloriLayout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:elevation="3dp"
+                    android:layout_marginStart="1dp"
+                    android:layout_marginEnd="1dp"
+                    android:background="@drawable/rounded_cardview">
+
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:gravity="center"
+                            android:padding="5dp"
+                            android:orientation="vertical">
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:gravity="center"
+                                android:orientation="horizontal">
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="لخسارة 1 كجم من وزنك في أسبوع تحتاج  "
+                                    style="@style/describtion_Black_Color"
+                                    android:textSize="15dp"/>
+
+                                <TextView
+                                    android:id="@+id/caloriNeedToLooseWeight"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="100 سعرة "
+                                    style="@style/describtion_ShadowPink_Color"
+                                    android:textSize="15dp"/>
+                            </LinearLayout>
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:gravity="center"
+                                android:orientation="horizontal">
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text=" لزيادة وزنك 1 كجم في أسبوع تحتاج"
+                                    style="@style/describtion_Black_Color"
+                                    android:textSize="15dp"/>
+
+                                <TextView
+                                    android:id="@+id/caloriNeedToIncreaseWeight"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="100 سعرة "
+                                    style="@style/describtion_ShadowPink_Color"
+                                    android:textSize="15dp"/>
+                            </LinearLayout>
+
+
+                        </LinearLayout>
+
+                </LinearLayout>
                 <androidx.cardview.widget.CardView
                     android:id="@+id/cardGoals"
                     android:layout_width="match_parent"
@@ -295,170 +517,10 @@
                             android:textColor="@color/black"
                             android:textSize="20dp"
                             android:text="حقق انجازك وابدأ التحديات"
-                           />
+                            />
                     </LinearLayout>
                 </androidx.cardview.widget.CardView>
 
-                <androidx.constraintlayout.widget.ConstraintLayout
-                    android:id="@+id/caloeiLayout"
-                    android:layout_width="match_parent"
-                    android:layout_height="188dp"
-                    android:layout_marginTop="18dp"
-                    android:background="@drawable/card_view_shape">
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="horizontal"
-                        android:padding="10dp"
-                        app:layout_constraintBottom_toTopOf="@id/roundedImageView3"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent">
-
-                        <ImageView
-                            android:layout_width="25dp"
-                            android:layout_height="26dp"
-                            android:layout_gravity="center"
-                            android:src="@drawable/calori_icon" />
-
-                        <TextView
-                            style="@style/describtion_ShadowPink_Color"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="center"
-                            android:text="حرق السعرات"
-                            android:textSize="20dp" />
-                    </LinearLayout>
-
-
-                    <com.rishabhharit.roundedimageview.RoundedImageView
-                        android:id="@+id/roundedImageView3"
-                        android:layout_width="match_parent"
-                        android:layout_height="148dp"
-                        android:alpha="0.5"
-                        android:scaleType="centerCrop"
-                        android:src="@drawable/calori_card_photo"
-                        app:cornerRadius="23dp"
-                        android:background="@drawable/card_view_shape"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:roundedCorners="topLeft|topRight"
-                        tools:ignore="MissingClass" />
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="148dp"
-                        android:background="@drawable/card_view_shape"
-                        android:gravity="center_horizontal"
-                        android:orientation="vertical"
-                        android:padding="10dp"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toStartOf="parent">
-
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:gravity="center"
-                            android:orientation="horizontal">
-
-                            <TextView
-                                style="@style/describtion_Black_Color"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="احتياجك اليومي"
-                                android:textColor="@color/black"
-                                android:textSize="18dp" />
-
-                            <TextView
-                                android:id="@+id/calorDailyRequirment"
-                                style="@style/describtion_Black_Color"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="@string/caloriesDay"
-                                android:textColor="@color/black"
-                                android:textSize="18dp" />
-                        </LinearLayout>
-
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="15dp"
-                            android:gravity="center_horizontal"
-                            android:orientation="horizontal">
-
-
-                            <LinearLayout
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_weight="1"
-                                android:gravity="center"
-                                android:orientation="vertical">
-
-                                <TextView
-                                    style="@style/describtion_Black_Color"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:gravity="center_horizontal"
-                                    android:text="السعرات المحروقة"
-                                    android:textColor="@color/black"
-                                    android:textSize="18dp" />
-
-                                <TextView
-                                    android:id="@+id/burnedCalories"
-                                    style="@style/describtion_Black_Color"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:text="@string/caloriesBurned"
-                                    android:textColor="@color/black"
-                                    android:textSize="18dp" />
-                            </LinearLayout>
-
-                            <androidx.appcompat.widget.AppCompatButton
-                                android:id="@+id/startBurned"
-                                style="@style/default_Button"
-                                android:layout_width="70dp"
-                                android:layout_height="37dp"
-                                android:layout_marginTop="47dp"
-                                android:layout_weight="1"
-                                android:text="ابدأ حرق " />
-
-                            <LinearLayout
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_weight="1"
-                                android:gravity="center"
-                                android:orientation="vertical">
-
-                                <TextView
-                                    style="@style/describtion_Black_Color"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:gravity="center_horizontal"
-                                    android:text="السعرات المكتسبة"
-                                    android:textColor="@color/black"
-                                    android:textSize="18dp" />
-
-                                <TextView
-                                    android:id="@+id/caloriesGained"
-                                    style="@style/describtion_Black_Color"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:text="@string/calorie"
-                                    android:textColor="@color/black"
-                                    android:textSize="18dp" />
-                            </LinearLayout>
-
-
-                        </LinearLayout>
-
-
-                    </LinearLayout>
-
-
-                </androidx.constraintlayout.widget.ConstraintLayout>
 
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:id="@+id/weightLayout"
@@ -553,6 +615,46 @@
                         app:sv_withTremble="false"
                         tools:ignore="MissingConstraints" />
                 </androidx.constraintlayout.widget.ConstraintLayout>
+                <LinearLayout
+                    android:id="@+id/weightLay"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:elevation="3dp"
+                    android:layout_marginStart="1dp"
+                    android:layout_marginEnd="1dp"
+                    android:background="@drawable/rounded_cardview">
+
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:padding="8dp"
+                        android:orientation="vertical">
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:gravity="center"
+                            android:orientation="horizontal">
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="وزنك المثالي "
+                                style="@style/describtion_Black_Color"
+                                android:textSize="15dp"/>
+
+                            <TextView
+                                android:id="@+id/weightPerfect"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="77 كجم"
+                                style="@style/describtion_ShadowPink_Color"
+                                android:textSize="15dp"/>
+                        </LinearLayout>
+
+                    </LinearLayout>
+
+                </LinearLayout>
 
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:id="@+id/watertLayout"
