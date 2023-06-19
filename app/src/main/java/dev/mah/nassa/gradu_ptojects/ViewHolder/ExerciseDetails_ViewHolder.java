@@ -17,7 +17,7 @@ public class ExerciseDetails_ViewHolder extends RecyclerView.ViewHolder {
    public TextView dateTv , date , nameExercise , exerciseDuration , time ,calories;
    public TableLayout tableLayout;
   public LinearLayoutCompat linearLayout;
-  public ImageView iconDrop;
+  public ImageView iconDrop,ivCheckBox;
     public ExerciseDetails_ViewHolder(@NonNull View itemView) {
         super(itemView);
         dateTv = itemView.findViewById(R.id.dateTv);
@@ -29,5 +29,7 @@ public class ExerciseDetails_ViewHolder extends RecyclerView.ViewHolder {
         tableLayout = itemView.findViewById(R.id.tableDetails);
         linearLayout=itemView.findViewById(R.id.linear);
         iconDrop=itemView.findViewById(R.id.dropIcon);
+        ivCheckBox = itemView.findViewById(R.id.exerciseDetails_check_box);
+
     }
 }

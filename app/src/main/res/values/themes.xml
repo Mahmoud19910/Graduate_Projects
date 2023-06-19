@@ -111,5 +111,10 @@
 <!--    <item name="android:foreground">@drawable/imagesrin</item>-->
 
     </style>
+    <style name="AppSearchViewStyle" parent="Widget.AppCompat.SearchView">
 
+        <item name="searchIcon">@drawable/ic_search</item>
+        <item name="searchViewStyle">@style/AppSearchViewStyle</item>
+        <!-- إضافة المزيد من الخصائص المخصصة هنا -->
+    </style>
 </resources>

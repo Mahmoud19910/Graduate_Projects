@@ -31,6 +31,14 @@
             android:text="10/10/2022"
             style="@style/describtion_ShadowBlack_Color"
             android:textSize="16dp"/>
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/exerciseDetails_check_box"
+            android:layout_marginEnd="12dp"
+            android:visibility="gone"
+            android:src="@drawable/ic_baseline_check_circle_24"
+            />
 
     </androidx.appcompat.widget.LinearLayoutCompat>
 

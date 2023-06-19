@@ -33,6 +33,14 @@ android:orientation="vertical">
         android:text="10/10/2022"
         style="@style/describtion_ShadowBlack_Color"
         android:textSize="16dp"/>
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/myMealList_check_box"
+        android:layout_marginEnd="12dp"
+        android:visibility="gone"
+        android:src="@drawable/ic_baseline_check_circle_24"
+        />
 
 </androidx.appcompat.widget.LinearLayoutCompat>
 
@@ -80,7 +88,7 @@ android:orientation="vertical">
         <TextView
             android:layout_width="match_parent"
             android:layout_height="40dp"
-            android:text="السعرات الحرارية المحروقة"
+            android:text="السعرات الحرارية"
             android:gravity="center"
             android:layout_margin="1dp"
             android:textSize="18dp"

@@ -23,6 +23,7 @@
 
         <activity
             android:name=".Activityes.MyMealList_Activity"
+            android:screenOrientation="portrait"
             android:exported="false">
             <meta-data
                 android:name="android.app.lib_name"
@@ -30,6 +31,7 @@
         </activity>
         <activity
             android:name=".Activityes.About_Activity"
+            android:screenOrientation="portrait"
             android:exported="false">
             <meta-data
                 android:name="android.app.lib_name"
@@ -37,6 +39,7 @@
         </activity>
         <activity
             android:name=".Activityes.FoodSection_Activity"
+            android:screenOrientation="portrait"
             android:exported="false">
             <meta-data
                 android:name="android.app.lib_name"
@@ -66,6 +69,7 @@
 
         <activity
             android:name=".Activityes.Chat_Activity"
+            android:screenOrientation="portrait"
             android:exported="false">
             <meta-data
                 android:name="android.app.lib_name"
@@ -73,6 +77,7 @@
         </activity>
         <activity
             android:name=".Activityes.DoctorsActivity"
+            android:screenOrientation="portrait"
             android:exported="false">
             <meta-data
                 android:name="android.app.lib_name"
@@ -80,6 +85,7 @@
         </activity>
         <activity
             android:name=".Activityes.StartTraining_Activity"
+            android:screenOrientation="portrait"
             android:exported="false">
             <meta-data
                 android:name="android.app.lib_name"
@@ -87,6 +93,7 @@
         </activity>
         <activity
             android:name=".Activityes.ProfileEdite_Activity"
+            android:screenOrientation="portrait"
             android:exported="false">
             <meta-data
                 android:name="android.app.lib_name"
@@ -94,6 +101,7 @@
         </activity>
         <activity
             android:name=".Activityes.Profile_Activity"
+            android:screenOrientation="portrait"
             android:exported="false"
             tools:ignore="DuplicateActivity">
             <meta-data
@@ -102,6 +110,7 @@
         </activity>
         <activity
             android:name=".Activityes.ActivitesStats"
+            android:screenOrientation="portrait"
             android:exported="false"
             tools:ignore="DuplicateActivity">
             <meta-data
@@ -110,6 +119,7 @@
         </activity>
         <activity
             android:name=".Activityes.Exercices_Activity"
+            android:screenOrientation="portrait"
             android:exported="false"
             android:label="Exercices Activity">
             <meta-data
@@ -124,6 +134,7 @@
 
         <activity
             android:name=".Activityes.Home_Activity"
+            android:screenOrientation="portrait"
             android:configChanges="locale"
             android:exported="false">
             <meta-data
@@ -132,6 +143,7 @@
         </activity>
         <activity
             android:name=".Activityes.VerifyForgetPass_Activity"
+            android:screenOrientation="portrait"
             android:exported="false">
             <meta-data
                 android:name="android.app.lib_name"
@@ -139,6 +151,7 @@
         </activity>
         <activity
             android:name=".Activityes.VerifyAccount_Activity"
+            android:screenOrientation="portrait"
             android:exported="false">
             <meta-data
                 android:name="android.app.lib_name"
@@ -146,6 +159,7 @@
         </activity>
         <activity
             android:name=".Activityes.SignUp_Activity"
+            android:screenOrientation="portrait"
             android:exported="false">
             <meta-data
                 android:name="android.app.lib_name"
@@ -153,6 +167,7 @@
         </activity>
         <activity
             android:name=".Activityes.SignIn_Activity"
+            android:screenOrientation="portrait"
             android:exported="false">
             <meta-data
                 android:name="android.app.lib_name"
@@ -160,6 +175,7 @@
         </activity>
         <activity
             android:name=".Activityes.Forget_Activity"
+            android:screenOrientation="portrait"
             android:exported="false">
             <meta-data
                 android:name="android.app.lib_name"
@@ -167,6 +183,7 @@
         </activity>
         <activity
             android:name=".Activityes.UsersInformation_Activity"
+            android:screenOrientation="portrait"
             android:exported="false">
             <meta-data
                 android:name="android.app.lib_name"
@@ -174,6 +191,7 @@
         </activity>
         <activity
             android:name=".Activityes.UnBoarding_Activity"
+            android:screenOrientation="portrait"
             android:exported="false">
             <meta-data
                 android:name="android.app.lib_name"
@@ -181,6 +199,7 @@
         </activity>
         <activity
             android:name=".Activityes.MainActivity"
+            android:screenOrientation="portrait"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
