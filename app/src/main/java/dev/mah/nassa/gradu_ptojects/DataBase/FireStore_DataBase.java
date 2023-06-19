@@ -127,14 +127,13 @@ public class FireStore_DataBase {
 
         //Food Meal(Collection)
     public static void insertMeal(My_Meal_List mealList, Context context) {
+        CollectionReference mealReference = firestore.collection("MyMeal");
+        mealList.setId(mealReference.document().getId());
         firestore.collection("MyMeal").add(mealList).addOnCompleteListener(new OnCompleteListener<DocumentReference>() {
             @Override
             public void onComplete(@NonNull Task<DocumentReference> task) {
                 if(task.isSuccessful()){
-                    Toast.makeText(context, "Added Health", Toast.LENGTH_SHORT).show();
                 }else{
-                    Toast.makeText(context, "Fail Health", Toast.LENGTH_SHORT).show();
-
                 }
             }
         });
@@ -146,9 +145,7 @@ public class FireStore_DataBase {
             @Override
             public void onComplete(@NonNull Task<DocumentReference> task) {
                 if(task.isSuccessful()){
-                    Toast.makeText(context, "Added Health", Toast.LENGTH_SHORT).show();
                 }else{
-                    Toast.makeText(context, "Fail Health", Toast.LENGTH_SHORT).show();
 
                 }
             }
@@ -493,6 +490,71 @@ public class FireStore_DataBase {
 
     }
 
+    //حذف من قائمة وجباتي
+    public static void deleteMyMealList(My_Meal_List meal) {
+        // below line is for getting the collection
+        // where we are storing our courses.
+        firestore.collection("MyMeal").
+
+                // after that we are getting the document
+                // which we have to delete.
+                        document(meal.getId()).
+
+                // after passing the document id we are calling
+                // delete method to delete this document.
+                        delete().
+                // after deleting call on complete listener
+                // method to delete this data.
+                        addOnCompleteListener(new OnCompleteListener<Void>() {
+                    @Override
+                    public void onComplete(@NonNull Task<Void> task) {
+                        // inside on complete method we are checking
+                        // if the task is success or not.
+                        if (task.isSuccessful()) {
+
+
+                        } else {
+                            // if the delete operation is failed
+                            // we are displaying a toast message.
+                            //      Toast.makeText(UpdateCourse.this, "Fail to delete the course. ", Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                });
+
+
+    }
+    public static void deleteExerciseDetails(Exercise_Details details) {
+        // below line is for getting the collection
+        // where we are storing our courses.
+        firestore.collection("MyMeal").
+
+                // after that we are getting the document
+                // which we have to delete.
+                        document(String.valueOf(details.getId())).
+
+                // after passing the document id we are calling
+                // delete method to delete this document.
+                        delete().
+                // after deleting call on complete listener
+                // method to delete this data.
+                        addOnCompleteListener(new OnCompleteListener<Void>() {
+                    @Override
+                    public void onComplete(@NonNull Task<Void> task) {
+                        // inside on complete method we are checking
+                        // if the task is success or not.
+                        if (task.isSuccessful()) {
+
+
+                        } else {
+                            // if the delete operation is failed
+                            // we are displaying a toast message.
+                            //      Toast.makeText(UpdateCourse.this, "Fail to delete the course. ", Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                });
+
+
+    }
 
 }
 

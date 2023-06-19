@@ -532,7 +532,6 @@ public class SharedFunctions {
                     //fireStore add Meal
                     FireStore_DataBase.insertMeal(mealList , view.getContext());
                     my_meal_mvvm.insertMy_Meal_List(mealList);
-
                     onSuccessListener.onSuccess(mealList);
                     dialog.dismiss();
                 }

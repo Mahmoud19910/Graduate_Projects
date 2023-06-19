@@ -25,10 +25,24 @@ public class My_Meal_MVVM extends AndroidViewModel {
     MutableLiveData<List<My_Meal_List>> mutableLiveData = new MutableLiveData<>();
     MutableLiveData<List<My_Meal_List>> liveData = new MutableLiveData<>();
     MutableLiveData<My_Meal_List> mutableLData = new MutableLiveData<>();
+    MutableLiveData<String> mutableLiveDataString=new MutableLiveData<>();
 
     Context context;
     AppDatabese appDatabese;
+    // initialize variables
 
+    // create set text method
+    public void setTitle(String s)
+    {
+        // set value
+        mutableLiveDataString.setValue(s);
+    }
+
+    // create get text method
+    public MutableLiveData<String> getTitle()
+    {
+        return mutableLiveDataString;
+    }
     public My_Meal_MVVM(@androidx.annotation.NonNull Application application) {
         super(application);
         context=application.getApplicationContext();
