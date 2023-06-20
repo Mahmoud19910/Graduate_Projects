@@ -19,7 +19,6 @@ public class About_Activity extends AppCompatActivity {
         imageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(About_Activity.this , Home_Activity.class));
                 finish();
             }
         });
@@ -28,7 +27,6 @@ public class About_Activity extends AppCompatActivity {
     @Override
     public void onBackPressed() {
         super.onBackPressed();
-        startActivity(new Intent(About_Activity.this , Home_Activity.class));
         finish();
     }
 }

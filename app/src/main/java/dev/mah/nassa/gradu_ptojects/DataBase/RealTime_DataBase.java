@@ -30,7 +30,6 @@ public class RealTime_DataBase {
        databaseReference.child(id).setValue(usersChat).addOnSuccessListener(new OnSuccessListener<Void>() {
            @Override
            public void onSuccess(Void unused) {
-               Toast.makeText(context, "Success Add To RealTime", Toast.LENGTH_SHORT).show();
            }
        }).addOnFailureListener(new OnFailureListener() {
            @Override
@@ -129,7 +128,7 @@ public class RealTime_DataBase {
         databaseReference.child(UUID.randomUUID().toString()).setValue(notifications).addOnSuccessListener(new OnSuccessListener<Void>() {
             @Override
             public void onSuccess(Void unused) {
-                Toast.makeText(context, "Success", Toast.LENGTH_SHORT).show();
+//                Toast.makeText(context, "Success", Toast.LENGTH_SHORT).show();
             }
         });
     }

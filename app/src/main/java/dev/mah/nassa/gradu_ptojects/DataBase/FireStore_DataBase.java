@@ -240,6 +240,7 @@ public class FireStore_DataBase {
     public static void updatePass(String newPass , String phoneNum , Context context){
 
         Query query = firestore.collection("UsersInfo").whereEqualTo("phone",phoneNum);
+
         query.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
             @Override
             public void onComplete(@NonNull Task<QuerySnapshot> task) {
@@ -330,6 +331,8 @@ public class FireStore_DataBase {
     }
 
     public static void insertOrUpdateExerciseDetails(Exercise_Details exercise_details , Context context){
+        CollectionReference eference = firestore.collection("ExerciseDetails");
+        exercise_details.setId(eference.document().getId());
         firestore.collection("ExerciseDetails").add(exercise_details).addOnCompleteListener(new OnCompleteListener<DocumentReference>() {
             @Override
             public void onComplete(@NonNull Task<DocumentReference> task) {
@@ -365,6 +368,29 @@ public class FireStore_DataBase {
         });
     }
 
+
+    public static void getAllExerciseDetails_Lists(OnSuccessListener onSuccessListener){
+        firestore.collection("ExerciseDetails").get().addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
+            @Override
+            public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
+
+                List<DocumentSnapshot> snapshotList =  queryDocumentSnapshots.getDocuments();
+                List<Exercise_Details> details = new ArrayList<>();
+                    for(DocumentSnapshot documentSnapshot: snapshotList){
+                        Exercise_Details exercise_details = documentSnapshot.toObject(Exercise_Details.class);
+                        details.add(exercise_details);
+                    }
+                onSuccessListener.onSuccess(details);
+
+
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+
+            }
+        });
+    }
     //inside this method we are passing our updated values
     //تحتاج الميثود ثلاث مدخلات
     //1 - اسم الكولكشن الموجود في الفاير ستور
@@ -491,7 +517,40 @@ public class FireStore_DataBase {
     }
 
     //حذف من قائمة وجباتي
-    public static void deleteMyMealList(My_Meal_List meal) {
+    public static void deleteMyMealList(My_Meal_List meal , Context context) {
+//
+//        CollectionReference collectionRef = firestore.collection("MyMeal");
+//
+//        collectionRef.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+//            @Override
+//            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+//                if (task.isSuccessful()) {
+//                    for (QueryDocumentSnapshot document : task.getResult()) {
+//
+//                        My_Meal_List mealList = document.toObject(My_Meal_List.class);
+//
+//                        if(mealList.getId().equals(meal.getId().getId())){
+//                            String documentId = document.getId();
+//
+//                            firestore.collection("MyMeal").document(documentId)
+//                                    .delete()
+//                                    .addOnCompleteListener(new OnCompleteListener<Void>() {
+//                                        @Override
+//                                        public void onComplete(@NonNull Task<Void> task) {
+//                                            if(task.isSuccessful()){
+//                                                Toast.makeText(context, "Suce", Toast.LENGTH_SHORT).show();
+//                                            }else {
+//                                                Toast.makeText(context, "fail", Toast.LENGTH_SHORT).show();
+//                                            }
+//                                        }
+//                                    });
+//
+//                        }
+//                    }
+//                }
+//            }
+//        });
+
         // below line is for getting the collection
         // where we are storing our courses.
         firestore.collection("MyMeal").
@@ -512,8 +571,8 @@ public class FireStore_DataBase {
                         // if the task is success or not.
                         if (task.isSuccessful()) {
 
-
                         } else {
+                            Toast.makeText(context, task.getException().getMessage().toString()+"  Message", Toast.LENGTH_SHORT).show();
                             // if the delete operation is failed
                             // we are displaying a toast message.
                             //      Toast.makeText(UpdateCourse.this, "Fail to delete the course. ", Toast.LENGTH_SHORT).show();
@@ -523,36 +582,39 @@ public class FireStore_DataBase {
 
 
     }
-    public static void deleteExerciseDetails(Exercise_Details details) {
-        // below line is for getting the collection
-        // where we are storing our courses.
-        firestore.collection("MyMeal").
+    public static void deleteExerciseDetails(Context context, Exercise_Details details) {
 
-                // after that we are getting the document
-                // which we have to delete.
-                        document(String.valueOf(details.getId())).
+        CollectionReference collectionRef = firestore.collection("ExerciseDetails");
 
-                // after passing the document id we are calling
-                // delete method to delete this document.
-                        delete().
-                // after deleting call on complete listener
-                // method to delete this data.
-                        addOnCompleteListener(new OnCompleteListener<Void>() {
-                    @Override
-                    public void onComplete(@NonNull Task<Void> task) {
-                        // inside on complete method we are checking
-                        // if the task is success or not.
-                        if (task.isSuccessful()) {
+        collectionRef.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                if (task.isSuccessful()) {
+                    for (QueryDocumentSnapshot document : task.getResult()) {
 
+                        Exercise_Details exercise_details = document.toObject(Exercise_Details.class);
 
-                        } else {
-                            // if the delete operation is failed
-                            // we are displaying a toast message.
-                            //      Toast.makeText(UpdateCourse.this, "Fail to delete the course. ", Toast.LENGTH_SHORT).show();
+                        if(exercise_details.getId().equals(details.getId())){
+                            String documentId = document.getId();
+
+                            firestore.collection("ExerciseDetails").document(documentId)
+                                            .delete()
+                                                    .addOnCompleteListener(new OnCompleteListener<Void>() {
+                                                        @Override
+                                                        public void onComplete(@NonNull Task<Void> task) {
+                                                            if(task.isSuccessful()){
+
+                                                            }else {
+                                                                Toast.makeText(context, task.getException().getMessage().toString()+"", Toast.LENGTH_SHORT).show();
+                                                            }
+                                                        }
+                                                    });
+
                         }
                     }
-                });
-
+                }
+            }
+        });
 
     }
 

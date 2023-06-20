@@ -17,6 +17,8 @@ import com.bumptech.glide.Glide;
 import com.google.android.gms.tasks.OnSuccessListener;
 
 import java.text.DecimalFormat;
+import java.util.Random;
+import java.util.UUID;
 
 import dev.mah.nassa.gradu_ptojects.Constants.CustomDialog;
 import dev.mah.nassa.gradu_ptojects.Constants.LanguageUtils;
@@ -47,6 +49,7 @@ public class Fragment_StartTraining_TimeGoal extends Fragment implements TimerLi
     private double caloriesBurned;
     private int progressedValue = 0;
     private ExersiseDetails_MVVM exercisedetails_mvvm;
+    private Random random;
 
 
 
@@ -148,7 +151,9 @@ public class Fragment_StartTraining_TimeGoal extends Fragment implements TimerLi
                         if (((Boolean) o) == true) {
                             // ايقاف المؤقت حفظ النشاط في قاعدة البيانات
                             timer.timerTask.cancel();
-                            Exercise_Details exercise_details = new Exercise_Details(uid , String.format("%.2f", caloriesBurned) ,  SharedFunctions.getTimeAtTheMoment() , SharedFunctions.getDateAtTheMoment()
+                             random = new Random();
+
+                            Exercise_Details exercise_details = new Exercise_Details(uid , UUID.randomUUID().toString() , String.format("%.2f", caloriesBurned) ,  SharedFunctions.getTimeAtTheMoment() , SharedFunctions.getDateAtTheMoment()
                                     , sports_exercises.getName() , String.valueOf(timer.getTimeByHours()));
                             FireStore_DataBase.insertOrUpdateExerciseDetails(exercise_details, getContext());
                             exercisedetails_mvvm.insertExersiseDetails(exercise_details);
@@ -182,8 +187,8 @@ public class Fragment_StartTraining_TimeGoal extends Fragment implements TimerLi
         if (timer.getTimeByHours() == timrHourse) {
             timer.timerTask.cancel();
 
-            Exercise_Details exercise_details = new Exercise_Details(uid , String.valueOf(caloriesBurned) ,  SharedFunctions.getTimeAtTheMoment() , SharedFunctions.getDateAtTheMoment()
-                    , sports_exercises.getName() , String.valueOf(timer.getTimeByHours()));
+            Exercise_Details exercise_details = new Exercise_Details(uid , UUID.randomUUID().toString() , String.valueOf(caloriesBurned) ,  SharedFunctions.getTimeAtTheMoment() , SharedFunctions.getDateAtTheMoment()
+                    , sports_exercises.getName() , String.valueOf(timer.getTimeByHours()) );
             exercisedetails_mvvm.insertExersiseDetails(exercise_details);
             FireStore_DataBase.insertOrUpdateExerciseDetails(exercise_details, getContext());
             CustomDialog dialog = new CustomDialog(getContext(), time, String.format("%.2f", caloriesBurned));

@@ -88,17 +88,11 @@ public class Chat_Activity extends AppCompatActivity {
         binding = ActivityChatBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
-        SharedFunctions.customToaste(R.layout.internet_toast_shape , Chat_Activity.this);
 
         // فحص الاتصال بالانترنت
         boolean internet = SharedFunctions.checkInternetConnection(this);
         if (!internet) {
             SharedFunctions.customToaste(R.layout.internet_toast_shape , Chat_Activity.this);
-//            View view = LayoutInflater.from(Chat_Activity.this).inflate(R.layout.internet_toast_shape , null , false);
-//            Toast toast = new Toast(Chat_Activity.this);
-//            toast.setView(view);
-//            toast.setDuration(Toast.LENGTH_LONG);
-//            toast.show();
         }
 
         usersViewModel = ViewModelProviders.of(this).get(UsersViewModel.class);
@@ -242,7 +236,7 @@ public class Chat_Activity extends AppCompatActivity {
         binding.mic.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(Chat_Activity.this, "الخدمة غير فعالة حالياً", Toast.LENGTH_SHORT).show();
+                SharedFunctions.customToaste(R.layout.voicerecord_message_toast_shape  ,Chat_Activity.this);
             }
         });
 

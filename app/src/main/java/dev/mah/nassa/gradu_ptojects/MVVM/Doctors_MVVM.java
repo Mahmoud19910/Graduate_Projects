@@ -118,7 +118,7 @@ public class Doctors_MVVM extends AndroidViewModel {
 
                     @Override
                     public void onComplete() {
-                        Toast.makeText(context, "deleted", Toast.LENGTH_SHORT).show();
+//                        Toast.makeText(context, "deleted", Toast.LENGTH_SHORT).show();
                     }
 
                     @Override

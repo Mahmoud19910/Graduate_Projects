@@ -18,7 +18,7 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Fitness App"
+        android:text="@string/app_name"
         android:textSize="25dp"
         style="@style/title_White_Color"/>
     <View
@@ -27,50 +27,119 @@
         android:layout_marginTop="20dp"
         android:background="@color/black"/>
 
-    <TextView
+    <LinearLayout
         android:id="@+id/account"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="حسابي"
+        android:gravity="center"
         android:layout_marginTop="20dp"
-        style="@style/describtion_Black_Color"
-        android:textSize="16dp"/>
+        android:orientation="horizontal">
+        <ImageView
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:layout_marginEnd="5dp"
+            android:src="@drawable/profile"/>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="حسابي"
+            style="@style/describtion_Black_Color"
+            android:textSize="16dp"/>
+    </LinearLayout>
 
-    <TextView
+
+    <LinearLayout
         android:id="@+id/myFoud"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="قائمة وجباتي"
+        android:gravity="center"
         android:layout_marginTop="20dp"
-        style="@style/describtion_Black_Color"
-        android:textSize="16dp"/>
+        android:orientation="horizontal">
+        <ImageView
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:layout_marginEnd="5dp"
+            android:src="@drawable/foolist"/>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="قائمة وجباتي"
+            style="@style/describtion_Black_Color"
+            android:textSize="16dp"/>
+    </LinearLayout>
 
-    <TextView
+
+
+
+    <LinearLayout
         android:id="@+id/statistics"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="الاحصائيات"
+        android:gravity="center"
         android:layout_marginTop="20dp"
-        style="@style/describtion_Black_Color"
-        android:textSize="16dp"/>
+        android:orientation="horizontal">
+        <ImageView
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:layout_marginEnd="5dp"
+            android:src="@drawable/stats"/>
 
-    <TextView
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="الاحصائيات"
+            style="@style/describtion_Black_Color"
+            android:textSize="16dp"/>
+    </LinearLayout>
+
+
+
+    <LinearLayout
         android:id="@+id/about"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="حول التطبيق"
+        android:gravity="center"
         android:layout_marginTop="20dp"
-        style="@style/describtion_Black_Color"
-        android:textSize="16dp"/>
+        android:orientation="horizontal">
+        <ImageView
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:layout_marginEnd="5dp"
+            android:src="@drawable/about"/>
 
-    <TextView
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="حول التطبيق"
+            style="@style/describtion_Black_Color"
+            android:textSize="16dp"/>
+
+    </LinearLayout>
+
+
+    <LinearLayout
         android:id="@+id/signOut"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="تسجيل الخروج"
+        android:gravity="center"
         android:layout_marginTop="20dp"
-        style="@style/describtion_Black_Color"
-        android:textSize="16dp"/>
+        android:orientation="horizontal">
+        <ImageView
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:layout_marginEnd="5dp"
+            android:src="@drawable/sign_out"/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="تسجيل الخروج"
+            style="@style/describtion_Black_Color"
+            android:textSize="16dp"/>
+
+    </LinearLayout>
+
+
 
 
 </LinearLayout>

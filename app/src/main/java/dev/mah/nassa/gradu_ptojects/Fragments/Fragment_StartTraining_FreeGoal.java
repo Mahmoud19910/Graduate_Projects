@@ -17,6 +17,9 @@ import android.widget.Toast;
 import com.bumptech.glide.Glide;
 import com.google.android.gms.tasks.OnSuccessListener;
 
+import java.util.Random;
+import java.util.UUID;
+
 import dev.mah.nassa.gradu_ptojects.Activityes.Exercices_Activity;
 import dev.mah.nassa.gradu_ptojects.Constants.CustomDialog;
 import dev.mah.nassa.gradu_ptojects.Constants.LanguageUtils;
@@ -122,8 +125,10 @@ public class Fragment_StartTraining_FreeGoal extends Fragment implements View.On
 
                 if(caloriesBurned != 0){
                     timer.timerTask.cancel();
-                    Exercise_Details exercise_details = new Exercise_Details(uid , String.valueOf(caloriesBurned) ,  SharedFunctions.getTimeAtTheMoment() , SharedFunctions.getDateAtTheMoment()
-                            , sports_exercises.getName(), String.valueOf(timer.getTimeByHours()));
+                    Random random = new Random();
+
+                    Exercise_Details exercise_details = new Exercise_Details(uid , UUID.randomUUID().toString() , String.valueOf(caloriesBurned) ,  SharedFunctions.getTimeAtTheMoment() , SharedFunctions.getDateAtTheMoment()
+                            , sports_exercises.getName(), String.valueOf(timer.getTimeByHours()) );
 
                     exercisedetails_mvvm.insertExersiseDetails(exercise_details);
                     FireStore_DataBase.insertOrUpdateExerciseDetails(exercise_details , getContext());

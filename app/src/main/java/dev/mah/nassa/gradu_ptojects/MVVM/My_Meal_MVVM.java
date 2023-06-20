@@ -62,7 +62,7 @@ public class My_Meal_MVVM extends AndroidViewModel {
 
                     @Override
                     public void onComplete() {
-                        Toast.makeText(context, "Success", Toast.LENGTH_SHORT).show();
+//                        Toast.makeText(context, "Success", Toast.LENGTH_SHORT).show();
                     }
 
                     @Override
@@ -107,7 +107,7 @@ public class My_Meal_MVVM extends AndroidViewModel {
 
                     @Override
                     public void onComplete() {
-                        Toast.makeText(context, "My_Meal_ListDelete", Toast.LENGTH_SHORT).show();
+//                        Toast.makeText(context, "My_Meal_ListDelete", Toast.LENGTH_SHORT).show();
                     }
 
                     @Override
@@ -129,7 +129,7 @@ public class My_Meal_MVVM extends AndroidViewModel {
 
                     @Override
                     public void onComplete() {
-                        Toast.makeText(context, "deleteAllMy_Meal_List", Toast.LENGTH_SHORT).show();
+//                        Toast.makeText(context, "deleteAllMy_Meal_List", Toast.LENGTH_SHORT).show();
                     }
 
                     @Override
@@ -182,7 +182,7 @@ public class My_Meal_MVVM extends AndroidViewModel {
 
                     @Override
                     public void onComplete() {
-                        Toast.makeText(context, "deleted", Toast.LENGTH_SHORT).show();
+//                        Toast.makeText(context, "deleted", Toast.LENGTH_SHORT).show();
                     }
 
                     @Override

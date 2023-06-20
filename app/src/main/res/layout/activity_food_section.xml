@@ -18,30 +18,40 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
-
             <TextView
                 android:id="@+id/foodSection_tv_title"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="الفاكهة"
-                android:textSize="@dimen/_18ssp"
-                android:textColor="@color/white"
+                android:layout_gravity="center"
                 android:shadowColor="@color/black"
                 android:shadowDx="0"
                 android:shadowDy="3"
                 android:shadowRadius="6"
-                android:layout_gravity="end"
-                android:layout_marginEnd="25dp"
-                />
+                android:text="الفاكهة"
+                android:textColor="@color/white"
+                android:visibility="visible"
+                android:textSize="@dimen/_18ssp" />
+
 
             <ImageView
                 android:id="@+id/foodSection_iv_back"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:src="@drawable/back_ios_new_24"
                 android:layout_gravity="start"
                 android:layout_marginEnd="@dimen/_7sdp"
+                android:src="@drawable/back_ios_new_24" />
+            <androidx.appcompat.widget.SearchView
+                android:id="@+id/search"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:queryBackground="@color/white"
+                android:layout_gravity="end"
+                android:layoutDirection="rtl"
+                app:queryHint="بحث"
+                app:searchHintIcon="@drawable/your_custom_search_icon"
+                style="@style/AppSearchViewStyle"
                 />
+
         </androidx.appcompat.widget.Toolbar>
 
         <androidx.recyclerview.widget.RecyclerView

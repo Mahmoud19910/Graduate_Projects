@@ -1,13 +1,14 @@
 package dev.mah.nassa.gradu_ptojects.Modles;
 
+import androidx.annotation.NonNull;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
 @Entity
 public class Exercise_Details {
-    @PrimaryKey(autoGenerate = true)
-    private
-    int id;
+    @PrimaryKey
+    @NonNull
+    private String id;
     private String uid;
     private String caloriesBurned;
     private String exerciseTime;
@@ -18,22 +19,19 @@ public class Exercise_Details {
     public Exercise_Details() {
     }
 
-    public Exercise_Details(String uid, String caloriesBurned, String exerciseTime, String date, String exerciseName, String exerciseDuration) {
+
+    public Exercise_Details(String uid, String id ,  String caloriesBurned, String exerciseTime, String date, String exerciseName, String exerciseDuration ) {
         this.uid = uid;
+        this.id=id;
         this.caloriesBurned = caloriesBurned;
         this.exerciseTime = exerciseTime;
         this.date = date;
         this.exerciseName = exerciseName;
         this.exerciseDuration = exerciseDuration;
+
     }
 
-    public int getId() {
-        return id;
-    }
 
-    public void setId(int id) {
-        this.id = id;
-    }
 
     public String getUid() {
         return uid;
@@ -81,5 +79,16 @@ public class Exercise_Details {
 
     public void setExerciseDuration(String exerciseDuration) {
         this.exerciseDuration = exerciseDuration;
+    }
+
+
+
+    @NonNull
+    public String getId() {
+        return id;
+    }
+
+    public void setId(@NonNull String id) {
+        this.id = id;
     }
 }

@@ -1,6 +1,7 @@
 package dev.mah.nassa.gradu_ptojects.Activityes;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.SearchView;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
@@ -31,6 +32,19 @@ public class FoodSection_Activity extends AppCompatActivity {
         //الحصول على عنوان صفحة Title
         binding.foodSectionTvTitle.setText(arrayList.get(0).getDepartmentName());
 
+        binding.search.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                return true;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+
+                adapter.getFilter().filter(newText);
+                return true;
+            }
+        });
         adapter = new FoodSection_Adapter(arrayList,getBaseContext());
         binding.foodSectionRecyclerView.setHasFixedSize(true);
         binding.foodSectionRecyclerView.setLayoutManager(new LinearLayoutManager(null));

@@ -5,10 +5,10 @@
     android:layout_width="match_parent"
 android:layout_height="wrap_content"
 android:layoutDirection="rtl"
-android:padding="10dp"
 android:orientation="vertical">
 
 <androidx.appcompat.widget.LinearLayoutCompat
+    android:layout_marginTop="15dp"
     android:id="@+id/meal_linear"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
@@ -33,12 +33,16 @@ android:orientation="vertical">
         android:text="10/10/2022"
         style="@style/describtion_ShadowBlack_Color"
         android:textSize="16dp"/>
+    <View
+        android:layout_width="wrap_content"
+        android:layout_height="-2dp"
+        android:layout_weight="1"/>
     <ImageView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/myMealList_check_box"
         android:layout_marginEnd="12dp"
-        android:visibility="gone"
+        android:visibility="visible"
         android:src="@drawable/ic_baseline_check_circle_24"
         />
 
@@ -48,7 +52,7 @@ android:orientation="vertical">
     android:id="@+id/myMealList_RV_tb_tableDetails"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginTop="20dp"
+    android:layout_marginTop="15dp"
     android:background="@color/blue"
     android:padding="1dp">
 

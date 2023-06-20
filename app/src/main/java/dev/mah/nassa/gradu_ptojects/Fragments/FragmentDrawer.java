@@ -9,6 +9,7 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import dev.mah.nassa.gradu_ptojects.Activityes.About_Activity;
@@ -38,11 +39,11 @@ public class FragmentDrawer extends Fragment {
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
-        TextView signOut = getActivity().findViewById(R.id.signOut);
-        TextView stats = getActivity().findViewById(R.id.statistics);
-        TextView account = getActivity().findViewById(R.id.account);
-        TextView food = getActivity().findViewById(R.id.myFoud);
-        TextView about = getActivity().findViewById(R.id.about);
+        LinearLayout signOut = getActivity().findViewById(R.id.signOut);
+        LinearLayout stats = getActivity().findViewById(R.id.statistics);
+        LinearLayout account = getActivity().findViewById(R.id.account);
+        LinearLayout food = getActivity().findViewById(R.id.myFoud);
+        LinearLayout about = getActivity().findViewById(R.id.about);
         signOut.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -80,7 +81,7 @@ public class FragmentDrawer extends Fragment {
             @Override
             public void onClick(View v) {
                 getActivity().startActivity(new Intent(getContext() , About_Activity.class));
-                getActivity().finish();
+
             }
         });
 

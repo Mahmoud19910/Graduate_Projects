@@ -35,6 +35,7 @@ public class SignUp_Activity extends AppCompatActivity implements View.OnClickLi
     private boolean checkInputs;
     private boolean showPass = false;
     private boolean isFindEmail=false; // لمعرفة هل تم التسجيل من قبل لتنفيذ عملية الدخول مباشرة
+    private String openAtivityFrom;
 
 
     @Override
@@ -43,6 +44,7 @@ public class SignUp_Activity extends AppCompatActivity implements View.OnClickLi
         binding = ActivitySignUpBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
+       openAtivityFrom =  getIntent().getStringExtra("from");
         // انشاء مصادقة جوجل
         Gmai_Auth.createGoogleAuth(this);
 
@@ -135,8 +137,18 @@ public class SignUp_Activity extends AppCompatActivity implements View.OnClickLi
     @Override
     public void onBackPressed() {
         super.onBackPressed();
-        startActivity(new Intent(getApplicationContext(), SignIn_Activity.class));
-        finish();
+
+        if(openAtivityFrom !=null){
+            if(openAtivityFrom.equals("fromUnboarding")){
+                startActivity(new Intent(getApplicationContext() , UnBoarding_Activity.class));
+                finish();
+            }else {
+                startActivity(new Intent(getApplicationContext(), SignIn_Activity.class));
+                finish();
+            }
+        }
+
+
     }
 
     @Override

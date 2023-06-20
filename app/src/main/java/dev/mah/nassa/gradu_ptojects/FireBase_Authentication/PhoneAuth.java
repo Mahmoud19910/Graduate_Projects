@@ -132,7 +132,7 @@ public class PhoneAuth {
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
                             SharedFunctions.dismissDialog();
-                            Toast.makeText(context, "Success Update", Toast.LENGTH_SHORT).show();
+//                            Toast.makeText(context, "Success Update", Toast.LENGTH_SHORT).show();
                             ((Activity)context).startActivity(new Intent(context , SignIn_Activity.class));
                             ((Activity) context).finish();
                             onSuccessListener.onSuccess(true);

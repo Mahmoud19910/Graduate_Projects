@@ -3,18 +3,18 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layoutDirection="rtl"
-    android:padding="10dp"
     android:orientation="vertical">
 
     <androidx.appcompat.widget.LinearLayoutCompat
         android:id="@+id/linear"
+        android:layout_marginTop="15dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal">
         <ImageView
             android:id="@+id/dropIcon"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:src="@drawable/pink_back_ios_new_24"/>
         <TextView
             android:layout_width="wrap_content"
@@ -31,6 +31,10 @@
             android:text="10/10/2022"
             style="@style/describtion_ShadowBlack_Color"
             android:textSize="16dp"/>
+        <View
+            android:layout_width="wrap_content"
+            android:layout_height="-2dp"
+            android:layout_weight="1"/>
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -46,7 +50,7 @@
         android:id="@+id/tableDetails"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="15dp"
         android:background="@color/blue"
         android:padding="1dp">
 

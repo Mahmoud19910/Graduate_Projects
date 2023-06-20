@@ -47,16 +47,18 @@ public class MyMealList_Adapter extends RecyclerView.Adapter<MyMealList_Adapter.
     boolean isSelectAll=false;
     ArrayList<My_Meal_List> selectList=new ArrayList<>();
     private ArrayList<My_Meal_List> copyMy_meal_lists;
+    private Context context;
 
 
     // create constructor
-    public MyMealList_Adapter(Activity activity,ArrayList<My_Meal_List> list,TextView tvEmpty,Toolbar toolbar)
+    public MyMealList_Adapter(Activity activity,ArrayList<My_Meal_List> list,TextView tvEmpty,Toolbar toolbar , Context context)
     {
         this.activity=activity;
         this.list=list;
         this.copyMy_meal_lists = list;
         this.tvEmpty=tvEmpty;
         this.toolbar = toolbar;
+        this.context = context;
     }
 
 
@@ -95,7 +97,7 @@ public class MyMealList_Adapter extends RecyclerView.Adapter<MyMealList_Adapter.
             holder.iconDrop.setRotation(270);
         }
 
-        holder.linearLayout.setOnClickListener(new View.OnClickListener() {
+        holder.iconDrop.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if(dropDown==false){
@@ -171,7 +173,8 @@ public class MyMealList_Adapter extends RecyclerView.Adapter<MyMealList_Adapter.
                                     for(My_Meal_List s:selectList)
                                     {
                                         // remove selected item list
-                                        FireStore_DataBase.deleteMyMealList(s);
+                                        mainViewModel.deleteMy_Meal_List(s);
+                                        FireStore_DataBase.deleteMyMealList(s , context);
                                         list.remove(s);
                                     }
                                     // check condition
@@ -179,7 +182,7 @@ public class MyMealList_Adapter extends RecyclerView.Adapter<MyMealList_Adapter.
                                     {
                                         // when array list is empty
                                         // visible text view
-                                        tvEmpty.setVisibility(View.VISIBLE);
+//                                        tvEmpty.setVisibility(View.VISIBLE);
                                     }
                                     // finish action mode
                                     mode.finish();

@@ -51,12 +51,12 @@ public class UsersViewModel extends AndroidViewModel {
 
                     @Override
                     public void onComplete() {
-                        Toast.makeText(context, "Insert Users Success", Toast.LENGTH_SHORT).show();
+//                        Toast.makeText(context, "Insert Users Success", Toast.LENGTH_SHORT).show();
                     }
 
                     @Override
                     public void onError(@NonNull Throwable e) {
-                        Toast.makeText(context, e.getMessage(), Toast.LENGTH_LONG).show();
+//                        Toast.makeText(context, e.getMessage(), Toast.LENGTH_LONG).show();
                         System.out.println("E R R O R  :"+e.getMessage());
                         Log.e("TAG", "Error occurred: " + e.getMessage());
 
@@ -76,7 +76,7 @@ public class UsersViewModel extends AndroidViewModel {
 
                     @Override
                     public void onComplete() {
-                        Toast.makeText(context, "Update", Toast.LENGTH_SHORT).show();
+//                        Toast.makeText(context, "Update", Toast.LENGTH_SHORT).show();
                     }
 
                     @Override
@@ -98,7 +98,7 @@ public class UsersViewModel extends AndroidViewModel {
 
                     @Override
                     public void onComplete() {
-                        Toast.makeText(context, "UsersDelete", Toast.LENGTH_SHORT).show();
+//                        Toast.makeText(context, "UsersDelete", Toast.LENGTH_SHORT).show();
                     }
 
                     @Override
@@ -120,7 +120,7 @@ public class UsersViewModel extends AndroidViewModel {
 
                     @Override
                     public void onComplete() {
-                        Toast.makeText(context, "deleteAllUsers", Toast.LENGTH_SHORT).show();
+//                        Toast.makeText(context, "deleteAllUsers", Toast.LENGTH_SHORT).show();
                     }
 
                     @Override
@@ -173,7 +173,7 @@ public class UsersViewModel extends AndroidViewModel {
 
                     @Override
                     public void onComplete() {
-                        Toast.makeText(context, "deleted", Toast.LENGTH_SHORT).show();
+//                        Toast.makeText(context, "deleted", Toast.LENGTH_SHORT).show();
                     }
 
                     @Override
@@ -264,12 +264,12 @@ public class UsersViewModel extends AndroidViewModel {
 
                     @Override
                     public void onComplete() {
-                        Toast.makeText(context, "Success Update", Toast.LENGTH_SHORT).show();
+//                        Toast.makeText(context, "Success Update", Toast.LENGTH_SHORT).show();
                     }
 
                     @Override
                     public void onError(@NonNull Throwable e) {
-                        Toast.makeText(context, e.getMessage().toString() , Toast.LENGTH_SHORT).show();
+//                        Toast.makeText(context, e.getMessage().toString() , Toast.LENGTH_SHORT).show();
 
                     }
                 });

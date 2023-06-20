@@ -85,6 +85,8 @@ public class Home_Activity extends AppCompatActivity implements View.OnClickList
         Intent intent = getIntent();
         uid = intent.getStringExtra("uid");
 
+        saveUid(uid);
+
         CheckRoomIsEmpty checkRoomIsEmpty = new CheckRoomIsEmpty(Home_Activity.this);
         checkRoomIsEmpty.checkFoodCategoryBase();
         checkRoomIsEmpty.checkUsersHealthBase(loadUid());
@@ -114,8 +116,6 @@ public class Home_Activity extends AppCompatActivity implements View.OnClickList
             bottomNavigation.show(3, false);
         }
 
-
-        saveUid(uid);
 
         // عند دخول المستخدم تعديل القيمة الى true أي أنه متصل بالتطبيق الآن
         if (internetCheck) {

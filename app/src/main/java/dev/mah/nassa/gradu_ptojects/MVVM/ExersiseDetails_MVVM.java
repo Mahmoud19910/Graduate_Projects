@@ -28,6 +28,21 @@ public class ExersiseDetails_MVVM extends AndroidViewModel {
     MutableLiveData<List<Exercise_Details>> mutableLiveDataExercie = new MutableLiveData<>();
     MutableLiveData<List<Exercise_Details>> mutableLiveDataUidAndDate = new MutableLiveData<>();
 
+    MutableLiveData<String> mutableLiveDataString=new MutableLiveData<>();
+
+    // create set text method
+    public void setTitle(String s)
+    {
+        // set value
+        mutableLiveDataString.setValue(s);
+    }
+
+    // create get text method
+    public MutableLiveData<String> getTitle()
+    {
+        return mutableLiveDataString;
+    }
+
     public ExersiseDetails_MVVM(@NonNull Application application) {
         super(application);
         context=application.getApplicationContext();
@@ -52,7 +67,7 @@ public class ExersiseDetails_MVVM extends AndroidViewModel {
 
                     @Override
                     public void onError(@io.reactivex.rxjava3.annotations.NonNull Throwable e) {
-                        Toast.makeText(context, e.getMessage().toString(), Toast.LENGTH_SHORT).show();
+//                        Toast.makeText(context, e.getMessage().toString(), Toast.LENGTH_SHORT).show();
                     }
 
                     @Override
@@ -75,12 +90,12 @@ public class ExersiseDetails_MVVM extends AndroidViewModel {
 
                     @Override
                     public void onComplete() {
-                        Toast.makeText(context, "Succes Add Exercise", Toast.LENGTH_SHORT).show();
+//                        Toast.makeText(context, "Succes Add Exercise", Toast.LENGTH_SHORT).show();
                     }
 
                     @Override
                     public void onError(@io.reactivex.rxjava3.annotations.NonNull Throwable e) {
-                        Toast.makeText(context, e.getMessage().toString(), Toast.LENGTH_SHORT).show();
+//                        Toast.makeText(context, e.getMessage().toString(), Toast.LENGTH_SHORT).show();
                     }
                 });
     }
@@ -107,6 +122,28 @@ public class ExersiseDetails_MVVM extends AndroidViewModel {
                 });
     }
 
+    public void deletExerciseDetails(Exercise_Details exercise_details){
+        exerciseDetailsDao.exersuseDetailsDelete(exercise_details)
+                .subscribeOn(Schedulers.io())
+                .subscribeOn(AndroidSchedulers.mainThread())
+                .subscribe(new CompletableObserver() {
+                    @Override
+                    public void onSubscribe(@io.reactivex.rxjava3.annotations.NonNull Disposable d) {
+
+                    }
+
+                    @Override
+                    public void onComplete() {
+
+                    }
+
+                    @Override
+                    public void onError(@io.reactivex.rxjava3.annotations.NonNull Throwable e) {
+//                        Toast.makeText(context, e.getMessage().toString(), Toast.LENGTH_SHORT).show();
+
+                    }
+                });
+    }
     public MutableLiveData<List<Exercise_Details>> getExerciseByDateAndUid(String uid , String date){
         exerciseDetailsDao.getExerciseByDateAndUid(uid , date)
                 .subscribeOn(Schedulers.computation())

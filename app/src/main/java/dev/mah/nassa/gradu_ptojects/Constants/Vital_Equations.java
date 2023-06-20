@@ -93,9 +93,7 @@ public class Vital_Equations {
     public static double calculatePerfectWeight(String length){
 
         double leng = (Double.parseDouble(length)/100);
-
         return Math.pow(leng,2)*25.29;
-
     }
 
 

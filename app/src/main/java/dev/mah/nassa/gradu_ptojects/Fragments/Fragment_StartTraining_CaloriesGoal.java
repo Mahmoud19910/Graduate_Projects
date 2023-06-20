@@ -18,6 +18,8 @@ import com.google.android.gms.tasks.OnSuccessListener;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
+import java.util.UUID;
 
 import dev.mah.nassa.gradu_ptojects.Constants.CustomDialog;
 import dev.mah.nassa.gradu_ptojects.Constants.LanguageUtils;
@@ -140,9 +142,10 @@ public class Fragment_StartTraining_CaloriesGoal extends Fragment implements Vie
                         if(((Boolean)o)==true){
                             // ايقاف المؤقت حفظ النشاط في قاعدة البيانات
                             timer.timerTask.cancel();
+                            Random random = new Random();
 
-                            Exercise_Details exercise_details = new Exercise_Details(uid , String.valueOf(caloriesBurned) ,  SharedFunctions.getTimeAtTheMoment() , SharedFunctions.getDateAtTheMoment()
-                                    , sports_exercises.getName() , String.valueOf(timer.getTimeByHours()));
+                            Exercise_Details exercise_details = new Exercise_Details(uid , UUID.randomUUID().toString() , String.valueOf(caloriesBurned) ,  SharedFunctions.getTimeAtTheMoment() , SharedFunctions.getDateAtTheMoment()
+                                    , sports_exercises.getName() , String.valueOf(timer.getTimeByHours()) );
                             FireStore_DataBase.insertOrUpdateExerciseDetails(exercise_details , getContext());
                             exercisedetails_mvvm.insertExersiseDetails(exercise_details);
 
@@ -168,7 +171,8 @@ public class Fragment_StartTraining_CaloriesGoal extends Fragment implements Vie
         // انهاء النشاط عند الوصوصل الى الهدف من السعرات
         if(Double.parseDouble(caloriNumber) <= Double.parseDouble(binding.caloriesCount.getText().toString())){
             timer.timerTask.cancel();
-            Exercise_Details exercise_details = new Exercise_Details(uid , String.valueOf(caloriesBurned) ,  SharedFunctions.getTimeAtTheMoment() , SharedFunctions.getDateAtTheMoment()
+            Random random = new Random();
+            Exercise_Details exercise_details = new Exercise_Details(uid , UUID.randomUUID().toString() , String.valueOf(caloriesBurned) ,  SharedFunctions.getTimeAtTheMoment() , SharedFunctions.getDateAtTheMoment()
                     , sports_exercises.getName() , String.valueOf(timer.getTimeByHours()));
             exercisedetails_mvvm.insertExersiseDetails(exercise_details);
             FireStore_DataBase.insertOrUpdateExerciseDetails(exercise_details , getContext());

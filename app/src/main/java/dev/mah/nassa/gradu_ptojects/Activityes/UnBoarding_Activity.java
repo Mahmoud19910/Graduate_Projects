@@ -42,6 +42,8 @@ public class UnBoarding_Activity extends AppCompatActivity implements ViewPager.
             @Override
             public void onClick(View view) {
                 Intent ii = new Intent(UnBoarding_Activity.this, SignUp_Activity.class);
+                ii.putExtra("from" , "fromUnboarding"); // لمعرفة أنه تم الفتح من UnBoarding لاغلاق التطبيق
+
                 startActivity(ii);
                 finish();
 
@@ -53,6 +55,7 @@ public class UnBoarding_Activity extends AppCompatActivity implements ViewPager.
             @Override
             public void onClick(View view) {
                 Intent ii = new Intent(UnBoarding_Activity.this, SignIn_Activity.class);
+                ii.putExtra("from" , "fromUnboarding"); // لمعرفة أنه تم الفتح من UnBoarding لاغلاق التطبيق
                 startActivity(ii);
                 finish();
             }

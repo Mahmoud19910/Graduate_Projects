@@ -14,6 +14,7 @@ import com.google.firebase.firestore.QuerySnapshot;
 import java.util.List;
 
 import dev.mah.nassa.gradu_ptojects.DataBase.FireStore_DataBase;
+import dev.mah.nassa.gradu_ptojects.Modles.My_Meal_List;
 import dev.mah.nassa.gradu_ptojects.Modles.Sports_Exercises;
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
 import io.reactivex.rxjava3.core.Observer;
@@ -25,6 +26,7 @@ public class FireStore_MVVM extends AndroidViewModel {
 
     static FirebaseFirestore firestore = FirebaseFirestore.getInstance();
     Context context;
+
     public FireStore_MVVM(@NonNull Application application) {
         super(application);
         context = application.getApplicationContext();
@@ -58,6 +60,7 @@ public class FireStore_MVVM extends AndroidViewModel {
                     }
                 });
     }
+
 
 
 

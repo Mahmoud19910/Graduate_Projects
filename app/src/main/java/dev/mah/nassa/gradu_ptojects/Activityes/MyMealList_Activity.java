@@ -23,6 +23,7 @@ import java.util.List;
 import dev.mah.nassa.gradu_ptojects.Adapters.MyMealList_Adapter;
 import dev.mah.nassa.gradu_ptojects.Constants.SharedFunctions;
 import dev.mah.nassa.gradu_ptojects.DataBase.FireStore_DataBase;
+import dev.mah.nassa.gradu_ptojects.MVVM.FireStore_MVVM;
 import dev.mah.nassa.gradu_ptojects.MVVM.My_Meal_MVVM;
 import dev.mah.nassa.gradu_ptojects.Modles.FoodCategory;
 import dev.mah.nassa.gradu_ptojects.Modles.My_Meal_List;
@@ -34,7 +35,8 @@ public class MyMealList_Activity extends AppCompatActivity {
     private ActivityMyMealListBinding binding;
     private MyMealList_Adapter adapter;
     private  ArrayList<My_Meal_List> mealLists=new ArrayList<>();
-    private int sum =0;
+    private List<My_Meal_List> listCountCalories;
+    private double sum =0;
     private My_Meal_MVVM my_meal_mvvm;
 
     @Override
@@ -42,7 +44,9 @@ public class MyMealList_Activity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         binding = ActivityMyMealListBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
+
         binding.myMealListTvSalary.setText("إجمالي السعرات الحرارية "+sum+" سعرة");
+
         my_meal_mvvm = ViewModelProviders.of(MyMealList_Activity.this).get(My_Meal_MVVM.class);
        boolean isConnect =  SharedFunctions.checkInternetConnection(MyMealList_Activity.this);
 
@@ -63,24 +67,33 @@ public class MyMealList_Activity extends AppCompatActivity {
         //استدعاء ميثود العرض في الادابتر
         showAdapterRev();
 
+        // جلب البينات من قاعدة البيانات لتحديث السعرات الحرارية
+        my_meal_mvvm.getAllMy_Meal_List().observe(MyMealList_Activity.this, new Observer<List<My_Meal_List>>() {
+            @Override
+            public void onChanged(List<My_Meal_List> my_meal_lists) {
+
+                // created for recycler view.
+                listCountCalories = my_meal_lists;
+
+                //جمع عدد سعرات
+                sum = 0;
+                for (int i = 0 ; i<listCountCalories.size() ; i++){
+                    double s = Double.parseDouble(listCountCalories.get(i).getCaloriesMeal());
+                    sum+=s;
+                }
+                binding.myMealListTvSalary.setText("إجمالي السعرات الحرارية "+sum+" سعرة");
+            }
+        });
        if(isConnect){
+
            //الحصول على البيانات من الفاير بيز
            FireStore_DataBase.getAllData(getApplicationContext(), "MyMeal",loadUid(), new OnSuccessListener() {
                @Override
                public void onSuccess(Object o) {
 
                    mealLists = (ArrayList<My_Meal_List>) o;
-                   //عرض الأدابتر
                    showAdapterRev();
 
-                   //جمع عدد سعرات
-                   sum = 0;
-                   for (int i = 0 ; i<mealLists.size() ; i++){
-                       int s = Integer.parseInt(mealLists.get(i).getCaloriesMeal());
-                       sum+=s;
-                   }
-
-                   binding.myMealListTvSalary.setText("إجمالي السعرات الحرارية "+sum+" سعرة");
                }
            });
        }else {
@@ -92,16 +105,11 @@ public class MyMealList_Activity extends AppCompatActivity {
                    mealLists = (ArrayList<My_Meal_List>) my_meal_lists;
                    showAdapterRev();
 
-                   //جمع عدد سعرات
-                   sum = 0;
-                   for (int i = 0 ; i<my_meal_lists.size() ; i++){
-                       int s = Integer.parseInt(my_meal_lists.get(i).getCaloriesMeal());
-                       sum+=s;
-                   }
-                   binding.myMealListTvSalary.setText("إجمالي السعرات الحرارية "+sum+" سعرة");
                }
            });
        }
+
+
 
 
         //اذا لم يكن هناك بيانات في الاري سيتم طباعة 0 للسعرات
@@ -166,7 +174,7 @@ public class MyMealList_Activity extends AppCompatActivity {
     }
     //ميثود لععرض البيانات في الادابتر
      private void showAdapterRev(){
-      adapter = new MyMealList_Adapter(MyMealList_Activity.this,mealLists,binding.tvEmpty,binding.toolbar);
+      adapter = new MyMealList_Adapter(MyMealList_Activity.this,mealLists,binding.tvEmpty,binding.toolbar , MyMealList_Activity.this);
       binding.myMealListRvRecycler.setHasFixedSize(true);
       LinearLayoutManager layoutManager = new LinearLayoutManager(null);
       layoutManager.setReverseLayout(true);

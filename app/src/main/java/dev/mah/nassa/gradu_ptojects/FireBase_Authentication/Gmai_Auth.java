@@ -54,11 +54,11 @@ public class Gmai_Auth {
 
             try {
                 if(task.isSuccessful()){
-                    Toast.makeText(context, "Task Success", Toast.LENGTH_SHORT).show();
+//                    Toast.makeText(context, "Task Success", Toast.LENGTH_SHORT).show();
                     // Signed in successfully, show authenticated UI.
                     GoogleSignInAccount account = task.getResult(ApiException.class);
                     // Use account.getIdToken() to authenticate with your server.
-                    Toast.makeText(context, "Success", Toast.LENGTH_SHORT).show();
+//                    Toast.makeText(context, "Success", Toast.LENGTH_SHORT).show();
                     String id=account.getId();
                     String email=account.getEmail();
                     String name=account.getDisplayName();
@@ -84,7 +84,7 @@ public class Gmai_Auth {
     public static void onSignOut(Context context){
         FirebaseAuth.getInstance().signOut();
         GoogleSignIn.getClient(context, GoogleSignInOptions.DEFAULT_SIGN_IN).signOut();
-        Toast.makeText(context, "Sign Out", Toast.LENGTH_SHORT).show();
+//        Toast.makeText(context, "Sign Out", Toast.LENGTH_SHORT).show();
     }
 
     // Loged In

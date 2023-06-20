@@ -34,6 +34,8 @@ import android.widget.Toast;
 import com.github.anastr.speedviewlib.SpeedView;
 
 import java.util.ArrayList;
+import java.util.Random;
+import java.util.UUID;
 
 import dev.mah.nassa.gradu_ptojects.Activityes.Home_Activity;
 import dev.mah.nassa.gradu_ptojects.Constants.CustomDialog;
@@ -178,9 +180,10 @@ public class StepsCounter_Fragment extends Fragment {
             public void onClick(View v) {
                 isStart = true;
                 stopTv.setText("بدء");
+                Random random = new Random();
                 startIcon.setImageDrawable(getActivity().getDrawable(R.drawable.play_arrow_24));
                 if( !caloriesTv.getText().toString().isEmpty() && caloriesTv.getText().toString() != null && Double.parseDouble(caloriesTv.getText().toString()) > 0.0){
-                    Exercise_Details exercise_details = new Exercise_Details(loadUid() , caloriesTv.getText().toString() , timeAtMomment ,  SharedFunctions.getDateAtTheMoment() , "رياضة المشي" ,String.valueOf(Home_Activity.timer.getTimeByHours()));
+                    Exercise_Details exercise_details = new Exercise_Details(loadUid() , UUID.randomUUID().toString() ,  caloriesTv.getText().toString() , timeAtMomment ,  SharedFunctions.getDateAtTheMoment() , "رياضة المشي" ,String.valueOf(Home_Activity.timer.getTimeByHours()));
                     exersiseDetails_mvvm.insertExersiseDetails(exercise_details);
                     FireStore_DataBase.insertOrUpdateExerciseDetails(exercise_details , getContext());
 

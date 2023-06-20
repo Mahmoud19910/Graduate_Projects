@@ -222,7 +222,7 @@
                                 <TextView
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:text="لخسارة 1 كجم من وزنك في أسبوع تحتاج  "
+                                    android:text="لخسارة 1 كجم في أسبوع تحتاج  "
                                     style="@style/describtion_Black_Color"
                                     android:textSize="15dp"/>
 
@@ -771,7 +771,7 @@
                     android:layout_height="wrap_content"
                     android:paddingStart="80dp"
                     android:paddingEnd="80dp"
-                    android:layout_marginBottom="@dimen/_50sdp"
+                    android:layout_marginBottom="@dimen/_57sdp"
                     />
             </LinearLayout>
         </ScrollView>

@@ -43,6 +43,7 @@ public class SignIn_Activity extends AppCompatActivity implements View.OnClickLi
 
 
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -103,6 +104,7 @@ public class SignIn_Activity extends AppCompatActivity implements View.OnClickLi
                                        for(UsersInfo users : usersInfos){
                                            if(users.getPhone().equals(binding.editPhoneSignIn.getText().toString()) && users.getPass().equals(binding.editPassSignIn.getText().toString())){
 
+                                               saveUid(users.getUid());
                                                //لجلب البيانات الخاصة بكل مستخدم uid ارسال فيمة
                                                Intent intent = new Intent(SignIn_Activity.this  , Home_Activity.class);
                                                intent.putExtra("uid" , users.getUid());
@@ -240,10 +242,10 @@ public class SignIn_Activity extends AppCompatActivity implements View.OnClickLi
             SharedPreferences sharedPreferences = getSharedPreferences("saveUid", Context.MODE_PRIVATE);
             SharedPreferences.Editor editor = sharedPreferences.edit();
             editor.putString("uid", uid);
-            Toast.makeText(this, "save", Toast.LENGTH_SHORT).show();
             editor.apply();
         }
 
     }
+
 
 }

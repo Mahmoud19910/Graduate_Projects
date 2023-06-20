@@ -12,11 +12,14 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Filter;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.LinearLayoutCompat;
 import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.FragmentActivity;
 import androidx.lifecycle.LifecycleOwner;
@@ -28,6 +31,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import dev.mah.nassa.gradu_ptojects.DataBase.FireStore_DataBase;
+import dev.mah.nassa.gradu_ptojects.MVVM.ExersiseDetails_MVVM;
 import dev.mah.nassa.gradu_ptojects.MVVM.My_Meal_MVVM;
 import dev.mah.nassa.gradu_ptojects.Modles.Exercise_Details;
 import dev.mah.nassa.gradu_ptojects.Modles.My_Meal_List;
@@ -41,16 +45,20 @@ public class ExerciseDetails_Adapter extends RecyclerView.Adapter<ExerciseDetail
     private Context context;
     private boolean dropDown=false;
     Activity activity;
-    Toolbar toolbar;
-    My_Meal_MVVM mainViewModel;
+    private LinearLayoutCompat linearAppBar;
+    ExersiseDetails_MVVM mainViewModel;
     boolean isEnable=false;
     boolean isSelectAll=false;
     ArrayList<Exercise_Details> selectList=new ArrayList<>();
+    private List<Exercise_Details> copyMy_exercise_Details;
 
-    public ExerciseDetails_Adapter(int layout, List<Exercise_Details> detailsList, Context context) {
+
+    public ExerciseDetails_Adapter(int layout, List<Exercise_Details> detailsList, Context context , LinearLayoutCompat linearAppBar) {
         this.layout = layout;
         this.detailsList = detailsList;
         this.context = context;
+        this.linearAppBar=linearAppBar;
+        copyMy_exercise_Details = detailsList;
     }
 
     @NonNull
@@ -60,7 +68,7 @@ public class ExerciseDetails_Adapter extends RecyclerView.Adapter<ExerciseDetail
       ExerciseDetails_ViewHolder exerciseDetails_viewHolder = new ExerciseDetails_ViewHolder(view);
         // initialize view Model
         mainViewModel= ViewModelProviders.of((FragmentActivity) context)
-                .get(My_Meal_MVVM.class);
+                .get(ExersiseDetails_MVVM.class);
         return exerciseDetails_viewHolder;
     }
 
@@ -86,7 +94,7 @@ public class ExerciseDetails_Adapter extends RecyclerView.Adapter<ExerciseDetail
                     holder.iconDrop.setRotation(270);
                 }
 
-                holder.linearLayout.setOnClickListener(new View.OnClickListener() {
+                holder.iconDrop.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
                         if(dropDown==false){
@@ -116,7 +124,7 @@ public class ExerciseDetails_Adapter extends RecyclerView.Adapter<ExerciseDetail
                     ActionMode.Callback callback=new ActionMode.Callback() {
                         @Override
                         public boolean onCreateActionMode(ActionMode mode, Menu menu) {
-                            toolbar.setVisibility(View.GONE);
+                            linearAppBar.setVisibility(View.GONE);
                             // initialize menu inflater
                             MenuInflater menuInflater= mode.getMenuInflater();
                             // inflate menu
@@ -134,7 +142,7 @@ public class ExerciseDetails_Adapter extends RecyclerView.Adapter<ExerciseDetail
                             // create method
                             ClickItem(holder);
                             // set observer on getText method
-                            mainViewModel.getTitle().observe((LifecycleOwner) activity
+                            mainViewModel.getTitle().observe((LifecycleOwner) context
                                     , new Observer<String>() {
                                         @Override
                                         public void onChanged(String s) {
@@ -162,7 +170,8 @@ public class ExerciseDetails_Adapter extends RecyclerView.Adapter<ExerciseDetail
                                     for(Exercise_Details s:selectList)
                                     {
                                         // remove selected item list
-                                        FireStore_DataBase.deleteExerciseDetails(s);
+                                        FireStore_DataBase.deleteExerciseDetails(context , s);
+                                        mainViewModel.deletExerciseDetails(s);
                                         detailsList.remove(s);
                                     }
                                     // check condition
@@ -209,7 +218,7 @@ public class ExerciseDetails_Adapter extends RecyclerView.Adapter<ExerciseDetail
 
                         @Override
                         public void onDestroyActionMode(ActionMode mode) {
-                            toolbar.setVisibility(View.VISIBLE);
+                            linearAppBar.setVisibility(View.VISIBLE);
                             // when action mode is destroy
                             // set isEnable false
                             isEnable=false;
@@ -248,8 +257,8 @@ public class ExerciseDetails_Adapter extends RecyclerView.Adapter<ExerciseDetail
                 {
                     // when action mode is not enable
                     // display toast
-                    Toast.makeText(activity,"You Clicked"+detailsList.get(holder.getAdapterPosition()),
-                            Toast.LENGTH_SHORT).show();
+//                    Toast.makeText(activity,"You Clicked"+detailsList.get(holder.getAdapterPosition()),
+//                            Toast.LENGTH_SHORT).show();
                 }
             }
         });
@@ -301,6 +310,37 @@ public class ExerciseDetails_Adapter extends RecyclerView.Adapter<ExerciseDetail
         mainViewModel.setTitle(String.valueOf(selectList.size()));
     }
 
+
+    //ميثود البحث لعمل فلترة اثناء ستخدام البحث
+    public Filter getFilter() {
+
+        Filter myFilter=new Filter() {
+            FilterResults fr=new FilterResults();
+            @Override
+            protected FilterResults performFiltering(CharSequence charSequence) {
+                ArrayList<Exercise_Details> temp=new ArrayList<Exercise_Details>();
+                for(int i=0;i<copyMy_exercise_Details.size();i++){
+                    Exercise_Details c=copyMy_exercise_Details.get(i);
+                    String stno=c.getDate()+"";
+                    if(c.getExerciseName().toLowerCase().contains(charSequence.toString().toLowerCase()) || stno.contains(charSequence.toString()) ){
+                        temp.add(c);
+                    }
+                }
+                fr.values=temp;
+                fr.count=temp.size();
+
+                return fr;
+            }
+
+            @Override
+            protected void publishResults(CharSequence charSequence, FilterResults fr) {
+                detailsList = (List<Exercise_Details>)fr.values;
+                notifyDataSetChanged();
+            }
+        };
+
+        return myFilter;
+    }
 
     @Override
     public int getItemCount() {

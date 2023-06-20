@@ -44,7 +44,7 @@ public class SportExercise_MVVM extends AndroidViewModel {
 
                     @Override
                     public void onComplete() {
-                        Toast.makeText(context, "Success Insert", Toast.LENGTH_SHORT).show();
+//                        Toast.makeText(context, "Success Insert", Toast.LENGTH_SHORT).show();
                     }
 
                     @Override

@@ -8,10 +8,13 @@
     android:orientation="vertical"
     tools:context=".Activityes.ActivitesStats">
     <androidx.appcompat.widget.LinearLayoutCompat
+        android:id="@+id/linearAppBar"
         android:layout_width="match_parent"
         android:layout_height="56dp"
         android:background="#3A7FC0"
-        android:gravity="center"
+        android:paddingTop="8dp"
+        android:paddingBottom="8dp"
+        android:gravity="center_vertical"
         android:paddingStart="@dimen/_10sdp"
         android:paddingEnd="@dimen/_10sdp"
         android:orientation="horizontal">
@@ -29,6 +32,19 @@
             android:layout_weight="1"
             android:textSize="18dp"
             style="@style/title_White_Color"/>
+
+        <androidx.appcompat.widget.SearchView
+            android:id="@+id/search"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            app:queryBackground="@color/white"
+            android:layout_gravity="end"
+            android:layoutDirection="rtl"
+            app:queryHint="بحث"
+            app:searchHintIcon="@drawable/your_custom_search_icon"
+            style="@style/AppSearchViewStyle"
+            />
+
     </androidx.appcompat.widget.LinearLayoutCompat>
     <androidx.appcompat.widget.LinearLayoutCompat
         android:layout_width="match_parent"

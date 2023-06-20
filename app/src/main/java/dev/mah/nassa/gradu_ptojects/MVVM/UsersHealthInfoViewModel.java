@@ -43,13 +43,13 @@ public class UsersHealthInfoViewModel extends AndroidViewModel {
 
                     @Override
                     public void onComplete() {
-                        Toast.makeText(context, "Insert Health Success", Toast.LENGTH_SHORT).show();
+//                        Toast.makeText(context, "Insert Health Success", Toast.LENGTH_SHORT).show();
                     }
 
                     @Override
                     public void onError(@io.reactivex.rxjava3.annotations.NonNull Throwable e) {
                         System.out.println("eRROR"+e.getMessage().toString());
-                        Toast.makeText(context, e.getMessage(), Toast.LENGTH_LONG).show();
+//                        Toast.makeText(context, e.getMessage(), Toast.LENGTH_LONG).show();
 
                     }
                 });
@@ -67,7 +67,7 @@ public class UsersHealthInfoViewModel extends AndroidViewModel {
 
                     @Override
                     public void onComplete() {
-                        Toast.makeText(context, "Update", Toast.LENGTH_SHORT).show();
+//                        Toast.makeText(context, "Update", Toast.LENGTH_SHORT).show();
                     }
 
                     @Override
@@ -89,7 +89,7 @@ public class UsersHealthInfoViewModel extends AndroidViewModel {
 
                     @Override
                     public void onComplete() {
-                        Toast.makeText(context, "delete", Toast.LENGTH_SHORT).show();
+//                        Toast.makeText(context, "delete", Toast.LENGTH_SHORT).show();
                     }
 
                     @Override
@@ -111,7 +111,7 @@ public class UsersHealthInfoViewModel extends AndroidViewModel {
 
                     @Override
                     public void onComplete() {
-                        Toast.makeText(context, "deleteAllUsersHealth", Toast.LENGTH_SHORT).show();
+//                        Toast.makeText(context, "deleteAllUsersHealth", Toast.LENGTH_SHORT).show();
                     }
 
                     @Override
@@ -191,7 +191,7 @@ public class UsersHealthInfoViewModel extends AndroidViewModel {
 
                     @Override
                     public void onComplete() {
-                        Toast.makeText(context, "deleted", Toast.LENGTH_SHORT).show();
+//                        Toast.makeText(context, "deleted", Toast.LENGTH_SHORT).show();
                     }
 
                     @Override
@@ -213,7 +213,7 @@ public class UsersHealthInfoViewModel extends AndroidViewModel {
 
                     @Override
                     public void onComplete() {
-                        Toast.makeText(context, "Success Update Calories", Toast.LENGTH_SHORT).show();
+//                        Toast.makeText(context, "Success Update Calories", Toast.LENGTH_SHORT).show();
                     }
 
                     @Override

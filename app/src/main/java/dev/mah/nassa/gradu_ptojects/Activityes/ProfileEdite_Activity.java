@@ -101,10 +101,6 @@ public class ProfileEdite_Activity extends AppCompatActivity implements AdapterV
                 // validating the text fields if empty or not.
                 if (TextUtils.isEmpty(binding.profileEditTvName.getText())) {
                     binding.profileEditTvName.setError("ارجاء ادخال الأسم");
-                } else if (TextUtils.isEmpty(binding.profileEditTvPhone.getText())) {
-                    binding.profileEditTvPhone.setError("ارجاء ادخال رقم الهاتف");
-                } else if (TextUtils.isEmpty(binding.profileEditTvEmail.getText())) {
-                    binding.profileEditTvEmail.setError("ارجاء ادخال حسابك جيميل");
                 } else if (TextUtils.isEmpty(binding.profileEditTvWeight.getText())) {
                     binding.profileEditTvWeight.setError("ارجاء ادخال وزنك");
                 } else if (TextUtils.isEmpty(binding.profileEditTvHeight.getText())) {

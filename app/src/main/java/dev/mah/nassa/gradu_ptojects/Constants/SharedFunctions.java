@@ -63,9 +63,11 @@ public class SharedFunctions {
 
     public static CountDownTimer countDownTimer;
     static Dialog dialog;
-    static int counter=0;
-    static int totalCalories;
+    static double counter=0;
+    static double totalCalories;
     public static My_Meal_MVVM my_meal_mvvm;
+    public static boolean isClickedIncreaseORDecrease = false;
+    public  static double caloriesPerOneGram;
     // ميثود التحقق من البيانات في واجهة مستخدم جديد
     public static boolean checkEnterdDataInSignUp(EditText editName, EditText editPhone, EditText editPass, CheckBox checkBox, Context context) {
         boolean check = true;
@@ -253,8 +255,8 @@ public class SharedFunctions {
     public static void caloriesDecrease(TextView caloriesView) {
         String caloriesNum = caloriesView.getText().toString();
         int calories = Integer.parseInt(caloriesNum);
-        if (calories == 0) {
-            caloriesView.setText("0");
+        if (calories == 5) {
+            caloriesView.setText("5");
         } else {
             caloriesView.setText((calories -= 5) + "");
         }
@@ -279,9 +281,9 @@ public class SharedFunctions {
         int hourse = Integer.parseInt(hourseTv.getText().toString());
         int minutes = Integer.parseInt(minutesTv.getText().toString());
 
-        if (hourse == 0 && minutes == 0) {
+        if (hourse == 0 && minutes == 5) {
             hourseTv.setText("0");
-            minutesTv.setText("00");
+            minutesTv.setText("5");
         } else if (minutes == 0 && hourse != 0) {
             hourseTv.setText("0" + (hourse -= 1));
             minutesTv.setText("60");
@@ -427,6 +429,7 @@ public class SharedFunctions {
                         ,weight.getText().toString());
                 FireStore_DataBase.insertMeal(mealList , view.getContext());
                 my_meal_mvvm.insertMy_Meal_List(mealList);
+                dialog.dismiss();
                 context.startActivity(new Intent(view.getContext(), MyMealList_Activity.class));
             }
         });
@@ -435,11 +438,18 @@ public class SharedFunctions {
         plus.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                counter = Integer.parseInt(weight.getText().toString());
+                counter = Double.parseDouble(weight.getText().toString());
+
+                if(isClickedIncreaseORDecrease ==false){
+                    caloriesPerOneGram = Double.parseDouble(foodCategory.getCaloriesMeal())/counter;
+                    isClickedIncreaseORDecrease = true;
+                }
+
                 counter+=5;
 
-                totalCalories = (counter*Integer.parseInt(foodCategory.getCaloriesMeal()));
-                caloriesMeal.setText(totalCalories+"");
+                totalCalories = counter*caloriesPerOneGram;
+
+                caloriesMeal.setText(String.format("%.2f" , totalCalories)+"");
                 weight.setText(counter+"");
             }
         });
@@ -449,11 +459,11 @@ public class SharedFunctions {
             @SuppressLint("SuspiciousIndentation")
             @Override
             public void onClick(View v) {
-                counter = Integer.parseInt(weight.getText().toString());
+                counter = Double.parseDouble(weight.getText().toString());
                 if (counter>=6){
                     counter-=5;
-                    totalCalories = (counter*Integer.parseInt(foodCategory.getCaloriesMeal()));
-                    caloriesMeal.setText(totalCalories+"");
+                    totalCalories = counter*caloriesPerOneGram;
+                    caloriesMeal.setText(String.format("%.2f" , totalCalories)+"");
                     weight.setText(counter+"");
                 }
             }
