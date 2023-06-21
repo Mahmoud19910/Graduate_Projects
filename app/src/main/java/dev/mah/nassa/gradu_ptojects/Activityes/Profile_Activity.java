@@ -61,6 +61,7 @@ public class Profile_Activity extends AppCompatActivity {
                    //ProgressBar اخفاء ال
                    binding.profileIdProgressBar.setVisibility(View.GONE);
 
+
                    usersInfo = (UsersInfo) o;
                    if(usersInfo.getPhoto()==null || usersInfo.getPhoto().isEmpty()){
                        binding.profileIvImage.setImageDrawable(getDrawable(R.drawable.user));

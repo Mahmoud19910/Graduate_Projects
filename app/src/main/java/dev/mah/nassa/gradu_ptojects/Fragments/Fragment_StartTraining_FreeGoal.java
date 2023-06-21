@@ -157,8 +157,7 @@ public class Fragment_StartTraining_FreeGoal extends Fragment implements View.On
             caloriesBurned = (Double.parseDouble(weight) * Double.parseDouble(sports_exercises.getMetValue()) * timer.getTimeByHours());
             binding.caloriesCountFreeGoal.setText(String.format("%.2f" , caloriesBurned) + "");
         }else {
-            Toast.makeText(getContext(), sports_exercises.getMetValue()+"  getMetValue()", Toast.LENGTH_SHORT).show();
-            Toast.makeText(getContext(), weight+"  weight", Toast.LENGTH_SHORT).show();
+
         }
     }
 }

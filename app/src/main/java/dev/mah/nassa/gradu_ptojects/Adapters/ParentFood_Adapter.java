@@ -10,6 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 import androidx.annotation.NonNull;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -51,6 +52,11 @@ public class ParentFood_Adapter extends RecyclerView.Adapter<ParentFood_Adapter.
 
         ArrayList<FoodCategory> horizontalFoodList = new ArrayList<>();
 
+        if(position == ss.size()-1){
+            ViewGroup.MarginLayoutParams layoutParams = (ViewGroup.MarginLayoutParams) holder.constraintLayout.getLayoutParams();
+            layoutParams.bottomMargin = 130; // Change the bottom margin value as desired
+            holder.constraintLayout.setLayoutParams(layoutParams);
+        }
 
         if(ss != null ){
             if (position < ss.size()) {
@@ -101,12 +107,14 @@ public class ParentFood_Adapter extends RecyclerView.Adapter<ParentFood_Adapter.
     public static class MyViewHolder extends RecyclerView.ViewHolder {
         public TextView foodName;
         public RecyclerView childRecyclerView;
+        public ConstraintLayout constraintLayout;
 
         public MyViewHolder(View itemView) {
             super(itemView);
 
             foodName = itemView.findViewById(R.id.parint_foood_name);
             childRecyclerView = itemView.findViewById(R.id.Child_RV);
+            constraintLayout = itemView.findViewById(R.id.constraintLayout);
         }
     }
 

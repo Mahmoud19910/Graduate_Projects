@@ -8,6 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.widget.LinearLayoutCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
@@ -41,6 +42,13 @@ public class Exercices_Adapter extends RecyclerView.Adapter<Exercices_ViewHolder
 
     @Override
     public void onBindViewHolder(@NonNull Exercices_ViewHolder holder, int position) {
+
+        if(position == arrayList.size()-1){
+            ViewGroup.MarginLayoutParams layoutParams = (ViewGroup.MarginLayoutParams) holder.linearLayoutCompat.getLayoutParams();
+            layoutParams.bottomMargin = 130; // Change the bottom margin value as desired
+            holder.linearLayoutCompat.setLayoutParams(layoutParams);
+        }
+
         holder.nameTraining.setText(arrayList.get(position).getName());
         Glide.with(context)
                         .load(arrayList.get(position).getImageUrl())
@@ -55,6 +63,8 @@ public class Exercices_Adapter extends RecyclerView.Adapter<Exercices_ViewHolder
 
             }
         });
+
+
 
     }
 

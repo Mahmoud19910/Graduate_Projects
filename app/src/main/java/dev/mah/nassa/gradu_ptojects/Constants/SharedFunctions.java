@@ -237,6 +237,7 @@ public class SharedFunctions {
                 intent.putExtra("value", value);
                 intent.putExtra("uid", uid);
                 context.startActivity(intent);
+                ((Activity)context).finish();
 
                 // start to a new activivty
             }

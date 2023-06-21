@@ -30,6 +30,9 @@ import com.github.anastr.speedviewlib.ProgressiveGauge;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.firestore.auth.User;
 
+import java.text.DecimalFormat;
+import java.text.NumberFormat;
+import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
@@ -148,7 +151,7 @@ public class Home_Fragment extends Fragment implements View.OnClickListener {
                 int timer = (int) (millisUntilFinished / 1000);
 
                 switch (timer){
-                    case 998:
+                    case 996:
                         binding.progress.setVisibility(View.INVISIBLE);
 
                         binding.caloeiLayout.setVisibility(View.VISIBLE);
@@ -238,8 +241,13 @@ public class Home_Fragment extends Fragment implements View.OnClickListener {
                 for(My_Meal_List mealList : my_meal_lists){
 
                     if(!mealList.getCaloriesMeal().isEmpty() || mealList.getCaloriesMeal()!=null){
-                        double cal = Double.parseDouble(mealList.getCaloriesMeal());
-                        totalCaloEarend+=cal;
+                        NumberFormat numberFormat = DecimalFormat.getInstance(Locale.ENGLISH); // Use English locale to parse decimal numbers
+                        try {
+                            double cal = numberFormat.parse(mealList.getCaloriesMeal()).doubleValue();
+                            totalCaloEarend += cal;
+                        } catch (ParseException e) {
+                            // Handle the ParseException, e.g., log an error or show an error message
+                        }
                     }
                 }
 

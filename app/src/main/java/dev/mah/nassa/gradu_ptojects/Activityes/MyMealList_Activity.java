@@ -17,8 +17,12 @@ import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnSuccessListener;
 
+import java.text.DecimalFormat;
+import java.text.NumberFormat;
+import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 import dev.mah.nassa.gradu_ptojects.Adapters.MyMealList_Adapter;
 import dev.mah.nassa.gradu_ptojects.Constants.SharedFunctions;
@@ -78,8 +82,15 @@ public class MyMealList_Activity extends AppCompatActivity {
                 //جمع عدد سعرات
                 sum = 0;
                 for (int i = 0 ; i<listCountCalories.size() ; i++){
-                    double s = Double.parseDouble(listCountCalories.get(i).getCaloriesMeal());
-                    sum+=s;
+
+                    try {
+                        NumberFormat numberFormat = DecimalFormat.getInstance(Locale.ENGLISH); // Use English locale to parse decimal numbers
+                        double s = numberFormat.parse(listCountCalories.get(i).getCaloriesMeal()).doubleValue();
+                        sum+=s;
+                    } catch (ParseException e) {
+                        // Handle the ParseException, e.g., log an error or show an error message
+                    }
+
                 }
                 binding.myMealListTvSalary.setText("إجمالي السعرات الحرارية "+sum+" سعرة");
             }

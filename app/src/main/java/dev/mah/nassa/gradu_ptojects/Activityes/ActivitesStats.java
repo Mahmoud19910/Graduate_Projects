@@ -55,6 +55,20 @@ public class ActivitesStats extends AppCompatActivity {
                 exerciseDetails_adapter.getFilter().filter(newText);
                 return true;
             }
+
+        });
+        binding.search.setOnSearchClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                binding.titleStartTraining.setVisibility(View.INVISIBLE);
+            }
+        });
+        binding.search.setOnCloseListener(new SearchView.OnCloseListener() {
+            @Override
+            public boolean onClose() {
+                binding.titleStartTraining.setVisibility(View.VISIBLE);
+                return false;
+            }
         });
 
         boolean isConnected = SharedFunctions.checkInternetConnection(ActivitesStats.this);

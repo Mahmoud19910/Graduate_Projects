@@ -10,6 +10,8 @@ import android.widget.Toast;
 import com.google.android.gms.tasks.OnSuccessListener;
 
 import java.text.DecimalFormat;
+import java.text.DecimalFormatSymbols;
+import java.util.Locale;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -120,14 +122,14 @@ public class StopwatchTimer {
 
     public double getTimeByHours(){
         double hours = time / 3600.0;
-        DecimalFormat decimalFormat = new DecimalFormat("#.##");
-        return  Double.parseDouble(decimalFormat.format(hours));
+        DecimalFormat decimalFormat = new DecimalFormat("#.##", new DecimalFormatSymbols(Locale.ENGLISH));
+        return Double.parseDouble(decimalFormat.format(hours));
 
     }
 
     public double getTimeByMinutes(){
         double min = time / 60.0;
-        DecimalFormat decimalFormat = new DecimalFormat("#.##");
+        DecimalFormat decimalFormat = new DecimalFormat("#.##" , new DecimalFormatSymbols(Locale.ENGLISH));
         return  Double.parseDouble(decimalFormat.format(min));
 
     }

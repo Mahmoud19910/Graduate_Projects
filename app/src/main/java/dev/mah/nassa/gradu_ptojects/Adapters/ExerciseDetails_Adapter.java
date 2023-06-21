@@ -148,7 +148,7 @@ public class ExerciseDetails_Adapter extends RecyclerView.Adapter<ExerciseDetail
                                         public void onChanged(String s) {
                                             // when text change
                                             // set text on action mode title
-                                            mode.setTitle(String.format("%s Selected",s));
+                                            mode.setTitle(String.format(s,"%s تم تحديد"));
 
                                         }
                                     });

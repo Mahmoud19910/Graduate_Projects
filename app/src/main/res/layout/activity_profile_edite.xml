@@ -239,7 +239,7 @@
                         android:layout_marginStart="@dimen/_10sdp"
                         android:layout_marginTop="@dimen/_15sdp"
                         android:layout_marginEnd="@dimen/_10sdp"
-                        android:background="@color/grey"
+                        android:background="@drawable/background_spinner"
                         android:textStyle="bold"
                         tools:ignore="TouchTargetSizeCheck,SpeakableTextPresentCheck" />.
 

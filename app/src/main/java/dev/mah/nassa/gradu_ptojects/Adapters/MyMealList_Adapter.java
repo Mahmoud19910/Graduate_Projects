@@ -151,7 +151,7 @@ public class MyMealList_Adapter extends RecyclerView.Adapter<MyMealList_Adapter.
                                         public void onChanged(String s) {
                                             // when text change
                                             // set text on action mode title
-                                            mode.setTitle(String.format("%s Selected",s));
+                                            mode.setTitle(String.format(s,"%s تم تحديد"));
 
                                         }
                                     });
