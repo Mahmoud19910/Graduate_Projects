@@ -33,13 +33,21 @@ public class RealTime_MVVM extends AndroidViewModel {
 
 
     public MutableLiveData<Doctor> getDoctors( Fragment fragment){
-        RealTime_DataBase.getAllDoctorsFromRealTime(context,  new OnSuccessListener() {
+        Thread thread = new Thread(new Runnable() {
             @Override
-            public void onSuccess(Object o) {
-              Doctor  doctor = (Doctor) o;
-              doctorMutableData.setValue(doctor);
+            public void run() {
+                RealTime_DataBase.getAllDoctorsFromRealTime(context,  new OnSuccessListener() {
+                    @Override
+                    public void onSuccess(Object o) {
+                        Doctor  doctor = (Doctor) o;
+                        doctorMutableData.setValue(doctor);
+                    }
+                });
             }
         });
+
+        thread.start();
+
         return doctorMutableData;
     }
 

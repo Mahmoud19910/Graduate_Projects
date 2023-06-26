@@ -30,6 +30,8 @@ import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
+
+import dev.mah.nassa.gradu_ptojects.Constants.LanguageUtils;
 import dev.mah.nassa.gradu_ptojects.DataBase.FireStore_DataBase;
 import dev.mah.nassa.gradu_ptojects.MVVM.My_Meal_MVVM;
 import dev.mah.nassa.gradu_ptojects.Modles.My_Meal_List;
@@ -78,6 +80,9 @@ public class MyMealList_Adapter extends RecyclerView.Adapter<MyMealList_Adapter.
 
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder holder, @SuppressLint("RecyclerView") int position) {
+
+        LanguageUtils.changeLanguage(context , "en");
+
         My_Meal_List meal = list.get(position);
         holder.mealName.setText(meal.getNameMeal());
         holder.mealCalories.setText(meal.getCaloriesMeal());
@@ -260,8 +265,8 @@ public class MyMealList_Adapter extends RecyclerView.Adapter<MyMealList_Adapter.
                 {
                     // when action mode is not enable
                     // display toast
-                    Toast.makeText(activity,"You Clicked"+list.get(holder.getAdapterPosition()),
-                            Toast.LENGTH_SHORT).show();
+//                    Toast.makeText(activity,"You Clicked"+list.get(holder.getAdapterPosition()),
+//                            Toast.LENGTH_SHORT).show();
                 }
             }
         });

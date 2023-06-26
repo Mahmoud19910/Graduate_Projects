@@ -14,6 +14,7 @@ import java.util.ArrayList;
 
 import dev.mah.nassa.gradu_ptojects.Adapters.FoodSection_Adapter;
 import dev.mah.nassa.gradu_ptojects.Adapters.ParentFood_Adapter;
+import dev.mah.nassa.gradu_ptojects.Constants.LanguageUtils;
 import dev.mah.nassa.gradu_ptojects.Modles.FoodCategory;
 import dev.mah.nassa.gradu_ptojects.databinding.ActivityFoodSectionBinding;
 
@@ -26,6 +27,10 @@ public class FoodSection_Activity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         binding = ActivityFoodSectionBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
+
+        LanguageUtils.changeLanguage(FoodSection_Activity.this , "en");
+
+
         Intent intent = getIntent();
         ArrayList<FoodCategory> arrayList =(ArrayList<FoodCategory>) intent.getSerializableExtra("food");
 

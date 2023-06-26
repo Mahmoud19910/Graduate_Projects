@@ -181,21 +181,21 @@ public class SignIn_Activity extends AppCompatActivity implements View.OnClickLi
             photo="";
         }
 
-        //لارسال الاشعارات و تخزينها في قاعدة البيانات Token جلب
-        CloudMessaging.getToken(SignIn_Activity.this, new OnSuccessListener() {
-            @Override
-            public void onSuccess(Object o) {
-               if(photo!=null){
-                   // حفظ في المستخدم ريال تايم
-                   Users_Chat usersChat = new Users_Chat(id , name , photo , "" , true , o.toString());
-                   RealTime_DataBase.addUsersToRealTime(SignIn_Activity.this , id , usersChat );
-               }else {
-                   // حفظ في المستخدم ريال تايم
-                   Users_Chat usersChat = new Users_Chat(id , name , photo , "" , true , o.toString());
-                   RealTime_DataBase.addUsersToRealTime(SignIn_Activity.this , id , usersChat );
-               }
-            }
-        });
+//        //لارسال الاشعارات و تخزينها في قاعدة البيانات Token جلب
+//        CloudMessaging.getToken(SignIn_Activity.this, new OnSuccessListener() {
+//            @Override
+//            public void onSuccess(Object o) {
+//               if(photo!=null){
+//                   // حفظ في المستخدم ريال تايم
+//                   Users_Chat usersChat = new Users_Chat(id , name , photo , "" , true , o.toString());
+//                   RealTime_DataBase.addUsersToRealTime(SignIn_Activity.this , id , usersChat );
+//               }else {
+//                   // حفظ في المستخدم ريال تايم
+//                   Users_Chat usersChat = new Users_Chat(id , name , photo , "" , true , o.toString());
+//                   RealTime_DataBase.addUsersToRealTime(SignIn_Activity.this , id , usersChat );
+//               }
+//            }
+//        });
 
 
         FireStore_DataBase.getAllUsersInfo(new OnSuccessListener<ArrayList<UsersInfo>>() {

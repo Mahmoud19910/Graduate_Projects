@@ -2,6 +2,7 @@ package dev.mah.nassa.gradu_ptojects.MVVM;
 
 import android.app.Application;
 import android.content.Context;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
@@ -11,9 +12,11 @@ import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QuerySnapshot;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import dev.mah.nassa.gradu_ptojects.DataBase.FireStore_DataBase;
+import dev.mah.nassa.gradu_ptojects.Modles.FoodCategory;
 import dev.mah.nassa.gradu_ptojects.Modles.My_Meal_List;
 import dev.mah.nassa.gradu_ptojects.Modles.Sports_Exercises;
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
@@ -60,6 +63,9 @@ public class FireStore_MVVM extends AndroidViewModel {
                     }
                 });
     }
+
+
+
 
 
 

@@ -1,5 +1,7 @@
 package dev.mah.nassa.gradu_ptojects.Fragments;
 
+import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.activity.OnBackPressedCallback;
@@ -21,6 +23,7 @@ import java.util.List;
 import java.util.Random;
 import java.util.UUID;
 
+import dev.mah.nassa.gradu_ptojects.Activityes.ActivitesStats;
 import dev.mah.nassa.gradu_ptojects.Constants.CustomDialog;
 import dev.mah.nassa.gradu_ptojects.Constants.LanguageUtils;
 import dev.mah.nassa.gradu_ptojects.Constants.PersonActivityArray;
@@ -179,6 +182,16 @@ public class Fragment_StartTraining_CaloriesGoal extends Fragment implements Vie
 
             CustomDialog dialog = new CustomDialog(getContext() , time , String.format("%.2f", caloriesBurned));
             dialog.show();
+            // اغلاق الdialog عند الضغط على الزر
+            dialog.layout.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    getActivity().startActivity(new Intent(getContext() , ActivitesStats.class));
+                    dialog.dismiss();
+                    getActivity().finish();
+
+                }
+            });
 
 
         }

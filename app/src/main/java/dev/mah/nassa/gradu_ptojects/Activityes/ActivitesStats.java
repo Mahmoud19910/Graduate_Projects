@@ -17,8 +17,11 @@ import android.widget.Toast;
 import com.google.android.gms.tasks.OnSuccessListener;
 
 import java.util.List;
+import java.util.concurrent.Executor;
+import java.util.concurrent.Executors;
 
 import dev.mah.nassa.gradu_ptojects.Adapters.ExerciseDetails_Adapter;
+import dev.mah.nassa.gradu_ptojects.Constants.LanguageUtils;
 import dev.mah.nassa.gradu_ptojects.Constants.SharedFunctions;
 import dev.mah.nassa.gradu_ptojects.DataBase.FireStore_DataBase;
 import dev.mah.nassa.gradu_ptojects.MVVM.ExersiseDetails_MVVM;
@@ -40,6 +43,8 @@ public class ActivitesStats extends AppCompatActivity {
         binding = ActivityActivitesStatsBinding.inflate(getLayoutInflater());
         View view = binding.getRoot();
         setContentView(view);
+
+        LanguageUtils.changeLanguage(ActivitesStats.this , "en");
 
         recyclerViewDetails = binding.recyclerDetails;
         exersiseDetails_mvvm = ViewModelProviders.of(ActivitesStats.this).get(ExersiseDetails_MVVM.class);
@@ -75,20 +80,28 @@ public class ActivitesStats extends AppCompatActivity {
 
         if(isConnected){
 
-            FireStore_DataBase.getAllExerciseDetails_Lists(new OnSuccessListener() {
+            Executor executor  = Executors.newSingleThreadExecutor();
+            executor.execute(new Runnable() {
                 @Override
-                public void onSuccess(Object o) {
-                    List<Exercise_Details> detailsList = (List<Exercise_Details>) o;
+                public void run() {
+                    FireStore_DataBase.getAllExerciseDetails_Lists(loadUid() , new OnSuccessListener() {
+                        @Override
+                        public void onSuccess(Object o) {
+                            List<Exercise_Details> detailsList = (List<Exercise_Details>) o;
 
-                    exerciseDetails_adapter = new ExerciseDetails_Adapter(R.layout.exercise_details_item_design , detailsList , ActivitesStats.this , binding.linearAppBar );
-                    LinearLayoutManager layoutManager = new LinearLayoutManager(ActivitesStats.this);
-                    layoutManager.setReverseLayout(true);
-                    layoutManager.setStackFromEnd(true);
-                    layoutManager.setOrientation(RecyclerView.VERTICAL);
-                    recyclerViewDetails.setLayoutManager(layoutManager);
-                    recyclerViewDetails.setAdapter(exerciseDetails_adapter);
+                            exerciseDetails_adapter = new ExerciseDetails_Adapter(R.layout.exercise_details_item_design , detailsList , ActivitesStats.this , binding.linearAppBar );
+                            LinearLayoutManager layoutManager = new LinearLayoutManager(ActivitesStats.this);
+                            layoutManager.setReverseLayout(true);
+                            layoutManager.setStackFromEnd(true);
+                            layoutManager.setOrientation(RecyclerView.VERTICAL);
+                            recyclerViewDetails.setLayoutManager(layoutManager);
+                            recyclerViewDetails.setAdapter(exerciseDetails_adapter);
+                        }
+                    });
                 }
             });
+
+
         }else {
             exersiseDetails_mvvm.getAllExersiseDetails().observe(this, new Observer<List<Exercise_Details>>() {
                 @Override

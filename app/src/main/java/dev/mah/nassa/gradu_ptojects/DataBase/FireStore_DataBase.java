@@ -369,7 +369,7 @@ public class FireStore_DataBase {
     }
 
 
-    public static void getAllExerciseDetails_Lists(OnSuccessListener onSuccessListener){
+    public static void getAllExerciseDetails_Lists(String uid , OnSuccessListener onSuccessListener){
         firestore.collection("ExerciseDetails").get().addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
             @Override
             public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
@@ -378,7 +378,9 @@ public class FireStore_DataBase {
                 List<Exercise_Details> details = new ArrayList<>();
                     for(DocumentSnapshot documentSnapshot: snapshotList){
                         Exercise_Details exercise_details = documentSnapshot.toObject(Exercise_Details.class);
-                        details.add(exercise_details);
+                        if(exercise_details.getUid().equals(uid)){
+                            details.add(exercise_details);
+                        }
                     }
                 onSuccessListener.onSuccess(details);
 

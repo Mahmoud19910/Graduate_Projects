@@ -22,6 +22,7 @@ import dev.mah.nassa.gradu_ptojects.R;
 
 public class CustomDialog extends Dialog {
     Context context;
+    public LinearLayout  layout;
     String time , caloriesBurned;
     public CustomDialog(Context context , String time , String caloriesBurned ) {
         super(context);
@@ -35,24 +36,13 @@ public class CustomDialog extends Dialog {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.goal_dialog);
 
-        LinearLayout  layout =  findViewById(R.id.details);
+          layout =  findViewById(R.id.details);
         ImageView imageView = findViewById(R.id.imageTraining);
 
         Glide.with(context)
                 .load("https://i.gifer.com/7LDn.gif")
                 .into(imageView);
 
-
-       layout.setOnClickListener(new View.OnClickListener() {
-           @Override
-           public void onClick(View v) {
-               Toast.makeText(context, "Navigate To Details Activity", Toast.LENGTH_SHORT).show();
-               ((Activity)context).startActivity(new Intent(context , ActivitesStats.class));
-               ((Activity)context).finish();
-
-
-           }
-       });
        TextView caloriTv = findViewById(R.id.caloriBurnd);
        caloriTv.setText(caloriesBurned+"سعرة");
         TextView achivmentTime = findViewById(R.id.achivmentTime);
@@ -62,5 +52,6 @@ public class CustomDialog extends Dialog {
         params.width = WindowManager.LayoutParams.MATCH_PARENT;
         params.height = WindowManager.LayoutParams.WRAP_CONTENT;
         getWindow().setAttributes(params);
+
     }
 }

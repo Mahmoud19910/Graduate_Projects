@@ -20,6 +20,7 @@ import java.util.Locale;
 import java.util.Timer;
 import java.util.TimerTask;
 
+import dev.mah.nassa.gradu_ptojects.Constants.CheckRoomIsEmpty;
 import dev.mah.nassa.gradu_ptojects.FireBase_Authentication.Gmai_Auth;
 import dev.mah.nassa.gradu_ptojects.R;
 
@@ -31,8 +32,10 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
         LinearLayout linearLayout = findViewById(R.id.parentLayout);
         ImageView imageView = findViewById(R.id.mainLogog);
+
 
         imageView.setVisibility(View.INVISIBLE);
         imageView.setVisibility(View.VISIBLE);

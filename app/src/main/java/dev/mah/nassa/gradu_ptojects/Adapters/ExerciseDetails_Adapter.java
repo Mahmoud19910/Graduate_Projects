@@ -30,6 +30,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import java.util.ArrayList;
 import java.util.List;
 
+import dev.mah.nassa.gradu_ptojects.Constants.LanguageUtils;
 import dev.mah.nassa.gradu_ptojects.DataBase.FireStore_DataBase;
 import dev.mah.nassa.gradu_ptojects.MVVM.ExersiseDetails_MVVM;
 import dev.mah.nassa.gradu_ptojects.MVVM.My_Meal_MVVM;
@@ -43,31 +44,31 @@ public class ExerciseDetails_Adapter extends RecyclerView.Adapter<ExerciseDetail
     private int layout;
     private List<Exercise_Details> detailsList;
     private Context context;
-    private boolean dropDown=false;
+    private boolean dropDown = false;
     Activity activity;
     private LinearLayoutCompat linearAppBar;
     ExersiseDetails_MVVM mainViewModel;
-    boolean isEnable=false;
-    boolean isSelectAll=false;
-    ArrayList<Exercise_Details> selectList=new ArrayList<>();
+    boolean isEnable = false;
+    boolean isSelectAll = false;
+    ArrayList<Exercise_Details> selectList = new ArrayList<>();
     private List<Exercise_Details> copyMy_exercise_Details;
 
 
-    public ExerciseDetails_Adapter(int layout, List<Exercise_Details> detailsList, Context context , LinearLayoutCompat linearAppBar) {
+    public ExerciseDetails_Adapter(int layout, List<Exercise_Details> detailsList, Context context, LinearLayoutCompat linearAppBar) {
         this.layout = layout;
         this.detailsList = detailsList;
         this.context = context;
-        this.linearAppBar=linearAppBar;
+        this.linearAppBar = linearAppBar;
         copyMy_exercise_Details = detailsList;
     }
 
     @NonNull
     @Override
     public ExerciseDetails_ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-      View view =  LayoutInflater.from(context).inflate(layout , parent , false);
-      ExerciseDetails_ViewHolder exerciseDetails_viewHolder = new ExerciseDetails_ViewHolder(view);
+        View view = LayoutInflater.from(context).inflate(layout, parent, false);
+        ExerciseDetails_ViewHolder exerciseDetails_viewHolder = new ExerciseDetails_ViewHolder(view);
         // initialize view Model
-        mainViewModel= ViewModelProviders.of((FragmentActivity) context)
+        mainViewModel = ViewModelProviders.of((FragmentActivity) context)
                 .get(ExersiseDetails_MVVM.class);
         return exerciseDetails_viewHolder;
     }
@@ -75,60 +76,61 @@ public class ExerciseDetails_Adapter extends RecyclerView.Adapter<ExerciseDetail
     @Override
     public void onBindViewHolder(@NonNull ExerciseDetails_ViewHolder holder, int position) {
 
+        LanguageUtils.changeLanguage(context, "en");
 
-                holder.exerciseDuration.setText(detailsList.get(position).getExerciseDuration() + "ساعة");
-                holder.nameExercise.setText(detailsList.get(position).getExerciseName() );
-                holder.time.setText(detailsList.get(position).getExerciseTime() );
-                holder.dateTv.setText(detailsList.get(position).getDate() );
-                holder.date.setText(detailsList.get(position).getDate() );
-                holder.calories.setText(String.format("%.2f", Double.parseDouble(detailsList.get(position).getCaloriesBurned())) + "سعرة حرارية");
 
-                ViewGroup.LayoutParams layoutParams =  holder.tableLayout.getLayoutParams();
-                if((position+1) != detailsList.size()){
-                    layoutParams.height=0;
-                    holder.tableLayout.setLayoutParams(layoutParams);
+        holder.exerciseDuration.setText(detailsList.get(position).getExerciseDuration() + "ساعة");
+        holder.nameExercise.setText(detailsList.get(position).getExerciseName());
+        holder.time.setText(detailsList.get(position).getExerciseTime());
+        holder.dateTv.setText(detailsList.get(position).getDate());
+        holder.date.setText(detailsList.get(position).getDate());
+        holder.calories.setText(String.format("%.2f", Double.parseDouble(detailsList.get(position).getCaloriesBurned())) + "سعرة حرارية");
+
+        ViewGroup.LayoutParams layoutParams = holder.tableLayout.getLayoutParams();
+        if ((position + 1) != detailsList.size()) {
+            layoutParams.height = 0;
+            holder.tableLayout.setLayoutParams(layoutParams);
+            holder.iconDrop.setRotation(360);
+        } else {
+            layoutParams.height = -2;
+            holder.tableLayout.setLayoutParams(layoutParams);
+            holder.iconDrop.setRotation(270);
+        }
+
+        holder.iconDrop.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (dropDown == false) {
+                    layoutParams.height = 0;
                     holder.iconDrop.setRotation(360);
-                }else {
-                    layoutParams.height=-2;
                     holder.tableLayout.setLayoutParams(layoutParams);
+                    dropDown = true;
+                } else {
+                    dropDown = false;
+                    layoutParams.height = -2;
                     holder.iconDrop.setRotation(270);
+                    holder.tableLayout.setLayoutParams(layoutParams);
+
                 }
+            }
+        });
 
-                holder.iconDrop.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        if(dropDown==false){
-                            layoutParams.height=0;
-                            holder.iconDrop.setRotation(360);
-                            holder.tableLayout.setLayoutParams(layoutParams);
-                            dropDown=true;
-                        }else {
-                            dropDown=false;
-                            layoutParams.height=-2;
-                            holder.iconDrop.setRotation(270);
-                            holder.tableLayout.setLayoutParams(layoutParams);
-
-                        }
-                    }
-                });
-
-                //عند ضغط ضغطة مطولة
-                 holder.itemView.setOnLongClickListener(new View.OnLongClickListener() {
+        //عند ضغط ضغطة مطولة
+        holder.itemView.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
             public boolean onLongClick(View v) {
                 // check condition
-                if (!isEnable)
-                {
+                if (!isEnable) {
                     // when action mode is not enable
                     // initialize action mode
-                    ActionMode.Callback callback=new ActionMode.Callback() {
+                    ActionMode.Callback callback = new ActionMode.Callback() {
                         @Override
                         public boolean onCreateActionMode(ActionMode mode, Menu menu) {
                             linearAppBar.setVisibility(View.GONE);
                             // initialize menu inflater
-                            MenuInflater menuInflater= mode.getMenuInflater();
+                            MenuInflater menuInflater = mode.getMenuInflater();
                             // inflate menu
-                            menuInflater.inflate(R.menu.click_menu,menu);
+                            menuInflater.inflate(R.menu.click_menu, menu);
                             // return true
 
                             return true;
@@ -138,7 +140,7 @@ public class ExerciseDetails_Adapter extends RecyclerView.Adapter<ExerciseDetail
                         public boolean onPrepareActionMode(ActionMode mode, Menu menu) {
                             // when action mode is prepare
                             // set isEnable true
-                            isEnable=true;
+                            isEnable = true;
                             // create method
                             ClickItem(holder);
                             // set observer on getText method
@@ -148,7 +150,7 @@ public class ExerciseDetails_Adapter extends RecyclerView.Adapter<ExerciseDetail
                                         public void onChanged(String s) {
                                             // when text change
                                             // set text on action mode title
-                                            mode.setTitle(String.format(s,"%s تم تحديد"));
+                                            mode.setTitle(String.format(s, "%s تم تحديد"));
 
                                         }
                                     });
@@ -160,23 +162,20 @@ public class ExerciseDetails_Adapter extends RecyclerView.Adapter<ExerciseDetail
                         public boolean onActionItemClicked(ActionMode mode, MenuItem item) {
                             // when click on action mode item
                             // get item  id
-                            int id=item.getItemId();
+                            int id = item.getItemId();
                             // use switch condition
-                            switch(id)
-                            {
+                            switch (id) {
                                 case R.id.menu_delete:
                                     // when click on delete
                                     // use for loop
-                                    for(Exercise_Details s:selectList)
-                                    {
+                                    for (Exercise_Details s : selectList) {
                                         // remove selected item list
-                                        FireStore_DataBase.deleteExerciseDetails(context , s);
+                                        FireStore_DataBase.deleteExerciseDetails(context, s);
                                         mainViewModel.deletExerciseDetails(s);
                                         detailsList.remove(s);
                                     }
                                     // check condition
-                                    if(detailsList.size()==0)
-                                    {
+                                    if (detailsList.size() == 0) {
                                         // when array list is empty
                                         // visible text view
                                         //tvEmpty.setVisibility(View.VISIBLE);
@@ -188,26 +187,23 @@ public class ExerciseDetails_Adapter extends RecyclerView.Adapter<ExerciseDetail
                                 case R.id.menu_select_all:
                                     // when click on select all
                                     // check condition
-                                    if(selectList.size()==detailsList.size())
-                                    {
+                                    if (selectList.size() == detailsList.size()) {
                                         // when all item selected
                                         // set isselectall false
-                                        isSelectAll=false;
+                                        isSelectAll = false;
                                         // create select array list
                                         selectList.clear();
-                                    }
-                                    else
-                                    {
+                                    } else {
                                         // when  all item unselected
                                         // set isSelectALL true
-                                        isSelectAll=true;
+                                        isSelectAll = true;
                                         // clear select array list
                                         selectList.clear();
                                         // add value in select array list
                                         selectList.addAll(detailsList);
                                     }
                                     // set text on view model
-                                    mainViewModel.setTitle(String .valueOf(selectList.size()));
+                                    mainViewModel.setTitle(String.valueOf(selectList.size()));
                                     // notify adapter
                                     notifyDataSetChanged();
                                     break;
@@ -221,9 +217,9 @@ public class ExerciseDetails_Adapter extends RecyclerView.Adapter<ExerciseDetail
                             linearAppBar.setVisibility(View.VISIBLE);
                             // when action mode is destroy
                             // set isEnable false
-                            isEnable=false;
+                            isEnable = false;
                             // set isSelectAll false
-                            isSelectAll=false;
+                            isSelectAll = false;
                             // clear select array list
                             selectList.clear();
                             // notify adapter
@@ -232,9 +228,7 @@ public class ExerciseDetails_Adapter extends RecyclerView.Adapter<ExerciseDetail
                     };
                     // start action mode
                     ((AppCompatActivity) v.getContext()).startActionMode(callback);
-                }
-                else
-                {
+                } else {
                     // when action mode is already enable
                     // call method
                     ClickItem(holder);
@@ -243,18 +237,15 @@ public class ExerciseDetails_Adapter extends RecyclerView.Adapter<ExerciseDetail
                 return true;
             }
         });
-                 holder.itemView.setOnClickListener(new View.OnClickListener() {
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 // check condition
-                if(isEnable)
-                {
+                if (isEnable) {
                     // when action mode is enable
                     // call method
                     ClickItem(holder);
-                }
-                else
-                {
+                } else {
                     // when action mode is not enable
                     // display toast
 //                    Toast.makeText(activity,"You Clicked"+detailsList.get(holder.getAdapterPosition()),
@@ -262,31 +253,28 @@ public class ExerciseDetails_Adapter extends RecyclerView.Adapter<ExerciseDetail
                 }
             }
         });
-                 // check condition
-                 if(isSelectAll)
-                  {
-                      // when value selected
-                      // visible all check boc image
-                      holder.ivCheckBox.setVisibility(View.VISIBLE);
-                      //set background color
-                      holder.itemView.setBackgroundColor(Color.LTGRAY);
-                  }
-                   else
-                    {
-                        // when all value unselected
-                        // hide all check box image
-                        holder.ivCheckBox.setVisibility(View.GONE);
-                        // set background color
-                        holder.itemView.setBackgroundColor(Color.TRANSPARENT);
-                    }
+        // check condition
+        if (isSelectAll) {
+            // when value selected
+            // visible all check boc image
+            holder.ivCheckBox.setVisibility(View.VISIBLE);
+            //set background color
+            holder.itemView.setBackgroundColor(Color.LTGRAY);
+        } else {
+            // when all value unselected
+            // hide all check box image
+            holder.ivCheckBox.setVisibility(View.GONE);
+            // set background color
+            holder.itemView.setBackgroundColor(Color.TRANSPARENT);
+        }
     }
+
     private void ClickItem(ExerciseDetails_ViewHolder holder) {
 
         // get selected item value
-        Exercise_Details s=detailsList.get(holder.getAdapterPosition());
+        Exercise_Details s = detailsList.get(holder.getAdapterPosition());
         // check condition
-        if(holder.ivCheckBox.getVisibility()==View.GONE)
-        {
+        if (holder.ivCheckBox.getVisibility() == View.GONE) {
             // when item not selected
             // visible check box image
             holder.ivCheckBox.setVisibility(View.VISIBLE);
@@ -294,9 +282,7 @@ public class ExerciseDetails_Adapter extends RecyclerView.Adapter<ExerciseDetail
             holder.itemView.setBackgroundColor(Color.LTGRAY);
             // add value in select array list
             selectList.add(s);
-        }
-        else
-        {
+        } else {
             // when item selected
             // hide check box image
             holder.ivCheckBox.setVisibility(View.GONE);
@@ -314,27 +300,28 @@ public class ExerciseDetails_Adapter extends RecyclerView.Adapter<ExerciseDetail
     //ميثود البحث لعمل فلترة اثناء ستخدام البحث
     public Filter getFilter() {
 
-        Filter myFilter=new Filter() {
-            FilterResults fr=new FilterResults();
+        Filter myFilter = new Filter() {
+            FilterResults fr = new FilterResults();
+
             @Override
             protected FilterResults performFiltering(CharSequence charSequence) {
-                ArrayList<Exercise_Details> temp=new ArrayList<Exercise_Details>();
-                for(int i=0;i<copyMy_exercise_Details.size();i++){
-                    Exercise_Details c=copyMy_exercise_Details.get(i);
-                    String stno=c.getDate()+"";
-                    if(c.getExerciseName().toLowerCase().contains(charSequence.toString().toLowerCase()) || stno.contains(charSequence.toString()) ){
+                ArrayList<Exercise_Details> temp = new ArrayList<Exercise_Details>();
+                for (int i = 0; i < copyMy_exercise_Details.size(); i++) {
+                    Exercise_Details c = copyMy_exercise_Details.get(i);
+                    String stno = c.getDate() + "";
+                    if (c.getExerciseName().toLowerCase().contains(charSequence.toString().toLowerCase()) || stno.contains(charSequence.toString())) {
                         temp.add(c);
                     }
                 }
-                fr.values=temp;
-                fr.count=temp.size();
+                fr.values = temp;
+                fr.count = temp.size();
 
                 return fr;
             }
 
             @Override
             protected void publishResults(CharSequence charSequence, FilterResults fr) {
-                detailsList = (List<Exercise_Details>)fr.values;
+                detailsList = (List<Exercise_Details>) fr.values;
                 notifyDataSetChanged();
             }
         };

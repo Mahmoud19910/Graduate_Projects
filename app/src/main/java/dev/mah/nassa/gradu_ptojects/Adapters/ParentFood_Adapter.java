@@ -62,8 +62,8 @@ public class ParentFood_Adapter extends RecyclerView.Adapter<ParentFood_Adapter.
             if (position < ss.size()) {
 
                 holder.foodName.setText(ss.get(position));
-                YoYo.with(Techniques.FlipInX).duration(1000).playOn(holder.foodName);
-                YoYo.with(Techniques.FlipInX).duration(1000).playOn(holder.childRecyclerView);
+                YoYo.with(Techniques.ZoomIn).duration(1000).playOn(holder.foodName);
+                YoYo.with(Techniques.ZoomIn).duration(1000).playOn(holder.childRecyclerView);
 
                 for(FoodCategory foodCategory : foodCategoryArrayList){
 

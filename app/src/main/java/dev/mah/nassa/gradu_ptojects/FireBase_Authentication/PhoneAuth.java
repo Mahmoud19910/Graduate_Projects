@@ -54,7 +54,7 @@ public class PhoneAuth {
             public void onVerificationFailed(FirebaseException e) {
                 // Verification failed, show error message
                 System.out.println("Verify Error"+ e.getMessage());
-                Toast.makeText(context, "Verification failed: " + e.getMessage(), Toast.LENGTH_LONG).show();
+                Toast.makeText(context, "فشلت عملية التاكيد: " + e.getMessage(), Toast.LENGTH_LONG).show();
             }
 
             @Override
@@ -98,15 +98,6 @@ public class PhoneAuth {
                             intent.putExtra("phone",phone);
                             intent.putExtra("pass",pass);
                             intent.putExtra("uid",uid);
-
-                            CloudMessaging.getToken(context, new OnSuccessListener() {
-                                @Override
-                                public void onSuccess(Object o) {
-                                    Users_Chat usersChat  = new Users_Chat(uid , name , " " , phone , true , o.toString());
-                                    RealTime_DataBase.addUsersToRealTime(context , uid , usersChat);
-
-                                }
-                            });
 
                             context.startActivity(intent);
                             ((Activity) context).finish();

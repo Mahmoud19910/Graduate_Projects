@@ -50,6 +50,7 @@ public class CheckRoomIsEmpty {
     private SportExercise_MVVM sportExerciseMvvm;
     private FireStore_MVVM fireStore_mvvm;
 
+    private List<Sports_Exercises> listSportLocal;
 
     public CheckRoomIsEmpty(Context context) {
         this.context = context;
@@ -181,12 +182,19 @@ public class CheckRoomIsEmpty {
 
                 if (doctorList.isEmpty() || doctorList == null) {
 
-                    RealTime_DataBase.getAllDoctorsFromRealTime(context, new OnSuccessListener() {
+                    Thread thread = new Thread(new Runnable() {
                         @Override
-                        public void onSuccess(Object o) {
-                            doctors_mvvm.insertDoctors((Doctor) o);
+                        public void run() {
+                            RealTime_DataBase.getAllDoctorsFromRealTime(context, new OnSuccessListener() {
+                                @Override
+                                public void onSuccess(Object o) {
+                                    doctors_mvvm.insertDoctors((Doctor) o);
+                                }
+                            });
                         }
                     });
+                    thread.start();
+
 
                 }
             }
@@ -235,6 +243,9 @@ public class CheckRoomIsEmpty {
            }
        });
     }
+
+
+
 
 
 }

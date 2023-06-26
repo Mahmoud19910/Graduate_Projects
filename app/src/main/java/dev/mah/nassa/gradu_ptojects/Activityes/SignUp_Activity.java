@@ -172,21 +172,21 @@ public class SignUp_Activity extends AppCompatActivity implements View.OnClickLi
         }
 
 
-        //لارسال الاشعارات و تخزينها في قاعدة البيانات Token جلب
-        CloudMessaging.getToken(SignUp_Activity.this, new OnSuccessListener() {
-            @Override
-            public void onSuccess(Object o) {
-               if(photo!=null){
-                   // حفظ في المستخدم ريال تايم
-                   Users_Chat usersChat = new Users_Chat(id , name , photo , "" , true , o.toString());
-                   RealTime_DataBase.addUsersToRealTime(SignUp_Activity.this , id , usersChat );
-               } else {
-                   // حفظ في المستخدم ريال تايم
-                   Users_Chat usersChat = new Users_Chat(id , name , photo , "" , true , o.toString());
-                   RealTime_DataBase.addUsersToRealTime(SignUp_Activity.this , id , usersChat );
-               }
-            }
-        });
+//        //لارسال الاشعارات و تخزينها في قاعدة البيانات Token جلب
+//        CloudMessaging.getToken(SignUp_Activity.this, new OnSuccessListener() {
+//            @Override
+//            public void onSuccess(Object o) {
+//               if(photo!=null){
+//                   // حفظ في المستخدم ريال تايم
+//                   Users_Chat usersChat = new Users_Chat(id , name , photo , "" , true , o.toString());
+//                   RealTime_DataBase.addUsersToRealTime(SignUp_Activity.this , id , usersChat );
+//               } else {
+//                   // حفظ في المستخدم ريال تايم
+//                   Users_Chat usersChat = new Users_Chat(id , name , photo , "" , true , o.toString());
+//                   RealTime_DataBase.addUsersToRealTime(SignUp_Activity.this , id , usersChat );
+//               }
+//            }
+//        });
 
 
 
@@ -233,7 +233,7 @@ public class SignUp_Activity extends AppCompatActivity implements View.OnClickLi
             SharedPreferences sharedPreferences = getSharedPreferences("saveUid", Context.MODE_PRIVATE);
             SharedPreferences.Editor editor = sharedPreferences.edit();
             editor.putString("uid", uid);
-            Toast.makeText(this, "save", Toast.LENGTH_SHORT).show();
+//            Toast.makeText(this, "save", Toast.LENGTH_SHORT).show();
             editor.apply();
         }
 

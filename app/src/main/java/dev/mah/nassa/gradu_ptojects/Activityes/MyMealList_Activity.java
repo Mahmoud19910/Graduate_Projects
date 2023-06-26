@@ -23,6 +23,8 @@ import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
+import java.util.concurrent.Executor;
+import java.util.concurrent.Executors;
 
 import dev.mah.nassa.gradu_ptojects.Adapters.MyMealList_Adapter;
 import dev.mah.nassa.gradu_ptojects.Constants.SharedFunctions;
@@ -96,17 +98,25 @@ public class MyMealList_Activity extends AppCompatActivity {
             }
         });
        if(isConnect){
-
            //الحصول على البيانات من الفاير بيز
-           FireStore_DataBase.getAllData(getApplicationContext(), "MyMeal",loadUid(), new OnSuccessListener() {
+           Executor executor = Executors.newSingleThreadExecutor();
+           executor.execute(new Runnable() {
                @Override
-               public void onSuccess(Object o) {
+               public void run() {
 
-                   mealLists = (ArrayList<My_Meal_List>) o;
-                   showAdapterRev();
+                   FireStore_DataBase.getAllData(getApplicationContext(), "MyMeal",loadUid(), new OnSuccessListener() {
+                       @Override
+                       public void onSuccess(Object o) {
+
+                           mealLists = (ArrayList<My_Meal_List>) o;
+                           showAdapterRev();
+
+                       }
+                   });
 
                }
            });
+
        }else {
            my_meal_mvvm.getAllMy_Meal_List().observe(MyMealList_Activity.this, new Observer<List<My_Meal_List>>() {
                @Override

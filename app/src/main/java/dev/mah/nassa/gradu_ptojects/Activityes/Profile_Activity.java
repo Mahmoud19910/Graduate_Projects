@@ -20,6 +20,7 @@ import com.google.android.gms.tasks.OnSuccessListener;
 
 import java.util.ArrayList;
 
+import dev.mah.nassa.gradu_ptojects.Constants.LanguageUtils;
 import dev.mah.nassa.gradu_ptojects.Constants.PersonActivityArray;
 import dev.mah.nassa.gradu_ptojects.Constants.SharedFunctions;
 import dev.mah.nassa.gradu_ptojects.DataBase.FireStore_DataBase;
@@ -42,6 +43,9 @@ public class Profile_Activity extends AppCompatActivity {
         binding = ActivityProfileBinding.inflate(getLayoutInflater());
         usersViewModel = ViewModelProviders.of(this).get(UsersViewModel.class);
         setContentView(binding.getRoot());
+
+        LanguageUtils.changeLanguage(Profile_Activity.this , "en");
+
 
         //اظهار ال ProgressBar
         binding.profileIdProgressBar.setVisibility(View.VISIBLE);

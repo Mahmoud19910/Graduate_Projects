@@ -90,22 +90,30 @@ public class Doctors_Fragment extends Fragment {
                 }
             });
 
-            RealTime_DataBase.getAllDoctorsFromRealTime(getContext(), doctorsAdapter, new OnSuccessListener() {
+            Thread thread = new Thread(new Runnable() {
                 @Override
-                public void onSuccess(Object o) {
-                    Doctor doctor = (Doctor) o;
-                    doctorsAdapter.addDoctor(doctor);
+                public void run() {
+                    RealTime_DataBase.getAllDoctorsFromRealTime(getContext(), doctorsAdapter, new OnSuccessListener() {
+                        @Override
+                        public void onSuccess(Object o) {
+                            Doctor doctor = (Doctor) o;
+                            doctorsAdapter.addDoctor(doctor);
+                        }
+                    });
+
+
+                    RealTime_DataBase.getAllDoctorsFromRealTime(getContext(), doctorAdapter_horisintal, new OnSuccessListener() {
+                        @Override
+                        public void onSuccess(Object o) {
+                            Doctor doctor = (Doctor) o;
+                            doctorAdapter_horisintal.addDoctor(doctor);
+                        }
+                    });
                 }
             });
 
+            thread.start();
 
-            RealTime_DataBase.getAllDoctorsFromRealTime(getContext(), doctorAdapter_horisintal, new OnSuccessListener() {
-                @Override
-                public void onSuccess(Object o) {
-                    Doctor doctor = (Doctor) o;
-                    doctorAdapter_horisintal.addDoctor(doctor);
-                }
-            });
 
         }else {
 

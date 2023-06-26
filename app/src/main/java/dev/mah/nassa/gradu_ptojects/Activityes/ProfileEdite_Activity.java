@@ -31,6 +31,7 @@ import com.google.firebase.storage.UploadTask;
 import java.io.IOException;
 import java.util.UUID;
 
+import dev.mah.nassa.gradu_ptojects.Constants.LanguageUtils;
 import dev.mah.nassa.gradu_ptojects.Constants.PersonActivityArray;
 import dev.mah.nassa.gradu_ptojects.Constants.Vital_Equations;
 import dev.mah.nassa.gradu_ptojects.DataBase.FireStore_DataBase;
@@ -65,6 +66,8 @@ public class ProfileEdite_Activity extends AppCompatActivity implements AdapterV
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        LanguageUtils.changeLanguage(ProfileEdite_Activity.this , "en");
 
         usersViewModel = ViewModelProviders.of(ProfileEdite_Activity.this).get(UsersViewModel.class);
         usersHealthInfoViewModel = ViewModelProviders.of(ProfileEdite_Activity.this).get(UsersHealthInfoViewModel.class);

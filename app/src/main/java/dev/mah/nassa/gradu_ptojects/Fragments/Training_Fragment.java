@@ -70,20 +70,20 @@ public class Training_Fragment extends Fragment {
 
 
         boolean isConnect = SharedFunctions.checkInternetConnection(getContext());
-        if(isConnect){
-            fireStore_mvvm.getAllSportsExercises(new OnSuccessListener<List<Sports_Exercises>>() {
-                @Override
-                public void onSuccess(List<Sports_Exercises> sports_exercises) {
-                    binding.recyclerExercices.setVisibility(View.VISIBLE);
-                    binding.progress.setVisibility(View.INVISIBLE);
-                    Exercices_Adapter exercices_adapter  = new Exercices_Adapter(R.layout.exercices_item_design , getContext() , sports_exercises,uid);
-                    LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
-                    linearLayoutManager.setOrientation(linearLayoutManager.VERTICAL);
-                    binding.recyclerExercices.setLayoutManager(linearLayoutManager);
-                    binding.recyclerExercices.setAdapter(exercices_adapter);
-                }
-            });
-        }else {
+//        if(isConnect){
+//            fireStore_mvvm.getAllSportsExercises(new OnSuccessListener<List<Sports_Exercises>>() {
+//                @Override
+//                public void onSuccess(List<Sports_Exercises> sports_exercises) {
+//                    binding.recyclerExercices.setVisibility(View.VISIBLE);
+//                    binding.progress.setVisibility(View.INVISIBLE);
+//                    Exercices_Adapter exercices_adapter  = new Exercices_Adapter(R.layout.exercices_item_design , getContext() , sports_exercises,uid);
+//                    LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
+//                    linearLayoutManager.setOrientation(linearLayoutManager.VERTICAL);
+//                    binding.recyclerExercices.setLayoutManager(linearLayoutManager);
+//                    binding.recyclerExercices.setAdapter(exercices_adapter);
+//                }
+//            });
+//        }else {
             binding.recyclerExercices.setVisibility(View.VISIBLE);
             binding.progress.setVisibility(View.INVISIBLE);
 
@@ -97,7 +97,7 @@ public class Training_Fragment extends Fragment {
                     binding.recyclerExercices.setAdapter(exercices_adapter);
                 }
             });
-        }
+//        }
 
     }
 }

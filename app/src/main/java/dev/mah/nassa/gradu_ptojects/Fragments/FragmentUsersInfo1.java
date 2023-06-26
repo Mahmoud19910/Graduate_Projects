@@ -125,7 +125,6 @@ public class FragmentUsersInfo1 extends Fragment implements View.OnClickListener
                 checkGender = true;
                 break;
             case R.id.yes:
-                Toast.makeText(getContext(), binding.yes.getText().toString(), Toast.LENGTH_SHORT).show();
                 binding.timeDialogBt.setVisibility(View.VISIBLE);
                 binding.timeTextView.setVisibility(View.VISIBLE);
                 illness = binding.yes.getText().toString();
@@ -133,7 +132,6 @@ public class FragmentUsersInfo1 extends Fragment implements View.OnClickListener
 
                 break;
             case R.id.no:
-                Toast.makeText(getContext(), binding.no.getText().toString(), Toast.LENGTH_SHORT).show();
                 binding.timeDialogBt.setVisibility(View.GONE);
                 binding.timeTextView.setVisibility(View.GONE);
                 illness = binding.no.getText().toString();

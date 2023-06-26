@@ -39,9 +39,12 @@ import com.google.firebase.storage.UploadTask;
 
 import java.io.IOException;
 import java.util.UUID;
+import java.util.concurrent.Executor;
+import java.util.concurrent.Executors;
 
 import dev.mah.nassa.gradu_ptojects.Adapters.DoctorsAdapter;
 import dev.mah.nassa.gradu_ptojects.Adapters.MessageAdapter;
+import dev.mah.nassa.gradu_ptojects.Constants.LanguageUtils;
 import dev.mah.nassa.gradu_ptojects.Constants.SharedFunctions;
 import dev.mah.nassa.gradu_ptojects.DataBase.RealTime_DataBase;
 import dev.mah.nassa.gradu_ptojects.DataBase.Storage_Firebase;
@@ -87,6 +90,7 @@ public class Chat_Activity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         binding = ActivityChatBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
+        LanguageUtils.changeLanguage(Chat_Activity.this , "en");
 
 
         // فحص الاتصال بالانترنت
@@ -139,51 +143,65 @@ public class Chat_Activity extends AppCompatActivity {
         databaseReferenceReciver = FirebaseDatabase.getInstance().getReference("Chat Messages").child(reciverRoom);
 
 
-        // جلب الرسائل المرسلة و المستلمة
-        databaseReferenceSender.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                messageAdapter.clearAdapter();
-                for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
-                    messagesModles = dataSnapshot.getValue(MessagesModles.class);
-                    messageAdapter.addMessage(messagesModles);
-                    binding.chatrecycle.scrollToPosition(0);
+        // جلب الرسائل المرسلة و المستلمة في الخلفية
 
-                    // جلب رقم التعريف الخاص بالشخص الذي استلم الرسالة لمعرفة أنه متصل أم غير متصل
-                    if (doctor.getId().equals(messagesModles.getReciverId())) {
-                        saveReciverId(messagesModles.getReciverId());
+        Executor executor = Executors.newSingleThreadExecutor();
+        executor.execute(new Runnable() {
+            @Override
+            public void run() {
+                databaseReferenceSender.addValueEventListener(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+                        messageAdapter.clearAdapter();
+                        for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
+                            messagesModles = dataSnapshot.getValue(MessagesModles.class);
+                            messageAdapter.addMessage(messagesModles);
+                            binding.chatrecycle.scrollToPosition(0);
+
+                            // جلب رقم التعريف الخاص بالشخص الذي استلم الرسالة لمعرفة أنه متصل أم غير متصل
+                            if (doctor.getId().equals(messagesModles.getReciverId())) {
+                                saveReciverId(messagesModles.getReciverId());
+                            }
+
+                        }
                     }
 
-                }
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-                Toast.makeText(Chat_Activity.this, error.getMessage().toString(), Toast.LENGTH_SHORT).show();
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError error) {
+                        Toast.makeText(Chat_Activity.this, error.getMessage().toString(), Toast.LENGTH_SHORT).show();
+                    }
+                });
             }
         });
 
-        RealTime_DataBase.getAllDoctorsFromRealTime(this, new OnSuccessListener() {
+
+        Executor executor1 = Executors.newSingleThreadExecutor();
+        executor1.execute(new Runnable() {
             @Override
-            public void onSuccess(Object o) {
+            public void run() {
+                RealTime_DataBase.getAllDoctorsFromRealTime(Chat_Activity.this , new OnSuccessListener() {
+                    @Override
+                    public void onSuccess(Object o) {
 
-                Doctor doctors = (Doctor) o;
-                doctorId = doctors.getId();
+                        Doctor doctors = (Doctor) o;
+                        doctorId = doctors.getId();
 
-                // فحص أن المستخدم الذي في الدردرشة متصل أم لا
-                if (doctors.getId().equals(loadReciverId())) {
-                    if (doctors.isSesion()) {
-                        binding.block.setImageDrawable(getDrawable(R.drawable.online));
-                        binding.onlinetv.setText("متصل");
+                        // فحص أن المستخدم الذي في الدردرشة متصل أم لا
+                        if (doctors.getId().equals(loadReciverId())) {
+                            if (doctors.isSesion()) {
+                                binding.block.setImageDrawable(getDrawable(R.drawable.online));
+                                binding.onlinetv.setText("متصل");
 
-                    } else {
-                        binding.block.setImageDrawable(getDrawable(R.drawable.ofline));
-                        binding.onlinetv.setText("غير متصل");
+                            } else {
+                                binding.block.setImageDrawable(getDrawable(R.drawable.ofline));
+                                binding.onlinetv.setText("غير متصل");
+
+                            }
+                        }
+
 
                     }
-                }
-
-
+                });
             }
         });
 

@@ -11,6 +11,7 @@ import android.widget.Toast;
 
 import java.io.Serializable;
 
+import dev.mah.nassa.gradu_ptojects.Constants.LanguageUtils;
 import dev.mah.nassa.gradu_ptojects.Fragments.Fragment_CaloriesGoal;
 import dev.mah.nassa.gradu_ptojects.Fragments.Fragment_FreeGoal;
 import dev.mah.nassa.gradu_ptojects.Fragments.Fragment_TimeGoal;
@@ -31,6 +32,8 @@ public class Exercices_Activity extends AppCompatActivity implements View.OnClic
         super.onCreate(savedInstanceState);
         binding = ActivityExercicesBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
+
+        LanguageUtils.changeLanguage(Exercices_Activity.this , "en");
 
         Intent intent = getIntent();
        sports_exercises = (Sports_Exercises) intent.getSerializableExtra("obj");

@@ -17,6 +17,7 @@ import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.ArrayList;
 
+import dev.mah.nassa.gradu_ptojects.Constants.LanguageUtils;
 import dev.mah.nassa.gradu_ptojects.Constants.PersonActivityArray;
 import dev.mah.nassa.gradu_ptojects.Constants.Vital_Equations;
 import dev.mah.nassa.gradu_ptojects.DataBase.FireStore_DataBase;
@@ -29,7 +30,11 @@ import dev.mah.nassa.gradu_ptojects.MVVM.UsersViewModel;
 import dev.mah.nassa.gradu_ptojects.Modles.Users_Chat;
 import dev.mah.nassa.gradu_ptojects.Modles.Users_Health_Info;
 import dev.mah.nassa.gradu_ptojects.R;
+import dev.mah.nassa.gradu_ptojects.Services_Firebase.CloudMessaging;
 import dev.mah.nassa.gradu_ptojects.databinding.ActivityUsersInformationBinding;
+import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
+import io.reactivex.rxjava3.core.Observable;
+import io.reactivex.rxjava3.schedulers.Schedulers;
 
 public class UsersInformation_Activity extends AppCompatActivity implements UsersInfoListener {
     private ActivityUsersInformationBinding binding;
@@ -47,6 +52,8 @@ public class UsersInformation_Activity extends AppCompatActivity implements User
         binding = ActivityUsersInformationBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
+        LanguageUtils.changeLanguage(UsersInformation_Activity.this , "en");
+
         usersHealthInfoViewModel = ViewModelProviders.of(this).get(UsersHealthInfoViewModel.class);
         usersViewModel = ViewModelProviders.of(this).get(UsersViewModel.class);
 
@@ -59,7 +66,6 @@ public class UsersInformation_Activity extends AppCompatActivity implements User
         email = i.getStringExtra("email");
 
 
-        Toast.makeText(this, "PHOME NUMBER  =" + phone, Toast.LENGTH_SHORT).show();
 
         // وضع اتجاه النص و الواجهات من الاليمين الى اليسار لغة عربية
         binding.parentUsersInfo.setLayoutDirection(View.LAYOUT_DIRECTION_RTL);
@@ -107,50 +113,65 @@ public class UsersInformation_Activity extends AppCompatActivity implements User
     // بعد اختيار المستخدم مستوى النشاط نقوم بارسال مستوى
     // النشاط وعليه يتم حساب السعرات الحرارية و كمية المياه و حفظ البيانات المستخدم و البيانات الصحية
     @Override
-    public void getActivityLevel(int activityIndex, String activityLeve) {
-        UsersInfo usersInfo = new UsersInfo(uid, name, phone, pass, eage, length, weight, activityLeve, gender, photo, email);
+    public void getActivityLevel(int activityIndex, String activityLevel) {
 
+        Observable.fromCallable(() -> {
+                    UsersInfo usersInfo = new UsersInfo(uid, name, phone, pass, eage, length, weight, activityLevel, gender, photo, email);
+                    ArrayList<UsersInfo> usersInfos = new ArrayList<>(); // Placeholder for your actual data retrieval from Firestore
+                    boolean isFind = false;
 
-        FireStore_DataBase.getAllUsersInfo(new OnSuccessListener<ArrayList<UsersInfo>>() {
-            @Override
-            public void onSuccess(ArrayList<UsersInfo> usersInfos) {
-                for (UsersInfo users : usersInfos) {
-                    if (users.getEmail().equals(usersInfo.getEmail()) && users.getPhone().equals(usersInfo.getPhone())) {
-                        isFind = true;
-                        break;
+                    for (UsersInfo users : usersInfos) {
+                        if (users.getEmail().equals(usersInfo.getEmail()) && users.getPhone().equals(usersInfo.getPhone())) {
+                            isFind = true;
+                            break;
+                        }
                     }
-                }
-                if (!isFind) {
-                    FireStore_DataBase.insertUsersInfo(usersInfo, UsersInformation_Activity.this); // Fire Store حفظ بيانات المستخدم على
-                    usersViewModel.insertUsers(usersInfo); // Save Data To Local Data Base
-                    if (!illness.isEmpty()) {
-                        AppDatabese appDatabese = AppDatabese.getInstance(UsersInformation_Activity.this);
-                       String levelActivity = PersonActivityArray.getPersonActivityList().get(activityIndex);
 
-                        // حساب السعرات الحرارية للشخص
-                       double caloriesRequorment =  Vital_Equations.caloriDailyRequirment(UsersInformation_Activity.this , eage , length , levelActivity , weight , gender);
+                    if (!isFind) {
+                        FireStore_DataBase.insertUsersInfo(usersInfo, UsersInformation_Activity.this);
+                        usersViewModel.insertUsers(usersInfo);
 
-                       // حساب كمية المياه التي يجب شربها
-                       double waterQuantity = Vital_Equations.waterQuantity(weight);
-                        Users_Health_Info usersHealthInfo = new Users_Health_Info(uid, caloriesRequorment,waterQuantity, true, alarmTime , 0 , 0);
-                        usersHealthInfoViewModel.insertUsersHealth(usersHealthInfo); // Save Data To Local Data Base
-                        FireStore_DataBase.insertUsersHealthInfo(usersHealthInfo, UsersInformation_Activity.this);
+                        // حفظ المستخدم للدردشة
+                        CloudMessaging.getToken(UsersInformation_Activity.this, new OnSuccessListener() {
+                            @Override
+                            public void onSuccess(Object o) {
+                                Toast.makeText(UsersInformation_Activity.this, "Name  :"+ name  +"\n phone  :"  + phone +"\nToken  :"+o.toString(), Toast.LENGTH_SHORT).show();
+                                Users_Chat usersChat  = new Users_Chat(uid , name , photo , " " , true , o.toString());
+                                RealTime_DataBase.addUsersToRealTime(UsersInformation_Activity.this , uid , usersChat);
+
+
+
+                            }
+                        });
+
+                        if (!illness.isEmpty()) {
+                            String levelActivity = PersonActivityArray.getPersonActivityList().get(activityIndex);
+                            double caloriesRequirement = Vital_Equations.caloriDailyRequirment(UsersInformation_Activity.this, eage, length, levelActivity, weight, gender);
+                            double waterQuantity = Vital_Equations.waterQuantity(weight);
+                            Users_Health_Info usersHealthInfo = new Users_Health_Info(uid, caloriesRequirement, waterQuantity, true, alarmTime, 0, 0);
+                            usersHealthInfoViewModel.insertUsersHealth(usersHealthInfo);
+                            FireStore_DataBase.insertUsersHealthInfo(usersHealthInfo, UsersInformation_Activity.this);
+                        }
+                    } else {
+                        throw new RuntimeException("رقم الهاتف أو البريد الاكتروني مستخدم بالفعل");
                     }
-                } else {
-                    Toast.makeText(UsersInformation_Activity.this, "رقم الهاتف أو البريد الاكتروني مستخدم بالفعل", Toast.LENGTH_SHORT).show();
-                    startActivity(new Intent(UsersInformation_Activity.this, SignUp_Activity.class));
-                    finish();
-                }
 
-            }
-        }, new OnFailureListener() {
-            @Override
-            public void onFailure(@NonNull Exception e) {
-                Toast.makeText(UsersInformation_Activity.this, e.getMessage(), Toast.LENGTH_SHORT).show();
-            }
-        });
+                    // Return a non-null value
+                    return true;
+                })
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(
+                        result -> {
+                            // Handle success
+                        },
+                        error -> {
+                            Toast.makeText(UsersInformation_Activity.this, error.getMessage(), Toast.LENGTH_SHORT).show();
+                            startActivity(new Intent(UsersInformation_Activity.this, SignUp_Activity.class));
+                            finish();
+                        }
+                );
     }
-
 
     @Override
     protected void onResume() {

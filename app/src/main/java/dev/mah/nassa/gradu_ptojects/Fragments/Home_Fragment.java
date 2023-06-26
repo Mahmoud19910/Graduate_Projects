@@ -117,6 +117,7 @@ public class Home_Fragment extends Fragment implements View.OnClickListener {
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
+        LanguageUtils.changeLanguage(getContext() , "en");
          sports_exercises  = new Sports_Exercises("M4zajfIsrYEKivgGO4vO" , "تمارين منزلية عامة " ,
                 "لايوجد " , "https://firebasestorage.googleapis.com/v0/b/graduate-project-c9979.appspot.com/o/exercises%2F3bfbb6ae-db1a-4ccb-b4e0-d41de16057c2?alt=media&token=dc9e4888-0426-480e-bd04-2c56f36e70d5" ,
                 "3.8");
@@ -206,11 +207,11 @@ public class Home_Fragment extends Fragment implements View.OnClickListener {
             @Override
             public void onChanged(Users_Health_Info users_health_info) {
 
-                binding.calorDailyRequirment.setText(String.format("kca " + "%.2f", users_health_info.getCaloriesNumber()) + "  ");
+                binding.calorDailyRequirment.setText(String.format("%.2f"+"  سعرة ", users_health_info.getCaloriesNumber()) + "  ");
                 binding.waterQuan.setText(String.format("لتر " + "%.2f", users_health_info.getWaterDrink()) + "  ");
-                binding.caloriesGained.setText(String.format("kca " + "%.2f", users_health_info.getCaloriesGained()) + "  ");
-                binding.caloriNeedToLooseWeight.setText(String.format("kca " + "%.2f", (users_health_info.getCaloriesNumber()-1000))+"");
-                binding.caloriNeedToIncreaseWeight.setText(String.format("kca " + "%.2f", (users_health_info.getCaloriesNumber()+1000))+"");
+                binding.caloriesGained.setText(String.format("%.2f"+"سعرة ", users_health_info.getCaloriesGained()) + "  ");
+                binding.caloriNeedToLooseWeight.setText(String.format("%.2f"+"  سعرة ", (users_health_info.getCaloriesNumber()-1000))+"");
+                binding.caloriNeedToIncreaseWeight.setText(String.format( "%.2f"+"  سعرة ", (users_health_info.getCaloriesNumber()+1000))+"");
 
 
             }

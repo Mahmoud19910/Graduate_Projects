@@ -41,6 +41,7 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.google.android.gms.tasks.OnSuccessListener;
 
+import java.text.NumberFormat;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
@@ -63,11 +64,12 @@ public class SharedFunctions {
 
     public static CountDownTimer countDownTimer;
     static Dialog dialog;
-    static double counter=0;
+    static double counter = 0;
     static double totalCalories;
     public static My_Meal_MVVM my_meal_mvvm;
     public static boolean isClickedIncreaseORDecrease = false;
-    public  static double caloriesPerOneGram;
+    public static double caloriesPerOneGram;
+
     // ميثود التحقق من البيانات في واجهة مستخدم جديد
     public static boolean checkEnterdDataInSignUp(EditText editName, EditText editPhone, EditText editPass, CheckBox checkBox, Context context) {
         boolean check = true;
@@ -189,7 +191,7 @@ public class SharedFunctions {
 
     //Dismiss Dialog
     public static void dismissDialog() {
-        if(dialog != null){
+        if (dialog != null) {
             dialog.dismiss();
 
         }
@@ -205,7 +207,6 @@ public class SharedFunctions {
             return false;
         }
     }
-
 
 
     // Create Timer Dialog to start training
@@ -237,7 +238,7 @@ public class SharedFunctions {
                 intent.putExtra("value", value);
                 intent.putExtra("uid", uid);
                 context.startActivity(intent);
-                ((Activity)context).finish();
+                ((Activity) context).finish();
 
                 // start to a new activivty
             }
@@ -298,7 +299,7 @@ public class SharedFunctions {
 
     }
 
-    public static void finishTrainingDialog(String goal, String achivmentGoal, Context context, String uid , Sports_Exercises sports_exercises, OnSuccessListener listener) {
+    public static void finishTrainingDialog(String goal, String achivmentGoal, Context context, String uid, Sports_Exercises sports_exercises, OnSuccessListener listener) {
         AlertDialog.Builder builder = new AlertDialog.Builder(context);
         // Set the dialog title and message
         builder.setTitle("إنهاء النشاط").setMessage("هل أنت متأكد من انهاء النشاط ؟؟");
@@ -309,25 +310,23 @@ public class SharedFunctions {
                 // حفظ البيانات في قاعدة البيانات
                 if (achivmentGoal == null) {
                     Toast.makeText(context, "قم بحرق سعرة واحدة عالأقل", Toast.LENGTH_SHORT).show();
-                }
-                else
-                    if (Double.parseDouble(goal) >= Double.parseDouble(achivmentGoal)) {
+                } else if (Double.parseDouble(goal) >= Double.parseDouble(achivmentGoal)) {
                     Toast.makeText(context, "! للأسف لم تصل الى هدفك ", Toast.LENGTH_LONG).show();
                     listener.onSuccess(false);
                     Intent intent = new Intent(context, Exercices_Activity.class);
                     intent.putExtra("obj", sports_exercises);
-                    intent.putExtra("uid" , uid);
+                    intent.putExtra("uid", uid);
                     ((Activity) context).startActivity(intent);
                     ((Activity) context).finish();
 
                 } else {
                     Toast.makeText(context, "تهاني لك على الانجاز", Toast.LENGTH_LONG).show();
                     listener.onSuccess(true);
-                        Intent intent = new Intent(context, Exercices_Activity.class);
-                        intent.putExtra("obj", sports_exercises);
-                        intent.putExtra("uid" , uid);
-                        ((Activity) context).startActivity(intent);
-                        ((Activity) context).finish();
+                    Intent intent = new Intent(context, Exercices_Activity.class);
+                    intent.putExtra("obj", sports_exercises);
+                    intent.putExtra("uid", uid);
+                    ((Activity) context).startActivity(intent);
+                    ((Activity) context).finish();
 
                 }
 
@@ -349,41 +348,41 @@ public class SharedFunctions {
 
 
     // Get Time
-    public static String getTimeAtTheMoment(){
+    public static String getTimeAtTheMoment() {
         // Get current time
         Calendar calendar = Calendar.getInstance();
         Date currentTime = calendar.getTime();
 
         // Format the time using SimpleDateFormat
         SimpleDateFormat dateFormat = new SimpleDateFormat("hh:mm a", Locale.US);
-      return  dateFormat.format(currentTime);
+        return dateFormat.format(currentTime);
     }
 
     //Get Date At the moment
-    public static String getDateAtTheMoment(){
+    public static String getDateAtTheMoment() {
         Calendar calendar = Calendar.getInstance();
         int year = calendar.get(Calendar.YEAR);
         int month = calendar.get(Calendar.MONTH) + 1;  // Note: Months start from 0
         int day = calendar.get(Calendar.DAY_OF_MONTH);
-        String date  = day+"/"+month+"/"+ year+"";
+        String date = day + "/" + month + "/" + year + "";
         return date;
     }
 
 
     //ديلوك لاضافة في قائمة وجباتي
     @SuppressLint("NewApi")
-    public static Dialog createFoodDialog(String activity ,  Context context ,String uid, FoodCategory foodCategory){
+    public static Dialog createFoodDialog(String activity, Context context, String uid, FoodCategory foodCategory) {
 
-        if(activity.equals("Home")){
-             my_meal_mvvm = ViewModelProviders.of((Home_Activity)context).get(My_Meal_MVVM.class);
-        }else {
-            my_meal_mvvm = ViewModelProviders.of((FoodSection_Activity)context).get(My_Meal_MVVM.class);
+        if (activity.equals("Home")) {
+            my_meal_mvvm = ViewModelProviders.of((Home_Activity) context).get(My_Meal_MVVM.class);
+        } else {
+            my_meal_mvvm = ViewModelProviders.of((FoodSection_Activity) context).get(My_Meal_MVVM.class);
 
         }
 
         Dialog dialog = new Dialog(context);
         View view = LayoutInflater.from(context).inflate(R.layout.dialog_food_section, null, false);
-        LinearLayout linearLayout =  view.findViewById(R.id.layoutDialog);
+        LinearLayout linearLayout = view.findViewById(R.id.layoutDialog);
         linearLayout.setBackgroundColor(context.getColor(R.color.white));
         linearLayout.setBackground(context.getDrawable(R.drawable.corner_raduis_card_food_dialog));
         dialog.setContentView(view);
@@ -392,18 +391,18 @@ public class SharedFunctions {
         dialogWindow.setBackgroundDrawableResource(R.drawable.food_shabe_background);
         dialogWindow.setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
 
-       //inflate
-        Button cancel,add;
-        ImageView foodImages,plus,minus;
-        TextView caloriesMeal,weight,foodName;
+        //inflate
+        Button cancel, add;
+        ImageView foodImages, plus, minus;
+        TextView caloriesMeal, weight, foodName;
 
 
         cancel = view.findViewById(R.id.dialogFood_cancel);
         add = view.findViewById(R.id.dialogFood_add);
         foodImages = view.findViewById(R.id.dialogImage);
         caloriesMeal = view.findViewById(R.id.dialogFood_caloriesMeal);
-        weight= view.findViewById(R.id.dialogFood_weight);
-        foodName= view.findViewById(R.id.dialogFood_name);
+        weight = view.findViewById(R.id.dialogFood_weight);
+        foodName = view.findViewById(R.id.dialogFood_name);
         plus = view.findViewById(R.id.dialogFood_plus);
         minus = view.findViewById(R.id.dialogFood_minus);
 
@@ -425,10 +424,10 @@ public class SharedFunctions {
             @Override
             public void onClick(View v) {
 
-                My_Meal_List mealList = new My_Meal_List(uid,UUID.randomUUID().toString(),foodCategory.getNameMeal()
-                        ,caloriesMeal.getText().toString() ,getTimeAtTheMoment(),getDateAtTheMoment()
-                        ,weight.getText().toString());
-                FireStore_DataBase.insertMeal(mealList , view.getContext());
+                My_Meal_List mealList = new My_Meal_List(uid, UUID.randomUUID().toString(), foodCategory.getNameMeal()
+                        , caloriesMeal.getText().toString(), getTimeAtTheMoment(), getDateAtTheMoment()
+                        , weight.getText().toString());
+                FireStore_DataBase.insertMeal(mealList, view.getContext());
                 my_meal_mvvm.insertMy_Meal_List(mealList);
                 dialog.dismiss();
                 context.startActivity(new Intent(view.getContext(), MyMealList_Activity.class));
@@ -441,17 +440,22 @@ public class SharedFunctions {
             public void onClick(View v) {
                 counter = Double.parseDouble(weight.getText().toString());
 
-                if(isClickedIncreaseORDecrease ==false){
-                    caloriesPerOneGram = Double.parseDouble(foodCategory.getCaloriesMeal())/counter;
+                if (isClickedIncreaseORDecrease == false) {
+                    caloriesPerOneGram = Double.parseDouble(foodCategory.getCaloriesMeal()) / counter;
                     isClickedIncreaseORDecrease = true;
                 }
 
-                counter+=5;
+                counter += 5;
 
-                totalCalories = counter*caloriesPerOneGram;
+                totalCalories = counter * caloriesPerOneGram;
+                NumberFormat numberFormat = NumberFormat.getInstance(Locale.ENGLISH);
 
-                caloriesMeal.setText(String.format("%.2f" , totalCalories)+"");
-                weight.setText(counter+"");
+// Format the number using the NumberFormat
+                double total = Double.parseDouble(numberFormat.format(totalCalories));
+                double coun = Double.parseDouble(numberFormat.format(counter));
+
+                caloriesMeal.setText(String.format("%.2f", total) + "");
+                weight.setText(coun + "");
             }
         });
 
@@ -461,11 +465,17 @@ public class SharedFunctions {
             @Override
             public void onClick(View v) {
                 counter = Double.parseDouble(weight.getText().toString());
-                if (counter>=6){
-                    counter-=5;
-                    totalCalories = counter*caloriesPerOneGram;
-                    caloriesMeal.setText(String.format("%.2f" , totalCalories)+"");
-                    weight.setText(counter+"");
+                if (counter >= 6) {
+                    counter -= 5;
+                    totalCalories = counter * caloriesPerOneGram;
+                    NumberFormat numberFormat = NumberFormat.getInstance(Locale.ENGLISH);
+
+// Format the number using the NumberFormat
+                    double total = Double.parseDouble(numberFormat.format(totalCalories));
+                    double coun = Double.parseDouble(numberFormat.format(counter));
+
+                    caloriesMeal.setText(String.format("%.2f", total) + "");
+                    weight.setText(coun + "");
                 }
             }
         });
@@ -476,26 +486,26 @@ public class SharedFunctions {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
 
-                if(event.getAction()== MotionEvent.ACTION_DOWN){
+                if (event.getAction() == MotionEvent.ACTION_DOWN) {
                     dialog.dismiss();
                     return true;
                 }
                 return false;
-             }
+            }
         });
         dialog.show();
         return dialog;
-}
+    }
 
     //ديلوك اكتفتي My Meal List
     //عند ضغط على زر الاضافة
     @SuppressLint("NewApi")
-    public static Dialog createFoodDialog(Context context , String uid ,OnSuccessListener onSuccessListener){
-        My_Meal_MVVM my_meal_mvvm = ViewModelProviders.of((MyMealList_Activity)context).get(My_Meal_MVVM.class);
+    public static Dialog createFoodDialog(Context context, String uid, OnSuccessListener onSuccessListener) {
+        My_Meal_MVVM my_meal_mvvm = ViewModelProviders.of((MyMealList_Activity) context).get(My_Meal_MVVM.class);
 
         Dialog dialog = new Dialog(context);
         View view = LayoutInflater.from(context).inflate(R.layout.dialog_meal_list, null, false);
-        LinearLayout linearLayout =  view.findViewById(R.id.layoutDialog);
+        LinearLayout linearLayout = view.findViewById(R.id.layoutDialog);
         linearLayout.setBackgroundColor(context.getColor(R.color.white));
         linearLayout.setBackground(context.getDrawable(R.drawable.corner_raduis_card_food_dialog));
         dialog.setContentView(view);
@@ -505,8 +515,8 @@ public class SharedFunctions {
         dialogWindow.setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
 
         //inflate
-        EditText meal_caloriesMeal , meal_name, meal_weight;
-        ImageView plus,minus;
+        EditText meal_caloriesMeal, meal_name, meal_weight;
+        ImageView plus, minus;
         meal_caloriesMeal = view.findViewById(R.id.dialogMeal_caloriesMeal);
         meal_name = view.findViewById(R.id.dialogMeal_name);
         meal_weight = view.findViewById(R.id.dialogMeal_weight);
@@ -516,7 +526,6 @@ public class SharedFunctions {
         cancel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(context, "cancel", Toast.LENGTH_SHORT).show();
                 dialog.dismiss();
             }
         });
@@ -528,20 +537,19 @@ public class SharedFunctions {
             public void onClick(View v) {
 
                 // validating the text fields if empty or not.
-                if(TextUtils.isEmpty(meal_name.getText())){
+                if (TextUtils.isEmpty(meal_name.getText())) {
                     meal_name.setError("قم بأدخال اسم الوجبة");
                 } else if (TextUtils.isEmpty(meal_caloriesMeal.getText())) {
                     meal_caloriesMeal.setError("قم بأدخال عدد سعرات");
                 } else if (TextUtils.isEmpty(meal_weight.getText())) {
                     meal_weight.setError("قم بأدخال وزن الوجبة");
-                }
-                else {
+                } else {
                     // calling method to add data to Firebase Firestore.
-                    My_Meal_List mealList = new My_Meal_List(uid, UUID.randomUUID().toString(),meal_name.getText().toString()
-                            ,meal_caloriesMeal.getText().toString(),getTimeAtTheMoment(),getDateAtTheMoment()
-                            ,meal_weight.getText().toString());
+                    My_Meal_List mealList = new My_Meal_List(uid, UUID.randomUUID().toString(), meal_name.getText().toString()
+                            , meal_caloriesMeal.getText().toString(), getTimeAtTheMoment(), getDateAtTheMoment()
+                            , meal_weight.getText().toString());
                     //fireStore add Meal
-                    FireStore_DataBase.insertMeal(mealList , view.getContext());
+                    FireStore_DataBase.insertMeal(mealList, view.getContext());
                     my_meal_mvvm.insertMy_Meal_List(mealList);
                     onSuccessListener.onSuccess(mealList);
                     dialog.dismiss();
@@ -555,7 +563,7 @@ public class SharedFunctions {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
 
-                if(event.getAction()== MotionEvent.ACTION_DOWN){
+                if (event.getAction() == MotionEvent.ACTION_DOWN) {
                     dialog.dismiss();
                     return true;
                 }
@@ -566,8 +574,8 @@ public class SharedFunctions {
         return dialog;
     }
 
-    public static void customToaste(int layout , Context context){
-        View view = LayoutInflater.from(context).inflate(layout , null , false);
+    public static void customToaste(int layout, Context context) {
+        View view = LayoutInflater.from(context).inflate(layout, null, false);
         Toast toast = new Toast(context);
         toast.setView(view);
         toast.setDuration(Toast.LENGTH_LONG);

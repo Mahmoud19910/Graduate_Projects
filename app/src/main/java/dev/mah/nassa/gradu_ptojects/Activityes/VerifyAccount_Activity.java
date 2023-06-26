@@ -85,11 +85,13 @@ public class VerifyAccount_Activity extends AppCompatActivity implements View.On
 
             case R.id.resend_ButAccount:
                 // ميثود ارسال رمز التحقق الى رقم الهاتف مرة أخرى
+                loadData();
                 PhoneAuth.sendSmsCode(VerifyAccount_Activity.this,phone.toString());
+                SharedFunctions.countDownTimerOnCreate(binding.resendButAccount , binding.progressVerifyAccount,binding.downTimerVerifyAccount);
                 SharedFunctions.startTimerAndVisibleUi(binding.progressVerifyAccount,binding.downTimerVerifyAccount);
                 break;
 
-            case R.id.back_VerifyAccount:
+            case R.id.backSignUp_Bt:
                 startActivity(new Intent(VerifyAccount_Activity.this , SignUp_Activity.class));
                 finish();
                 break;
@@ -102,14 +104,14 @@ public class VerifyAccount_Activity extends AppCompatActivity implements View.On
     @Override
     public void getverificationId(String verificationId) {
         storedVerificationId=verificationId;
-        Toast.makeText(this, verificationId+"ID", Toast.LENGTH_SHORT).show();
+//        Toast.makeText(this, verificationId+"ID", Toast.LENGTH_SHORT).show();
     }
 
     @Override
     protected void onResume() {
         super.onResume();
         loadData();
-        Toast.makeText(this, phone+pass, Toast.LENGTH_SHORT).show();
+//        Toast.makeText(this, phone+pass, Toast.LENGTH_SHORT).show();
 
     }
 

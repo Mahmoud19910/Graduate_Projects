@@ -9,6 +9,7 @@ import android.view.View;
 import com.bumptech.glide.Glide;
 
 import dev.mah.nassa.gradu_ptojects.Adapters.DoctorsAdapter;
+import dev.mah.nassa.gradu_ptojects.Constants.LanguageUtils;
 import dev.mah.nassa.gradu_ptojects.Modles.Doctor;
 import dev.mah.nassa.gradu_ptojects.R;
 import dev.mah.nassa.gradu_ptojects.databinding.ActivityDoctorsBinding;
@@ -22,6 +23,8 @@ public class DoctorsActivity extends AppCompatActivity  {
         super.onCreate(savedInstanceState);
         binding = ActivityDoctorsBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
+
+        LanguageUtils.changeLanguage(DoctorsActivity.this , "en");
 
 
         Doctor doctor = DoctorsAdapter.TransferToActivit();

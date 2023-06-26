@@ -31,6 +31,7 @@ import com.etebarian.meowbottomnavigation.MeowBottomNavigation;
 import com.google.android.gms.tasks.OnSuccessListener;
 
 import dev.mah.nassa.gradu_ptojects.Constants.CheckRoomIsEmpty;
+import dev.mah.nassa.gradu_ptojects.Constants.LanguageUtils;
 import dev.mah.nassa.gradu_ptojects.Constants.SharedFunctions;
 import dev.mah.nassa.gradu_ptojects.Constants.StopwatchTimer;
 import dev.mah.nassa.gradu_ptojects.Constants.Vital_Equations;
@@ -82,10 +83,12 @@ public class Home_Activity extends AppCompatActivity implements View.OnClickList
         binding = ActivityHomeBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
+        LanguageUtils.changeLanguage(Home_Activity.this , "en");
         Intent intent = getIntent();
         uid = intent.getStringExtra("uid");
 
         saveUid(uid);
+
 
         CheckRoomIsEmpty checkRoomIsEmpty = new CheckRoomIsEmpty(Home_Activity.this);
         checkRoomIsEmpty.checkFoodCategoryBase();
