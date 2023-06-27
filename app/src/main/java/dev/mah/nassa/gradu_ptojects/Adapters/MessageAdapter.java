@@ -101,44 +101,48 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.MessageV
                         switch (item.getItemId()){
                             case R.id.delete:
 
-                                try {
-                                    // الحذف من طرف المرسل
-                                    FirebaseDatabase.getInstance().getReference("Chat Messages")
-                                            .child(messagesModles.getSenderId()+messagesModles.getReciverId()).child(messagesModles.getDocumentMessgeId())
-                                            .removeValue().addOnSuccessListener(new OnSuccessListener<Void>() {
-                                                @Override
-                                                public void onSuccess(Void unused) {
-                                                    Toast.makeText(context, "تم الحذف", Toast.LENGTH_SHORT).show();
-                                                }
-                                            }).addOnFailureListener(new OnFailureListener() {
-                                                @Override
-                                                public void onFailure(@NonNull Exception e) {
-                                                    Toast.makeText(context, e.getMessage().toString(), Toast.LENGTH_SHORT).show();
-                                                }
-                                            });
-                                }catch (Exception e){
-                                    Toast.makeText(context, e.getMessage().toString()+"", Toast.LENGTH_SHORT).show();
-                                }
+                             if(messagesModles.getSenderId() == loadId){
+
+                                 try {
+                                     // الحذف من طرف المرسل
+                                     FirebaseDatabase.getInstance().getReference("Chat Messages")
+                                             .child(messagesModles.getSenderId()+messagesModles.getReciverId()).child(messagesModles.getDocumentMessgeId())
+                                             .removeValue().addOnSuccessListener(new OnSuccessListener<Void>() {
+                                                 @Override
+                                                 public void onSuccess(Void unused) {
+                                                     Toast.makeText(context, "تم الحذف", Toast.LENGTH_SHORT).show();
+                                                 }
+                                             }).addOnFailureListener(new OnFailureListener() {
+                                                 @Override
+                                                 public void onFailure(@NonNull Exception e) {
+                                                     Toast.makeText(context, e.getMessage().toString(), Toast.LENGTH_SHORT).show();
+                                                 }
+                                             });
+                                 }catch (Exception e){
+                                     Toast.makeText(context, e.getMessage().toString()+"", Toast.LENGTH_SHORT).show();
+                                 }
 
 
-                                try {
-                                    // الحذف من طرف المستقبل
-                                    FirebaseDatabase.getInstance().getReference("Chat Messages")
-                                            .child(messagesModles.getReciverId()+messagesModles.getSenderId()).child(messagesModles.getDocumentMessgeId())
-                                            .removeValue().addOnSuccessListener(new OnSuccessListener<Void>() {
-                                                @Override
-                                                public void onSuccess(Void unused) {
-                                                    Toast.makeText(context, "تم الحذف", Toast.LENGTH_SHORT).show();
-                                                }
-                                            }).addOnFailureListener(new OnFailureListener() {
-                                                @Override
-                                                public void onFailure(@NonNull Exception e) {
-                                                    Toast.makeText(context, e.getMessage().toString(), Toast.LENGTH_SHORT).show();
-                                                }
-                                            });
-                                }catch (Exception e){
-                                    Toast.makeText(context, e.getMessage().toString(), Toast.LENGTH_SHORT).show();
-                                }
+                                 try {
+                                     // الحذف من طرف المستقبل
+                                     FirebaseDatabase.getInstance().getReference("Chat Messages")
+                                             .child(messagesModles.getReciverId()+messagesModles.getSenderId()).child(messagesModles.getDocumentMessgeId())
+                                             .removeValue().addOnSuccessListener(new OnSuccessListener<Void>() {
+                                                 @Override
+                                                 public void onSuccess(Void unused) {
+                                                     Toast.makeText(context, "تم الحذف", Toast.LENGTH_SHORT).show();
+                                                 }
+                                             }).addOnFailureListener(new OnFailureListener() {
+                                                 @Override
+                                                 public void onFailure(@NonNull Exception e) {
+                                                     Toast.makeText(context, e.getMessage().toString(), Toast.LENGTH_SHORT).show();
+                                                 }
+                                             });
+                                 }catch (Exception e){
+                                     Toast.makeText(context, e.getMessage().toString(), Toast.LENGTH_SHORT).show();
+                                 }
+
+                             }
 
 
                                 return true;

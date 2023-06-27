@@ -134,7 +134,7 @@ public class ExersiseDetails_MVVM extends AndroidViewModel {
 
                     @Override
                     public void onComplete() {
-
+//                        Toast.makeText(context, "Delete", Toast.LENGTH_SHORT).show();
                     }
 
                     @Override

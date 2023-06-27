@@ -64,6 +64,34 @@ public class FireStore_MVVM extends AndroidViewModel {
                 });
     }
 
+    public void getAllFood(OnSuccessListener<ArrayList<FoodCategory>> onSuccessListener){
+        FireStore_DataBase.getAllFoodCategory(context)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Observer<ArrayList<FoodCategory>>() {
+                    @Override
+                    public void onSubscribe(@io.reactivex.rxjava3.annotations.NonNull Disposable d) {
+
+                    }
+
+                    @Override
+                    public void onNext(@io.reactivex.rxjava3.annotations.NonNull ArrayList<FoodCategory> foodCategories) {
+
+                        onSuccessListener.onSuccess(foodCategories);
+                    }
+
+                    @Override
+                    public void onError(@io.reactivex.rxjava3.annotations.NonNull Throwable e) {
+
+                    }
+
+                    @Override
+                    public void onComplete() {
+
+                    }
+                });
+    }
+
 
 
 

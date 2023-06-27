@@ -1,12 +1,14 @@
 package dev.mah.nassa.gradu_ptojects.Interfaces;
 
 import androidx.room.Dao;
+import androidx.room.Delete;
 import androidx.room.Insert;
 import androidx.room.Query;
 
 import java.util.List;
 
 import dev.mah.nassa.gradu_ptojects.Modles.Doctor;
+import dev.mah.nassa.gradu_ptojects.Modles.Exercise_Details;
 import dev.mah.nassa.gradu_ptojects.Modles.Sports_Exercises;
 import io.reactivex.rxjava3.core.Completable;
 import io.reactivex.rxjava3.core.Observable;
@@ -21,4 +23,7 @@ public interface Exercise_Dao {
 
     @Query("Select * from Sports_Exercises where id=:id")
     Observable<Sports_Exercises>  getSports_ExercisesById(String id);
+
+    @Query("delete From Sports_Exercises")
+    Completable deleteAllExercise();
 }

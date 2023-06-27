@@ -520,67 +520,67 @@ public class FireStore_DataBase {
 
     //حذف من قائمة وجباتي
     public static void deleteMyMealList(My_Meal_List meal , Context context) {
-//
-//        CollectionReference collectionRef = firestore.collection("MyMeal");
-//
-//        collectionRef.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-//            @Override
-//            public void onComplete(@NonNull Task<QuerySnapshot> task) {
-//                if (task.isSuccessful()) {
-//                    for (QueryDocumentSnapshot document : task.getResult()) {
-//
-//                        My_Meal_List mealList = document.toObject(My_Meal_List.class);
-//
-//                        if(mealList.getId().equals(meal.getId().getId())){
-//                            String documentId = document.getId();
-//
-//                            firestore.collection("MyMeal").document(documentId)
-//                                    .delete()
-//                                    .addOnCompleteListener(new OnCompleteListener<Void>() {
-//                                        @Override
-//                                        public void onComplete(@NonNull Task<Void> task) {
-//                                            if(task.isSuccessful()){
+
+        CollectionReference collectionRef = firestore.collection("MyMeal");
+
+        collectionRef.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                if (task.isSuccessful()) {
+                    for (QueryDocumentSnapshot document : task.getResult()) {
+
+                        My_Meal_List mealList = document.toObject(My_Meal_List.class);
+
+                        if(mealList.getId().equals(meal.getId())){
+                            String documentId = document.getId();
+
+                            firestore.collection("MyMeal").document(documentId)
+                                    .delete()
+                                    .addOnCompleteListener(new OnCompleteListener<Void>() {
+                                        @Override
+                                        public void onComplete(@NonNull Task<Void> task) {
+                                            if(task.isSuccessful()){
 //                                                Toast.makeText(context, "Suce", Toast.LENGTH_SHORT).show();
-//                                            }else {
+                                            }else {
 //                                                Toast.makeText(context, "fail", Toast.LENGTH_SHORT).show();
-//                                            }
-//                                        }
-//                                    });
-//
-//                        }
-//                    }
-//                }
-//            }
-//        });
+                                            }
+                                        }
+                                    });
 
-        // below line is for getting the collection
-        // where we are storing our courses.
-        firestore.collection("MyMeal").
-
-                // after that we are getting the document
-                // which we have to delete.
-                        document(meal.getId()).
-
-                // after passing the document id we are calling
-                // delete method to delete this document.
-                        delete().
-                // after deleting call on complete listener
-                // method to delete this data.
-                        addOnCompleteListener(new OnCompleteListener<Void>() {
-                    @Override
-                    public void onComplete(@NonNull Task<Void> task) {
-                        // inside on complete method we are checking
-                        // if the task is success or not.
-                        if (task.isSuccessful()) {
-
-                        } else {
-                            Toast.makeText(context, task.getException().getMessage().toString()+"  Message", Toast.LENGTH_SHORT).show();
-                            // if the delete operation is failed
-                            // we are displaying a toast message.
-                            //      Toast.makeText(UpdateCourse.this, "Fail to delete the course. ", Toast.LENGTH_SHORT).show();
                         }
                     }
-                });
+                }
+            }
+        });
+
+//        // below line is for getting the collection
+//        // where we are storing our courses.
+//        firestore.collection("MyMeal").
+//
+//                // after that we are getting the document
+//                // which we have to delete.
+//                        document(meal.getId()).
+//
+//                // after passing the document id we are calling
+//                // delete method to delete this document.
+//                        delete().
+//                // after deleting call on complete listener
+//                // method to delete this data.
+//                        addOnCompleteListener(new OnCompleteListener<Void>() {
+//                    @Override
+//                    public void onComplete(@NonNull Task<Void> task) {
+//                        // inside on complete method we are checking
+//                        // if the task is success or not.
+//                        if (task.isSuccessful()) {
+//
+//                        } else {
+//                            Toast.makeText(context, task.getException().getMessage().toString()+"  Message", Toast.LENGTH_SHORT).show();
+//                            // if the delete operation is failed
+//                            // we are displaying a toast message.
+//                            //      Toast.makeText(UpdateCourse.this, "Fail to delete the course. ", Toast.LENGTH_SHORT).show();
+//                        }
+//                    }
+//                });
 
 
     }
@@ -619,6 +619,59 @@ public class FireStore_DataBase {
         });
 
     }
+
+    public static Observable<ArrayList<FoodCategory>> getAllFoodCategory (Context context){
+
+       return Observable.create(new ObservableOnSubscribe<ArrayList<FoodCategory>>() {
+           @Override
+           public void subscribe(@io.reactivex.rxjava3.annotations.NonNull ObservableEmitter<ArrayList<FoodCategory>> emitter) throws Throwable {
+               ArrayList<FoodCategory> foodCategories = new ArrayList<>();
+               firestore.collection("Food_Category").get()
+                       .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
+                           @Override
+                           public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
+                               // after getting the data we are calling on success method
+                               // and inside this method we are checking if the received
+                               // query snapshot is empty or not.
+                               if (!queryDocumentSnapshots.isEmpty()) {
+                                   // if the snapshot is not empty we are
+                                   // hiding our progress bar and adding
+                                   // our data in a list.
+                                   List<DocumentSnapshot> list = queryDocumentSnapshots.getDocuments();
+                                   for (DocumentSnapshot d : list) {
+                                       // after getting this list we are passing
+                                       // that list to our object class.
+                                       FoodCategory c = d.toObject(FoodCategory.class);
+
+                                       // below is the updated line of code which we have to
+                                       // add to pass the document id inside our modal class.
+                                       // we are setting our document id with d.getId() method
+                                       c.setId(d.getId());
+
+                                       // and we will pass this object class
+                                       // inside our arraylist which we have
+                                       // created for recycler view.
+                                       foodCategories.add(c);
+                                   }
+
+                                   emitter.onNext(foodCategories);
+                                   emitter.onComplete();
+                               } else {
+                                   // if the snapshot is empty we are displaying a toast message.
+                               }
+                           }
+                       }).addOnFailureListener(new OnFailureListener() {
+                           @Override
+                           public void onFailure(@NonNull Exception e) {
+                               // if we do not get any data or any error we are displaying
+                               // a toast message that we do not get any data
+                           }
+                       });
+           }
+       });
+
+    }
+
 
 }
 

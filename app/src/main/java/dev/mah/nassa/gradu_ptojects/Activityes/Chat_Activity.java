@@ -293,21 +293,22 @@ public class Chat_Activity extends AppCompatActivity {
                 name = usersInfo.getName();
                 photo = usersInfo.getPhoto();
 
-
-                String messageId = databaseReferenceSender.push().getKey();
-
-                MessagesModles mesg = new MessagesModles(messId, message, messgePhotot, name, doctor.getId(), loadUid(), photo, SharedFunctions.getTimeAtTheMoment(), messageId);
-                messageAdapter.addMessage(mesg);
-
-                databaseReferenceSender
-                        .child(messageId)
-                        .setValue(mesg);
-
-                databaseReferenceReciver
-                        .child(messageId)
-                        .setValue(mesg);
             }
         });
+
+
+        String messageId = databaseReferenceSender.push().getKey();
+
+        MessagesModles mesg = new MessagesModles(messId, message, messgePhotot, name, doctor.getId(), loadUid(), photo, SharedFunctions.getTimeAtTheMoment(), messageId);
+        messageAdapter.addMessage(mesg);
+
+        databaseReferenceSender
+                .child(messageId)
+                .setValue(mesg);
+
+        databaseReferenceReciver
+                .child(messageId)
+                .setValue(mesg);
 
 
     }

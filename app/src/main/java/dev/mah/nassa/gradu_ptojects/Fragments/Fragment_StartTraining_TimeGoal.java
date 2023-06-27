@@ -1,5 +1,6 @@
 package dev.mah.nassa.gradu_ptojects.Fragments;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.activity.OnBackPressedCallback;
@@ -20,6 +21,7 @@ import java.text.DecimalFormat;
 import java.util.Random;
 import java.util.UUID;
 
+import dev.mah.nassa.gradu_ptojects.Activityes.ActivitesStats;
 import dev.mah.nassa.gradu_ptojects.Constants.CustomDialog;
 import dev.mah.nassa.gradu_ptojects.Constants.LanguageUtils;
 import dev.mah.nassa.gradu_ptojects.Constants.SharedFunctions;
@@ -193,6 +195,16 @@ public class Fragment_StartTraining_TimeGoal extends Fragment implements TimerLi
             FireStore_DataBase.insertOrUpdateExerciseDetails(exercise_details, getContext());
             CustomDialog dialog = new CustomDialog(getContext(), time, String.format("%.2f", caloriesBurned));
             dialog.show();
+            // اغلاق الdialog عند الضغط على الزر
+            dialog.layout.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    getActivity().startActivity(new Intent(getContext() , ActivitesStats.class));
+                    dialog.dismiss();
+                    getActivity().finish();
+
+                }
+            });
 
         }
 

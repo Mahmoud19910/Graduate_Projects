@@ -20,6 +20,7 @@ import com.google.android.gms.tasks.OnSuccessListener;
 import java.util.Random;
 import java.util.UUID;
 
+import dev.mah.nassa.gradu_ptojects.Activityes.ActivitesStats;
 import dev.mah.nassa.gradu_ptojects.Activityes.Exercices_Activity;
 import dev.mah.nassa.gradu_ptojects.Constants.CustomDialog;
 import dev.mah.nassa.gradu_ptojects.Constants.LanguageUtils;
@@ -135,6 +136,16 @@ public class Fragment_StartTraining_FreeGoal extends Fragment implements View.On
 
                     CustomDialog dialog = new CustomDialog(getContext() , timeGoal , String.format("%.2f", caloriesBurned));
                     dialog.show();
+                    // اغلاق الdialog عند الضغط على الزر
+                    dialog.layout.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            getActivity().startActivity(new Intent(getContext() , ActivitesStats.class));
+                            dialog.dismiss();
+                            getActivity().finish();
+
+                        }
+                    });
                 }else {
                     Toast.makeText(getContext(), "! للأسف لم تقم بأي نشاط ", Toast.LENGTH_LONG).show();
                     Intent intent = new Intent(getContext(), Exercices_Activity.class);

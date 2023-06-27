@@ -97,27 +97,27 @@ public class MyMealList_Activity extends AppCompatActivity {
                 binding.myMealListTvSalary.setText("إجمالي السعرات الحرارية "+sum+" سعرة");
             }
         });
-       if(isConnect){
-           //الحصول على البيانات من الفاير بيز
-           Executor executor = Executors.newSingleThreadExecutor();
-           executor.execute(new Runnable() {
-               @Override
-               public void run() {
-
-                   FireStore_DataBase.getAllData(getApplicationContext(), "MyMeal",loadUid(), new OnSuccessListener() {
-                       @Override
-                       public void onSuccess(Object o) {
-
-                           mealLists = (ArrayList<My_Meal_List>) o;
-                           showAdapterRev();
-
-                       }
-                   });
-
-               }
-           });
-
-       }else {
+//       if(isConnect){
+//           //الحصول على البيانات من الفاير بيز
+//           Executor executor = Executors.newSingleThreadExecutor();
+//           executor.execute(new Runnable() {
+//               @Override
+//               public void run() {
+//
+//                   FireStore_DataBase.getAllData(getApplicationContext(), "MyMeal",loadUid(), new OnSuccessListener() {
+//                       @Override
+//                       public void onSuccess(Object o) {
+//
+//                           mealLists = (ArrayList<My_Meal_List>) o;
+//                           showAdapterRev();
+//
+//                       }
+//                   });
+//
+//               }
+//           });
+//
+//       }else {
            my_meal_mvvm.getAllMy_Meal_List().observe(MyMealList_Activity.this, new Observer<List<My_Meal_List>>() {
                @Override
                public void onChanged(List<My_Meal_List> my_meal_lists) {
@@ -128,7 +128,7 @@ public class MyMealList_Activity extends AppCompatActivity {
 
                }
            });
-       }
+//       }
 
 
 
@@ -139,35 +139,38 @@ public class MyMealList_Activity extends AppCompatActivity {
      }
 
       //عند ضغط سيظهر ديلوك لأضافة الوجبة
-      binding.addFoodList.setOnClickListener(new View.OnClickListener() {
-          @Override
-          public void onClick(View v) {
-              SharedFunctions.createFoodDialog(MyMealList_Activity.this, loadUid(), new OnSuccessListener() {
-                  @Override
-                  public void onSuccess(Object o) {
-                      if(SharedFunctions.checkInternetConnection(MyMealList_Activity.this)){
-                          mealLists.add((My_Meal_List) o);
-                          showAdapterRev();
-                          //جمع عدد سعرات
-                          sum = 0;
-                          for (int i = 0 ; i<mealLists.size() ; i++){
-                              int s = Integer.parseInt(mealLists.get(i).getCaloriesMeal());
-                              sum+=s;
-                          }
-                          binding.myMealListTvSalary.setText("إجمالي السعرات الحرارية "+sum+" سعرة");
-                      }else {
-                          my_meal_mvvm.insertMy_Meal_List((My_Meal_List) o);
+        binding.addFoodList.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                SharedFunctions.createFoodDialog(MyMealList_Activity.this, loadUid(), new OnSuccessListener() {
+                    @Override
+                    public void onSuccess(Object o) {
+                        if (SharedFunctions.checkInternetConnection(MyMealList_Activity.this)) {
+                            mealLists.add((My_Meal_List) o);
+                            showAdapterRev();
+                            // Calculate the total calories
+                            int sum = 0;
+                            for (int i = 0; i < mealLists.size(); i++) {
+                                String caloriesMeal = mealLists.get(i).getCaloriesMeal();
+                                try {
+                                    int s = Integer.parseInt(caloriesMeal);
+                                    sum += s;
+                                } catch (NumberFormatException e) {
+                                    // Handle invalid calorie values here
+                                    e.printStackTrace();
+                                }
+                            }
+                            binding.myMealListTvSalary.setText("إجمالي السعرات الحرارية " + sum + " سعرة");
+                        } else {
+                            my_meal_mvvm.insertMy_Meal_List((My_Meal_List) o);
+                        }
+                    }
+                });
+            }
+        });
 
-                      }
 
-                  }
-              });
-
-          }
-      });
-
-
-      //Back
+        //Back
       binding.myMealIvBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

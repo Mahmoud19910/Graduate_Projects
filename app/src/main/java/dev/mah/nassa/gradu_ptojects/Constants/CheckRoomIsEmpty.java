@@ -66,23 +66,47 @@ public class CheckRoomIsEmpty {
 
     }
 
+//    public void checkFoodCategoryBase() {
+//        foodCategoryMvvm.getAllFoodCategory().observe((Home_Activity) context, new Observer<List<FoodCategory>>() {
+//            @Override
+//            public void onChanged(List<FoodCategory> foodCategoryList) {
+//                if (foodCategoryList.isEmpty() || foodCategoryList == null) {
+//
+//
+//                    FireStore_DataBase.getAllDatas(context, "Food_Category", new OnSuccessListener() {
+//                        @Override
+//                        public void onSuccess(Object o) {
+//                            ArrayList<FoodCategory> foodCategories = (ArrayList<FoodCategory>) o;
+//                            for (FoodCategory foodCategory : foodCategories) {
+//                                foodCategoryMvvm.insertFoodCategory(foodCategory);
+//
+//                            }
+//
+//                        }
+//                    });
+//
+//
+//                }
+//            }
+//        });
+//    }
+
     public void checkFoodCategoryBase() {
         foodCategoryMvvm.getAllFoodCategory().observe((Home_Activity) context, new Observer<List<FoodCategory>>() {
             @Override
             public void onChanged(List<FoodCategory> foodCategoryList) {
                 if (foodCategoryList.isEmpty() || foodCategoryList == null) {
 
-                    FireStore_DataBase.getAllDatas(context, "Food_Category", new OnSuccessListener() {
+                    fireStore_mvvm.getAllFood(new OnSuccessListener<ArrayList<FoodCategory>>() {
                         @Override
-                        public void onSuccess(Object o) {
-                            ArrayList<FoodCategory> foodCategories = (ArrayList<FoodCategory>) o;
+                        public void onSuccess(ArrayList<FoodCategory> foodCategories) {
                             for (FoodCategory foodCategory : foodCategories) {
                                 foodCategoryMvvm.insertFoodCategory(foodCategory);
 
                             }
-
                         }
                     });
+
 
 
                 }
@@ -224,28 +248,32 @@ public class CheckRoomIsEmpty {
     }
 
 
+
+
+
     public void checkSportExerciseBase() {
-       sportExerciseMvvm.getAllSports_Exercises().observe((Home_Activity) context, new Observer<List<Sports_Exercises>>() {
-           @Override
-           public void onChanged(List<Sports_Exercises> sports_exercises) {
+        sportExerciseMvvm.getAllSports_Exercises().observe((Home_Activity) context, new Observer<List<Sports_Exercises>>() {
+            @Override
+            public void onChanged(List<Sports_Exercises> sports_exercises) {
 
-               if(sports_exercises.isEmpty() || sports_exercises == null){
+                listSportLocal = sports_exercises;
+                    fireStore_mvvm.getAllSportsExercises(new OnSuccessListener<List<Sports_Exercises>>() {
+                        @Override
+                        public void onSuccess(List<Sports_Exercises> sports_exercises) {
 
-                   fireStore_mvvm.getAllSportsExercises(new OnSuccessListener<List<Sports_Exercises>>() {
-                       @Override
-                       public void onSuccess(List<Sports_Exercises> sports_exercises) {
-                           for(Sports_Exercises sports_exercises1 : sports_exercises){
-                               sportExerciseMvvm.insertSportExercise(sports_exercises1);
-                           }
-                       }
-                   });
-               }
-           }
-       });
+                            if(sports_exercises.size() != listSportLocal.size()){
+                                sportExerciseMvvm.deleteAllExercise(context);
+                                for(Sports_Exercises sports_exercises1 : sports_exercises){
+                                    sportExerciseMvvm.insertSportExercise(sports_exercises1);
+                                }
+                            }
+
+                        }
+                    });
+
+            }
+        });
     }
-
-
-
 
 
 }

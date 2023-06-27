@@ -12,12 +12,15 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
+import android.os.CountDownTimer;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
+import com.daimajia.androidanimations.library.Techniques;
+import com.daimajia.androidanimations.library.YoYo;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.firestore.DocumentSnapshot;
@@ -73,46 +76,106 @@ public class FoodCategory_Fragment extends Fragment {
         foodCategoryMvvm = ViewModelProviders.of(FoodCategory_Fragment.this).get(FoodCategory_MVVM.class);
 
 
-
-        foodCategoryMvvm.getAllFoodCategory().observe(FoodCategory_Fragment.this, new Observer<List<FoodCategory>>() {
+        CountDownTimer countDownTimer = new CountDownTimer(1000000, 1000) {
             @Override
-            public void onChanged(List<FoodCategory> foodCategoryList) {
-                progressBar.setVisibility(View.INVISIBLE);
-                parentFoodRecyclerView.setHasFixedSize(true);
-                parentLayoutManager = new LinearLayoutManager(getContext());
-                parentFoodRecyclerView.setLayoutManager(parentLayoutManager);
-                ParentAdapter = new ParentFood_Adapter((ArrayList<FoodCategory>) foodCategoryList, getContext(), list1 -> {
-                    Intent intent = new Intent(getContext(), FoodSection_Activity.class);
-                    intent.putExtra("food", list1);
-                    getContext().startActivity(intent);
-                });
-                parentFoodRecyclerView.setAdapter(ParentAdapter);
+            public void onTick(long millisUntilFinished) {
 
-            }
-        });
+                int timer = (int) (millisUntilFinished / 1000);
 
-        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
-            @Override
-            public void onRefresh() {
-                swipeRefreshLayout.setRefreshing(false);
-                foodCategoryMvvm.getAllFoodCategory().observe(FoodCategory_Fragment.this, new Observer<List<FoodCategory>>() {
-                    @Override
-                    public void onChanged(List<FoodCategory> foodCategoryList) {
-                        parentFoodRecyclerView.setHasFixedSize(true);
-                        parentLayoutManager = new LinearLayoutManager(getContext());
-                        parentFoodRecyclerView.setLayoutManager(parentLayoutManager);
-                        ParentAdapter = new ParentFood_Adapter((ArrayList<FoodCategory>) foodCategoryList, getContext(), list1 -> {
-                            Intent intent = new Intent(getContext(), FoodSection_Activity.class);
-                            intent.putExtra("food", list1);
-                            getContext().startActivity(intent);
+                switch (timer){
+                    case 998:
+
+                        fireStore_mvvm.getAllFood(new OnSuccessListener<ArrayList<FoodCategory>>() {
+                            @Override
+                            public void onSuccess(ArrayList<FoodCategory> foodCategories) {
+                                progressBar.setVisibility(View.INVISIBLE);
+                                parentFoodRecyclerView.setHasFixedSize(true);
+                                parentLayoutManager = new LinearLayoutManager(getContext());
+                                parentFoodRecyclerView.setLayoutManager(parentLayoutManager);
+                                ParentAdapter = new ParentFood_Adapter(foodCategories, getContext(), list1 -> {
+                                    Intent intent = new Intent(getContext(), FoodSection_Activity.class);
+                                    intent.putExtra("food", list1);
+                                    getContext().startActivity(intent);
+                                });
+                                parentFoodRecyclerView.setAdapter(ParentAdapter);
+                            }
                         });
-                        parentFoodRecyclerView.setAdapter(ParentAdapter);
+//                        foodCategoryMvvm.getAllFoodCategory().observe(FoodCategory_Fragment.this, new Observer<List<FoodCategory>>() {
+//                            @Override
+//                            public void onChanged(List<FoodCategory> foodCategoryList) {
+//                                progressBar.setVisibility(View.INVISIBLE);
+//                                parentFoodRecyclerView.setHasFixedSize(true);
+//                                parentLayoutManager = new LinearLayoutManager(getContext());
+//                                parentFoodRecyclerView.setLayoutManager(parentLayoutManager);
+//                                ParentAdapter = new ParentFood_Adapter((ArrayList<FoodCategory>) foodCategoryList, getContext(), list1 -> {
+//                                    Intent intent = new Intent(getContext(), FoodSection_Activity.class);
+//                                    intent.putExtra("food", list1);
+//                                    getContext().startActivity(intent);
+//                                });
+//                                parentFoodRecyclerView.setAdapter(ParentAdapter);
+//
+//                            }
+//                        });
 
-                    }
-                });
+//                        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+//                            @Override
+//                            public void onRefresh() {
+//                                swipeRefreshLayout.setRefreshing(false);
+//                                foodCategoryMvvm.getAllFoodCategory().observe(FoodCategory_Fragment.this, new Observer<List<FoodCategory>>() {
+//                                    @Override
+//                                    public void onChanged(List<FoodCategory> foodCategoryList) {
+//                                        parentFoodRecyclerView.setHasFixedSize(true);
+//                                        parentLayoutManager = new LinearLayoutManager(getContext());
+//                                        parentFoodRecyclerView.setLayoutManager(parentLayoutManager);
+//                                        ParentAdapter = new ParentFood_Adapter((ArrayList<FoodCategory>) foodCategoryList, getContext(), list1 -> {
+//                                            Intent intent = new Intent(getContext(), FoodSection_Activity.class);
+//                                            intent.putExtra("food", list1);
+//                                            getContext().startActivity(intent);
+//                                        });
+//                                        parentFoodRecyclerView.setAdapter(ParentAdapter);
+//
+//                                    }
+//                                });
+//
+//                            }
+//                        });
+
+                        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+                            @Override
+                            public void onRefresh() {
+                                swipeRefreshLayout.setRefreshing(false);
+
+                                fireStore_mvvm.getAllFood(new OnSuccessListener<ArrayList<FoodCategory>>() {
+                                    @Override
+                                    public void onSuccess(ArrayList<FoodCategory> foodCategories) {
+                                        parentFoodRecyclerView.setHasFixedSize(true);
+                                        parentLayoutManager = new LinearLayoutManager(getContext());
+                                        parentFoodRecyclerView.setLayoutManager(parentLayoutManager);
+                                        ParentAdapter = new ParentFood_Adapter(foodCategories, getContext(), list1 -> {
+                                            Intent intent = new Intent(getContext(), FoodSection_Activity.class);
+                                            intent.putExtra("food", list1);
+                                            getContext().startActivity(intent);
+                                        });
+                                        parentFoodRecyclerView.setAdapter(ParentAdapter);
+                                    }
+                                });
+                            }
+                        });
+
+                        break;
+
+                }
+            }
+
+            @Override
+            public void onFinish() {
 
             }
-        });
+
+        };
+        countDownTimer.start();
+
+
 
 //        if (internetConnection) {
 //

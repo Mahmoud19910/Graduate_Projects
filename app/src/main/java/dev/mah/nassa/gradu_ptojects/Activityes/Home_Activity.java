@@ -91,13 +91,18 @@ public class Home_Activity extends AppCompatActivity implements View.OnClickList
 
 
         CheckRoomIsEmpty checkRoomIsEmpty = new CheckRoomIsEmpty(Home_Activity.this);
-        checkRoomIsEmpty.checkFoodCategoryBase();
-        checkRoomIsEmpty.checkUsersHealthBase(loadUid());
-        checkRoomIsEmpty.checkUsersInfoBase(loadUid());
-        checkRoomIsEmpty.checkMyMealBase(loadUid());
-        checkRoomIsEmpty.checkDoctorsBase();
-        checkRoomIsEmpty.checkExerxciseDetailsBase(loadUid());
-        checkRoomIsEmpty.checkSportExerciseBase();
+        if(SharedFunctions.checkInternetConnection(Home_Activity.this)==true){
+            checkRoomIsEmpty.checkFoodCategoryBase();
+            checkRoomIsEmpty.checkUsersHealthBase(loadUid());
+            checkRoomIsEmpty.checkUsersInfoBase(loadUid());
+            checkRoomIsEmpty.checkMyMealBase(loadUid());
+            checkRoomIsEmpty.checkDoctorsBase();
+            checkRoomIsEmpty.checkExerxciseDetailsBase(loadUid());
+            checkRoomIsEmpty.checkSportExerciseBase();
+        }else{
+            Toast.makeText(this, "not connect", Toast.LENGTH_SHORT).show();
+        }
+
 
         drawerLayout = findViewById(R.id.drawerLayout);
         bottomNavigation = findViewById(R.id.navigateBar);

@@ -110,6 +110,28 @@ public class SportExercise_MVVM extends AndroidViewModel {
         return mutableLData;
     }
 
+    public void deleteAllExercise(Context context){
+        appDatabese.sports_exercises_dao().deleteAllExercise()
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new CompletableObserver() {
+                    @Override
+                    public void onSubscribe(@io.reactivex.rxjava3.annotations.NonNull Disposable d) {
+
+                    }
+
+                    @Override
+                    public void onComplete() {
+//                        Toast.makeText(context, "Delete All Exer", Toast.LENGTH_SHORT).show();
+                    }
+
+                    @Override
+                    public void onError(@io.reactivex.rxjava3.annotations.NonNull Throwable e) {
+
+                    }
+                });
+    }
+
 
 
 }

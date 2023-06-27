@@ -1,5 +1,6 @@
 package dev.mah.nassa.gradu_ptojects.Fragments;
 
+import android.content.Intent;
 import android.graphics.Shader;
 import android.os.Bundle;
 
@@ -8,7 +9,9 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
+import android.os.CountDownTimer;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,12 +21,16 @@ import android.widget.Toast;
 import com.bumptech.glide.Glide;
 import com.google.android.gms.tasks.OnSuccessListener;
 
+import java.util.ArrayList;
 import java.util.List;
 
+import dev.mah.nassa.gradu_ptojects.Activityes.FoodSection_Activity;
 import dev.mah.nassa.gradu_ptojects.Adapters.Exercices_Adapter;
+import dev.mah.nassa.gradu_ptojects.Adapters.ParentFood_Adapter;
 import dev.mah.nassa.gradu_ptojects.Constants.SharedFunctions;
 import dev.mah.nassa.gradu_ptojects.MVVM.FireStore_MVVM;
 import dev.mah.nassa.gradu_ptojects.MVVM.SportExercise_MVVM;
+import dev.mah.nassa.gradu_ptojects.Modles.FoodCategory;
 import dev.mah.nassa.gradu_ptojects.Modles.Sports_Exercises;
 import dev.mah.nassa.gradu_ptojects.R;
 import dev.mah.nassa.gradu_ptojects.databinding.FragmentTrainingBinding;
@@ -70,26 +77,12 @@ public class Training_Fragment extends Fragment {
 
 
         boolean isConnect = SharedFunctions.checkInternetConnection(getContext());
-//        if(isConnect){
-//            fireStore_mvvm.getAllSportsExercises(new OnSuccessListener<List<Sports_Exercises>>() {
-//                @Override
-//                public void onSuccess(List<Sports_Exercises> sports_exercises) {
-//                    binding.recyclerExercices.setVisibility(View.VISIBLE);
-//                    binding.progress.setVisibility(View.INVISIBLE);
-//                    Exercices_Adapter exercices_adapter  = new Exercices_Adapter(R.layout.exercices_item_design , getContext() , sports_exercises,uid);
-//                    LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
-//                    linearLayoutManager.setOrientation(linearLayoutManager.VERTICAL);
-//                    binding.recyclerExercices.setLayoutManager(linearLayoutManager);
-//                    binding.recyclerExercices.setAdapter(exercices_adapter);
-//                }
-//            });
-//        }else {
-            binding.recyclerExercices.setVisibility(View.VISIBLE);
-            binding.progress.setVisibility(View.INVISIBLE);
-
-            sportExerciseMvvm.getAllSports_Exercises().observe(Training_Fragment.this, new Observer<List<Sports_Exercises>>() {
+        if(isConnect){
+            fireStore_mvvm.getAllSportsExercises(new OnSuccessListener<List<Sports_Exercises>>() {
                 @Override
-                public void onChanged(List<Sports_Exercises> sports_exercises) {
+                public void onSuccess(List<Sports_Exercises> sports_exercises) {
+                    binding.recyclerExercices.setVisibility(View.VISIBLE);
+                    binding.progress.setVisibility(View.INVISIBLE);
                     Exercices_Adapter exercices_adapter  = new Exercices_Adapter(R.layout.exercices_item_design , getContext() , sports_exercises,uid);
                     LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
                     linearLayoutManager.setOrientation(linearLayoutManager.VERTICAL);
@@ -97,7 +90,43 @@ public class Training_Fragment extends Fragment {
                     binding.recyclerExercices.setAdapter(exercices_adapter);
                 }
             });
-//        }
+        }else {
+        CountDownTimer countDownTimer = new CountDownTimer(1000000, 1000) {
+            @Override
+            public void onTick(long millisUntilFinished) {
+
+                int timer = (int) (millisUntilFinished / 1000);
+
+                switch (timer){
+                    case 998:
+                        binding.recyclerExercices.setVisibility(View.VISIBLE);
+                        binding.progress.setVisibility(View.INVISIBLE);
+
+                        sportExerciseMvvm.getAllSports_Exercises().observe(Training_Fragment.this, new Observer<List<Sports_Exercises>>() {
+                            @Override
+                            public void onChanged(List<Sports_Exercises> sports_exercises) {
+                                Exercices_Adapter exercices_adapter  = new Exercices_Adapter(R.layout.exercices_item_design , getContext() , sports_exercises,uid);
+                                LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
+                                linearLayoutManager.setOrientation(linearLayoutManager.VERTICAL);
+                                binding.recyclerExercices.setLayoutManager(linearLayoutManager);
+                                binding.recyclerExercices.setAdapter(exercices_adapter);
+                            }
+                        });
+                        break;
+
+                }
+            }
+
+            @Override
+            public void onFinish() {
+
+            }
+
+        };
+        countDownTimer.start();
+
+
+        }
 
     }
 }

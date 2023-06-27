@@ -78,31 +78,37 @@ public class ActivitesStats extends AppCompatActivity {
 
         boolean isConnected = SharedFunctions.checkInternetConnection(ActivitesStats.this);
 
-        if(isConnected){
+//        if(isConnected){
+//
+//        try {
+//            Executor executor  = Executors.newSingleThreadExecutor();
+//            executor.execute(new Runnable() {
+//                @Override
+//                public void run() {
+//                    FireStore_DataBase.getAllExerciseDetails_Lists(loadUid() , new OnSuccessListener() {
+//                        @Override
+//                        public void onSuccess(Object o) {
+//                            List<Exercise_Details> detailsList = (List<Exercise_Details>) o;
+//
+//                            exerciseDetails_adapter = new ExerciseDetails_Adapter(R.layout.exercise_details_item_design , detailsList , ActivitesStats.this , binding.linearAppBar );
+//                            LinearLayoutManager layoutManager = new LinearLayoutManager(ActivitesStats.this);
+//                            layoutManager.setReverseLayout(true);
+//                            layoutManager.setStackFromEnd(true);
+//                            layoutManager.setOrientation(RecyclerView.VERTICAL);
+//                            recyclerViewDetails.setLayoutManager(layoutManager);
+//                            recyclerViewDetails.setAdapter(exerciseDetails_adapter);
+//                        }
+//                    });
+//                }
+//            });
+//
+//        }catch (Exception e){
+//            Toast.makeText(this, e.getMessage().toString()+"  Error", Toast.LENGTH_SHORT).show();
+//            System.out.println(e.getMessage().toString());
+//        }
 
-            Executor executor  = Executors.newSingleThreadExecutor();
-            executor.execute(new Runnable() {
-                @Override
-                public void run() {
-                    FireStore_DataBase.getAllExerciseDetails_Lists(loadUid() , new OnSuccessListener() {
-                        @Override
-                        public void onSuccess(Object o) {
-                            List<Exercise_Details> detailsList = (List<Exercise_Details>) o;
 
-                            exerciseDetails_adapter = new ExerciseDetails_Adapter(R.layout.exercise_details_item_design , detailsList , ActivitesStats.this , binding.linearAppBar );
-                            LinearLayoutManager layoutManager = new LinearLayoutManager(ActivitesStats.this);
-                            layoutManager.setReverseLayout(true);
-                            layoutManager.setStackFromEnd(true);
-                            layoutManager.setOrientation(RecyclerView.VERTICAL);
-                            recyclerViewDetails.setLayoutManager(layoutManager);
-                            recyclerViewDetails.setAdapter(exerciseDetails_adapter);
-                        }
-                    });
-                }
-            });
-
-
-        }else {
+//        }else {
             exersiseDetails_mvvm.getAllExersiseDetails().observe(this, new Observer<List<Exercise_Details>>() {
                 @Override
                 public void onChanged(List<Exercise_Details> exercise_details) {
@@ -115,7 +121,7 @@ public class ActivitesStats extends AppCompatActivity {
                     recyclerViewDetails.setAdapter(exerciseDetails_adapter);
                 }
             });
-        }
+//        }
 
 
         binding.backActivityExercices.setOnClickListener(new View.OnClickListener() {
