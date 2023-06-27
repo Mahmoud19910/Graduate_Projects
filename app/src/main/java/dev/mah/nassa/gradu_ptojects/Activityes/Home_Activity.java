@@ -99,8 +99,6 @@ public class Home_Activity extends AppCompatActivity implements View.OnClickList
             checkRoomIsEmpty.checkDoctorsBase();
             checkRoomIsEmpty.checkExerxciseDetailsBase(loadUid());
             checkRoomIsEmpty.checkSportExerciseBase();
-        }else{
-            Toast.makeText(this, "not connect", Toast.LENGTH_SHORT).show();
         }
 
 
