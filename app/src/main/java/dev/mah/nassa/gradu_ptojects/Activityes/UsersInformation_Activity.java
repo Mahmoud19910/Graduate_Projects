@@ -135,7 +135,7 @@ public class UsersInformation_Activity extends AppCompatActivity implements User
                         CloudMessaging.getToken(UsersInformation_Activity.this, new OnSuccessListener() {
                             @Override
                             public void onSuccess(Object o) {
-                                Toast.makeText(UsersInformation_Activity.this, "Name  :"+ name  +"\n phone  :"  + phone +"\nToken  :"+o.toString(), Toast.LENGTH_SHORT).show();
+//                                Toast.makeText(UsersInformation_Activity.this, "Name  :"+ name  +"\n phone  :"  + phone +"\nToken  :"+o.toString(), Toast.LENGTH_SHORT).show();
                                 Users_Chat usersChat  = new Users_Chat(uid , name , photo , " " , true , o.toString());
                                 RealTime_DataBase.addUsersToRealTime(UsersInformation_Activity.this , uid , usersChat);
 

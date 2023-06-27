@@ -102,7 +102,7 @@ public class FireStore_DataBase {
             @Override
             public void onComplete(@NonNull Task<DocumentReference> task) {
                 if(task.isSuccessful()){
-                    Toast.makeText(context, "Added Health", Toast.LENGTH_SHORT).show();
+//                    Toast.makeText(context, "Added Health", Toast.LENGTH_SHORT).show();
                 }else{
                     Toast.makeText(context, "Fail Health", Toast.LENGTH_SHORT).show();
 

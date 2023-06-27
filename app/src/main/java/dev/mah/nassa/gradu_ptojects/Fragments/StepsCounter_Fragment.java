@@ -191,7 +191,6 @@ public class StepsCounter_Fragment extends Fragment {
                     dialog.show();
                 }
                 listener.startWalkingListener(false , true);
-                getActivity().startActivity(new Intent(getContext() , Home_Activity.class));
 
             }
         });

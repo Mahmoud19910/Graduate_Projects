@@ -22,6 +22,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 import java.util.UUID;
+import java.util.concurrent.Executor;
+import java.util.concurrent.Executors;
 
 import dev.mah.nassa.gradu_ptojects.Activityes.ActivitesStats;
 import dev.mah.nassa.gradu_ptojects.Constants.CustomDialog;
@@ -149,7 +151,15 @@ public class Fragment_StartTraining_CaloriesGoal extends Fragment implements Vie
 
                             Exercise_Details exercise_details = new Exercise_Details(uid , UUID.randomUUID().toString() , String.valueOf(caloriesBurned) ,  SharedFunctions.getTimeAtTheMoment() , SharedFunctions.getDateAtTheMoment()
                                     , sports_exercises.getName() , String.valueOf(timer.getTimeByHours()) );
-                            FireStore_DataBase.insertOrUpdateExerciseDetails(exercise_details , getContext());
+
+                            Executor executor = Executors.newSingleThreadExecutor();
+                            executor.execute(new Runnable() {
+                                @Override
+                                public void run() {
+                                    FireStore_DataBase.insertOrUpdateExerciseDetails(exercise_details , getContext());
+
+                                }
+                            });
                             exercisedetails_mvvm.insertExersiseDetails(exercise_details);
 
                         }else {

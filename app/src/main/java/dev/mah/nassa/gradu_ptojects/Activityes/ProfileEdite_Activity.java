@@ -305,7 +305,7 @@ public class ProfileEdite_Activity extends AppCompatActivity implements AdapterV
                 checkGender = true;
                 break;
         }
-        Toast.makeText(getApplicationContext(), gender, Toast.LENGTH_SHORT).show();
+//        Toast.makeText(getApplicationContext(), gender, Toast.LENGTH_SHORT).show();
     }
 
     // ميثود تحديث وتعديل بينات الصحية عند التعديل على البيانات الشخصية

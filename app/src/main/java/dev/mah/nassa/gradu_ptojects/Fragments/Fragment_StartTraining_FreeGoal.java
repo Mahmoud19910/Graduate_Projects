@@ -19,6 +19,8 @@ import com.google.android.gms.tasks.OnSuccessListener;
 
 import java.util.Random;
 import java.util.UUID;
+import java.util.concurrent.Executor;
+import java.util.concurrent.Executors;
 
 import dev.mah.nassa.gradu_ptojects.Activityes.ActivitesStats;
 import dev.mah.nassa.gradu_ptojects.Activityes.Exercices_Activity;
@@ -132,7 +134,14 @@ public class Fragment_StartTraining_FreeGoal extends Fragment implements View.On
                             , sports_exercises.getName(), String.valueOf(timer.getTimeByHours()) );
 
                     exercisedetails_mvvm.insertExersiseDetails(exercise_details);
-                    FireStore_DataBase.insertOrUpdateExerciseDetails(exercise_details , getContext());
+
+                    Executor executor = Executors.newSingleThreadExecutor();
+                    executor.execute(new Runnable() {
+                        @Override
+                        public void run() {
+                            FireStore_DataBase.insertOrUpdateExerciseDetails(exercise_details , getContext());
+                        }
+                    });
 
                     CustomDialog dialog = new CustomDialog(getContext() , timeGoal , String.format("%.2f", caloriesBurned));
                     dialog.show();
