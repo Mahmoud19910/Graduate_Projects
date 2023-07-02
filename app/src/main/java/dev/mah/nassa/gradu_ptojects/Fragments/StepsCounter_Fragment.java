@@ -100,10 +100,12 @@ public class StepsCounter_Fragment extends Fragment {
         walkingMvvm.getAllData().observe(this, new Observer<ArrayList<String>>() {
             @Override
             public void onChanged(ArrayList<String> strings) {
+                SharedFunctions.saveCaloBurned(strings.get(2) , getContext()); // حفظ قيمة السعرات عندما لاتكون قيمتها صفر عند الوقوف عن المشي
 
                 distanceTv.setText(strings.get(0) + " m");
                 speedTv.setText(strings.get(1) + " m/min");
-                caloriesTv.setText(strings.get(2));
+
+                caloriesTv.setText(SharedFunctions.loadCaloBurned(getContext()));
                 caloriesBurned = strings.get(2);
                 stepsTv.setText(strings.get(3));
                 timeAtMomment = strings.get(4);
@@ -186,9 +188,9 @@ public class StepsCounter_Fragment extends Fragment {
                     Exercise_Details exercise_details = new Exercise_Details(loadUid() , UUID.randomUUID().toString() ,  caloriesTv.getText().toString() , timeAtMomment ,  SharedFunctions.getDateAtTheMoment() , "رياضة المشي" ,String.valueOf(Home_Activity.timer.getTimeByHours()));
                     exersiseDetails_mvvm.insertExersiseDetails(exercise_details);
                     FireStore_DataBase.insertOrUpdateExerciseDetails(exercise_details , getContext());
-
                     CustomDialog dialog = new CustomDialog(getContext() , timerTv.getText().toString() , caloriesBurned);
                     dialog.show();
+                    SharedFunctions.saveCaloBurned("0.00" , getContext()); //  حفظ قيمة 0 عند الانهاء
                 }
                 listener.startWalkingListener(false , true);
 
@@ -205,6 +207,8 @@ public class StepsCounter_Fragment extends Fragment {
         SharedPreferences sharedPreferences = getActivity().getSharedPreferences("saveUid", Context.MODE_PRIVATE);
         return sharedPreferences.getString("uid", "");
     }
+
+
 
 
 }

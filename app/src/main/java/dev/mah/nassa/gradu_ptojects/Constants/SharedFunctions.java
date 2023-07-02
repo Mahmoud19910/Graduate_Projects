@@ -582,4 +582,20 @@ public class SharedFunctions {
         toast.show();
     }
 
+
+    public static void saveCaloBurned(String calo , Context context){
+        Toast.makeText(context, "calo", Toast.LENGTH_SHORT).show();
+        if(!calo.equals("0.00")){
+            Toast.makeText(context, "Success Save "+calo, Toast.LENGTH_SHORT).show();
+            SharedPreferences sharedPreferences = ((Activity)context).getSharedPreferences("caloButned" , Context.MODE_PRIVATE);
+            sharedPreferences.edit().putString("calo" , calo).apply();
+        }
+
+    }
+
+    public static String loadCaloBurned(Context context){
+        SharedPreferences sharedPreferences = ((Activity)context).getSharedPreferences("caloButned" , Context.MODE_PRIVATE);
+        return sharedPreferences.getString("calo" , " ");
+    }
+
 }
